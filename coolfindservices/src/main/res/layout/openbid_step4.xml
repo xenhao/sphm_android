@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+<com.pa.common.ImageViewFitWidth
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/margin2"
+        android:src="@drawable/post_job_3"
+         />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" >
+
+        <LinearLayout
+            android:id="@+id/wrapper"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical" >
+
+                <com.pa.common.TypefaceTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin4"
+        android:gravity="left"
+        android:text="SERVICE/DELIVERY/PICKUP DATE AND TIME"
+       android:textAppearance="@style/Label"
+        android:textSize="@dimen/txt_extra_big"
+        app:typeface="OpenSans-Bold" />
+            
+            
+            <com.pa.common.TypefaceTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin4"
+                android:gravity="center"
+                android:text="@string/_1st_preferred_service_date"
+                android:textAppearance="@style/Label"
+                android:textSize="@dimen/txt_big"
+                app:typeface="OpenSans-Bold" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+
+                <com.pa.common.TypefaceTextView
+                    android:id="@+id/first_prefer_date"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/edittext_height3"
+                    android:layout_marginTop="@dimen/margin4"
+                    android:background="@drawable/white_rectangle_solid"
+                    android:gravity="left|center_vertical"
+                    android:hint="Pick your date"
+                    android:textAppearance="@style/Placeholder"
+                    android:textSize="@dimen/txt_big"
+                    app:typeface="OpenSans-Regular" />
+
+                <com.pa.common.TypefaceTextView
+                    android:visibility="gone"
+                    android:id="@+id/first_prefer_time"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/edittext_height3"
+                    android:layout_marginTop="@dimen/margin4"
+                    android:background="@drawable/white_rectangle_solid"
+                    android:gravity="left|center_vertical"
+                    android:hint="Pick your time"
+                    android:textAppearance="@style/Placeholder"
+                    android:textSize="@dimen/txt_big"
+                    app:typeface="OpenSans-Regular" />
+            </LinearLayout>
+
+            <com.pa.common.TypefaceTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin4"
+                android:gravity="center"
+                android:text="@string/_2nd_preferred_date_and_time"
+                android:textAppearance="@style/Label"
+                android:textSize="@dimen/txt_big"
+                app:typeface="OpenSans-Bold" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+
+                <com.pa.common.TypefaceTextView
+                    android:id="@+id/second_prefer_date"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/edittext_height3"
+                    android:layout_marginTop="@dimen/margin4"
+                    android:background="@drawable/white_rectangle_solid"
+                    android:gravity="left|center_vertical"
+                    android:hint="Pick your date "
+                    android:textAppearance="@style/Placeholder"
+                    android:textSize="@dimen/txt_big"
+                    app:typeface="OpenSans-Regular" />
+
+               
+
+                <com.pa.common.TypefaceTextView android:visibility="gone"
+                    android:id="@+id/second_prefer_time"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/edittext_height3"
+                    android:layout_marginTop="@dimen/margin4"
+                    android:background="@drawable/white_rectangle_solid"
+                    android:gravity="left|center_vertical"
+                    android:hint="Pick your time"
+                    android:textAppearance="@style/Placeholder"
+                    android:textSize="@dimen/txt_big"
+                    app:typeface="OpenSans-Regular" />
+            </LinearLayout>
+            
+            <com.pa.common.TypefaceTextView
+                android:visibility="gone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin4"
+                android:gravity="center"
+                android:text="Select Preferred Merchant Rating"
+               android:textAppearance="@style/Label"
+                android:textSize="@dimen/txt_extra_big"
+                app:typeface="OpenSans-Bold" />
+
+            <com.pa.common.TypefaceTextView
+                android:visibility="gone"
+                android:id="@+id/txtRating"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/edittext_height3"
+                android:layout_marginTop="@dimen/margin4"
+                android:background="@drawable/white_rectangle_solid"
+                android:drawableRight="@drawable/icon_blue_dropdown"
+                android:gravity="left|center_vertical"
+                android:text="Select preferred rating"
+                android:textAppearance="@style/Placeholder"
+                android:textSize="@dimen/txt_big"
+                app:typeface="OpenSans-Regular" />
+
+            <com.pa.common.TypefaceTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin4"
+                android:gravity="center"
+                android:text="Service Location/Pickup Address"
+               android:textAppearance="@style/Label"
+               
+                android:textSize="@dimen/txt_extra_big"
+                app:typeface="OpenSans-Bold" />
+
+            <com.pa.common.TypefaceTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin2"
+                android:text="Unit no. is optional - please contact merchant to provide your full address if you do not include your unit no. here."
+               android:textAppearance="@style/Placeholder"
+               android:textColor="@color/black"
+                android:textSize="@dimen/txt_big"
+                app:typeface="OpenSans-Bold" />
+
+            <com.pa.common.TypefaceEditText
+                android:id="@+id/txtAddress"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/edittext_height3"
+                android:layout_marginTop="@dimen/margin4"
+                android:background="@drawable/white_rectangle_solid"
+                android:gravity="left|center_vertical"
+                android:hint="Address"
+                android:inputType="text"
+                style="@style/PlaceholderEdit" android:textColor="#ff989898"
+               
+                android:textSize="@dimen/txt_big"
+                app:typeface="OpenSans-Regular" />
+
+            <com.pa.common.TypefaceTextView
+                android:id="@+id/country"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/edittext_height3"
+                android:layout_marginTop="@dimen/margin4"
+                android:background="@drawable/white_rectangle_solid"
+                android:drawableRight="@drawable/icon_blue_dropdown"
+                android:gravity="left|center_vertical"
+                android:hint="Select country"
+                android:textAppearance="@style/Placeholder"
+                android:textSize="@dimen/txt_big"
+                app:typeface="OpenSans-Regular" />
+
+            <com.pa.common.TypefaceTextView
+                android:id="@+id/state"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/edittext_height3"
+                android:layout_marginTop="@dimen/margin4"
+                android:background="@drawable/white_rectangle_solid"
+                android:drawableRight="@drawable/icon_blue_dropdown"
+                android:gravity="left|center_vertical"
+                android:hint="Select state"
+                android:textAppearance="@style/Placeholder"
+                android:textSize="@dimen/txt_big"
+                app:typeface="OpenSans-Regular" />
+
+            <com.pa.common.TypefaceTextView
+                android:id="@+id/city"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/edittext_height3"
+                android:layout_marginTop="@dimen/margin4"
+                android:background="@drawable/white_rectangle_solid"
+                android:drawableRight="@drawable/icon_blue_dropdown"
+                android:gravity="left|center_vertical"
+                android:hint="Select city"
+                android:textAppearance="@style/Placeholder"
+                android:textSize="@dimen/txt_big"
+                app:typeface="OpenSans-Regular" />
+
+            <com.pa.common.TypefaceEditText
+                android:id="@+id/txtPostalCode"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/edittext_height3"
+                android:layout_marginTop="@dimen/margin4"
+                android:background="@drawable/white_rectangle_solid"
+                android:gravity="left|center_vertical"
+                android:hint="postal code"
+                android:inputType="number"
+                android:textAppearance="@style/PlaceholderEdit"
+                android:textSize="@dimen/txt_big" android:textColor="#ff989898"
+               
+                app:typeface="OpenSans-Regular" />
+        </LinearLayout>
+    </ScrollView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin2"
+        android:orientation="horizontal"
+        android:visibility="visible" >
+
+        <com.pa.common.TypefaceButton
+            android:visibility="gone"
+            android:id="@+id/btnCancel2"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/edittext_height"
+            android:layout_marginRight="@dimen/margin2"
+            android:layout_weight="1"
+            android:background="@drawable/btn_effect_gray"
+            android:gravity="center"
+            android:paddingRight="@dimen/margin3"
+            android:text="BACK"
+            android:textColor="@color/white"
+            android:textSize="@dimen/txt_big"
+            android:textStyle="normal"
+            app:typeface="OpenSans-Regular" />
+
+        <com.pa.common.TypefaceButton
+            android:id="@+id/btnNext2"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/edittext_height"
+            android:layout_weight="1"
+            android:background="@drawable/btn_effect_blue"
+            android:gravity="center"
+            android:text="NEXT"
+            android:textColor="@color/white"
+            android:textSize="@dimen/txt_big"
+            android:textStyle="normal"
+            app:typeface="OpenSans-Regular" />
+    </LinearLayout>
+
+</LinearLayout>

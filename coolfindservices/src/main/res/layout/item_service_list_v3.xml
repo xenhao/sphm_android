@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/margin2"
+        android:layout_marginLeft="@dimen/margin4"
+        android:layout_marginRight="@dimen/margin4"
+        android:layout_marginTop="@dimen/margin2"
+        android:orientation="horizontal" >
+
+        <com.pa.common.TypefaceTextView
+            android:id="@+id/service"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text=" "
+            android:textAppearance="@style/Label"
+            android:textSize="@dimen/txt_big"
+            app:typeface="OpenSans-Bold" />
+
+        <com.pa.common.TypefaceTextView
+            android:id="@+id/view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margin2"
+            android:background="@drawable/btn_effect_blue"
+            android:padding="@dimen/margin2"
+            android:text="View"
+            android:textColor="@color/white"
+            android:textSize="@dimen/txt_big"
+            android:visibility="gone"
+            app:typeface="OpenSans-Regular" />
+    </LinearLayout>
+
+    <com.pa.common.TypefaceTextView
+        android:id="@+id/service_detail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/margin4"
+        android:layout_marginRight="@dimen/margin4"
+        android:text=""
+        android:textAppearance="@style/Normal"
+        android:textSize="@dimen/txt_big"
+        app:typeface="OpenSans-Regular" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/divider"
+        android:layout_marginLeft="@dimen/margin2"
+        android:layout_marginRight="@dimen/margin2"
+        android:background="@color/pa_grey" />
+
+</LinearLayout>

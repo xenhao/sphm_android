@@ -1,0 +1,590 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/edittext_height3"
+        android:background="@color/pa_blue"
+        android:gravity="center"
+        android:orientation="horizontal" >
+
+        <ImageView
+            android:id="@+id/btnBack"
+            android:layout_width="@dimen/edittext_height"
+            android:layout_height="@dimen/edittext_height"
+            android:layout_marginLeft="@dimen/margin2"
+            android:padding="@dimen/padding"
+            android:src="@drawable/img_back" />
+
+        <com.pa.common.TypefaceTextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="BIDDING DETAIL"
+            android:textColor="@color/white"
+            android:textSize="@dimen/txt_extra_big"
+            app:typeface="OpenSans-Bold" />
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="@dimen/margin2" >
+
+                <com.pa.common.ImageViewFitWidth
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:src="@drawable/ic_launcher" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin2"
+                    android:layout_weight="4"
+                    android:orientation="vertical" >
+
+                    <com.pa.common.TypefaceTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Bid Title"
+                        android:textColor="@color/pa_blue"
+                        android:textSize="@dimen/txt_big"
+                        app:typeface="OpenSans-Bold" />
+
+                    <com.pa.common.TypefaceTextView
+                        android:id="@+id/txtBidTitle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text=" "
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/txt_big"
+                        app:typeface="OpenSans-Bold" />
+                    
+                    <com.pa.common.TypefaceTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Category Service:"
+                        android:textColor="@color/pa_blue"
+                        android:textSize="@dimen/txt_big"
+                        app:typeface="OpenSans-Bold" />
+
+                    <com.pa.common.TypefaceTextView
+                        android:id="@+id/txtCatService"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text=" "
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/txt_big"
+                        app:typeface="OpenSans-Bold" />
+
+                    <com.pa.common.TypefaceTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/margin4"
+                        android:text="Bidding Number:"
+                        android:textColor="@color/pa_blue"
+                        android:textSize="@dimen/txt_big"
+                        app:typeface="OpenSans-Bold" />
+
+                    <com.pa.common.TypefaceTextView
+                        android:id="@+id/txtSerial"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text=" "
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/txt_big"
+                        app:typeface="OpenSans-Regular" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/pa_grey"
+                android:padding="@dimen/margin2" >
+
+                <com.pa.common.TypefaceTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/margin2"
+                    android:paddingRight="@dimen/margin2"
+                    android:text="SERVICE DELIVERY DETAIL"
+                    android:textColor="@color/pa_blue"
+                    android:textSize="@dimen/txt_big"
+                    app:typeface="OpenSans-Bold" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/margin2"
+                android:layout_marginLeft="@dimen/margin4"
+                android:layout_marginRight="@dimen/margin4"
+                android:layout_marginTop="@dimen/margin2"
+                android:orientation="horizontal" >
+
+                <com.pa.common.TypefaceTextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="State"
+                    android:textColor="@color/pa_blue"
+                    android:textSize="@dimen/txt_big"
+                    app:typeface="OpenSans-Regular" />
+
+                <com.pa.common.TypefaceTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=":"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/txt_big"
+                    app:typeface="OpenSans-Regular" />
+
+                <com.pa.common.TypefaceTextView
+                    android:id="@+id/txtState"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin2"
+                    android:layout_weight="2"
+                    android:text=" "
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/txt_big"
+                    app:typeface="OpenSans-Regular" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/divider"
+                android:layout_marginLeft="@dimen/margin2"
+                android:layout_marginRight="@dimen/margin2"
+                android:background="@color/pa_grey" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/margin2"
+                android:layout_marginLeft="@dimen/margin4"
+                android:layout_marginRight="@dimen/margin4"
+                android:layout_marginTop="@dimen/margin2"
+                android:orientation="horizontal" >
+
+                <com.pa.common.TypefaceTextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="City"
+                    android:textColor="@color/pa_blue"
+                    android:textSize="@dimen/txt_big"
+                    app:typeface="OpenSans-Regular" />
+
+                <com.pa.common.TypefaceTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=":"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/txt_big"
+                    app:typeface="OpenSans-Regular" />
+
+                <com.pa.common.TypefaceTextView
+                    android:id="@+id/txtCity"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin2"
+                    android:layout_weight="2"
+                    android:text=" "
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/txt_big"
+                    app:typeface="OpenSans-Regular" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/divider"
+                android:layout_marginLeft="@dimen/margin2"
+                android:layout_marginRight="@dimen/margin2"
+                android:background="@color/pa_grey" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/margin2"
+                android:layout_marginLeft="@dimen/margin4"
+                android:layout_marginRight="@dimen/margin4"
+                android:layout_marginTop="@dimen/margin2"
+                android:orientation="horizontal" >
+
+                <com.pa.common.TypefaceTextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Street"
+                    android:textColor="@color/pa_blue"
+                    android:textSize="@dimen/txt_big"
+                    app:typeface="OpenSans-Regular" />
+
+                <com.pa.common.TypefaceTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=":"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/txt_big"
+                    app:typeface="OpenSans-Regular" />
+
+                <com.pa.common.TypefaceTextView
+                    android:id="@+id/txtStreet"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin2"
+                    android:layout_weight="2"
+                    android:text=" "
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/txt_big"
+                    app:typeface="OpenSans-Regular" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/divider"
+                android:layout_marginLeft="@dimen/margin2"
+                android:layout_marginRight="@dimen/margin2"
+                android:background="@color/pa_grey" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/margin2"
+                android:layout_marginLeft="@dimen/margin4"
+                android:layout_marginRight="@dimen/margin4"
+                android:layout_marginTop="@dimen/margin2"
+                android:orientation="horizontal" >
+
+                <com.pa.common.TypefaceTextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Preferred Service Time"
+                    android:textColor="@color/pa_blue"
+                    android:textSize="@dimen/txt_big"
+                    app:typeface="OpenSans-Regular" />
+
+                <com.pa.common.TypefaceTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=":"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/txt_big"
+                    app:typeface="OpenSans-Regular" />
+
+                <com.pa.common.TypefaceTextView
+                    android:id="@+id/txtServiceTime"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin2"
+                    android:layout_weight="2"
+                    android:text=" "
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/txt_big"
+                    app:typeface="OpenSans-Regular" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/divider"
+                android:layout_marginLeft="@dimen/margin2"
+                android:layout_marginRight="@dimen/margin2"
+                android:background="@color/pa_grey" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/pa_grey"
+                android:padding="@dimen/margin2" >
+
+                <com.pa.common.TypefaceTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/margin2"
+                    android:paddingRight="@dimen/margin2"
+                    android:text="PREFERRED SERVICE(s) LIST"
+                    android:textColor="@color/pa_blue"
+                    android:textSize="@dimen/txt_big"
+                    app:typeface="OpenSans-Bold" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/wrapperService"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/pa_grey"
+                android:padding="@dimen/margin2" >
+
+                <com.pa.common.TypefaceTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/margin2"
+                    android:paddingRight="@dimen/margin2"
+                    android:text="BIDDING DETAIL"
+                    android:textColor="@color/pa_blue"
+                    android:textSize="@dimen/txt_big"
+                    app:typeface="OpenSans-Bold" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/margin2"
+                android:layout_marginLeft="@dimen/margin4"
+                android:layout_marginRight="@dimen/margin4"
+                android:layout_marginTop="@dimen/margin2"
+                android:orientation="horizontal" >
+
+                <com.pa.common.TypefaceTextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Price Range"
+                    android:textColor="@color/pa_blue"
+                    android:textSize="@dimen/txt_big"
+                    app:typeface="OpenSans-Regular" />
+
+                <com.pa.common.TypefaceTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=":"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/txt_big"
+                    app:typeface="OpenSans-Regular" />
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:orientation="vertical" >
+                    <com.pa.common.TypefaceTextView
+                        android:visibility="invisible"
+                        android:id="@+id/txtPriceCurrency"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/margin2"
+                        android:text="SGD"
+                        android:textColor="@color/pa_dark_grey"
+                        android:textSize="@dimen/txt_big"
+                        app:typeface="OpenSans-Regular" />
+                    <com.pa.common.TypefaceTextView
+                        android:id="@+id/txtPriceCurrencyVisible"
+                        android:layout_below="@id/txtPriceCurrency"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/margin2"
+                        android:text="SGD"
+                        android:textColor="@color/pa_dark_grey"
+                        android:textSize="@dimen/txt_big"
+                        app:typeface="OpenSans-Regular" />
+                    
+                    <com.pa.common.TypefaceTextView
+                        android:layout_toRightOf="@id/txtPriceCurrency"
+                        android:id="@+id/txtPriceRange"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/margin2"
+                        android:text=" "
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/txt_big"
+                        app:typeface="OpenSans-Regular" />
+                    
+                </RelativeLayout>
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/divider"
+                android:layout_marginLeft="@dimen/margin2"
+                android:layout_marginRight="@dimen/margin2"
+                android:background="@color/pa_grey" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/margin2"
+                android:layout_marginLeft="@dimen/margin4"
+                android:layout_marginRight="@dimen/margin4"
+                android:layout_marginTop="@dimen/margin2"
+                android:orientation="horizontal" >
+
+                <com.pa.common.TypefaceTextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Closing Date"
+                    android:textColor="@color/pa_blue"
+                    android:textSize="@dimen/txt_big"
+                    app:typeface="OpenSans-Regular" />
+
+                <com.pa.common.TypefaceTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=":"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/txt_big"
+                    app:typeface="OpenSans-Regular" />
+
+                <com.pa.common.TypefaceTextView
+                    android:id="@+id/txtClosingDate"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin2"
+                    android:layout_weight="2"
+                    android:text=" "
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/txt_big"
+                    app:typeface="OpenSans-Regular" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/divider"
+                android:layout_marginLeft="@dimen/margin2"
+                android:layout_marginRight="@dimen/margin2"
+                android:background="@color/pa_grey" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/margin2"
+                android:layout_marginLeft="@dimen/margin4"
+                android:layout_marginRight="@dimen/margin4"
+                android:layout_marginTop="@dimen/margin2"
+                android:orientation="horizontal" >
+
+                <com.pa.common.TypefaceTextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Time Left"
+                    android:textColor="@color/pa_blue"
+                    android:textSize="@dimen/txt_big"
+                    app:typeface="OpenSans-Regular" />
+
+                <com.pa.common.TypefaceTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=":"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/txt_big"
+                    app:typeface="OpenSans-Regular" />
+
+                <com.pa.common.TypefaceTextView
+                    android:id="@+id/txtTimeLeft"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin2"
+                    android:layout_weight="2"
+                    android:text=" "
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/txt_big"
+                    app:typeface="OpenSans-Regular" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/divider"
+                android:layout_marginLeft="@dimen/margin2"
+                android:layout_marginRight="@dimen/margin2"
+                android:background="@color/pa_grey" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/margin2"
+                android:layout_marginLeft="@dimen/margin4"
+                android:layout_marginRight="@dimen/margin4"
+                android:layout_marginTop="@dimen/margin2"
+                android:orientation="horizontal" >
+
+                <com.pa.common.TypefaceTextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Submitted Bid"
+                    android:textColor="@color/pa_blue"
+                    android:textSize="@dimen/txt_big"
+                    app:typeface="OpenSans-Regular" />
+
+                <com.pa.common.TypefaceTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=":"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/txt_big"
+                    app:typeface="OpenSans-Regular" />
+
+                <com.pa.common.TypefaceTextView
+                    android:id="@+id/txtSubmittedBid"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin2"
+                    android:layout_weight="2"
+                    android:text=" "
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/txt_big"
+                    app:typeface="OpenSans-Regular" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/divider"
+                android:layout_marginLeft="@dimen/margin2"
+                android:layout_marginRight="@dimen/margin2"
+                android:background="@color/pa_grey" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/pa_grey"
+                android:padding="@dimen/margin2" >
+
+                <com.pa.common.TypefaceButton
+                    android:id="@+id/place_bid"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/button_height3"
+                    android:layout_marginBottom="@dimen/margin3"
+                    android:layout_marginLeft="@dimen/margin6"
+                    android:layout_marginRight="@dimen/margin6"
+                    android:layout_marginTop="@dimen/margin3"
+                    android:background="@drawable/btn_effect_blue"
+                    android:gravity="center"
+                    android:lines="5"
+                    android:text="PLACE BID"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/txt_big"
+                    app:typeface="OpenSans-Regular" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

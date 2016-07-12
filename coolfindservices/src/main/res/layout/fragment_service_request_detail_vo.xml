@@ -1,0 +1,388 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/edittext_height3"
+        android:background="@color/pa_orange"
+        android:gravity="center"
+        android:orientation="horizontal" >
+
+        <ImageView
+            android:id="@+id/btnBack"
+            android:layout_width="@dimen/edittext_height"
+            android:layout_height="@dimen/edittext_height"
+            android:layout_marginLeft="@dimen/margin2"
+            android:padding="@dimen/padding"
+            android:src="@drawable/img_back" />
+
+        <com.pa.common.TypefaceTextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="JOB REQUEST DETAIL"
+            android:textColor="@color/white"
+            android:textSize="@dimen/txt_extra_big"
+            app:typeface="OpenSans-Bold" />
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="@dimen/margin2" >
+
+                <com.pa.common.ImageViewFitWidth
+                    android:id="@+id/img"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:src="@drawable/ic_launcher" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin2"
+                    android:layout_marginRight="@dimen/margin2"
+                    android:layout_weight="4"
+                    android:orientation="vertical" >
+
+                    <com.pa.common.TypefaceTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Job Title"
+    android:textAppearance="@style/Label"
+                        android:textSize="@dimen/txt_big"
+                        app:typeface="OpenSans-Bold" />
+
+                    <com.pa.common.TypefaceTextView
+                        android:id="@+id/txtDescription"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text=" "
+    android:textAppearance="@style/Normal"
+                        android:textSize="@dimen/txt_big"
+                        app:typeface="OpenSans-Bold" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal" >
+
+                        <com.pa.common.TypefaceTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Job Status:"
+        android:textAppearance="@style/Label"
+                            android:textSize="@dimen/txt_big"
+                            app:typeface="OpenSans-Bold" />
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/margin2"
+                            android:layout_weight="1"
+                            android:orientation="vertical" >
+
+                            <com.pa.common.TypefaceTextView
+                                android:id="@+id/txtBidStatus"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@color/pa_blue"
+                                android:gravity="center"
+                                android:padding="@dimen/margin2"
+                                android:text="OPEN"
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/txt_big"
+                                app:typeface="OpenSans-Bold" />
+
+                            <com.pa.common.TypefaceTextView
+                                android:id="@+id/txtCloseTime"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@color/pa_grey"
+                                android:gravity="center"
+                                android:padding="@dimen/margin2"
+                                android:text="close in 2 days"
+                                android:textColor="@color/pa_dark_grey"
+                                android:textSize="@dimen/txt_small"
+                                app:typeface="OpenSans-Bold" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="vertical"
+                android:paddingLeft="@dimen/margin4"
+                android:paddingRight="@dimen/margin4" >
+
+                <com.pa.common.TypefaceTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin4"
+                    android:text="Service Request ID:"
+android:textAppearance="@style/Label"
+                    android:textSize="@dimen/txt_big"
+                    app:typeface="OpenSans-Bold" />
+
+                <com.pa.common.TypefaceTextView
+                    android:id="@+id/txtSerial"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="SR-"
+android:textAppearance="@style/Normal"
+                    android:textSize="@dimen/txt_big"
+                    app:typeface="OpenSans-Regular" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/wrapper_service_delivery_detail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin4"
+                android:background="@drawable/white_rectangle_solid"
+                android:orientation="vertical"
+                android:padding="@dimen/margin4" >
+
+                <com.pa.common.TypefaceTextView
+                    android:id="@+id/catParent"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/edittext_height2"
+                    android:gravity="left|center_vertical"
+                    android:text="Merchant Offers"
+android:textAppearance="@style/Label"
+                    android:textSize="@dimen/txt_big"
+                    app:typeface="OpenSans-Bold" />
+
+                <LinearLayout
+                    android:id="@+id/categoryWrapper"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical" >
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/divider"
+                        android:layout_marginBottom="@dimen/margin2"
+                        android:layout_marginTop="@dimen/margin2"
+                        android:background="@color/pa_grey" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical" >
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/white"
+                            android:orientation="vertical"
+                            android:paddingLeft="@dimen/margin4"
+                            android:paddingRight="@dimen/margin4" >
+
+                            <com.pa.common.TypefaceTextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/margin4"
+                                android:text="Job Description"
+            android:textAppearance="@style/Label"
+                                android:textSize="@dimen/txt_big"
+                                app:typeface="OpenSans-Bold" />
+
+                            <com.pa.common.TypefaceTextView
+                                android:id="@+id/txtJobDesc"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+android:textAppearance="@style/Normal"
+                                android:textSize="@dimen/txt_big"
+                                app:typeface="OpenSans-Regular" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/white"
+                            android:orientation="vertical"
+                            android:paddingLeft="@dimen/margin4"
+                            android:paddingRight="@dimen/margin4" >
+
+                            <com.pa.common.TypefaceTextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/margin4"
+                                android:text="Price"
+            android:textAppearance="@style/Label"
+                                android:textSize="@dimen/txt_big"
+                                app:typeface="OpenSans-Bold" />
+
+                            <com.pa.common.TypefaceTextView
+                                android:id="@+id/txtPrice"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+            android:textAppearance="@style/Normal"
+                                android:textSize="@dimen/txt_big"
+                                app:typeface="OpenSans-Regular" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/white"
+                            android:orientation="vertical"
+                            android:paddingLeft="@dimen/margin4"
+                            android:paddingRight="@dimen/margin4" >
+
+                            <com.pa.common.TypefaceTextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/margin4"
+                                android:text="Related Job ID"
+            android:textAppearance="@style/Label"
+                                android:textSize="@dimen/txt_big"
+                                app:typeface="OpenSans-Bold" />
+
+                            <com.pa.common.TypefaceTextView
+                                android:id="@+id/txt_related_serial"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+            android:textAppearance="@style/Normal"
+                                android:textSize="@dimen/txt_big"
+                                app:typeface="OpenSans-Regular" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/white"
+                            android:orientation="vertical"
+                            android:paddingLeft="@dimen/margin4"
+                            android:paddingRight="@dimen/margin4" >
+
+                            <com.pa.common.TypefaceTextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/margin4"
+                                android:text="Merchant Company Name"
+            android:textAppearance="@style/Label"
+                                android:textSize="@dimen/txt_big"
+                                app:typeface="OpenSans-Bold" />
+
+                            <com.pa.common.TypefaceTextView
+                                android:id="@+id/txtCompanyName"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+            android:textAppearance="@style/Normal"
+                                android:textSize="@dimen/txt_big"
+                                app:typeface="OpenSans-Regular" />
+                        </LinearLayout>
+
+                        
+                                                <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/white"
+                            android:orientation="vertical"
+                            android:paddingLeft="@dimen/margin4"
+                            android:paddingRight="@dimen/margin4" >
+
+                            <com.pa.common.TypefaceTextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/margin4"
+                                android:text="Merchant Contact No:"
+            android:textAppearance="@style/Label"
+                                android:textSize="@dimen/txt_big"
+                                app:typeface="OpenSans-Bold" />
+
+                            <com.pa.common.TypefaceTextView
+                                android:id="@+id/txtMerchantContact"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+            android:textAppearance="@style/Normal"
+                                android:textSize="@dimen/txt_big"
+                                app:typeface="OpenSans-Regular" />
+                        </LinearLayout>
+                        
+                                                
+                                                                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/white"
+                            android:orientation="vertical"
+                            android:paddingLeft="@dimen/margin4"
+                            android:paddingRight="@dimen/margin4" >
+
+                            <com.pa.common.TypefaceTextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/margin4"
+                                android:text="Merchant Email Address"
+            android:textAppearance="@style/Label"
+                                android:textSize="@dimen/txt_big"
+                                app:typeface="OpenSans-Bold" />
+
+                            <com.pa.common.TypefaceTextView
+                                android:id="@+id/txtMerchantEmail"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+            android:textAppearance="@style/Normal"
+                                android:textSize="@dimen/txt_big"
+                                app:typeface="OpenSans-Regular" />
+                        </LinearLayout>
+                                                
+                        
+                        
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+    <LinearLayout
+        android:id="@+id/wrapperAction"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin4"
+        android:orientation="horizontal"
+        android:visibility="visible" >
+
+        <com.pa.common.TypefaceButton
+            android:id="@+id/btnOfferVO"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/edittext_height"
+            android:layout_marginRight="@dimen/margin2"
+            android:layout_weight="1"
+            android:background="@drawable/btn_effect_blue"
+            android:gravity="center"
+            android:paddingRight="@dimen/margin3"
+            android:text="ACCEPT REQUEST"
+            android:textColor="@color/white"
+            android:textSize="@dimen/txt_big"
+            android:textStyle="normal"
+            app:typeface="OpenSans-Regular" />
+
+        
+    </LinearLayout>
+
+</LinearLayout>

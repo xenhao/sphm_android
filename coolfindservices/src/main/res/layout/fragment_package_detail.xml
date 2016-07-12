@@ -1,0 +1,280 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical" >
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/edittext_height3"
+        android:background="@color/pa_light_orange"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:baselineAligned="false">
+
+        <ImageView
+            android:id="@+id/btnBack"
+            android:layout_width="@dimen/edittext_height"
+            android:layout_height="@dimen/edittext_height"
+            android:padding="@dimen/padding"
+            android:src="@drawable/img_back" />
+
+
+
+        <com.pa.common.TypefaceTextView
+            android:id="@+id/page_title"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="@dimen/txt_extra_big"
+            app:typeface="OpenSans-Bold"
+            android:elegantTextHeight="false" /><!--android:text="PACKAGE DETAILS"-->
+
+        <ImageView
+            android:id="@+id/btnIntercom"
+            android:layout_width="@dimen/edittext_height"
+            android:layout_height="@dimen/edittext_height"
+            android:padding="@dimen/padding"
+            android:src="@drawable/icon_chat" />
+    </LinearLayout>
+
+        <ImageView
+            android:id="@+id/btnHome"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/edittext_height"
+            android:src="@drawable/ic_home_white"
+            android:gravity="center"
+            android:layout_marginLeft="@dimen/edittext_height2"
+            android:layout_marginTop="5dp"/>
+    </FrameLayout>
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="1">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:showDividers="middle"
+            android:divider="@drawable/transparent_10dp"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/edittext_height3"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <com.pa.common.TypefaceTextView
+                    android:id="@+id/companyName"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    style="@style/Label"
+                    android:layout_marginLeft="@dimen/margin3"
+                    android:textSize="@dimen/txt_extra_big"
+                    android:layout_weight = "4"
+                    />
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2">
+                    <RatingBar
+                        android:id="@+id/ratingBar1"
+                        style="?android:attr/ratingBarStyleSmall"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right"
+                        android:layout_marginRight="@dimen/margin3"
+                        android:max="5"
+                        android:numStars="5"
+                        android:rating="3" />
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right"
+                        android:layout_marginRight="@dimen/margin3">
+
+                            <com.pa.common.TypefaceTextView
+                                android:id="@+id/ratingPoint"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/margin2"
+                                style="@style/Label"
+                                android:textSize="@dimen/txt_small"
+                                app:typeface="OpenSans-Bold"
+                                android:layout_weight="2"
+                                android:gravity="right"/>
+
+                            <com.pa.common.TypefaceTextView
+                                android:id="@+id/totalReviewNumber"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/margin2"
+                                android:layout_marginLeft="@dimen/margin1"
+                                style="@style/Label"
+                                android:textSize="@dimen/txt_small"
+                                app:typeface="OpenSans-Bold"
+                                android:layout_weight="2"
+                                android:gravity="right"/>
+
+                        </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/gray"/>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin4"
+                android:layout_marginRight="@dimen/margin4">
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical">
+
+                        <com.pa.common.TypefaceTextView
+                            android:id="@+id/title"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:text="PROMOTION TITLE"
+                            style="@style/Label"
+                            android:textSize="@dimen/txt_extra_big"
+                            app:typeface="OpenSans-Bold"
+                            android:layout_weight = "1.5"/>
+
+                        <com.pa.common.TypefaceTextView
+                            android:id="@+id/price"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/margin2"
+                            style="@style/Label"
+                            android:textSize="@dimen/txt_xxx_big"
+                            app:typeface="OpenSans-Bold"
+                            android:layout_weight = "1"
+                            android:gravity="right"/>
+
+                </LinearLayout>
+
+
+                <com.pa.common.TypefaceTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin7"
+                    android:layout_marginBottom="@dimen/margin1"
+                    android:text="SCOPE OF WORK"
+                    android:textSize="@dimen/txt_extra_big"
+                    style="@style/Label"
+                    app:typeface="OpenSans-Bold" />
+                <com.pa.common.TypefaceTextView
+                    android:id="@+id/detail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/margin3"
+                    android:textSize="@dimen/txt_big"
+                    style="@style/Normal"
+                    app:typeface="OpenSans-Bold" />
+                <!--<LinearLayout-->
+                <!--android:id="@+id/categoryWrapper"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:orientation="vertical" >-->
+                <!--<View-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="@dimen/divider"-->
+                <!--android:layout_marginBottom="@dimen/margin2"-->
+                <!--android:layout_marginTop="@dimen/margin2"-->
+                <!--android:background="@color/pa_grey" />-->
+                <LinearLayout
+                    android:id="@+id/gallery_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginTop="@dimen/margin7">
+                </LinearLayout>
+                <!--</LinearLayout>-->
+                <com.pa.common.TypefaceTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin7"
+                    android:layout_marginBottom="@dimen/margin1"
+                    android:text="Terms and Conditions"
+                    android:textSize="@dimen/txt_extra_big"
+                    style="@style/Label"
+                    app:typeface="OpenSans-Bold" />
+                <com.pa.common.TypefaceTextView
+                    android:id="@+id/tnc"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/txt_big"
+                    android:text=""
+                    style="@style/Normal"
+                    app:typeface="OpenSans-Bold" />
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:id="@+id/layout_cancellation"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <com.pa.common.TypefaceTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/margin7"
+                        android:layout_marginBottom="@dimen/margin1"
+                        android:text="Cancellation Policy"
+                        android:textSize="@dimen/txt_extra_big"
+                        style="@style/Label"
+                        app:typeface="OpenSans-Bold"
+                        android:visibility="invisible"/>
+                    <com.pa.common.TypefaceTextView
+                        android:id="@+id/txt_cancellation_policy"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/txt_big"
+                        android:text=""
+                        style="@style/Normal"
+                        app:typeface="OpenSans-Bold"
+                        android:visibility="invisible"/>
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageView"
+        android:layout_gravity="right" />
+
+    <com.pa.common.TypefaceButton
+        android:id="@+id/btnNext"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/edittext_height"
+        android:layout_margin="@dimen/margin2"
+        android:background="@drawable/btn_effect_blue"
+        android:gravity="center"
+        android:text="NEXT"
+        android:textColor="@color/white"
+        android:textSize="@dimen/txt_big"
+        android:textStyle="normal"
+        app:typeface="OpenSans-Regular" />
+
+</LinearLayout>

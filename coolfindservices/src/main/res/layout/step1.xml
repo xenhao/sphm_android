@@ -1,0 +1,314 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="@dimen/margin4" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin4"
+        android:gravity="center"
+        android:orientation="horizontal" >
+
+        <com.pa.common.TypefaceTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Personal Information"
+            android:textColor="@color/pa_blue"
+            android:textSize="@dimen/txt_big"
+            app:typeface="OpenSans-Bold" />
+
+        <View android:visibility="invisible"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_marginLeft="@dimen/margin1"
+            android:layout_weight="1"
+            android:background="@color/pa_blue" />
+    </LinearLayout>
+
+    <com.pa.common.TypefaceEditText
+        android:id="@+id/co_first_name"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/edittext_height3"
+        android:layout_marginTop="@dimen/margin1"
+        android:background="@drawable/white_rectangle_solid"
+        android:gravity="left|center_vertical"
+        android:hint="First Name"
+        android:textColor="@color/black"
+        android:textSize="@dimen/txt_big"
+        app:typeface="OpenSans-Regular" />
+
+    <com.pa.common.TypefaceEditText
+        android:id="@+id/co_last_name"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/edittext_height3"
+        android:layout_marginTop="@dimen/margin1"
+        android:background="@drawable/white_rectangle_solid"
+        android:gravity="left|center_vertical"
+        android:hint="Last Name"
+        android:textColor="@color/black"
+        android:textSize="@dimen/txt_big"
+        app:typeface="OpenSans-Regular" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin4"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:visibility="gone" >
+
+        <com.pa.common.TypefaceTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Address"
+            android:textColor="@color/pa_blue"
+            android:textSize="@dimen/txt_big"
+            app:typeface="OpenSans-Bold" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_marginLeft="@dimen/margin1"
+            android:layout_weight="1"
+            android:background="@color/pa_blue" />
+    </LinearLayout>
+
+    <com.pa.common.TypefaceEditText
+        android:id="@+id/txtAddr"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/profilecircle"
+        android:layout_marginTop="@dimen/margin4"
+        android:background="@drawable/white_rectangle_solid"
+        android:gravity="left|top"
+        android:hint="Address 1"
+        android:textColor="@color/black"
+        android:textSize="@dimen/txt_big"
+        android:visibility="gone"
+        app:typeface="OpenSans-Regular" />
+
+    <com.pa.common.TypefaceTextView
+        android:id="@+id/co_country"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/edittext_height3"
+        android:layout_marginTop="@dimen/margin4"
+        android:background="@drawable/white_rectangle_solid"
+        android:drawableRight="@drawable/icon_blue_dropdown"
+        android:gravity="left|center_vertical"
+        android:hint="Select your country"
+        android:textColor="@color/black"
+        android:textSize="@dimen/txt_big"
+        android:visibility="gone"
+        app:typeface="OpenSans-Regular" />
+
+    <com.pa.common.TypefaceTextView
+        android:id="@+id/co_state"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/edittext_height3"
+        android:layout_marginTop="@dimen/margin4"
+        android:background="@drawable/white_rectangle_solid"
+        android:drawableRight="@drawable/icon_blue_dropdown"
+        android:gravity="left|center_vertical"
+        android:hint="Select your state"
+        android:textColor="@color/black"
+        android:textSize="@dimen/txt_big"
+        android:visibility="gone"
+        app:typeface="OpenSans-Regular" />
+
+    <com.pa.common.TypefaceTextView
+        android:id="@+id/co_city"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/edittext_height3"
+        android:layout_marginTop="@dimen/margin4"
+        android:background="@drawable/white_rectangle_solid"
+        android:drawableRight="@drawable/icon_blue_dropdown"
+        android:gravity="left|center_vertical"
+        android:hint="Select your city"
+        android:textColor="@color/black"
+        android:textSize="@dimen/txt_big"
+        android:visibility="gone"
+        app:typeface="OpenSans-Regular" />
+
+    <com.pa.common.TypefaceEditText
+        android:id="@+id/co_postal_code"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/edittext_height3"
+        android:layout_marginTop="@dimen/margin4"
+        android:background="@drawable/white_rectangle_solid"
+        android:ems="10"
+        android:gravity="left|center_vertical"
+        android:hint="Input your postal code"
+        android:inputType="textPostalAddress"
+        android:textColor="@color/black"
+        android:textSize="@dimen/txt_big"
+        android:visibility="gone"
+        app:typeface="OpenSans-Regular" >
+
+        <requestFocus />
+    </com.pa.common.TypefaceEditText>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin4"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:visibility="gone" >
+
+        <com.pa.common.TypefaceTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Contact"
+            android:textColor="@color/pa_blue"
+            android:textSize="@dimen/txt_big"
+            app:typeface="OpenSans-Bold" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_marginLeft="@dimen/margin1"
+            android:layout_weight="1"
+            android:background="@color/pa_blue" />
+    </LinearLayout>
+
+    <!--
+         <com.pa.common.TypefaceEditText
+        android:id="@+id/co_main_email"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/edittext_height3"
+        android:layout_marginTop="@dimen/margin1"
+        android:background="@drawable/gray_rectangle_solid"
+        android:gravity="left|center_vertical"
+        android:hint="Email Address"
+        android:inputType="text|textEmailAddress"
+        android:textColor="@color/black"
+        android:textSize="@dimen/txt_big"
+        app:typeface="OpenSans-Regular" />
+    -->
+
+    <LinearLayout
+        android:id="@+id/asdfasdf"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin1" >
+
+        <com.pa.common.TypefaceTextView
+            android:drawableRight="@drawable/icon_arrow_down"
+            android:drawablePadding="@dimen/margin1"
+            android:id="@+id/prefix"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/edittext_height3"
+            android:background="@drawable/white_rectangle_solid"
+            android:gravity="left|center_vertical"
+            android:text="+65"
+            android:inputType="text|phone"
+            android:layout_marginRight="@dimen/margin1"
+            android:textColor="@color/black"
+            android:textSize="@dimen/txt_big"
+            app:typeface="OpenSans-Regular" />
+        
+        <com.pa.common.TypefaceEditText
+            android:id="@+id/co_main_business_number"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/edittext_height3"
+            android:background="@drawable/white_rectangle_solid"
+            android:gravity="left|center_vertical"
+            android:hint="Phone number"
+            android:inputType="text|phone"
+            android:textColor="@color/black"
+            android:textSize="@dimen/txt_big"
+            app:typeface="OpenSans-Regular" />
+    </LinearLayout>
+
+    <!--
+         <com.pa.common.TypefaceEditText
+        android:id="@+id/co_contact_person_number"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/edittext_height3"
+        android:layout_marginTop="@dimen/margin1"
+        android:background="@drawable/gray_rectangle_solid"
+        android:gravity="left|center_vertical"
+        android:hint="Mobile Number"
+        android:inputType="text|phone"
+        android:textColor="@color/black"
+        android:textSize="@dimen/txt_big"
+        app:typeface="OpenSans-Regular" />
+    -->
+
+    <com.pa.common.TypefaceEditText
+        android:id="@+id/referral_number"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/edittext_height3"
+        android:layout_marginTop="@dimen/margin4"
+        android:background="@drawable/white_rectangle_solid"
+        android:gravity="left|center_vertical"
+        android:hint="Referral Code(optional)"
+        android:inputType="text|phone"
+        android:textColor="@color/black"
+        android:textSize="@dimen/txt_big"
+        android:visibility="gone"
+        app:typeface="OpenSans-Regular" />
+
+    <com.pa.common.TypefaceTextView android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/edittext_height3"
+        android:layout_marginTop="@dimen/margin1"
+        android:gravity="left|center_vertical"
+        android:text="please use +60xxxxxx for malaysian number and +65xxxxxx for singaporean number"
+        android:textColor="@color/red"
+        android:textSize="@dimen/txt_big"
+        app:typeface="OpenSans-Regular" />
+
+    <com.pa.common.TypefaceTextView
+        android:id="@+id/tnc"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/edittext_height3"
+        android:layout_marginTop="@dimen/margin4"
+        android:gravity="left|center_vertical"
+        android:text="@string/tnc"
+        android:textColor="@color/pa_dark_grey"
+        android:textSize="@dimen/txt_big"
+        app:typeface="OpenSans-Regular" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin2"
+        android:orientation="horizontal" >
+
+        <com.pa.common.TypefaceButton
+            android:id="@+id/btnCancel1"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/edittext_height"
+            android:layout_marginRight="@dimen/margin2"
+            android:layout_weight="1"
+            android:background="@drawable/btn_effect_gray"
+            android:gravity="center"
+            android:paddingRight="@dimen/margin3"
+            android:text="BACK"
+            android:textColor="@color/white"
+            android:textSize="@dimen/txt_big"
+            android:textStyle="normal"
+            app:typeface="OpenSans-Regular" />
+
+        <com.pa.common.TypefaceButton
+            android:id="@+id/btnNext1"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/edittext_height"
+            android:layout_weight="1"
+            android:background="@drawable/btn_effect_blue"
+            android:gravity="center"
+            android:text="NEXT"
+            android:textColor="@color/white"
+            android:textSize="@dimen/txt_big"
+            android:textStyle="normal"
+            app:typeface="OpenSans-Regular" />
+    </LinearLayout>
+
+</LinearLayout>

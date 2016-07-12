@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <com.pa.common.ImageViewFitWidth
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/margin2"
+        android:src="@drawable/post_job_2" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <com.pa.common.TypefaceTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin4"
+                android:gravity="left"
+                android:text="Job Title"
+                android:textAppearance="@style/Label"
+                android:textSize="@dimen/txt_big"
+                android:visibility="gone"
+                app:typeface="OpenSans-Bold" />
+
+            <com.pa.common.TypefaceTextView
+                android:id="@+id/txt_service_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin4"
+                android:background="@drawable/white_rectangle_solid"
+                android:gravity="left|center_vertical"
+                android:textAppearance="@style/Normal"
+                android:textSize="@dimen/txt_big"
+                android:visibility="gone"
+                app:typeface="OpenSans-Regular" />
+
+            <com.pa.common.TypefaceTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin4"
+                android:gravity="left"
+                android:text="Service Description"
+                android:textAppearance="@style/Label"
+                android:textSize="@dimen/txt_big"
+                android:visibility="gone"
+                app:typeface="OpenSans-Bold" />
+
+            <com.pa.common.TypefaceEditText
+                android:id="@+id/txt_service_description"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/edittext_height3"
+                android:layout_marginTop="@dimen/margin4"
+                android:background="@drawable/white_rectangle_solid"
+                android:gravity="left|center_vertical"
+                android:hint="Input service description"
+                android:inputType="text"
+                android:textAppearance="@style/Normal"
+                android:textSize="@dimen/txt_big"
+                android:visibility="gone"
+                app:typeface="OpenSans-Regular" />
+
+            <com.pa.common.TypefaceTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin4"
+                android:gravity="left"
+                android:text="Sub service(s) detail"
+                android:textAppearance="@style/Label"
+                android:textSize="@dimen/txt_big"
+                app:typeface="OpenSans-Bold" />
+
+            <LinearLayout
+                android:id="@+id/wrapper"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+            </LinearLayout>
+
+            <com.pa.common.TypefaceTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin4"
+                android:gravity="left"
+                android:text="TAKE A PHOTO (Optional)"
+                android:textAppearance="@style/Label"
+                android:textSize="@dimen/txt_big"
+                android:textAllCaps="false"
+                app:typeface="OpenSans-Bold" />
+
+            <com.pa.common.TypefaceTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin4"
+                android:gravity="left"
+                android:text="This will help our merchants better understand your request and provide you with a more accurate quotation"
+                android:textAppearance="@style/Normal"
+                android:textSize="@dimen/txt_big"
+                app:typeface="OpenSans-Bold" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" >
+
+                <LinearLayout
+                    android:id="@+id/wrapperPhoto"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal" >
+                </LinearLayout>
+
+                <com.pa.common.ImageViewFitHeight
+                    android:id="@+id/add"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/edittext_height3"
+                    android:layout_gravity="center"
+                    android:layout_marginRight="@dimen/margin1"
+                    android:src="@drawable/icon_add_photo" />
+            </LinearLayout>
+
+            <com.pa.common.TypefaceTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin4"
+                android:gravity="left"
+                android:text="Other Comments"
+                android:textAppearance="@style/Label"
+                android:textSize="@dimen/txt_big"
+                app:typeface="OpenSans-Bold" />
+
+            <com.pa.common.TypefaceEditText
+                android:id="@+id/txt_other_remark"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin4"
+                android:background="@drawable/white_rectangle_solid"
+                android:gravity="left|center_vertical"
+                android:hint="Other comments"
+                android:imeOptions="actionDone"
+                android:inputType="textMultiLine"
+                android:minHeight="@dimen/edittext_height3"
+                android:singleLine="false"
+                android:textAppearance="@style/Placeholder"
+                android:textColor="#ff989898"
+                android:textSize="@dimen/txt_big"
+                app:typeface="OpenSans-Regular" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin2"
+                android:orientation="horizontal"
+                android:visibility="visible" >
+
+                <com.pa.common.TypefaceButton
+                    android:id="@+id/btnCancel2"
+                    android:visibility="gone"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/edittext_height"
+                    android:layout_marginRight="@dimen/margin2"
+                    android:layout_weight="1"
+                    android:background="@drawable/btn_effect_gray"
+                    android:gravity="center"
+                    android:paddingRight="@dimen/margin3"
+                    android:text="BACK"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/txt_big"
+                    android:textStyle="normal"
+                    app:typeface="OpenSans-Regular" />
+
+                <com.pa.common.TypefaceButton
+                    android:id="@+id/btnNext2"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/edittext_height"
+                    android:layout_weight="1"
+                    android:background="@drawable/btn_effect_blue"
+                    android:gravity="center"
+                    android:text="NEXT"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/txt_big"
+                    android:textStyle="normal"
+                    app:typeface="OpenSans-Regular" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

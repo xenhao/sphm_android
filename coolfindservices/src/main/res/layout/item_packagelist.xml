@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingBottom="@dimen/margin1"
+    android:background="@color/white"
+    android:orientation="vertical">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <com.pa.common.ImageViewFitWidth
+            android:id="@+id/coverImage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/promo_placeholder"
+            android:minHeight="150dp"/>
+        <ImageView
+            android:id="@+id/img_mpg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin4"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/icon_verified"
+            android:visibility="gone"/>
+    </RelativeLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignBottom="@+id/img_mpg"
+        android:background="#686868"
+        android:padding="@dimen/margin3"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="@dimen/margin2">
+
+            <com.pa.common.TypefaceTextView
+                android:id="@+id/title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textSize="@dimen/txt_big"
+                android:textStyle="bold"
+                android:singleLine="false"
+                android:textColor="@color/white"
+                android:maxLines="2"
+                android:ellipsize="marquee"
+                android:layout_weight="6"/>
+
+            <RatingBar
+                android:id="@+id/ratingBar1"
+                style="?android:attr/ratingBarStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:max="5"
+                android:numStars="5"
+                android:rating="3" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+            <com.pa.common.TypefaceTextView
+                android:id="@+id/companyName"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textSize="@dimen/txt_medium_big"
+                android:gravity="left"
+                android:textColor="@color/white"
+                android:layout_weight="1.2" />
+            <com.pa.common.TypefaceTextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="from"
+                android:textSize="@dimen/txt_medium_big"
+                android:gravity="right"
+                android:textColor="@color/white"
+                android:layout_weight="0.5" />
+
+            <com.pa.common.TypefaceTextView
+                android:id="@+id/discountedPrice"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/margin3"
+                android:text=""
+                android:textSize="@dimen/txt_extra_big"
+                android:textStyle="bold"
+                android:textColor="@color/white"
+                android:gravity="right"
+                android:layout_weight="0.8" />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

@@ -1,0 +1,121 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/pa_grey"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/edittext_height3"
+        android:background="@color/pa_light_orange"
+        android:gravity="center"
+        android:orientation="horizontal" >
+
+        <ImageView
+            android:id="@+id/btnMenu"
+            android:layout_width="@dimen/edittext_height"
+            android:layout_height="@dimen/edittext_height"
+            android:padding="@dimen/padding"
+            android:src="@drawable/img_back" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center" >
+
+            <com.pa.common.TypefaceTextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="VOUCHER &amp; PROMOTION"
+                android:textColor="@color/white"
+                android:textSize="@dimen/txt_extra_big"
+                app:typeface="OpenSans-Bold" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginLeft="@dimen/margin4"
+        android:layout_marginRight="@dimen/margin4"
+        android:layout_weight="1"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin4"
+            android:gravity="center"
+            android:orientation="horizontal" >
+
+            <com.pa.common.TypefaceTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Promo Code"
+                android:textColor="@color/pa_blue"
+                android:textSize="@dimen/txt_extra_big"
+                app:typeface="OpenSans-Bold" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginLeft="@dimen/margin1"
+                android:layout_weight="1"
+                android:background="@color/pa_blue" />
+        </LinearLayout>
+
+        <com.pa.common.TypefaceEditText
+            android:id="@+id/txtCode"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/edittext_height3"
+            android:layout_marginTop="@dimen/margin4"
+            android:background="@drawable/white_rectangle_solid"
+            android:gravity="left|center_vertical"
+            android:hint="Type your promo code here"
+            android:textColor="@color/pa_dark_grey"
+            android:textSize="@dimen/txt_big"
+            app:typeface="OpenSans-Regular" />
+
+        <View android:layout_width="1dp" android:layout_height="0dp" android:layout_weight="1" />
+        
+        <com.pa.common.TypefaceButton
+            android:id="@+id/btn_ok"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/edittext_height"
+            android:layout_marginTop="@dimen/margin6"
+            android:background="@drawable/btn_effect_blue_light"
+            android:gravity="center"
+            android:paddingLeft="@dimen/margin3"
+            android:paddingRight="@dimen/margin3"
+            android:text="APPLY PROMO CODE"
+            android:textColor="@color/white"
+            android:textSize="@dimen/txt_medium"
+            android:textStyle="normal"
+            app:typeface="OpenSans-Regular" />
+
+        
+         <com.pa.common.TypefaceButton
+            android:layout_marginBottom="@dimen/margin4"
+            android:id="@+id/btn_skip"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/edittext_height"
+            android:layout_marginTop="@dimen/margin2"
+            android:background="@drawable/btn_effect_gray"
+            android:gravity="center"
+            android:paddingLeft="@dimen/margin3"
+            android:paddingRight="@dimen/margin3"
+            android:text="Skip"
+            android:textColor="@color/white"
+            android:textSize="@dimen/txt_medium"
+            android:textStyle="normal"
+            app:typeface="OpenSans-Regular" />
+        
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+<!--     <item android:drawable="@drawable/btn_blue_off" android:state_focused="true" android:state_pressed="false"/>
+    <item android:drawable="@drawable/btn_blue_off" android:state_focused="true" android:state_pressed="true"/>
+    <item android:drawable="@drawable/btn_blue_off" android:state_focused="false" android:state_pressed="true"/>
+    
+    <item android:drawable="@drawable/btn_blue_off"/>
+ -->
+      <item android:drawable="@color/pa_blue_btn_on" android:state_focused="true" android:state_pressed="false"/>
+    <item android:drawable="@color/pa_blue_btn_on" android:state_focused="true" android:state_pressed="true"/>
+    <item android:drawable="@color/pa_blue_btn_on" android:state_focused="false" android:state_pressed="true"/>
+    
+    <item android:drawable="@color/pa_blue_btn"/>
+ 
+ 
+</selector>

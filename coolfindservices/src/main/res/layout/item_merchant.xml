@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#e5f7fd"
+    android:orientation="horizontal"
+    android:padding="@dimen/padding2"
+    android:weightSum="10" >
+
+    <FrameLayout
+        android:id="@+id/wrapper_thumb"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="2" >
+
+        <com.pa.common.ImageViewFitWidth
+            android:id="@+id/status"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_launcher" />
+        
+        <com.pa.common.ImageViewFitWidth 
+            android:id="@+id/verified"
+            android:layout_gravity="right|bottom"
+            android:layout_width="@dimen/margin8" android:layout_height="wrap_content" 
+            android:src="@drawable/icon_verified"
+            />
+    </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/margin4"
+        android:layout_weight="7"
+        android:orientation="vertical" >
+
+        <com.pa.common.TypefaceTextView
+            android:id="@+id/txtName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Name"
+            android:textColor="@color/pa_blue"
+            android:textSize="@dimen/txt_big"
+            app:typeface="OpenSans-Bold" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/divider"
+            android:layout_marginBottom="@dimen/margin1"
+            android:layout_marginTop="@dimen/margin1"
+            android:background="@color/pa_grey" />
+
+        <RatingBar
+            android:id="@+id/ratingBar1"
+            style="?android:attr/ratingBarStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:max="5"
+            android:numStars="5"
+            android:rating="3" />
+
+        <com.pa.common.TypefaceTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin4"
+            android:text="SERVICES"
+            android:textColor="@color/black"
+            android:textSize="@dimen/txt_big"
+            app:typeface="OpenSans-Bold" />
+
+        <com.pa.common.TypefaceTextView
+            android:id="@+id/services"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textColor="@color/black"
+            android:textSize="@dimen/txt_big"
+            app:typeface="OpenSans-Regular" />
+    </LinearLayout>
+
+    <com.pa.common.ImageViewFitWidth
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginLeft="@dimen/margin4"
+        android:layout_weight="1"
+        android:src="@drawable/orange_arrow" />
+
+</LinearLayout>

@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Determine either development server "0", staging server "1" or live server "2" -->
+    <string name="server">0</string>
+</resources>

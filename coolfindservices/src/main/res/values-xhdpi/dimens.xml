@@ -1,0 +1,61 @@
+<resources>
+
+    <!-- XHDPI screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">10dp</dimen>
+    <dimen name="activity_vertical_margin">10dp</dimen>
+    <dimen name="activity_splash_margin">350dp</dimen>
+    <dimen name="txt_small">8dp</dimen>
+    <dimen name="txt_medium">10dp</dimen>
+    <dimen name="txt_big">13dp</dimen>
+    <dimen name="txt_extra_big">16dp</dimen>
+    <dimen name="txt_xx_big">18dp</dimen>
+    <dimen name="txt_xxx_big">22dp</dimen>
+    <dimen name="txt_xxxx_big">30dp</dimen>
+    
+    <dimen name="profilecircle">90dp</dimen>
+    <dimen name="profilecircle2">60dp</dimen>
+    <dimen name="padding">3dp</dimen>
+    <dimen name="padding2">6dp</dimen>
+    <dimen name="padding4">24dp</dimen>
+    <dimen name="padding5">30dp</dimen>
+    <dimen name="padding7">42dp</dimen>
+    <dimen name="margin1">3dp</dimen>
+    <dimen name="margin2">6dp</dimen>
+    <dimen name="margin3">9dp</dimen>
+    <dimen name="margin4">12dp</dimen>
+    <dimen name="margin5">15dp</dimen>
+    <dimen name="margin6">18dp</dimen>
+    <dimen name="margin7">21dp</dimen>
+    <dimen name="margin8">24dp</dimen>
+    <dimen name="margin9">27dp</dimen>
+    <dimen name="margin10">30dp</dimen>
+    <dimen name="edittext_width">240dp</dimen>
+    <dimen name="edittext_height">30dp</dimen>
+    <dimen name="edittext_height2">18dp</dimen>
+    <dimen name="edittext_height3">42dp</dimen>
+    <dimen name="edittext_height4">35dp</dimen>
+    <dimen name="nav_top_height">45dp</dimen>
+    <dimen name="nav_bottom_height">36dp</dimen>
+    <dimen name="divider">1dp</dimen>
+    <dimen name="button_height_min">-30dp</dimen>
+    <dimen name="button_height">30dp</dimen>
+    <dimen name="button_height2">36dp</dimen>
+    <dimen name="button_height3">42dp</dimen>
+    <dimen name="button_height_small_circle">18dp</dimen>
+    <dimen name="dialog_width">480dp</dimen>
+    <dimen name="dialog_height1">120dp</dimen>
+    <dimen name="dialog_height2">200dp</dimen>
+    <dimen name="dialog_height3">400dp</dimen>
+    <dimen name="dialog_width_title">320dp</dimen>
+            <dimen name="dialog_profile_height">280dp</dimen>
+    
+    <dimen name="level_w">90dp</dimen>
+    <dimen name="level_h">138dp</dimen>
+    <dimen name="bab_h">150dp</dimen>
+    <dimen name="min100">-60dp</dimen>
+    <dimen name="penjelasan_w">747dp</dimen>
+    <dimen name="penjelasan_h">386dp</dimen>
+    <dimen name="nilai_w">560dp</dimen>
+    <dimen name="margin130">104dp</dimen>
+    
+</resources>

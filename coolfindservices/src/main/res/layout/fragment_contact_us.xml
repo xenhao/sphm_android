@@ -1,0 +1,67 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/pa_grey"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/edittext_height3"
+        android:background="@color/pa_orange" >
+
+        <com.pa.common.TypefaceTextView
+            android:id="@+id/name"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="CONTACT US"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:textSize="@dimen/txt_extra_big"
+            app:typeface="OpenSans-Bold" />
+
+        <ImageView
+            android:id="@+id/btnMenu"
+            android:layout_width="@dimen/edittext_height"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/margin2"
+            android:padding="@dimen/padding"
+            android:gravity="center_vertical"
+            android:src="@drawable/btn_effect_menu" />
+    </RelativeLayout>
+
+    <com.pa.common.TypefaceTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="For assistance, please:"
+        android:textColor="@color/gray"
+        android:gravity="center"
+        android:textSize="@dimen/txt_extra_big"
+        app:typeface="OpenSans-Bold"
+        android:layout_margin="@dimen/margin8"/>
+
+    <com.pa.common.TypefaceButton
+        android:id="@+id/btnContactUs"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/edittext_height3"
+        android:background="@drawable/btn_effect_blue"
+        android:gravity="center"
+        android:paddingRight="@dimen/margin3"
+        android:text="CONTACT US"
+        android:textColor="@color/white"
+        android:textSize="@dimen/txt_big"
+        app:typeface="OpenSans-Bold"
+        android:layout_marginLeft="@dimen/margin10"
+        android:layout_marginRight="@dimen/margin10" />
+
+    <com.pa.common.TypefaceTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/text_contact_us"
+        android:gravity="center"
+        android:textColor="@color/gray"
+        android:textSize="@dimen/txt_extra_big"
+        app:typeface="OpenSans-Bold"
+        android:layout_margin="@dimen/margin8"/>
+
+</LinearLayout>

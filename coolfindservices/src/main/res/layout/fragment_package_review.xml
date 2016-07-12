@@ -1,0 +1,604 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical"
+    android:animateLayoutChanges="true">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/edittext_height3"
+        android:background="@color/pa_light_orange"
+        android:gravity="center"
+        android:orientation="horizontal">
+        <ImageView
+            android:id="@+id/btnBack"
+            android:layout_width="@dimen/edittext_height"
+            android:layout_height="@dimen/edittext_height"
+            android:padding="@dimen/padding"
+            android:src="@drawable/img_back" />
+        <com.pa.common.TypefaceTextView
+            android:id="@+id/page_title"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="ORDER SUMMARY"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:textSize="@dimen/txt_extra_big"
+            app:typeface="OpenSans-Bold" />
+        <ImageView
+            android:id="@+id/btnIntercom"
+            android:layout_width="@dimen/edittext_height"
+            android:layout_height="@dimen/edittext_height"
+            android:padding="@dimen/padding"
+            android:src="@drawable/icon_chat" />
+    </LinearLayout>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <!--<LinearLayout-->
+                <!--android:orientation="horizontal"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:padding="@dimen/margin4">-->
+                <!--<com.pa.common.TypefaceTextView-->
+                    <!--android:id="@+id/txt_merchant"-->
+                    <!--android:layout_width="0dp"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_weight="3"-->
+                    <!--android:layout_marginRight="@dimen/margin3"-->
+                    <!--app:typeface="OpenSans-Bold"-->
+                    <!--android:textColor="@color/black"-->
+                    <!--android:textStyle="bold"-->
+                    <!--android:textSize="@dimen/txt_extra_big"-->
+                    <!--android:text="Gutzai Sdn Bhd"/>-->
+                <!--<LinearLayout-->
+                    <!--android:orientation="vertical"-->
+                    <!--android:layout_width="0dp"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_weight="2"-->
+                    <!--android:gravity="right">-->
+                    <!--<RatingBar-->
+                        <!--android:id="@+id/rating_bar"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--style="?android:attr/ratingBarStyleSmall"-->
+                        <!--android:max="5"-->
+                        <!--android:numStars="5"-->
+                        <!--android:rating="3" />-->
+                    <!--<com.pa.common.TypefaceTextView-->
+                        <!--android:id="@+id/txt_rating"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_marginTop="@dimen/margin2"-->
+                        <!--android:textSize="@dimen/txt_medium"-->
+                        <!--android:textColor="@color/black"-->
+                        <!--app:typeface="OpenSans-Bold"-->
+                        <!--android:text="0.0 OF 5 (0 REVIEWS)"/>-->
+                <!--</LinearLayout>-->
+            <!--</LinearLayout>-->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/gray"/>
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/margin7"
+                android:paddingLeft="@dimen/margin7"
+                android:paddingRight="@dimen/margin7"
+                android:gravity="center_vertical">
+                <com.pa.common.TypefaceTextView
+                    android:id="@+id/txt_title"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3"
+                    android:layout_marginRight="@dimen/margin3"
+                    android:textSize="@dimen/txt_extra_big"
+                    app:typeface="OpenSans-Bold"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:text="Aircon Servicing"/>
+
+                <!--<com.pa.common.TypefaceTextView-->
+                    <!--android:id="@+id/txt_price"-->
+                    <!--android:layout_width="0dp"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_weight="3"-->
+                    <!--android:gravity="left"-->
+                    <!--style="@style/Label"-->
+                    <!--android:textColor="@color/black"-->
+                    <!--android:textStyle="bold"-->
+                    <!--android:textSize="@dimen/txt_xxx_big"-->
+                    <!--app:typeface="OpenSans-Bold"-->
+                    <!--android:text="$200.00"/>-->
+            </LinearLayout>
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin7"
+                android:layout_marginRight="@dimen/margin7">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin4"
+                    android:layout_marginRight="@dimen/margin7">
+                    <com.pa.common.TypefaceTextView
+                        android:id="@+id/txt_price"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="3"
+                        android:gravity="left"
+                        style="@style/Label"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"
+                        android:textSize="@dimen/txt_xxx_big"
+                        app:typeface="OpenSans-Bold"
+                        android:text="$200.00"/>
+                </LinearLayout>
+                <!--<LinearLayout-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_marginTop="@dimen/margin4"-->
+                    <!--android:layout_marginRight="@dimen/margin7"-->
+                    <!--android:orientation="vertical"-->
+                    <!--android:animateLayoutChanges="true">-->
+                    <!--<com.pa.common.TypefaceEditText-->
+                        <!--android:id="@+id/use_promo_code"-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:layout_weight="3"-->
+                        <!--android:gravity="left|center_vertical"-->
+                        <!--android:background="@drawable/white_rectangle_solid"-->
+                        <!--android:textColor="@color/black"-->
+                        <!--android:textSize="@dimen/txt_xxx_big"-->
+                        <!--app:typeface="OpenSans-Regular"-->
+                        <!--android:hint="Use Promo Code"-->
+                        <!--android:singleLine="true" />-->
+                    <!--<RelativeLayout-->
+                        <!--android:id="@+id/promo_layout"-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!-->-->
+                    <!--<com.pa.common.TypefaceButton-->
+                        <!--android:id="@+id/btnApplyPromoCode"-->
+                        <!--android:layout_width="@dimen/edittext_height3"-->
+                        <!--android:layout_height="@dimen/edittext_height"-->
+                        <!--android:layout_margin="@dimen/margin2"-->
+                        <!--android:background="@drawable/btn_effect_gray"-->
+                        <!--android:paddingBottom="5dp"-->
+                        <!--android:gravity="center"-->
+                        <!--android:layout_alignParentRight="true"-->
+                        <!--android:text="Apply"-->
+                        <!--android:textColor="@color/white"-->
+                        <!--android:textSize="@dimen/txt_big"-->
+                        <!--android:textStyle="normal"-->
+                        <!--app:typeface="OpenSans-Regular" /></RelativeLayout>-->
+                    <!--<com.pa.common.TypefaceEditText-->
+                        <!--android:id="@+id/use_credits"-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:layout_weight="3"-->
+                        <!--android:gravity="left|center_vertical"-->
+                        <!--android:background="@drawable/white_rectangle_solid"-->
+                        <!--android:textColor="@color/black"-->
+                        <!--android:textSize="@dimen/txt_xxx_big"-->
+                        <!--app:typeface="OpenSans-Regular"-->
+                        <!--android:hint="Use Credits"-->
+                        <!--android:singleLine="true" />-->
+                    <!--<RelativeLayout-->
+                        <!--android:id="@+id/credits_layout"-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:visibility="gone">-->
+                    <!--<com.pa.common.TypefaceButton-->
+                        <!--android:id="@+id/btnApplyCredits"-->
+                        <!--android:layout_width="@dimen/edittext_height3"-->
+                        <!--android:layout_height="@dimen/edittext_height"-->
+                        <!--android:layout_margin="@dimen/margin2"-->
+                        <!--android:background="@drawable/btn_effect_gray"-->
+                        <!--android:gravity="center"-->
+                        <!--android:layout_alignParentRight="true"-->
+                        <!--android:text="Apply"-->
+                        <!--android:textColor="@color/white"-->
+                        <!--android:textSize="@dimen/txt_big"-->
+                        <!--android:textStyle="normal"-->
+                        <!--app:typeface="OpenSans-Regular" /></RelativeLayout>-->
+                <!--</LinearLayout>-->
+
+                <LinearLayout
+                    android:id="@+id/accordion"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/margin4"
+                    android:background="@drawable/white_rectangle_solid"
+                    android:divider="@drawable/divider_grey"
+                    android:showDividers="middle"
+                    android:orientation="vertical"
+                    android:animateLayoutChanges="true">
+
+                    <LinearLayout
+                        android:id="@+id/rowPromoCode"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:id="@+id/headerPromoCode"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:padding="@dimen/margin2"
+                            android:orientation="horizontal">
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/black_tick_icon"
+                                android:visibility="invisible"/>
+
+                            <com.pa.common.TypefaceTextView
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/edittext_height2"
+                                android:layout_marginLeft="@dimen/margin2"
+                                android:text="Use Promo Code"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/txt_big"
+                                app:typeface="OpenSans-Regular" />
+
+                        </LinearLayout>
+
+                        <RelativeLayout
+                            android:id="@+id/containerPromoCode"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:visibility="gone">
+
+                            <include layout="@layout/horizontal_line_grey" />
+
+                            <TextView
+                                android:id="@+id/txtPromoCode"
+                                android:visibility="invisible"
+                                android:padding="@dimen/margin2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true"
+                                android:textAppearance="@style/Bold"
+                                android:textSize="@dimen/txt_extra_big"
+                                android:text="Promotion Code Accepted"/>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:padding="@dimen/margin2"
+                                android:orientation="horizontal">
+
+                                <EditText
+                                    android:id="@+id/inputPromoCode"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginRight="8dp"
+                                    android:hint="Enter Promo Code (if any)"
+                                    android:layout_weight="4"/>
+
+                                <com.pa.common.TypefaceButton
+                                    android:id="@+id/btnPromoCode"
+                                    android:layout_width="50dp"
+                                    android:layout_height="@dimen/edittext_height"
+                                    android:background="@drawable/btn_effect_gray"
+                                    android:gravity="center"
+                                    android:text="APPLY"
+                                    android:textColor="@color/white"
+                                    android:textSize="@dimen/txt_big"
+                                    android:textStyle="normal"
+                                    app:typeface="OpenSans-Regular" />
+                            </LinearLayout>
+                        </RelativeLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:id="@+id/headerFreeCredits"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:padding="@dimen/margin2"
+                            android:orientation="horizontal">
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/black_tick_icon"
+                                android:visibility="invisible"/>
+
+                            <com.pa.common.TypefaceTextView
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/edittext_height2"
+                                android:layout_marginLeft="@dimen/margin2"
+                                android:text="Use Credits"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/txt_big"
+                                app:typeface="OpenSans-Regular" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/containerFreeCredits"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:visibility="gone">
+
+                            <include layout="@layout/horizontal_line_grey" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:padding="@dimen/margin2"
+                                android:orientation="horizontal">
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:gravity="center"
+                                    android:orientation="vertical">
+
+                                    <TextView
+                                        android:id="@+id/txtCredits"
+                                        android:visibility="gone"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:textAppearance="@style/Bold"
+                                        android:textSize="@dimen/txt_extra_big"
+                                        android:text="Credits Accepted"/>
+
+                                    <com.pa.common.TypefaceTextView
+                                        android:id="@+id/txtAvailableCredits"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Available Credits:"
+                                        android:textAppearance="@style/Bold"
+                                        android:textSize="@dimen/txt_extra_big"
+                                        app:typeface="OpenSans-Bold" />
+
+                                    <com.pa.common.TypefaceTextView
+                                        android:id="@+id/txtBalanceCredits"
+                                        android:visibility="gone"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Balance Credits:"
+                                        android:textAppearance="@style/Bold"
+                                        android:textSize="@dimen/txt_extra_big"
+                                        app:typeface="OpenSans-Bold" />
+
+                                    <com.pa.common.TypefaceTextView
+                                        android:id="@+id/freeCredits"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:textAppearance="@style/Bold"
+                                        android:textSize="@dimen/txt_extra_big"
+                                        app:typeface="OpenSans-Bold" />
+
+                                </LinearLayout>
+
+                                <com.pa.common.TypefaceButton
+                                    android:id="@+id/btnCredits"
+                                    android:layout_width="50dp"
+                                    android:layout_height="@dimen/edittext_height"
+                                    android:background="@drawable/btn_effect_gray"
+                                    android:gravity="center"
+                                    android:text="APPLY"
+                                    android:textColor="@color/white"
+                                    android:textSize="@dimen/txt_big"
+                                    android:textStyle="normal"
+                                    app:typeface="OpenSans-Regular" />
+
+                            </LinearLayout>
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/layout_date"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:animateLayoutChanges="true">
+
+                    <com.pa.common.TypefaceTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/margin7"
+                        android:textSize="@dimen/txt_extra_big"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"
+                        app:typeface="OpenSans-Bold"
+                        android:text="Appointment Date" />
+                    <LinearLayout
+                        android:layout_marginTop="@dimen/margin3"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical">
+                        <ImageView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/date"/>
+                        <com.pa.common.TypefaceTextView
+                            android:id="@+id/txt_date"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="3"
+                            android:textSize="@dimen/txt_big"
+                            android:textColor="@color/black"
+                            app:typeface="OpenSans-Bold"
+                            android:text="17 September 2015"/>
+                        <ImageView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/time"/>
+                        <com.pa.common.TypefaceTextView
+                            android:id="@+id/txt_time"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2"
+                            android:textSize="@dimen/txt_big"
+                            android:textColor="@color/black"
+                            app:typeface="OpenSans-Bold"
+                            android:text="09:00" />
+                    </LinearLayout>
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/layout_address"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:animateLayoutChanges="true">
+                    <com.pa.common.TypefaceTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/margin7"
+                        android:textSize="@dimen/txt_extra_big"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"
+                        app:typeface="OpenSans-Bold"
+                        android:text="Appointment Address" />
+                    <com.pa.common.TypefaceTextView
+                        android:id="@+id/txt_address"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/margin1"
+                        android:textSize="@dimen/txt_big"
+                        app:typeface="OpenSans-Bold"
+                        android:text="Appointment Address" />
+                    <com.pa.common.TypefaceTextView
+                        android:id="@+id/txt_country"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/txt_big"
+                        app:typeface="OpenSans-Bold"
+                        android:text="Appointment Address" />
+                    <com.pa.common.TypefaceTextView
+                        android:id="@+id/txt_state"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/txt_big"
+                        app:typeface="OpenSans-Bold"
+                        android:text="Appointment Address" />
+                    <com.pa.common.TypefaceTextView
+                        android:id="@+id/txt_city"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/txt_big"
+                        app:typeface="OpenSans-Bold"
+                        android:text="Appointment Address" />
+                    <com.pa.common.TypefaceTextView
+                        android:id="@+id/txt_postal_code"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/txt_big"
+                        app:typeface="OpenSans-Bold"
+                        android:text="Appointment Address" />
+                </LinearLayout>
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:animateLayoutChanges="true">
+                    <com.pa.common.TypefaceTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/margin7"
+                        android:textSize="@dimen/txt_extra_big"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"
+                        app:typeface="OpenSans-Bold"
+                        android:text="Scope of work" />
+                    <com.pa.common.TypefaceTextView
+                        android:id="@+id/txt_detail"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/margin1"
+                        android:textSize="@dimen/txt_big"
+                        app:typeface="OpenSans-Bold"
+                        android:text="Appointment Address" />
+                </LinearLayout>
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:animateLayoutChanges="true">
+                    <com.pa.common.TypefaceTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/margin7"
+                        android:textSize="@dimen/txt_extra_big"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"
+                        app:typeface="OpenSans-Bold"
+                        android:text="Terms and Conditions" />
+                    <com.pa.common.TypefaceTextView
+                        android:id="@+id/txt_tnc"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/margin1"
+                        android:textSize="@dimen/txt_big"
+                        app:typeface="OpenSans-Bold"
+                        android:text="Appointment Address" />
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/layout_cancellation"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <com.pa.common.TypefaceTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/margin7"
+                        android:textSize="@dimen/txt_extra_big"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"
+                        app:typeface="OpenSans-Bold"
+                        android:text="Cancellation Policy" />
+                    <com.pa.common.TypefaceTextView
+                        android:id="@+id/txt_cancellation_policy"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/margin1"
+                        android:textSize="@dimen/txt_big"
+                        app:typeface="OpenSans-Bold"
+                        android:text="Appointment Address" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+    <com.pa.common.TypefaceButton
+        android:id="@+id/btnNext"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/edittext_height"
+        android:layout_margin="@dimen/margin2"
+        android:background="@drawable/btn_effect_blue"
+        android:gravity="center"
+        android:text="BUY NOW"
+        android:textColor="@color/white"
+        android:textSize="@dimen/txt_big"
+        android:textStyle="normal"
+        app:typeface="OpenSans-Regular" />
+</LinearLayout>

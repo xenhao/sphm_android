@@ -1,0 +1,866 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical"
+    tools:ignore="DuplicateIds">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/edittext_height3"
+        android:background="@color/pa_orange"
+        android:gravity="center"
+        android:orientation="horizontal" >
+
+        <ImageView
+            android:id="@+id/btnBack"
+            android:layout_width="@dimen/edittext_height"
+            android:layout_height="@dimen/edittext_height"
+            android:layout_marginLeft="@dimen/margin2"
+            android:padding="@dimen/padding"
+            android:src="@drawable/img_back" />
+
+        <com.pa.common.TypefaceTextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="JOB REQUEST DETAIL"
+            android:textColor="@color/white"
+            android:textSize="@dimen/txt_extra_big"
+            app:typeface="OpenSans-Bold" />
+
+        <com.pa.common.ImageViewFitHeight
+            android:id="@+id/btnHome"
+            android:layout_gravity="center"
+            android:layout_width="36dp" android:layout_height="36dp"
+            android:src="@drawable/ic_home_white"
+            />
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="@dimen/margin2" >
+
+                <com.pa.common.ImageViewFitWidth
+                    android:id="@+id/img"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:src="@drawable/ic_launcher" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin2"
+                    android:layout_marginRight="@dimen/margin2"
+                    android:layout_weight="4"
+                    android:orientation="vertical" >
+
+                    <com.pa.common.TypefaceTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Job Title"
+    android:textAppearance="@style/Label"
+                        android:textSize="@dimen/txt_big"
+                        app:typeface="OpenSans-Bold" />
+
+                    <com.pa.common.TypefaceTextView
+                        android:id="@+id/txtDescription"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text=" "
+    android:textAppearance="@style/Normal"
+                        android:textSize="@dimen/txt_big"
+                        app:typeface="OpenSans-Bold" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal" >
+
+                        <com.pa.common.TypefaceTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Bid Status:"
+        android:textAppearance="@style/Label"
+                            android:textSize="@dimen/txt_big"
+                            app:typeface="OpenSans-Bold" />
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/margin2"
+                            android:layout_weight="1"
+                            android:orientation="vertical" >
+
+                            <com.pa.common.TypefaceTextView
+                                android:id="@+id/txtBidStatus"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@color/pa_blue"
+                                android:gravity="center"
+                                android:padding="@dimen/margin2"
+                                android:text="OPEN"
+                                android:textAllCaps="true"
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/txt_big"
+                                app:typeface="OpenSans-Bold" />
+
+                            <com.pa.common.TypefaceTextView
+                                android:id="@+id/txtCloseTime"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@color/pa_grey"
+                                android:gravity="center"
+                                android:padding="@dimen/margin2"
+                                android:text="close in 2 days"
+                                android:textColor="@color/pa_dark_grey"
+                                android:textSize="@dimen/txt_small"
+                                app:typeface="OpenSans-Bold" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="vertical"
+                android:paddingLeft="@dimen/margin4"
+                android:paddingRight="@dimen/margin4" >
+
+                <com.pa.common.TypefaceTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin4"
+                    android:text="Service Request ID:"
+android:textAppearance="@style/Label"
+                    android:textSize="@dimen/txt_big"
+                    app:typeface="OpenSans-Bold" />
+
+                <com.pa.common.TypefaceTextView
+                    android:id="@+id/txtSerial"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="SR-"
+android:textAppearance="@style/Normal"
+                    android:textSize="@dimen/txt_big"
+                    app:typeface="OpenSans-Regular" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="vertical"
+                android:paddingLeft="@dimen/margin4"
+                android:paddingRight="@dimen/margin4"
+                android:visibility="gone" >
+
+                <com.pa.common.TypefaceTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin4"
+                    android:text="Service Requested :"
+android:textAppearance="@style/Label"
+                    android:textSize="@dimen/txt_big"
+                    app:typeface="OpenSans-Bold" />
+
+                <com.pa.common.TypefaceTextView
+                    android:id="@+id/txtSerial"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text=" "
+android:textAppearance="@style/Normal"
+                    android:textSize="@dimen/txt_big"
+                    app:typeface="OpenSans-Regular" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:padding="0dp"
+                android:id="@+id/wrapper_merchant_offer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin4"
+                android:background="@drawable/grey_rectangle_solid"
+                android:orientation="vertical"
+                android:visibility="gone" >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:orientation="horizontal"
+                    android:background="@color/merchant_offer_blue">
+
+                    <com.pa.common.TypefaceTextView
+                        android:layout_marginTop="@dimen/margin4"
+                        android:layout_marginLeft="@dimen/margin4"
+                        android:layout_marginRight="@dimen/margin4"
+                        android:layout_marginBottom="@dimen/margin4"
+
+                        android:id="@+id/catParent"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/edittext_height2"
+                        android:gravity="left|center_vertical"
+                        android:text="SELECT AND VIEW MERCHANT OFFER"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/txt_big"
+                        app:typeface="OpenSans-Bold"
+                        android:layout_weight="1"/>
+
+                    <LinearLayout
+                        android:id="@+id/btnSortMerchantList"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:background="@color/merchant_offer_orange"
+                        android:padding="@dimen/margin1">
+
+                        <com.pa.common.TypefaceTextView
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/edittext_height2"
+                            android:gravity="center"
+                            android:text="sort by"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/txt_small"
+                            app:typeface="OpenSans-Bold"
+                            android:layout_weight="1"/>
+
+                        <ImageButton
+                            android:layout_width="31dp"
+                            android:layout_height="21.5dp"
+                            android:background="@drawable/menuicon"
+                            android:layout_weight="1"
+                            android:duplicateParentState="true"
+                            android:clickable="false"
+                            android:focusable="false"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/categoryWrapper"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical" >
+
+                    <View
+                        android:visibility="gone"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/divider"
+                        android:layout_marginBottom="@dimen/margin2"
+                        android:layout_marginTop="@dimen/margin2"
+                        android:background="@color/pa_grey" />
+
+                    <LinearLayout
+                        android:id="@+id/contentMerchantOffer"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical" >
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/merchantListFooter"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:orientation="horizontal"
+                    android:visibility="gone"
+                    android:background="@color/merchant_offer_blue"
+                    android:padding="0dp">
+
+                    <RelativeLayout
+                        android:id="@+id/pagination_prev_btn"
+                        android:layout_width="32dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:layout_marginLeft="8dp">
+
+                        <ImageButton
+                            android:layout_width="@dimen/merchant_list_footer_arrow"
+                            android:layout_height="@dimen/merchant_list_footer_arrow"
+                            android:background="@drawable/arrow_prev"
+                            android:duplicateParentState="true"
+                            android:clickable="false"
+                            android:focusable="false"/>
+
+
+                    </RelativeLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="50"
+                        android:orientation="vertical"
+                        android:padding="@dimen/margin2">
+
+                        <LinearLayout
+                            android:id="@+id/pagination_dots_container"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="center"
+                            android:layout_weight="1">
+
+                        </LinearLayout>
+
+                        <com.pa.common.TypefaceTextView
+                            android:id="@+id/pagination_text"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="30 merchant offers"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/txt_medium"
+                            app:typeface="OpenSans-Bold"
+                            android:layout_weight="1"/>
+
+                    </LinearLayout>
+
+
+                    <RelativeLayout
+                        android:id="@+id/pagination_next_btn"
+                        android:layout_width="32dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center">
+
+                        <ImageButton
+                            android:layout_width="@dimen/merchant_list_footer_arrow"
+                            android:layout_height="@dimen/merchant_list_footer_arrow"
+                            android:background="@drawable/arrow"
+                            android:duplicateParentState="true"
+                            android:clickable="false"
+                            android:focusable="false"/>
+
+                    </RelativeLayout>
+
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/wrapper_bid_response"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin4"
+                android:background="@drawable/white_rectangle_solid"
+                android:orientation="vertical"
+                android:padding="@dimen/margin4" >
+
+                <!--
+                     <com.pa.common.TypefaceTextView
+                    android:id="@+id/catParent"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/edittext_height2"
+                    android:drawableRight="@drawable/icon_arrow_up"
+                    android:gravity="left|center_vertical"
+                    android:text="BID RESPONSE"
+android:textAppearance="@style/Label"
+                    android:textSize="@dimen/txt_big"
+                    app:typeface="OpenSans-Bold" />
+                -->
+
+                <LinearLayout
+                    android:id="@+id/catParent"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/edittext_height2"
+                    android:orientation="horizontal" >
+
+                    <com.pa.common.TypefaceTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/edittext_height2"
+                        android:gravity="left|center_vertical"
+                        android:text="BID RESPONSE"
+    android:textAppearance="@style/Label"
+                        android:textSize="@dimen/txt_big"
+                        app:typeface="OpenSans-Bold" />
+
+
+                                <LinearLayout
+                                    android:clickable="true"
+                                    android:id="@+id/wrapper_refresh"
+                                    android:layout_width="wrap_content"
+                                    android:background="@drawable/btn_effect_transparant"
+                                    android:layout_height="match_parent">
+
+                    <com.pa.common.ImageViewFitHeight
+                        android:id="@+id/refresh"
+                        android:layout_marginLeft="@dimen/margin2"
+                        android:layout_marginRight="@dimen/margin2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/ic_menu_refresh" />
+                                                                </LinearLayout>
+
+
+                    <View android:layout_width="0dp" android:layout_weight="1" android:layout_height="1dp"/>
+
+                    <com.pa.common.ImageViewFitHeight
+                        android:id="@+id/arrow"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="@dimen/margin1"
+                        android:layout_marginTop="@dimen/divider"
+                        android:src="@drawable/icon_arrow_up" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/categoryWrapper"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical" >
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/divider"
+                        android:layout_marginBottom="@dimen/margin2"
+                        android:layout_marginTop="@dimen/margin2"
+                        android:background="@color/pa_grey" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal" >
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="vertical" >
+
+                            <com.pa.common.TypefaceTextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="left|center_vertical"
+                                android:text="Bid(s) received"
+                                android:textColor="@color/pa_dark_grey"
+                                android:textSize="@dimen/txt_medium"
+                                app:typeface="OpenSans-Bold" />
+
+                            <com.pa.common.TextViewSquare
+                                android:id="@+id/txtTotalBid"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@color/pa_orange"
+                                android:gravity="center"
+                                android:text=""
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/txt_extra_big"
+                                app:typeface="OpenSans-Bold" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/margin4"
+                            android:layout_weight="3"
+                            android:orientation="vertical" >
+
+                            <com.pa.common.TypefaceTextView
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/edittext_height2"
+                                android:gravity="left|center_vertical"
+                                android:text="Highest Bid"
+                                android:textColor="@color/pa_dark_grey"
+                                android:textSize="@dimen/txt_medium"
+                                app:typeface="OpenSans-Bold" />
+
+                            <com.pa.common.TypefaceTextView
+                                android:id="@+id/txtBidHighest"
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/edittext_height"
+                                android:gravity="left|center_vertical"
+                                android:text=""
+            android:textAppearance="@style/Label"
+                                android:textSize="@dimen/txt_xx_big"
+                                app:typeface="OpenSans-Bold" />
+
+                            <!--<View-->
+                                <!--android:layout_width="match_parent"-->
+                                <!--android:layout_height="@dimen/divider"-->
+                                <!--android:layout_marginBottom="@dimen/margin1"-->
+                                <!--android:layout_marginTop="@dimen/margin1"-->
+                                <!--android:background="@color/pa_grey" />-->
+
+                            <com.pa.common.TypefaceTextView
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/edittext_height2"
+                                android:gravity="left|center_vertical"
+                                android:text="Lowest Bid"
+                                android:textColor="@color/pa_dark_grey"
+                                android:textSize="@dimen/txt_medium"
+                                app:typeface="OpenSans-Bold" />
+
+                            <com.pa.common.TypefaceTextView
+                                android:id="@+id/txtBidLowest"
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/edittext_height"
+                                android:gravity="left|center_vertical"
+                                android:text=""
+            android:textAppearance="@style/Label"
+                                android:textSize="@dimen/txt_xx_big"
+                                app:typeface="OpenSans-Bold" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/wrapper_service_delivery_detail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin4"
+                android:background="@drawable/white_rectangle_solid"
+                android:orientation="vertical"
+                android:padding="@dimen/margin4" >
+
+                <com.pa.common.TypefaceTextView
+                    android:id="@+id/catParent"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/edittext_height2"
+                    android:drawableRight="@drawable/icon_arrow_up"
+                    android:gravity="left|center_vertical"
+                    android:text="SERVICE DELIVERY DETAILS"
+android:textAppearance="@style/Label"
+                    android:textSize="@dimen/txt_big"
+                    app:typeface="OpenSans-Bold" />
+
+                <LinearLayout
+                    android:id="@+id/categoryWrapper"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical" >
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/divider"
+                        android:layout_marginBottom="@dimen/margin2"
+                        android:layout_marginTop="@dimen/margin2"
+                        android:background="@color/pa_grey" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical" >
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/white"
+                            android:orientation="vertical"
+                            android:paddingLeft="@dimen/margin4"
+                            android:paddingRight="@dimen/margin4" >
+
+                            <com.pa.common.TypefaceTextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/margin4"
+                                android:text="1st Preferred Date &amp; Time"
+            android:textAppearance="@style/Label"
+                                android:textSize="@dimen/txt_big"
+                                app:typeface="OpenSans-Bold" />
+
+                            <com.pa.common.TypefaceTextView
+                                android:id="@+id/txtFirstDate"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+android:textAppearance="@style/Normal"
+                                android:textSize="@dimen/txt_big"
+                                app:typeface="OpenSans-Regular" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/white"
+                            android:orientation="vertical"
+                            android:paddingLeft="@dimen/margin4"
+                            android:paddingRight="@dimen/margin4" >
+
+                            <com.pa.common.TypefaceTextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/margin4"
+                                android:text="2nd Preferred Date &amp; Time"
+            android:textAppearance="@style/Label"
+                                android:textSize="@dimen/txt_big"
+                                app:typeface="OpenSans-Bold" />
+
+                            <com.pa.common.TypefaceTextView
+                                android:id="@+id/txtSecondDate"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+            android:textAppearance="@style/Normal"
+                                android:textSize="@dimen/txt_big"
+                                app:typeface="OpenSans-Regular" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:visibility="gone"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/white"
+                            android:orientation="vertical"
+                            android:paddingLeft="@dimen/margin4"
+                            android:paddingRight="@dimen/margin4" >
+
+                            <com.pa.common.TypefaceTextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/margin4"
+                                android:text="Estimated Budget"
+            android:textAppearance="@style/Label"
+                                android:textSize="@dimen/txt_big"
+                                app:typeface="OpenSans-Bold" />
+
+                            <com.pa.common.TypefaceTextView
+                                android:id="@+id/txt_budget"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+            android:textAppearance="@style/Normal"
+                                android:textSize="@dimen/txt_big"
+                                app:typeface="OpenSans-Regular" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/white"
+                            android:orientation="vertical"
+                            android:paddingLeft="@dimen/margin4"
+                            android:paddingRight="@dimen/margin4" >
+
+                            <com.pa.common.TypefaceTextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/margin4"
+                                android:text="Service Delivery Address"
+            android:textAppearance="@style/Label"
+                                android:textSize="@dimen/txt_big"
+                                app:typeface="OpenSans-Bold" />
+
+                            <com.pa.common.TypefaceTextView
+                                android:id="@+id/txtAddress"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+            android:textAppearance="@style/Normal"
+                                android:textSize="@dimen/txt_big"
+                                app:typeface="OpenSans-Regular" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/wrapper_service_detail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin4"
+                android:background="@drawable/white_rectangle_solid"
+                android:orientation="vertical"
+                android:padding="@dimen/margin4" >
+
+                <com.pa.common.TypefaceTextView
+                    android:id="@+id/catParent"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/edittext_height2"
+                    android:drawableRight="@drawable/icon_arrow_up"
+                    android:gravity="left|center_vertical"
+                    android:text="SERVICE DETAILS"
+android:textAppearance="@style/Label"
+                    android:textSize="@dimen/txt_big"
+                    app:typeface="OpenSans-Bold" />
+
+                <LinearLayout
+                    android:id="@+id/categoryWrapper"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical" >
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/divider"
+                        android:layout_marginBottom="@dimen/margin2"
+                        android:layout_marginTop="@dimen/margin2"
+                        android:background="@color/pa_grey" />
+
+                    <LinearLayout
+                        android:id="@+id/service_detail_content"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical" >
+                    </LinearLayout>
+
+                    <include layout="@layout/field_other_comments" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/wrapper_gallery"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin4"
+                android:background="@drawable/white_rectangle_solid"
+                android:orientation="vertical"
+                android:padding="@dimen/margin4" >
+
+                <com.pa.common.TypefaceTextView
+                    android:id="@+id/galleryParent"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/edittext_height2"
+                    android:drawableRight="@drawable/icon_arrow_up"
+                    android:gravity="left|center_vertical"
+                    android:text="Images"
+                    android:textAppearance="@style/Label"
+                    android:textSize="@dimen/txt_big"
+                    app:typeface="OpenSans-Bold" />
+
+                <LinearLayout
+                    android:id="@+id/categoryWrapper"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical" >
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/divider"
+                        android:layout_marginBottom="@dimen/margin2"
+                        android:layout_marginTop="@dimen/margin2"
+                        android:background="@color/pa_grey" />
+
+                    <LinearLayout
+                        android:id="@+id/gallery_content"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/profilecircle2"
+                        android:orientation="horizontal" >
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin4"
+                android:background="@drawable/white_rectangle_solid"
+                android:orientation="vertical"
+                android:padding="@dimen/margin4" >
+
+                <com.pa.common.TypefaceTextView
+                    android:id="@+id/commentParent"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/edittext_height2"
+                    android:drawableRight="@drawable/icon_arrow_up"
+                    android:gravity="left|center_vertical"
+                    android:text="Public Comments"
+                    android:textAppearance="@style/Label"
+                    android:textSize="@dimen/txt_big"
+                    app:typeface="OpenSans-Bold" />
+
+                <LinearLayout
+                    android:id="@+id/categoryWrapper"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical" >
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/divider"
+                        android:layout_marginBottom="@dimen/margin2"
+                        android:layout_marginTop="@dimen/margin2"
+                        android:background="@color/pa_grey" />
+
+                    <com.pa.common.TypefaceTextView
+                        android:id="@+id/view_more_comments"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/edittext_height2"
+                        android:gravity="left|center_vertical"
+                        android:text="View 3 earlier comments"
+                        android:layout_marginTop="@dimen/margin2"
+                        android:textSize="@dimen/txt_big"
+                        android:textColor="@color/pa_blue"
+                        android:visibility="gone"
+                        app:typeface="OpenSans-Regular" />
+
+                    <LinearLayout
+                        android:id="@+id/wrapper_comment"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical" >
+
+                    </LinearLayout>
+
+                    <com.pa.common.TypefaceTextView
+                        android:id="@+id/post_new_comment"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/edittext_height2"
+                        android:gravity="left|center_vertical"
+                        android:text="@string/post_new_comment"
+                        android:textSize="@dimen/txt_big"
+                        android:layout_marginTop="@dimen/margin4"
+                        android:textColor="@color/pa_blue"
+                        app:typeface="OpenSans-Regular" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+    <LinearLayout
+        android:id="@+id/wrapperAction"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin4"
+        android:orientation="horizontal"
+        android:visibility="visible" >
+
+        <com.pa.common.TypefaceButton
+            android:id="@+id/btnNext2"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/edittext_height"
+            android:layout_weight="1"
+            android:background="@drawable/btn_effect_gray"
+            android:layout_marginRight="@dimen/margin2"
+            android:gravity="center"
+            android:text="CANCEL REQUEST"
+            android:textColor="@color/white"
+            android:textSize="@dimen/txt_big"
+            android:textStyle="normal"
+            app:typeface="OpenSans-Regular" />
+
+        <com.pa.common.TypefaceButton
+            android:id="@+id/btnCancel2"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/edittext_height"
+            android:layout_weight="1"
+            android:background="@drawable/btn_effect_blue"
+            android:gravity="center"
+            android:paddingRight="@dimen/margin3"
+            android:text="CLOSE BID"
+            android:textColor="@color/white"
+            android:textSize="@dimen/txt_big"
+            android:textStyle="normal"
+            app:typeface="OpenSans-Regular" />
+    </LinearLayout>
+
+</LinearLayout>

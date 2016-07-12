@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/edittext_height3"
+        android:background="@color/pa_orange"
+        android:gravity="center"
+        android:orientation="horizontal" >
+
+        <ImageView
+            android:id="@+id/btnBack"
+            android:layout_width="@dimen/edittext_height"
+            android:layout_height="@dimen/edittext_height"
+            android:layout_marginLeft="@dimen/margin2"
+            android:padding="@dimen/padding"
+            android:src="@drawable/img_back" />
+
+        <com.pa.common.TypefaceTextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="JOB REQUEST SENT"
+            android:textColor="@color/white"
+            android:textSize="@dimen/txt_extra_big"
+            app:typeface="OpenSans-Bold" />
+    </LinearLayout>
+    
+    <ScrollView
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="vertical"
+                android:padding="@dimen/margin4" >
+
+                <com.pa.common.TypefaceTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/icon_success"
+                    android:drawablePadding="@dimen/margin3"
+                    android:gravity="center"
+                    android:text="Success"
+                    android:textColor="@color/pa_blue"
+                    android:textSize="@dimen/txt_xx_big"
+                    app:typeface="OpenSans-Bold" />
+
+                <com.pa.common.TypefaceTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin1"
+                    android:drawablePadding="@dimen/margin3"
+                    android:gravity="left"
+                    android:text="Your job request has been successfully sent to our merchants. Please check your Job Requests to view bid status."
+                    android:textColor="@color/pa_dark_grey"
+                    android:textSize="@dimen/txt_big"
+                    app:typeface="OpenSans-Regular" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin8"
+                    android:gravity="center"
+                    android:orientation="horizontal" >
+
+                    <com.pa.common.TypefaceTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="What happens next?"
+                        android:textColor="@color/pa_blue"
+                        android:textSize="@dimen/txt_big"
+                        app:typeface="OpenSans-Bold" />
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"
+                        android:layout_marginLeft="@dimen/margin1"
+                        android:layout_weight="1"
+                        android:background="@color/pa_blue" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/merchant_list_row_odd"
+                android:orientation="horizontal"
+                android:padding="@dimen/margin4" >
+
+                <com.pa.common.TextViewSquare
+                    android:layout_width="@dimen/button_height"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/circle_dark_gray"
+                    android:gravity="center"
+                    android:text="1"
+                    android:textColor="@color/pa_blue"
+                    android:textSize="@dimen/txt_big"
+                    app:typeface="OpenSans-Bold" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin3"
+                    android:layout_weight="1"
+                    android:orientation="vertical" >
+
+                    <com.pa.common.TypefaceTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="left"
+                        android:text="While your bid is open"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/txt_big"
+                        app:typeface="OpenSans-Bold" />
+
+                    <com.pa.common.TypefaceTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="left"
+                        android:text="You can view or manage your job request"
+                        android:textColor="@color/pa_dark_grey"
+                        android:textSize="@dimen/txt_big"
+                        app:typeface="OpenSans-Regular" />
+
+                    <com.pa.common.TypefaceButton
+                        android:id="@+id/btnViewJobDetail"
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/edittext_height"
+                        android:layout_marginTop="@dimen/margin2"
+                        android:background="@drawable/btn_effect_blue"
+                        android:gravity="center"
+                        android:paddingLeft="@dimen/margin8"
+                        android:paddingRight="@dimen/margin8"
+                        android:text="VIEW JOB REQUEST"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/txt_big"
+                        android:textStyle="normal"
+                        app:typeface="OpenSans-Regular" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="horizontal"
+                android:padding="@dimen/margin4" >
+
+                <com.pa.common.TextViewSquare
+                    android:layout_width="@dimen/button_height"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/circle_brown"
+                    android:gravity="center"
+                    android:text="2"
+                    android:textColor="@color/pa_blue"
+                    android:textSize="@dimen/txt_big"
+                    app:typeface="OpenSans-Bold" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin3"
+                    android:layout_weight="1"
+                    android:orientation="vertical" >
+
+                    <com.pa.common.TypefaceTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="left"
+                        android:text="After your bid is closed"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/txt_big"
+                        app:typeface="OpenSans-Bold" />
+
+                    <com.pa.common.TypefaceTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="left"
+                        android:text="You can:\n- Review merchant offers\n- Select a merchant to do your job"
+                        android:textColor="@color/pa_dark_grey"
+                        android:textSize="@dimen/txt_big"
+                        app:typeface="OpenSans-Regular" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/merchant_list_row_odd"
+                android:orientation="horizontal"
+                android:padding="@dimen/margin4" >
+
+                <com.pa.common.TextViewSquare
+                    android:layout_width="@dimen/button_height"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/circle_dark_gray"
+                    android:gravity="center"
+                    android:text="3"
+                    android:textColor="@color/pa_blue"
+                    android:textSize="@dimen/txt_big"
+                    app:typeface="OpenSans-Bold" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin3"
+                    android:layout_weight="1"
+                    android:orientation="vertical" >
+
+                    <com.pa.common.TypefaceTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="left"
+                        android:text="On the day of your service appointment"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/txt_big"
+                        app:typeface="OpenSans-Bold" />
+
+                    <com.pa.common.TypefaceTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="left"
+                        android:text="You need to:\n- Ask the merchant for a verification code to start the job\n- Close the job after the merchant has completed the job\n- Check that the job has been done properly and rate the merchant"
+                        android:textColor="@color/pa_dark_grey"
+                        android:textSize="@dimen/txt_big"
+                        app:typeface="OpenSans-Regular" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:gravity="center"
+                android:padding="@dimen/margin4" >
+
+                <com.pa.common.TypefaceButton
+                    android:id="@+id/btnViewJobList"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/edittext_height"
+                    android:layout_marginTop="@dimen/margin2"
+                    android:background="@drawable/btn_effect_blue_light"
+                    android:gravity="center"
+                    android:paddingLeft="@dimen/margin8"
+                    android:paddingRight="@dimen/margin8"
+                    android:text="GO TO JOB REQUEST LIST"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/txt_big"
+                    android:textStyle="normal"
+                    app:typeface="OpenSans-Regular" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

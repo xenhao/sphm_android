@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/margin1"
+                android:background="@color/white">
+    <com.pa.common.ImageViewFitWidth
+        android:id="@+id/coverImage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/promo_placeholder"
+        android:minHeight="150dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/black"
+        android:padding="@dimen/margin3"
+        android:alpha=".7"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="@dimen/margin2">
+
+            <com.pa.common.TypefaceTextView
+                android:id="@+id/title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textSize="@dimen/txt_big"
+                android:textStyle="bold"
+                android:singleLine="false"
+                android:maxLines="2"
+                android:ellipsize="marquee"
+                android:layout_weight="6"/>
+            <com.pa.common.TypefaceTextView
+                android:id="@+id/originalPrice"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin3"
+                android:text=""
+                android:textSize="@dimen/txt_big"
+                android:textStyle="bold"
+                android:gravity="right"
+                android:layout_weight="4"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <com.pa.common.TypefaceTextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="(PROMO CODE Required)"
+                android:textSize="@dimen/txt_medium_big"
+                android:gravity="left"
+                android:layout_weight="2" />
+            <com.pa.common.TypefaceTextView
+                android:id="@+id/discountedPrice"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin3"
+                android:layout_marginRight="@dimen/margin3"
+                android:text=""
+                android:textSize="@dimen/txt_extra_big"
+                android:textStyle="bold"
+                android:gravity="right"
+                android:layout_weight="2" />
+        </LinearLayout>
+    </LinearLayout>
+</RelativeLayout>

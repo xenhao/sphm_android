@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_centerInParent="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin2"
+        android:orientation="vertical"
+        android:padding="@dimen/margin6"
+        android:visibility="visible" >
+
+        <com.pa.common.TypefaceTextView
+            android:id="@+id/txtMsg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/margin2"
+            android:layout_marginTop="@dimen/margin2"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="We're sorry but no merchants have submitted bids to perform your job. Would you like to re-submit your job request?
+
+\n\nTip: For some service categories, uploading images might help our merchants better assess your job request and they may then be more likely to submit bids"
+            android:textColor="@color/white"
+            android:textSize="@dimen/txt_big"
+            android:textStyle="normal"
+            app:typeface="OpenSans-Bold" />
+
+        <LinearLayout
+            android:gravity="center"
+            android:weightSum="2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <com.pa.common.TypefaceButton
+                android:visibility="gone"
+                android:id="@+id/btnCancel2"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/edittext_height"
+                android:layout_marginBottom="@dimen/margin2"
+                android:layout_marginTop="@dimen/margin2"
+                android:layout_weight="1"
+                android:background="@drawable/btn_effect_gray"
+                android:gravity="center"
+                android:text="CANCEL"
+                android:textColor="@color/white"
+                android:textSize="@dimen/txt_big"
+                android:textStyle="normal"
+                app:typeface="OpenSans-Regular" />
+
+            <com.pa.common.TypefaceButton
+                android:id="@+id/btnNext2"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/edittext_height"
+                android:layout_marginTop="@dimen/margin2"
+                android:layout_weight="1"
+                android:background="@drawable/btn_effect_blue"
+                android:gravity="center"
+                android:text="Re-submit Job Request"
+                android:textColor="@color/white"
+                android:textSize="@dimen/txt_big"
+                android:textStyle="normal"
+                app:typeface="OpenSans-Regular" />
+        </LinearLayout>
+    </LinearLayout>
+
+</RelativeLayout>

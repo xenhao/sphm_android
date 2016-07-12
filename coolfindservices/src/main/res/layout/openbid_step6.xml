@@ -1,0 +1,570 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical" >
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin4"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:visibility="gone" >
+
+                <com.pa.common.TypefaceTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="Confirm bid detail"
+                    android:textAppearance="@style/Label"                    android:textSize="@dimen/txt_big"
+                    app:typeface="OpenSans-Bold" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="@dimen/margin1"
+                    android:layout_weight="1"
+                    android:background="@color/pa_blue" />
+            </LinearLayout>
+
+            <com.pa.common.TypefaceTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/pa_grey"
+                android:gravity="left"
+                android:paddingBottom="@dimen/margin2"
+                android:paddingLeft="@dimen/margin4"
+                android:paddingRight="@dimen/margin4"
+                android:paddingTop="@dimen/margin2"
+                android:text="JOB DESCRIPTION"
+                android:textAppearance="@style/Label"                android:textSize="@dimen/txt_big"
+                app:typeface="OpenSans-Bold" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="horizontal" >
+
+                <com.pa.common.TypefaceTextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="left"
+                    android:paddingLeft="@dimen/margin4"
+                    android:paddingRight="@dimen/margin4"
+                    android:paddingTop="@dimen/margin2"
+                    android:text="Job Title"
+                    android:textAppearance="@style/Normal"
+                    android:textSize="@dimen/txt_big"
+                    app:typeface="OpenSans-Bold" />
+
+                <com.pa.common.TypefaceTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="left"
+                    android:paddingLeft="@dimen/margin4"
+                    android:paddingRight="@dimen/margin4"
+                    android:paddingTop="@dimen/margin2"
+                    android:text=":"
+                    android:textAppearance="@style/Normal"
+                    android:textSize="@dimen/txt_big"
+                    app:typeface="OpenSans-Bold" />
+
+                <com.pa.common.TypefaceTextView
+                    android:id="@+id/txt_title"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:gravity="left"
+                    android:paddingLeft="@dimen/margin4"
+                    android:paddingRight="@dimen/margin4"
+                    android:paddingTop="@dimen/margin2"
+                    android:text=" "
+                    android:textAppearance="@style/Normal"
+                    android:textSize="@dimen/txt_big"
+                    app:typeface="OpenSans-Regular" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:visibility="gone" >
+
+                <com.pa.common.TypefaceTextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="left"
+                    android:paddingLeft="@dimen/margin4"
+                    android:paddingRight="@dimen/margin4"
+                    android:paddingTop="@dimen/margin2"
+                    android:text="Description"
+                    android:textAppearance="@style/Normal"
+                    android:textSize="@dimen/txt_big"
+                    app:typeface="OpenSans-Bold" />
+
+                <com.pa.common.TypefaceTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="left"
+                    android:paddingLeft="@dimen/margin4"
+                    android:paddingRight="@dimen/margin4"
+                    android:paddingTop="@dimen/margin2"
+                    android:text=":"
+                    android:textAppearance="@style/Normal"
+                    android:textSize="@dimen/txt_big"
+                    app:typeface="OpenSans-Bold" />
+
+                <com.pa.common.TypefaceTextView
+                    android:id="@+id/txt_description"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:gravity="left"
+                    android:paddingLeft="@dimen/margin4"
+                    android:paddingRight="@dimen/margin4"
+                    android:paddingTop="@dimen/margin2"
+                    android:text=" "
+                    android:textAppearance="@style/Normal"
+                    android:textSize="@dimen/txt_big"
+                    app:typeface="OpenSans-Regular" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" >
+
+                <com.pa.common.TypefaceTextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="left"
+                    android:paddingLeft="@dimen/margin4"
+                    android:paddingRight="@dimen/margin4"
+                    android:paddingTop="@dimen/margin2"
+                    android:text="Other comments"
+                    android:textAppearance="@style/Normal"
+                    android:textSize="@dimen/txt_big"
+                    app:typeface="OpenSans-Bold" />
+
+                <com.pa.common.TypefaceTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="left"
+                    android:paddingLeft="@dimen/margin4"
+                    android:paddingRight="@dimen/margin4"
+                    android:paddingTop="@dimen/margin2"
+                    android:text=":"
+                    android:textAppearance="@style/Normal"
+                    android:textSize="@dimen/txt_big"
+                    app:typeface="OpenSans-Bold" />
+
+                <com.pa.common.TypefaceTextView
+                    android:id="@+id/txt_remarks"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:gravity="left"
+                    android:paddingLeft="@dimen/margin4"
+                    android:paddingRight="@dimen/margin4"
+                    android:paddingTop="@dimen/margin2"
+                    android:text=" "
+                    android:textAppearance="@style/Normal"
+                    android:textSize="@dimen/txt_big"
+                    app:typeface="OpenSans-Regular" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" >
+
+                <com.pa.common.TypefaceTextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="left"
+                    android:paddingBottom="@dimen/margin2"
+                    android:paddingLeft="@dimen/margin4"
+                    android:paddingRight="@dimen/margin4"
+                    android:paddingTop="@dimen/margin2"
+                    android:text="Estimated Budget"
+                    android:textAppearance="@style/Normal"
+                    android:textSize="@dimen/txt_big"
+                    app:typeface="OpenSans-Bold" />
+
+                <com.pa.common.TypefaceTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="left"
+                    android:paddingBottom="@dimen/margin2"
+                    android:paddingLeft="@dimen/margin4"
+                    android:paddingRight="@dimen/margin4"
+                    android:paddingTop="@dimen/margin2"
+                    android:text=":"
+                    android:textAppearance="@style/Normal"
+                    android:textSize="@dimen/txt_big"
+                    app:typeface="OpenSans-Bold" />
+
+                <com.pa.common.TypefaceTextView
+                    android:id="@+id/txt_max_budget"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:gravity="left"
+                    android:paddingBottom="@dimen/margin2"
+                    android:paddingLeft="@dimen/margin4"
+                    android:paddingRight="@dimen/margin4"
+                    android:paddingTop="@dimen/margin2"
+                    android:text=" "
+                    android:textAppearance="@style/Normal"
+                    android:textSize="@dimen/txt_big"
+                    app:typeface="OpenSans-Regular" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal" >
+
+                <com.pa.common.TypefaceTextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="left"
+                    android:paddingBottom="@dimen/margin2"
+                    android:paddingLeft="@dimen/margin4"
+                    android:paddingRight="@dimen/margin4"
+                    android:paddingTop="@dimen/margin2"
+                    android:text="Preferred Merchant Rating"
+                    android:textAppearance="@style/Normal"
+                    android:textSize="@dimen/txt_big"
+                    app:typeface="OpenSans-Bold" />
+
+                <com.pa.common.TypefaceTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="left"
+                    android:paddingBottom="@dimen/margin2"
+                    android:paddingLeft="@dimen/margin4"
+                    android:paddingRight="@dimen/margin4"
+                    android:paddingTop="@dimen/margin2"
+                    android:text=":"
+                    android:textAppearance="@style/Normal"
+                    android:textSize="@dimen/txt_big"
+                    app:typeface="OpenSans-Bold" />
+
+                <LinearLayout 
+                    android:layout_weight="2"
+                    android:id="@+id/aa"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical" >
+
+                    <RatingBar
+                        android:id="@+id/preferred_rating"
+                        style="?android:attr/ratingBarStyleSmall"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:max="5"
+                        android:numStars="5"
+                        android:rating="3" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <com.pa.common.TypefaceTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:gravity="left"
+                android:paddingBottom="@dimen/margin2"
+                android:paddingLeft="@dimen/margin4"
+                android:paddingRight="@dimen/margin4"
+                android:paddingTop="@dimen/margin2"
+                android:text="SERVICE CATEGORY"
+                android:textAppearance="@style/Normal"
+                android:textSize="@dimen/txt_big"
+                android:visibility="gone"
+                app:typeface="OpenSans-Bold" />
+
+            <LinearLayout
+                android:id="@+id/wrapperServiceCategory"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/pa_grey"
+                android:orientation="vertical"
+                android:visibility="gone" >
+
+                <com.pa.common.TypefaceTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="left"
+                    android:paddingBottom="@dimen/margin2"
+                    android:paddingLeft="@dimen/margin4"
+                    android:paddingRight="@dimen/margin4"
+                    android:paddingTop="@dimen/margin2"
+                    android:text=" "
+                    android:textAppearance="@style/Normal"
+                    android:textSize="@dimen/txt_big"
+                    app:typeface="OpenSans-Regular" />
+            </LinearLayout>
+
+            <com.pa.common.TypefaceTextView
+                android:id="@+id/txtServiceCategory"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/pa_grey"
+                android:gravity="left"
+                android:paddingBottom="@dimen/margin2"
+                android:paddingLeft="@dimen/margin4"
+                android:paddingRight="@dimen/margin4"
+                android:paddingTop="@dimen/margin2"
+                android:text="SERVICE DETAIL"
+                android:textAppearance="@style/Label"                android:textSize="@dimen/txt_big"
+                app:typeface="OpenSans-Bold" />
+
+            <LinearLayout
+                android:id="@+id/wrapperServiceDetail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin4"
+                android:layout_marginRight="@dimen/margin4"
+                android:orientation="vertical"
+                android:paddingBottom="@dimen/margin4" >
+            </LinearLayout>
+
+            <com.pa.common.TypefaceTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/pa_grey"
+                android:gravity="left"
+                android:paddingBottom="@dimen/margin2"
+                android:paddingLeft="@dimen/margin4"
+                android:paddingRight="@dimen/margin4"
+                android:paddingTop="@dimen/margin2"
+                android:text="SERVICE DELIVERY DETAIL"
+                android:textAppearance="@style/Label"                android:textSize="@dimen/txt_big"
+                app:typeface="OpenSans-Bold" />
+
+            <LinearLayout
+                android:id="@+id/wrapperServiceDeliveryDetail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+
+                <com.pa.common.TypefaceTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="left"
+                    android:paddingBottom="@dimen/margin2"
+                    android:paddingLeft="@dimen/margin4"
+                    android:paddingRight="@dimen/margin4"
+                    android:paddingTop="@dimen/margin2"
+                    android:text="1st preferred date and time"
+                    android:textAppearance="@style/Normal"
+                    android:textSize="@dimen/txt_big"
+                    app:typeface="OpenSans-Bold" />
+
+                <com.pa.common.TypefaceTextView
+                    android:id="@+id/txt_first_prefer_date"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="left"
+                    android:paddingBottom="@dimen/margin2"
+                    android:paddingLeft="@dimen/margin4"
+                    android:paddingRight="@dimen/margin4"
+                    android:text=" "
+                    android:textAppearance="@style/Normal"
+                    android:textSize="@dimen/txt_big"
+                    app:typeface="OpenSans-Regular" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/divider"
+                    android:layout_marginLeft="@dimen/margin2"
+                    android:layout_marginRight="@dimen/margin2"
+                    android:background="@color/pa_line_grey" />
+
+                <com.pa.common.TypefaceTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="left"
+                    android:paddingBottom="@dimen/margin2"
+                    android:paddingLeft="@dimen/margin4"
+                    android:paddingRight="@dimen/margin4"
+                    android:paddingTop="@dimen/margin2"
+                    android:text="2nd preferred date and time"
+                    android:textAppearance="@style/Normal"
+                    android:textSize="@dimen/txt_big"
+                    app:typeface="OpenSans-Bold" />
+
+                <com.pa.common.TypefaceTextView
+                    android:id="@+id/txt_second_prefer_date"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="left"
+                    android:paddingBottom="@dimen/margin2"
+                    android:paddingLeft="@dimen/margin4"
+                    android:paddingRight="@dimen/margin4"
+                    android:text=" "
+                    android:textAppearance="@style/Normal"
+                    android:textSize="@dimen/txt_big"
+                    app:typeface="OpenSans-Regular" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/divider"
+                    android:layout_marginLeft="@dimen/margin2"
+                    android:layout_marginRight="@dimen/margin2"
+                    android:background="@color/pa_line_grey" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal" >
+
+                    <com.pa.common.TypefaceTextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="left"
+                        android:paddingBottom="@dimen/margin2"
+                        android:paddingLeft="@dimen/margin4"
+                        android:paddingRight="@dimen/margin4"
+                        android:paddingTop="@dimen/margin2"
+                        android:text="Address"
+                        android:textAppearance="@style/Normal"
+                        android:textSize="@dimen/txt_big"
+                        app:typeface="OpenSans-Bold" />
+
+                    <com.pa.common.TypefaceTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="left"
+                        android:paddingBottom="@dimen/margin2"
+                        android:paddingLeft="@dimen/margin4"
+                        android:paddingRight="@dimen/margin4"
+                        android:paddingTop="@dimen/margin2"
+                        android:text=":"
+                        android:textAppearance="@style/Normal"
+                        android:textSize="@dimen/txt_big"
+                        app:typeface="OpenSans-Bold" />
+
+                    <com.pa.common.TypefaceTextView
+                        android:id="@+id/txt_address"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:gravity="left"
+                        android:paddingBottom="@dimen/margin2"
+                        android:paddingLeft="@dimen/margin4"
+                        android:paddingRight="@dimen/margin4"
+                        android:paddingTop="@dimen/margin2"
+                        android:text=" "
+                        android:textAppearance="@style/Normal"
+                        android:textSize="@dimen/txt_big"
+                        app:typeface="OpenSans-Regular" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <com.pa.common.TypefaceTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/pa_grey"
+                android:gravity="left"
+                android:paddingBottom="@dimen/margin2"
+                android:paddingLeft="@dimen/margin4"
+                android:paddingRight="@dimen/margin4"
+                android:paddingTop="@dimen/margin2"
+                android:text="BIDDING DETAIL"
+                android:textAppearance="@style/Label"                android:textSize="@dimen/txt_big"
+                android:visibility="gone"
+                app:typeface="OpenSans-Bold" />
+
+            <LinearLayout
+                android:id="@+id/wrapperBiddingDetail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+            </LinearLayout>
+
+            <com.pa.common.TypefaceTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/pa_grey"
+                android:gravity="left"
+                android:paddingBottom="@dimen/margin2"
+                android:paddingLeft="@dimen/margin4"
+                android:paddingRight="@dimen/margin4"
+                android:paddingTop="@dimen/margin2"
+                android:text="PAYMENT METHOD"
+                android:textAppearance="@style/Label"                android:textSize="@dimen/txt_big"
+                android:visibility="gone"
+                app:typeface="OpenSans-Bold" />
+
+            <LinearLayout
+                android:id="@+id/wrapperPaymentMethod"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin4"
+        android:orientation="horizontal"
+        android:visibility="visible" >
+
+        <com.pa.common.TypefaceButton
+            android:visibility="gone"
+            android:id="@+id/btnCancel2"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/edittext_height"
+            android:layout_marginRight="@dimen/margin2"
+            android:layout_weight="1"
+            android:background="@drawable/btn_effect_gray"
+            android:gravity="center"
+            android:paddingRight="@dimen/margin3"
+            android:text="BACK"
+            android:textColor="@color/white"
+            android:textSize="@dimen/txt_big"
+            android:textStyle="normal"
+            app:typeface="OpenSans-Regular" />
+
+        <com.pa.common.TypefaceButton
+            android:id="@+id/btnNext2"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/edittext_height"
+            android:layout_weight="1"
+            android:background="@drawable/btn_effect_blue"
+            android:gravity="center"
+            android:text="CONFIRM"
+            android:textColor="@color/white"
+            android:textSize="@dimen/txt_big"
+            android:textStyle="normal"
+            app:typeface="OpenSans-Regular" />
+    </LinearLayout>
+
+</LinearLayout>

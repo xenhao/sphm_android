@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <com.pa.common.ImageViewFitWidth android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:src="@drawable/step1" android:visibility="gone" android:layout_marginBottom="@dimen/margin2"
+        />
+      <com.pa.common.TypefaceTextView
+          android:visibility="gone"
+          android:layout_marginBottom="@dimen/margin4"
+          android:id="@+id/merchant_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="left"
+            android:textColor="@color/pa_blue"
+            android:textSize="@dimen/txt_extra_big"
+            app:typeface="OpenSans-Bold" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal" >
+
+        <com.pa.common.TypefaceTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Service Detail"
+            android:textColor="@color/pa_blue"
+            android:textSize="@dimen/txt_big"
+            app:typeface="OpenSans-Bold" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_marginLeft="@dimen/margin1"
+            android:layout_weight="1"
+            android:background="@color/pa_blue" />
+    </LinearLayout>
+
+    <com.pa.common.TypefaceTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="left"
+        android:text="Please input the service you are looking for"
+        android:textColor="@color/pa_dark_grey"
+        android:textSize="@dimen/txt_big"
+        app:typeface="OpenSans-Bold" />
+
+    <com.pa.common.TypefaceTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin4"
+        android:gravity="left"
+        android:text="Select your requested service(s)"
+        android:textColor="@color/pa_blue"
+        android:textSize="@dimen/txt_big"
+        app:typeface="OpenSans-Bold" />
+
+    <com.pa.common.TypefaceTextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/edittext_height3"
+        android:layout_marginTop="@dimen/margin4"
+        android:background="@drawable/white_rectangle_solid"
+        android:gravity="left|center_vertical"
+        android:text="Select Service"
+        android:textColor="@color/pa_dark_grey"
+        android:textSize="@dimen/txt_big"
+        app:typeface="OpenSans-Bold" />
+
+    <ListView
+        android:id="@+id/list"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@drawable/white_rectangle_solid"
+        android:cacheColorHint="#00000000"
+        android:divider="@color/black"
+        android:dividerHeight="0dp" >
+    </ListView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin2"
+        android:orientation="horizontal"
+        android:visibility="visible" >
+
+        <com.pa.common.TypefaceButton
+            android:visibility="gone"
+            android:id="@+id/btnCancel2"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/edittext_height"
+            android:layout_marginRight="@dimen/margin2"
+            android:layout_weight="1"
+            android:background="@drawable/btn_effect_gray"
+            android:gravity="center"
+            android:paddingRight="@dimen/margin3"
+            android:text="BACK"
+            android:textColor="@color/white"
+            android:textSize="@dimen/txt_big"
+            android:textStyle="normal"
+            app:typeface="OpenSans-Regular" />
+
+        <com.pa.common.TypefaceButton
+            android:id="@+id/btnNext2"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/edittext_height"
+            android:layout_weight="1"
+            android:background="@drawable/btn_effect_blue"
+            android:gravity="center"
+            android:text="NEXT"
+            android:textColor="@color/white"
+            android:textSize="@dimen/txt_big"
+            android:textStyle="normal"
+            app:typeface="OpenSans-Regular" />
+    </LinearLayout>
+
+</LinearLayout>

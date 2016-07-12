@@ -1,0 +1,204 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/pa_grey"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/edittext_height3"
+        android:background="@color/pa_orange"
+        android:gravity="center"
+        android:orientation="horizontal" >
+
+        <com.pa.common.TypefaceTextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="PASSWORD RESET"
+            android:textColor="@color/white"
+            android:textSize="@dimen/txt_extra_big"
+            app:typeface="OpenSans-Bold" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginLeft="@dimen/margin6"
+        android:layout_marginRight="@dimen/margin6"
+        android:layout_weight="1"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:weightSum="5" >
+        </LinearLayout>
+
+        <ViewSwitcher
+            android:id="@+id/switcher_forgot"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <LinearLayout
+                android:id="@+id/view1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+
+                <LinearLayout
+                    android:id="@+id/asdfasdf"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin4" >
+
+                    <com.pa.common.TypefaceTextView
+                        android:id="@+id/prefix"
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/edittext_height3"
+                        android:layout_marginRight="@dimen/margin1"
+                        android:background="@drawable/white_rectangle_solid"
+                        android:drawablePadding="@dimen/margin1"
+                        android:drawableRight="@drawable/icon_arrow_down"
+                        android:gravity="left|center_vertical"
+                        android:inputType="text|phone"
+                        android:text="+65"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/txt_big"
+                        app:typeface="OpenSans-Regular" />
+
+                    <com.pa.common.TypefaceEditText
+                        android:id="@+id/phone"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/edittext_height3"
+                        android:background="@drawable/white_rectangle_solid"
+                        android:gravity="left|center_vertical"
+                        android:hint="Phone number"
+                        android:inputType="text|phone"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/txt_big"
+                        app:typeface="OpenSans-Regular" />
+                </LinearLayout>
+
+                <com.pa.common.TypefaceButton
+                    android:id="@+id/btnReset"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/edittext_height3"
+                    android:layout_marginTop="@dimen/margin1"
+                    android:background="@drawable/btn_effect_blue"
+                    android:gravity="center"
+                    android:text="Reset Password"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/txt_big"
+                    android:textStyle="bold"
+                    app:typeface="OpenSans-Regular" />
+                
+                <com.pa.common.TypefaceTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/edittext_height3"
+                    android:layout_marginTop="@dimen/margin1"
+                    android:gravity="center"
+                    android:text="A one-time passcode will be sent to your mobile phone"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/txt_big"
+                    android:textStyle="bold"
+                    app:typeface="OpenSans-Regular" />
+                
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/view2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+
+                <com.pa.common.TypefaceTextView
+                    android:id="@+id/phone2"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/edittext_height3"
+                    android:layout_marginTop="@dimen/margin4"
+                    android:background="@drawable/white_rectangle_solid"
+                    android:gravity="left|center_vertical"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/txt_big"
+                    app:typeface="OpenSans-Regular" />
+
+                <com.pa.common.TypefaceEditText
+                    android:id="@+id/token"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/edittext_height3"
+                    android:layout_marginTop="@dimen/margin4"
+                    android:background="@drawable/white_rectangle_solid"
+                    android:gravity="left|center_vertical"
+                    android:hint="Reset Code"
+                    android:inputType="text"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/txt_big"
+                    app:typeface="OpenSans-Regular" />
+
+                <com.pa.common.TypefaceEditText
+                    android:id="@+id/pass"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/edittext_height3"
+                    android:layout_marginTop="@dimen/margin4"
+                    android:background="@drawable/white_rectangle_solid"
+                    android:gravity="left|center_vertical"
+                    android:hint="Password"
+                    android:inputType="textPassword"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/txt_big"
+                    app:typeface="OpenSans-Regular" />
+
+                <com.pa.common.TypefaceEditText
+                    android:id="@+id/repass"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/edittext_height3"
+                    android:layout_marginTop="@dimen/margin4"
+                    android:background="@drawable/white_rectangle_solid"
+                    android:gravity="left|center_vertical"
+                    android:hint="Password confirmation"
+                    android:inputType="textPassword"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/txt_big"
+                    app:typeface="OpenSans-Regular" />
+
+                <com.pa.common.TypefaceButton
+                    android:id="@+id/btnSubmit"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/edittext_height3"
+                    android:layout_marginTop="@dimen/margin1"
+                    android:background="@drawable/btn_effect_blue"
+                    android:gravity="center"
+                    android:text="RESET PASSWORD"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/txt_big"
+                    android:textStyle="bold"
+                    app:typeface="OpenSans-Regular" />
+            </LinearLayout>
+        </ViewSwitcher>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <com.pa.common.TypefaceButton
+            android:id="@+id/btnBack"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/edittext_height3"
+            android:layout_marginTop="@dimen/margin1"
+            android:background="@drawable/btn_effect_blue"
+            android:gravity="center"
+            android:text="Back"
+            android:textColor="@color/white"
+            android:textSize="@dimen/txt_big"
+            android:textStyle="bold"
+            app:typeface="OpenSans-Regular" />
+    </LinearLayout>
+
+</LinearLayout>

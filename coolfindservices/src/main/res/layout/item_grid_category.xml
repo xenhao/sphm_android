@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+
+    <com.pa.common.TextViewSquare
+                        android:visibility="gone"
+        
+        android:id="@+id/txtCat"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@drawable/pink_rounded"
+        android:gravity="center"
+        android:text="cat"
+        android:textSize="@dimen/txt_extra_big" />
+    
+    <com.pa.common.ImageViewFitWidth android:layout_width="match_parent"
+        
+        android:layout_height="wrap_content"
+        android:id="@+id/img"
+        android:src="@drawable/cool_find_logo"
+        />
+
+</LinearLayout>

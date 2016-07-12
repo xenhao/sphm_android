@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#cc000000"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_centerInParent="true"
+        android:layout_margin="@dimen/margin4"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/margin2"
+        android:orientation="vertical"
+        android:padding="@dimen/margin1"
+        android:visibility="visible" >
+
+        <com.pa.common.TouchImageView
+            android:id="@+id/img"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_marginBottom="@dimen/margin2"
+            android:layout_marginTop="@dimen/margin2"
+            android:layout_marginLeft="@dimen/margin2"
+                android:layout_marginRight="@dimen/margin2"
+                
+			 android:src="@drawable/cool_find_logo"
+			 />
+
+        <LinearLayout
+            android:gravity="center"
+            android:weightSum="2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <com.pa.common.TypefaceButton
+                android:id="@+id/btnCancel2"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/edittext_height"
+                android:layout_marginTop="@dimen/margin2"
+                
+                android:layout_weight="1"
+                android:background="@drawable/btn_effect_gray"
+                android:gravity="center"
+                android:text="BACK"
+                android:textColor="@color/white"
+                android:textSize="@dimen/txt_big"
+                android:textStyle="normal"
+                app:typeface="OpenSans-Regular" />
+
+            <com.pa.common.TypefaceButton
+                android:id="@+id/btnNext2"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/edittext_height"
+                android:layout_marginLeft="@dimen/margin2"
+                android:layout_marginTop="@dimen/margin2"
+                android:layout_weight="1"
+                android:background="@drawable/btn_effect_blue"
+                android:gravity="center"
+                android:text="DELETE"
+                android:textColor="@color/white"
+                android:textSize="@dimen/txt_big"
+                android:textStyle="normal"
+                app:typeface="OpenSans-Regular" />
+        </LinearLayout>
+    </LinearLayout>
+
+</RelativeLayout>

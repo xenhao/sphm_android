@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/pa_light_orange"
+    >
+
+    <LinearLayout
+        android:id="@+id/logo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:background="@color/white"
+        android:paddingLeft="@dimen/margin80"
+        android:paddingRight="@dimen/margin80"
+        android:orientation="horizontal" >
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/cool_find_logo" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        android:paddingLeft="@dimen/margin60"
+        android:paddingRight="@dimen/margin60"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/icon_warning" />
+
+            <com.pa.common.TypefaceTextView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/edittext_height3"
+            android:gravity="center"
+            android:text="Time for an upgrade"
+            android:textColor="@color/black"
+            android:textSize="@dimen/txt_xx_big"
+            app:typeface="OpenSans-Regular" />
+
+            <com.pa.common.TypefaceTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="This version is no longer supported.\nPlease download the newest version"
+            android:textColor="@color/black"
+            android:textSize="@dimen/txt_big"
+            app:typeface="OpenSans-Regular" />
+
+            <com.pa.common.TypefaceButton
+            android:id="@+id/btnUpdate"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/edittext_height3"
+            android:layout_marginTop="@dimen/margin6"
+            android:background="@drawable/btn_effect_blue"
+            android:gravity="center"
+            android:text="UPDATE COOL-FIND"
+            android:textColor="@color/white"
+            android:textSize="@dimen/txt_big"
+            android:textStyle="bold"
+            app:typeface="OpenSans-Regular" />
+
+    </LinearLayout>
+
+</RelativeLayout>

@@ -1,0 +1,454 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/pa_grey"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/edittext_height3"
+        android:background="@color/pa_orange"
+        android:gravity="center"
+        android:orientation="horizontal" >
+
+        <ImageView
+            android:id="@+id/btnBack"
+            android:layout_width="@dimen/edittext_height"
+            android:layout_height="@dimen/edittext_height"
+            android:layout_marginLeft="@dimen/margin2"
+            android:padding="@dimen/padding"
+            android:src="@drawable/img_back" />
+
+        <com.pa.common.TypefaceTextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="EDIT PROFILE SETTINGS"
+            android:textColor="@color/white"
+            android:textSize="@dimen/txt_extra_big"
+            app:typeface="OpenSans-Bold" />
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" >
+
+                <com.pa.common.ImageViewFitWidth android:visibility="gone"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="3"
+                    android:src="@drawable/icon_new_profile_picture" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="7"
+                    android:orientation="vertical" >
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                         >
+
+                        <com.pa.common.TypefaceTextView
+                            android:id="@+id/merchant_name"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/white"
+                            android:gravity="left"
+                            android:paddingBottom="@dimen/margin2"
+                            android:paddingLeft="@dimen/margin4"
+                            android:paddingRight="@dimen/margin4"
+                            android:paddingTop="@dimen/margin2"
+                            android:text="Consumer Name"
+                            android:textColor="@color/pa_blue"
+                            android:textSize="@dimen/txt_big"
+                            app:typeface="OpenSans-Regular" />
+
+                        <com.pa.common.TypefaceTextView
+                            android:id="@+id/service_name"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="left"
+                            android:paddingBottom="@dimen/margin2"
+                            android:paddingLeft="@dimen/margin4"
+                            android:paddingRight="@dimen/margin4"
+                            android:paddingTop="@dimen/margin2"
+                            android:text="Service Name"
+                            android:textColor="@color/pa_category"
+                            android:textSize="@dimen/txt_big"
+                            app:typeface="OpenSans-Regular" />
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/divider"
+                        android:background="@color/pa_grey" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:padding="@dimen/margin2"
+                        android:visibility="gone" >
+
+                        <com.pa.common.TypefaceTextView
+                            android:id="@+id/numberOfBranch"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="left"
+                            android:text="0"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/txt_big"
+                            app:typeface="OpenSans-Bold" />
+
+                        <com.pa.common.TypefaceTextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="right"
+                            android:text="Branch(es)"
+                            android:textColor="@color/pa_dark_grey"
+                            android:textSize="@dimen/txt_big"
+                            app:typeface="OpenSans-Regular" />
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/divider"
+                        android:background="@color/pa_grey" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:padding="@dimen/margin2"
+                        android:visibility="gone" >
+
+                        <com.pa.common.TypefaceTextView
+                            android:id="@+id/numberOfAppointment"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="left"
+                            android:text="0"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/txt_big"
+                            app:typeface="OpenSans-Bold" />
+
+                        <com.pa.common.TypefaceTextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="right"
+                            android:text="Appointment"
+                            android:textColor="@color/pa_dark_grey"
+                            android:textSize="@dimen/txt_big"
+                            app:typeface="OpenSans-Regular" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            <com.pa.common.TypefaceTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/margin1"
+                android:layout_marginTop="@dimen/margin4"
+                android:background="@color/white"
+                android:paddingBottom="@dimen/padding2"
+                android:paddingLeft="@dimen/margin4"
+                android:paddingRight="@dimen/margin4"
+                android:paddingTop="@dimen/padding2"
+                android:text="ADDRESS"
+                android:textColor="@color/pa_blue"
+                android:textSize="@dimen/txt_big"
+                app:typeface="OpenSans-Bold" />
+
+            <com.pa.common.TypefaceEditText
+                android:inputType="text"
+                android:imeOptions="actionDone"
+                android:id="@+id/address"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/edittext_height3"
+                android:layout_marginBottom="@dimen/margin1"
+                android:layout_marginLeft="@dimen/margin4"
+                android:layout_marginRight="@dimen/margin4"
+                android:layout_marginTop="@dimen/margin1"
+                android:background="@drawable/white_rectangle_solid"
+                android:hint="Address"
+                android:paddingBottom="@dimen/margin2"
+                android:paddingLeft="@dimen/margin4"
+                android:paddingRight="@dimen/margin4"
+                android:paddingTop="@dimen/margin2"
+                android:textColor="@color/pa_category"
+                android:textSize="@dimen/txt_big" />
+
+            <com.pa.common.TypefaceTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/margin1"
+                android:background="@color/white"
+                android:paddingBottom="@dimen/padding2"
+                android:paddingLeft="@dimen/margin4"
+                android:paddingRight="@dimen/margin4"
+                android:paddingTop="@dimen/padding2"
+                android:text="COUNTRY"
+                android:textColor="@color/pa_blue"
+                android:textSize="@dimen/txt_big"
+                app:typeface="OpenSans-Bold" />
+
+            <com.pa.common.TypefaceTextView
+                android:id="@+id/country"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/edittext_height3"
+                android:layout_marginBottom="@dimen/margin1"
+                android:layout_marginLeft="@dimen/margin4"
+                android:layout_marginRight="@dimen/margin4"
+                android:layout_marginTop="@dimen/margin1"
+                android:background="@drawable/white_rectangle_solid"
+                android:drawableRight="@drawable/icon_blue_dropdown"
+                android:gravity="left|center_vertical"
+                android:hint="Country"
+                android:paddingBottom="@dimen/margin2"
+                android:paddingLeft="@dimen/margin4"
+                android:paddingRight="@dimen/margin4"
+                android:paddingTop="@dimen/margin2"
+                android:textColor="@color/pa_category"
+                android:textSize="@dimen/txt_big" />
+
+            <com.pa.common.TypefaceTextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/edittext_height3"
+                android:layout_marginBottom="@dimen/margin1"
+                android:background="@color/white"
+                android:paddingBottom="@dimen/padding2"
+                android:paddingLeft="@dimen/margin4"
+                android:paddingRight="@dimen/margin4"
+                android:paddingTop="@dimen/padding2"
+                android:text="STATE"
+                android:textColor="@color/pa_blue"
+                android:textSize="@dimen/txt_big"
+                app:typeface="OpenSans-Bold" />
+
+            <com.pa.common.TypefaceTextView
+                android:id="@+id/state"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/margin1"
+                android:layout_marginLeft="@dimen/margin4"
+                android:layout_marginRight="@dimen/margin4"
+                android:layout_marginTop="@dimen/margin1"
+                android:background="@drawable/white_rectangle_solid"
+                android:drawableRight="@drawable/icon_blue_dropdown"
+                android:gravity="left|center_vertical"
+                android:hint="State"
+                android:paddingBottom="@dimen/margin2"
+                android:paddingLeft="@dimen/margin4"
+                android:paddingRight="@dimen/margin4"
+                android:paddingTop="@dimen/margin2"
+                android:textColor="@color/pa_category"
+                android:textSize="@dimen/txt_big" />
+
+            <com.pa.common.TypefaceTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/margin1"
+                android:background="@color/white"
+                android:paddingBottom="@dimen/padding2"
+                android:paddingLeft="@dimen/margin4"
+                android:paddingRight="@dimen/margin4"
+                android:paddingTop="@dimen/padding2"
+                android:text="CITY"
+                android:textColor="@color/pa_blue"
+                android:textSize="@dimen/txt_big"
+                app:typeface="OpenSans-Bold" />
+
+            <com.pa.common.TypefaceTextView
+                android:id="@+id/city"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/margin1"
+                android:layout_marginLeft="@dimen/margin4"
+                android:layout_marginRight="@dimen/margin4"
+                android:layout_marginTop="@dimen/margin1"
+                android:background="@drawable/white_rectangle_solid"
+                android:drawableRight="@drawable/icon_blue_dropdown"
+                android:gravity="left|center_vertical"
+                android:hint="City"
+                android:paddingBottom="@dimen/margin2"
+                android:paddingLeft="@dimen/margin4"
+                android:paddingRight="@dimen/margin4"
+                android:paddingTop="@dimen/margin2"
+                android:textColor="@color/pa_category"
+                android:textSize="@dimen/txt_big" />
+
+            <com.pa.common.TypefaceTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/margin1"
+                android:background="@color/white"
+                android:paddingBottom="@dimen/padding2"
+                android:paddingLeft="@dimen/margin4"
+                android:paddingRight="@dimen/margin4"
+                android:paddingTop="@dimen/padding2"
+                android:text="POSTAL CODE"
+                android:textColor="@color/pa_blue"
+                android:textSize="@dimen/txt_big"
+                app:typeface="OpenSans-Bold" />
+
+            <com.pa.common.TypefaceEditText 
+                android:inputType="text"
+                android:imeOptions="actionDone"
+                android:id="@+id/postal_code"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/edittext_height3"
+                android:layout_marginBottom="@dimen/margin1"
+                android:layout_marginLeft="@dimen/margin4"
+                android:layout_marginRight="@dimen/margin4"
+                android:layout_marginTop="@dimen/margin1"
+                android:background="@drawable/white_rectangle_solid"
+                android:hint="Postal code"
+                android:paddingBottom="@dimen/margin2"
+                android:paddingLeft="@dimen/margin4"
+                android:paddingRight="@dimen/margin4"
+                android:paddingTop="@dimen/margin2"
+                android:textColor="@color/pa_category"
+                android:textSize="@dimen/txt_big" />
+
+            <com.pa.common.TypefaceTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/margin1"
+                android:background="@color/white"
+                android:paddingBottom="@dimen/padding2"
+                android:paddingLeft="@dimen/margin4"
+                android:paddingRight="@dimen/margin4"
+                android:paddingTop="@dimen/padding2"
+                android:text="HOME NUMBER"
+                android:textColor="@color/pa_blue"
+                android:textSize="@dimen/txt_big"
+                app:typeface="OpenSans-Bold" />
+
+            <com.pa.common.TypefaceEditText                 android:imeOptions="actionDone"
+                android:inputType="phone"
+                android:id="@+id/home_number"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/edittext_height3"
+                android:layout_marginBottom="@dimen/margin1"
+                android:layout_marginLeft="@dimen/margin4"
+                android:layout_marginRight="@dimen/margin4"
+                android:layout_marginTop="@dimen/margin1"
+                android:background="@drawable/white_rectangle_solid"
+                android:hint="Home number"
+                android:paddingBottom="@dimen/margin2"
+                android:paddingLeft="@dimen/margin4"
+                android:paddingRight="@dimen/margin4"
+                android:paddingTop="@dimen/margin2"
+                android:textColor="@color/pa_category"
+                android:textSize="@dimen/txt_big" />
+
+            <com.pa.common.TypefaceTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/margin1"
+                android:background="@color/white"
+                android:paddingBottom="@dimen/padding2"
+                android:paddingLeft="@dimen/margin4"
+                android:paddingRight="@dimen/margin4"
+                android:paddingTop="@dimen/padding2"
+                android:text="MOBILE NUMBER"
+                android:textColor="@color/pa_blue"
+                android:textSize="@dimen/txt_big"
+                app:typeface="OpenSans-Bold" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/edittext_height3"
+                android:layout_marginBottom="@dimen/margin1"
+                android:layout_marginLeft="@dimen/margin4"
+                android:layout_marginRight="@dimen/margin4"
+                android:layout_marginTop="@dimen/margin1"
+                android:orientation="horizontal" >
+
+                <com.pa.common.TypefaceTextView
+                    android:id="@+id/prefix"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/edittext_height3"
+                    android:layout_marginRight="@dimen/margin1"
+                    android:background="@drawable/white_rectangle_solid"
+                    android:drawablePadding="@dimen/margin1"
+                    android:drawableRight="@drawable/icon_arrow_down"
+                    android:gravity="left|center_vertical"
+                    android:inputType="text|phone"
+                    android:text="+65"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/txt_big"
+                    app:typeface="OpenSans-Regular" />
+
+                <com.pa.common.TypefaceEditText                 android:imeOptions="actionDone"
+                    android:inputType="phone"
+                    android:id="@+id/mobile_number"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/edittext_height3"
+                    android:layout_weight="1"
+                    android:background="@drawable/white_rectangle_solid"
+                    android:hint="Mobile number"
+                    android:paddingBottom="@dimen/margin2"
+                    android:paddingLeft="@dimen/margin4"
+                    android:paddingRight="@dimen/margin4"
+                    android:paddingTop="@dimen/margin2"
+                    android:textColor="@color/pa_category"
+                    android:textSize="@dimen/txt_big" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin2"
+                android:orientation="horizontal" >
+
+                <com.pa.common.TypefaceButton
+                    android:id="@+id/btnCancel2"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/edittext_height"
+                    android:layout_marginRight="@dimen/margin2"
+                    android:layout_weight="1"
+                    android:background="@drawable/btn_effect_gray"
+                    android:gravity="center"
+                    android:text="CANCEL"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/txt_big"
+                    android:textStyle="normal"
+                    app:typeface="OpenSans-Regular" />
+
+                <com.pa.common.TypefaceButton
+                    android:id="@+id/btnNext2"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/edittext_height"
+                    android:layout_weight="1"
+                    android:background="@drawable/btn_effect_orange"
+                    android:gravity="center"
+                    android:text="SAVE"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/txt_big"
+                    android:textStyle="normal"
+                    app:typeface="OpenSans-Regular" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

@@ -1,0 +1,380 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/stickyTop"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/twocolor_orange"
+        android:orientation="horizontal" >
+
+        <com.pa.common.ImageViewSquare
+            android:id="@+id/profile_pic"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/margin4"
+            android:layout_weight="1"
+            android:background="@drawable/circle_dark_gray"
+            android:padding="@dimen/padding"
+            android:src="@drawable/add_photo"
+            android:visibility="gone" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_weight="2"
+            android:orientation="vertical" >
+
+            <LinearLayout android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1"
+                android:orientation="horizontal"
+                >
+
+                <com.pa.common.TypefaceTextView
+                    android:id="@+id/username"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_margin="@dimen/margin4"
+                    android:layout_marginLeft="@dimen/margin2"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:text=""
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/txt_big"
+                    app:typeface="OpenSans-Regular" />
+
+                <com.pa.common.TypefaceTextView
+                    android:id="@+id/version"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/margin4"
+                    android:layout_marginLeft="@dimen/margin2"
+                    android:gravity="center_vertical"
+                    android:text="version:\n1.2.1"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/txt_medium"
+                    app:typeface="OpenSans-Regular" />
+
+            </LinearLayout>
+
+            <com.pa.common.TypefaceTextView
+                android:id="@+id/email"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_margin="@dimen/margin4"
+                android:layout_marginLeft="@dimen/margin2"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:text=""
+                android:textColor="@color/pa_blue"
+                android:textSize="@dimen/txt_big"
+                app:typeface="OpenSans-Regular" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_below="@id/stickyTop"
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent">
+
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#efeff4"
+            android:orientation="vertical" >
+
+            <com.pa.common.TypefaceTextView
+                android:id="@+id/menu_jobs_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin4"
+                android:layout_marginLeft="@dimen/margin2"
+                android:drawableLeft="@drawable/ic_home"
+                android:drawablePadding="@dimen/padding2"
+                android:gravity="center_vertical"
+                android:text="Home"
+                android:textColor="@color/pa_dark_grey"
+                android:textSize="@dimen/txt_big"
+                app:typeface="OpenSans-Regular" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/divider"
+                android:layout_marginLeft="@dimen/margin2"
+                android:layout_marginRight="@dimen/margin2"
+                android:background="@color/pa_dark_grey" />
+
+            <com.pa.common.TypefaceTextView
+                android:id="@+id/menu_bid"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin4"
+                android:layout_marginLeft="@dimen/margin2"
+                android:drawableLeft="@drawable/ic_job_request"
+                android:drawablePadding="@dimen/padding2"
+                android:gravity="center_vertical"
+                android:text="Job Requests"
+                android:textColor="@color/pa_dark_grey"
+                android:textSize="@dimen/txt_big"
+                app:typeface="OpenSans-Regular" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/divider"
+                android:layout_marginLeft="@dimen/margin2"
+                android:layout_marginRight="@dimen/margin2"
+                android:background="@color/pa_dark_grey" />
+
+            <com.pa.common.TypefaceTextView
+                android:id="@+id/menu_quotation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin4"
+                android:layout_marginLeft="@dimen/margin2"
+                android:drawableLeft="@drawable/ic_appointment"
+                android:drawablePadding="@dimen/padding2"
+                android:gravity="center_vertical"
+                android:text="Appointment"
+                android:textColor="@color/pa_dark_grey"
+                android:textSize="@dimen/txt_big"
+                app:typeface="OpenSans-Regular" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/divider"
+                android:layout_marginLeft="@dimen/margin2"
+                android:layout_marginRight="@dimen/margin2"
+                android:background="@color/pa_dark_grey" />
+
+            <com.pa.common.TypefaceTextView
+                android:id="@+id/menu_completed_jobs"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin4"
+                android:layout_marginLeft="@dimen/margin2"
+                android:drawableLeft="@drawable/ic_history"
+                android:drawablePadding="@dimen/padding2"
+                android:gravity="center_vertical"
+                android:text="History"
+                android:textColor="@color/pa_dark_grey"
+                android:textSize="@dimen/txt_big"
+                app:typeface="OpenSans-Regular" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/divider"
+                android:layout_marginLeft="@dimen/margin2"
+                android:layout_marginRight="@dimen/margin2"
+                android:background="@color/pa_dark_grey" />
+
+            <com.pa.common.TypefaceTextView
+                android:id="@+id/menu_free_credit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin4"
+                android:layout_marginLeft="@dimen/margin2"
+                android:drawableLeft="@drawable/icon_free_credit"
+                android:drawablePadding="@dimen/padding2"
+                android:gravity="center_vertical"
+                android:text="Earn Free Credits"
+                android:textColor="@color/pa_dark_grey"
+                android:textSize="@dimen/txt_big"
+                app:typeface="OpenSans-Regular" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/divider"
+                android:layout_marginLeft="@dimen/margin2"
+                android:layout_marginRight="@dimen/margin2"
+                android:background="@color/pa_dark_grey" />
+
+            <com.pa.common.TypefaceTextView
+                android:id="@+id/menu_history"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin4"
+                android:layout_marginLeft="@dimen/margin2"
+                android:drawableLeft="@drawable/icon_job_history"
+                android:drawablePadding="@dimen/padding2"
+                android:gravity="center_vertical"
+                android:text="Job History"
+                android:textColor="@color/pa_dark_grey"
+                android:textSize="@dimen/txt_big"
+                android:visibility="gone"
+                app:typeface="OpenSans-Regular" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/divider"
+                android:layout_marginLeft="@dimen/margin2"
+                android:layout_marginRight="@dimen/margin2"
+                android:background="@color/pa_dark_grey"
+                android:visibility="gone" />
+
+            <com.pa.common.TypefaceTextView
+                android:id="@+id/menu_settings"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin4"
+                android:layout_marginLeft="@dimen/margin2"
+                android:drawableLeft="@drawable/ic_setting"
+                android:drawablePadding="@dimen/padding2"
+                android:gravity="center_vertical"
+                android:text="Settings"
+                android:textColor="@color/pa_dark_grey"
+                android:textSize="@dimen/txt_big"
+                app:typeface="OpenSans-Regular" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/divider"
+                android:layout_marginLeft="@dimen/margin2"
+                android:layout_marginRight="@dimen/margin2"
+                android:background="@color/pa_dark_grey" />
+
+            <com.pa.common.TypefaceTextView
+                android:id="@+id/menu_chat"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin4"
+                android:layout_marginLeft="@dimen/margin2"
+                android:drawableLeft="@drawable/ic_chat"
+                android:drawablePadding="@dimen/padding2"
+                android:gravity="center_vertical"
+                android:text="Chat with us"
+                android:textColor="@color/pa_dark_grey"
+                android:textSize="@dimen/txt_big"
+                android:visibility="visible"
+                app:typeface="OpenSans-Regular" />
+
+            <View android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/divider"
+                android:layout_marginLeft="@dimen/margin2"
+                android:layout_marginRight="@dimen/margin2"
+                android:background="@color/pa_dark_grey" />
+
+            <com.pa.common.TypefaceTextView
+                android:id="@+id/menu_faq"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin4"
+                android:layout_marginLeft="@dimen/margin2"
+                android:drawableLeft="@drawable/ic_faq"
+                android:drawablePadding="@dimen/padding2"
+                android:gravity="center_vertical"
+                android:text="FAQ"
+                android:textColor="@color/pa_dark_grey"
+                android:textSize="@dimen/txt_big"
+                android:visibility="gone"
+                app:typeface="OpenSans-Regular" />
+
+            <View android:visibility="visible"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/divider"
+                android:layout_marginLeft="@dimen/margin2"
+                android:layout_marginRight="@dimen/margin2"
+                android:background="@color/pa_dark_grey" />
+
+            <com.pa.common.TypefaceTextView
+                android:id="@+id/menu_help"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin4"
+                android:layout_marginLeft="@dimen/margin2"
+                android:drawableLeft="@drawable/icon_help"
+                android:drawablePadding="@dimen/padding2"
+                android:gravity="center_vertical"
+                android:text="Help"
+                android:textColor="@color/pa_dark_grey"
+                android:textSize="@dimen/txt_big"
+                android:visibility="gone"
+                app:typeface="OpenSans-Regular" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/divider"
+                android:layout_marginLeft="@dimen/margin2"
+                android:layout_marginRight="@dimen/margin2"
+                android:background="@color/pa_dark_grey"
+                android:visibility="gone" />
+
+            <com.pa.common.TypefaceTextView
+                android:id="@+id/menu_about"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin4"
+                android:layout_marginLeft="@dimen/margin2"
+                android:drawableLeft="@drawable/icon_about"
+                android:drawablePadding="@dimen/padding2"
+                android:gravity="center_vertical"
+                android:text="Favourite"
+                android:textColor="@color/pa_dark_grey"
+                android:textSize="@dimen/txt_big"
+                android:visibility="gone"
+                app:typeface="OpenSans-Regular" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/divider"
+                android:layout_marginLeft="@dimen/margin2"
+                android:layout_marginRight="@dimen/margin2"
+                android:background="@color/pa_dark_grey"
+                android:visibility="gone" />
+
+            <com.pa.common.TypefaceTextView
+                android:id="@+id/menu_contact_us"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin4"
+                android:layout_marginLeft="@dimen/margin2"
+                android:drawableLeft="@drawable/ic_contact"
+                android:drawablePadding="@dimen/padding2"
+                android:gravity="center_vertical"
+                android:text="Contact Us"
+                android:textColor="@color/pa_dark_grey"
+                android:textSize="@dimen/txt_big"
+                app:typeface="OpenSans-Regular" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/divider"
+                android:layout_marginLeft="@dimen/margin2"
+                android:layout_marginRight="@dimen/margin2"
+                android:background="@color/pa_dark_grey" />
+            android:visibility="gone" />
+
+            <com.pa.common.TypefaceTextView
+                android:id="@+id/menu_logout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin4"
+                android:layout_marginLeft="@dimen/margin2"
+                android:drawableLeft="@drawable/ic_logout"
+                android:drawablePadding="@dimen/padding2"
+                android:gravity="center_vertical"
+                android:text="Logout"
+                android:textColor="@color/pa_dark_grey"
+                android:textSize="@dimen/txt_big"
+                app:typeface="OpenSans-Regular" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/divider"
+                android:layout_marginLeft="@dimen/margin2"
+                android:layout_marginRight="@dimen/margin2"
+                android:background="@color/pa_dark_grey" />
+
+
+
+        </LinearLayout>
+    </ScrollView>
+
+
+
+</RelativeLayout>

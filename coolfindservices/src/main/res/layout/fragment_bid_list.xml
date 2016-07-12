@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/pa_grey"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/edittext_height3"
+        android:background="@color/pa_orange"
+        android:gravity="center"
+        android:orientation="horizontal" >
+
+        <ImageView
+            android:layout_marginLeft="@dimen/margin2"
+            android:id="@+id/btnMenu"
+            android:layout_width="@dimen/edittext_height"
+            android:layout_height="@dimen/edittext_height"
+            android:padding="@dimen/padding"
+            android:src="@drawable/btn_effect_menu" />
+
+        <com.pa.common.ImageViewFitHeight
+            android:id="@+id/btnHome"
+            android:layout_gravity="center"
+            android:layout_width="36dp" android:layout_height="36dp"
+            android:src="@drawable/ic_home_white"
+            />
+
+        <com.pa.common.TypefaceTextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="JOB REQUEST LIST"
+            android:textColor="@color/white"
+            android:textSize="@dimen/txt_extra_big"
+            app:typeface="OpenSans-Bold" />
+
+        <ImageView
+            android:id="@+id/btnIntercom"
+            android:layout_width="@dimen/edittext_height"
+            android:layout_height="@dimen/edittext_height"
+            android:padding="@dimen/padding"
+            android:src="@drawable/icon_chat" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/margin4"
+        android:layout_marginRight="@dimen/margin4"
+        android:layout_marginBottom="@dimen/margin4"
+        
+        android:orientation="horizontal" >
+
+        <LinearLayout
+            android:visibility="gone"
+            android:id="@+id/job"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/button_height3"
+            android:layout_weight="1"
+            android:background="@drawable/bg_bid_tab_off"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/padding2"
+            android:paddingRight="@dimen/padding2" >
+
+            <com.pa.common.TypefaceTextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:drawableLeft="@drawable/icon_list_job"
+                android:drawablePadding="@dimen/padding2"
+                android:gravity="center"
+                android:text="JOB LIST"
+                android:textColor="@color/white"
+                android:textSize="@dimen/txt_big"
+                app:typeface="OpenSans-Bold" />
+        </LinearLayout>
+
+        <RelativeLayout
+            android:visibility="gone"
+            android:id="@+id/bid"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/button_height3"
+            android:layout_weight="1"
+            android:background="@drawable/bg_bid_tab_on"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/padding2"
+            android:paddingRight="@dimen/padding2" >
+
+            <TextView 
+                android:background="@android:color/transparent"
+                android:id="@+id/bid_widget"
+                android:layout_width="match_parent" android:layout_height="match_parent"/>
+            
+            <com.pa.common.TypefaceTextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:drawableLeft="@drawable/icon_price_tag"
+                android:drawablePadding="@dimen/padding2"
+                android:gravity="center"
+                android:text="BID REQUEST"
+                android:textColor="@color/white"
+                android:textSize="@dimen/txt_big"
+                app:typeface="OpenSans-Bold" />
+
+            <com.pa.common.TypefaceTextView
+                android:visibility="gone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin2"
+                android:background="@drawable/bg_red_circle"
+                android:gravity="center"
+                android:padding="@dimen/padding"
+                android:text="1"
+                android:textColor="@color/white"
+                android:textSize="@dimen/txt_big"
+                app:typeface="OpenSans-Bold" />
+        </RelativeLayout>
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/list"
+        
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@android:color/transparent"
+        android:cacheColorHint="#00000000"
+        android:divider="@color/black"
+        android:dividerHeight="0dp" >
+    </ListView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/edittext_height3"
+        android:background="@color/pa_blue"
+        android:gravity="left|center_vertical"
+        android:orientation="horizontal"
+        android:padding="@dimen/margin1"
+        android:visibility="gone" >
+
+        <com.pa.common.TypefaceButton
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/edittext_height"
+            android:background="@drawable/btn_effect_blue"
+            android:gravity="center"
+            android:paddingLeft="@dimen/margin3"
+            android:paddingRight="@dimen/margin3"
+            android:text="+ New Job"
+            android:textColor="@color/white"
+            android:textSize="@dimen/txt_big"
+            android:textStyle="normal"
+            android:visibility="gone"
+            app:typeface="OpenSans-Regular" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/refresh"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/edittext_height3"
+        android:background="@color/pa_orange"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <com.pa.common.ImageViewFitHeight
+            android:layout_gravity="center"
+            android:layout_width="wrap_content" android:layout_height="@dimen/edittext_height"
+            android:src="@drawable/ic_refresh_white"
+            />
+
+        <com.pa.common.TypefaceButton
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@color/pa_orange"
+            android:text="REFRESH"
+            android:textColor="@color/white"
+            android:textSize="@dimen/txt_xx_big"
+            android:textStyle="normal"
+            app:typeface="OpenSans-Regular"
+            android:duplicateParentState="true"
+            android:clickable="false"
+            android:focusable="false" />
+    </LinearLayout>
+
+</LinearLayout>

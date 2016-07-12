@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+
+    <com.pa.common.TypefaceTextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="@dimen/margin1"
+        android:gravity="center"
+        android:text="SPH Magazines 2016. All Rights Reserved"
+        android:textColor="@color/white"
+        android:textSize="@dimen/txt_medium"
+        app:typeface="OpenSans-Light" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center">
+
+        <com.pa.common.TypefaceTextView
+            android:id="@+id/privacy_policy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/margin1"
+            android:text="Privacy Policy"
+            android:textColor="@color/white"
+            android:textSize="@dimen/txt_medium"
+            app:typeface="OpenSans-Light" />
+
+        <View
+            android:layout_width="10dp"
+            android:layout_height="match_parent"/>
+
+        <com.pa.common.TypefaceTextView
+            android:id="@+id/term_of_use"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/margin1"
+            android:text="Term of Use"
+            android:textColor="@color/white"
+            android:textSize="@dimen/txt_medium"
+            app:typeface="OpenSans-Light" />
+
+    </LinearLayout>
+
+
+
+</LinearLayout>

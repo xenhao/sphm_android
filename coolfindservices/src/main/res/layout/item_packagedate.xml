@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingRight="1dp"
+    android:background="@color/gray">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:padding="@dimen/margin3"
+        android:id="@+id/ListViewDateItem"
+        android:orientation="vertical">
+
+        <com.pa.common.TypefaceTextView
+            android:id="@+id/datedays"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="AvailableDate"
+            android:textSize="@dimen/txt_xx_big"
+            android:textStyle="bold"
+            android:singleLine="false"
+            android:textAlignment="center"
+            android:layout_gravity="center"
+            android:maxLines="2"
+            android:textColor="@color/black"
+            android:ellipsize="marquee"/>
+
+        <com.pa.common.TypefaceTextView
+            android:id="@+id/dateTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="AvailableDate"
+            android:textSize="@dimen/txt_big"
+            android:textStyle="bold"
+            android:singleLine="false"
+            android:layout_gravity="center"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:ellipsize="marquee"/>
+
+        <com.pa.common.TypefaceTextView
+            android:id="@+id/monthTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="AvailableDate"
+            android:textSize="@dimen/txt_big"
+            android:textStyle="bold"
+            android:singleLine="false"
+            android:layout_gravity="center"
+            android:textAlignment="center"
+            android:maxLines="2"
+            android:layout_marginTop="@dimen/margin1"
+            android:textColor="@color/black"
+            android:ellipsize="marquee"/>
+
+    </LinearLayout>
+
+</RelativeLayout>

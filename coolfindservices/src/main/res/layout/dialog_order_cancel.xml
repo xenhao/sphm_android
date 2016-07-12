@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/pa_grey"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/edittext_height3"
+        android:background="@color/pa_orange"
+        android:gravity="center"
+        android:orientation="horizontal" >
+
+        <ImageView
+            android:id="@+id/btnBack"
+            android:layout_width="@dimen/edittext_height"
+            android:layout_height="@dimen/edittext_height"
+            android:layout_marginLeft="@dimen/margin2"
+            android:padding="@dimen/padding"
+            android:src="@drawable/img_back" />
+
+        <com.pa.common.TypefaceTextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="PAYMENT FAILED"
+            android:textColor="@color/white"
+            android:textSize="@dimen/txt_extra_big"
+            app:typeface="OpenSans-Bold" />
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="30" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/pa_grey"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin4"
+                android:gravity="center"
+                android:orientation="horizontal" >
+
+                <com.pa.common.TypefaceTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="Job Not Accepted and Confirmed"
+                    android:textColor="@color/pa_blue"
+                    android:textSize="@dimen/txt_big"
+                    app:typeface="OpenSans-Bold" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="@dimen/margin1"
+                    android:layout_weight="1"
+                    android:background="@color/pa_blue" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" >
+
+                <com.pa.common.TypefaceTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:gravity="left"
+                    android:paddingBottom="@dimen/margin2"
+                    android:paddingLeft="@dimen/margin4"
+                    android:paddingRight="@dimen/margin4"
+                    android:paddingTop="@dimen/margin2"
+                    android:text="SERVICE REQUEST ID :"
+                    android:textColor="@color/pa_blue"
+                    android:textSize="@dimen/txt_big"
+                    app:typeface="OpenSans-Bold" />
+
+                <com.pa.common.TypefaceTextView
+                    android:id="@+id/txtServiceRequestID"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@color/white"
+                    android:gravity="left"
+                    android:paddingBottom="@dimen/margin2"
+                    android:paddingLeft="@dimen/margin4"
+                    android:paddingRight="@dimen/margin4"
+                    android:paddingTop="@dimen/margin2"
+                    android:text=""
+                    android:textColor="@color/pa_blue"
+                    android:textSize="@dimen/txt_big"
+                    app:typeface="OpenSans-Bold" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/wrapperServiceCategory"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/pa_grey"
+                android:orientation="vertical" >
+
+                <com.pa.common.TypefaceTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="left"
+                    android:paddingLeft="@dimen/margin4"
+                    android:paddingRight="@dimen/margin4"
+                    android:paddingTop="@dimen/margin4"
+                    android:text="@string/cancel_order"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/txt_big"
+                    app:typeface="OpenSans-Regular" />
+
+                <com.pa.common.TypefaceTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="left"
+                    android:paddingBottom="@dimen/margin4"
+                    android:paddingLeft="@dimen/margin4"
+                    android:paddingRight="@dimen/margin4"
+                    android:paddingTop="@dimen/margin4"
+                    android:text="@string/cancel_order_reason"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/txt_big"
+                    app:typeface="OpenSans-Regular" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+    <!--<LinearLayout-->
+        <!--android:layout_weight="2"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginLeft="@dimen/margin4"-->
+        <!--android:layout_marginRight="@dimen/margin4"-->
+        <!--android:orientation="vertical"-->
+        <!--android:showDividers="middle"-->
+        <!--android:divider="@drawable/transparent_10dp" >-->
+
+        <com.pa.common.TypefaceButton
+            android:id="@+id/btnReturnToPayment"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/edittext_height"
+            android:background="@drawable/btn_effect_blue_light"
+            android:gravity="center"
+            android:text="RETURN TO PAYMENT PAGE"
+            android:textColor="@color/white"
+            android:layout_margin="10dp"
+            android:textSize="@dimen/txt_big"
+            android:textStyle="normal"
+            app:typeface="OpenSans-Regular" />
+
+        <com.pa.common.TypefaceButton
+            android:id="@+id/btnNext2"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/edittext_height"
+            android:layout_margin="10dp"
+            android:background="@drawable/btn_effect_blue_light"
+            android:gravity="center"
+            android:text="GO TO MERCHANT'S OFFERS"
+            android:textColor="@color/white"
+            android:textSize="@dimen/txt_big"
+            android:textStyle="normal"
+            app:typeface="OpenSans-Regular" />
+    <!--</LinearLayout>-->
+
+    <LinearLayout
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/margin4"
+        android:layout_marginRight="@dimen/margin4"
+        android:orientation="horizontal" >
+
+        <com.pa.common.TypefaceTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="left"
+            android:paddingBottom="@dimen/margin2"
+            android:paddingRight="@dimen/margin4"
+            android:paddingTop="@dimen/margin2"
+            android:text="Need assistance ? Call "
+            android:textColor="@color/pa_dark_grey"
+            android:textSize="@dimen/txt_big"
+            app:typeface="OpenSans-Regular" />
+        <com.pa.common.TypefaceTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="left"
+            android:paddingBottom="@dimen/margin2"
+            android:paddingRight="@dimen/margin4"
+            android:paddingTop="@dimen/margin2"
+            android:text="MY: +60 3 2630 8430 \nSG: +65 6850 5451"
+            android:textColor="@color/pa_blue"
+            android:textSize="@dimen/txt_big"
+            app:typeface="OpenSans-Regular" />
+        
+    </LinearLayout>
+
+</LinearLayout>

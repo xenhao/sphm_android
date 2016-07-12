@@ -1,0 +1,175 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/logo"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:visibility="gone"
+        android:weightSum="5" >
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:src="@drawable/cool_find_logo" />
+    </LinearLayout>
+
+<!--     <ScrollView
+        android:id="@+id/layoutLogin"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginLeft="@dimen/margin6"
+        android:layout_marginRight="@dimen/margin6"
+        android:layout_weight="1"
+        android:visibility="visible" >
+ -->
+        <LinearLayout         android:layout_marginLeft="@dimen/margin6"
+        android:layout_marginRight="@dimen/margin6"
+            
+            android:layout_width="match_parent"
+            android:layout_height="0dp" android:layout_weight="1"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:weightSum="5" >
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:src="@drawable/cool_find_logo" />
+            </LinearLayout>
+
+            <com.pa.common.TypefaceEditText
+                android:inputType="numberSigned"
+                android:gravity="center"
+                android:id="@+id/activation"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/edittext_height3"
+                android:background="@drawable/white_rectangle_solid"
+                android:drawablePadding="@dimen/margin1"
+                android:hint="Activation code"
+                android:textSize="@dimen/txt_big"
+                app:typeface="OpenSans-Regular" />
+
+            <com.pa.common.TypefaceTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Please check your mobile phone for an SMS containing the activation code"
+                android:textColor="@color/white"/>
+
+            
+
+            <com.pa.common.TypefaceButton
+                android:id="@+id/btnActivate"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/edittext_height3"
+                android:layout_marginTop="@dimen/margin1"
+                android:background="@drawable/btn_effect_blue"
+                android:gravity="center"
+                android:text="ACTIVATE MY ACCOUNT"
+                android:textColor="@color/white"
+                android:textSize="@dimen/txt_big"
+                android:textStyle="bold"
+                app:typeface="OpenSans-Regular" />
+
+            
+
+             <LinearLayout
+        android:id="@+id/asdfasdf"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin4" >
+
+        <com.pa.common.TypefaceTextView
+            android:drawableRight="@drawable/icon_arrow_down"
+            android:drawablePadding="@dimen/margin1"
+            android:id="@+id/prefix"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/edittext_height3"
+            android:background="@drawable/white_rectangle_solid"
+            android:gravity="left|center_vertical"
+            android:text="+65"
+            android:inputType="text|phone"
+            android:layout_marginRight="@dimen/margin1"
+            android:textColor="@color/black"
+            android:textSize="@dimen/txt_big"
+            app:typeface="OpenSans-Regular" />
+        
+        <com.pa.common.TypefaceEditText
+            android:id="@+id/co_main_business_number"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/edittext_height3"
+            android:background="@drawable/white_rectangle_solid"
+            android:gravity="left|center_vertical"
+            android:hint="Phone number"
+            android:inputType="text|phone"
+            android:textColor="@color/black"
+            android:textSize="@dimen/txt_big"
+            app:typeface="OpenSans-Regular" />
+    </LinearLayout>
+            
+             <com.pa.common.TypefaceButton
+                android:id="@+id/btnResendActivate"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/edittext_height3"
+                android:layout_marginTop="@dimen/margin1"
+                android:background="@drawable/btn_effect_blue"
+                android:gravity="center"
+                android:text="RESEND ACTIVATE CODE"
+                android:textColor="@color/white"
+                android:textSize="@dimen/txt_big"
+                android:textStyle="bold"
+                app:typeface="OpenSans-Regular" />
+             
+             
+            
+            <com.pa.common.ImageViewFitHeight
+                android:visibility="gone"
+                android:layout_gravity="center_horizontal"
+                android:id="@+id/btnGuest"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/edittext_height3"
+                android:layout_marginTop="@dimen/margin1"
+                android:src="@drawable/btn_effect_continue_as_guest"
+ 				/>
+            
+            <View android:layout_width="1dp" android:layout_height="0dp" android:layout_weight="1" />
+            
+            <com.pa.common.TypefaceButton
+                android:id="@+id/btnBack"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/edittext_height3"
+                android:layout_marginTop="@dimen/margin1"
+                android:background="@drawable/btn_effect_blue"
+                android:gravity="center"
+                android:text="Back"
+                android:textColor="@color/white"
+                android:textSize="@dimen/txt_big"
+                android:textStyle="bold"
+                app:typeface="OpenSans-Regular" />
+        </LinearLayout>
+<!--     </ScrollView>
+ -->
+     <include
+        android:id="@+id/copyright"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/margin2"
+        layout="@layout/copyright" />
+    
+   
+
+</LinearLayout>

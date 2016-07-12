@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/gradient_grey"
+    android:orientation="horizontal"
+    android:padding="@dimen/padding2"
+    android:weightSum="10" >
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/margin4"
+        android:layout_weight="5.5"
+        android:orientation="vertical" >
+
+        <com.pa.common.TypefaceTextView
+            android:id="@+id/txtName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Name"
+            android:textColor="#ff787878"
+            android:textSize="@dimen/txt_big"
+            app:typeface="OpenSans-Bold" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+
+                <RatingBar
+                    android:id="@+id/ratingBar1"
+                    style="?android:attr/ratingBarStyleSmall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:max="5"
+                    android:numStars="5"
+                    android:rating="3" />
+            </LinearLayout>
+            <View 
+                android:visibility="gone"
+                android:layout_width="0dp" android:layout_weight="1" android:layout_height="1dp"/>
+                            <com.pa.common.TypefaceTextView
+                                
+                               android:visibility="gone"
+                    android:id="@+id/view_offer"
+                    android:layout_gravity="center"
+                    android:padding="@dimen/margin2"
+                    android:background="@drawable/btn_effect_blue_light"
+                    android:layout_width="wrap_content" 
+                    android:layout_height="wrap_content"
+                    android:text="SEE OFFER"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/txt_big"
+                    app:typeface="OpenSans-Bold" />
+            
+        </LinearLayout>
+    </LinearLayout>
+    <LinearLayout 
+        android:layout_marginLeft="@dimen/margin2"
+        android:orientation="vertical"
+        android:layout_width="0dp" android:layout_weight="4" android:layout_height="wrap_content">
+        
+        <com.pa.common.TypefaceTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Offer price"
+            android:textColor="#ffc0c0c0"
+            android:textSize="@dimen/txt_small"
+            app:typeface="OpenSans-Bold" />
+        <com.pa.common.TypefaceTextView
+                    android:id="@+id/txtPrice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin2"
+                    android:text=""
+                    android:textColor="#ff919191"
+                    android:textSize="@dimen/txt_xxx_big"
+                    app:typeface="OpenSans-Bold" />
+        
+    </LinearLayout>
+
+    <com.pa.common.ImageViewFitWidth
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginLeft="@dimen/margin4"
+        android:layout_weight="0.5"
+        android:src="@drawable/gray_arrow"
+        android:visibility="visible" />
+
+</LinearLayout>

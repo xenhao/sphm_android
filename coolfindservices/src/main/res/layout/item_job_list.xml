@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#e5f7fd"
+    android:orientation="horizontal"
+    android:padding="@dimen/padding2"
+    android:weightSum="10" >
+
+    <com.pa.common.ImageViewFitWidth
+        android:visibility="gone"
+        android:id="@+id/img"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:src="@drawable/ic_launcher" />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/margin4"
+        android:layout_weight="8"
+        android:orientation="vertical" >
+
+        <com.pa.common.TypefaceTextView
+            android:id="@+id/service_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Name"
+            android:textColor="@color/pa_blue"
+            android:textSize="@dimen/txt_big"
+            app:typeface="OpenSans-Bold" />
+
+
+    
+        <com.pa.common.TypefaceTextView
+            android:id="@+id/txt_service_serial"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="customer 1"
+            android:textColor="@color/pa_dark_grey"
+            android:textSize="@dimen/txt_big"
+            app:typeface="OpenSans-Regular" />
+
+        
+        <com.pa.common.TypefaceTextView
+            android:id="@+id/job_id"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin4"
+            android:text="Job id:"
+            android:textColor="@color/black"
+            android:textSize="@dimen/txt_big"
+            app:typeface="OpenSans-Regular" />
+        <com.pa.common.TypefaceTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="DATE &amp; TIME"
+            android:textColor="@color/black"
+            android:textSize="@dimen/txt_big"
+            app:typeface="OpenSans-Bold" />
+
+        <com.pa.common.TypefaceTextView
+            android:id="@+id/date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="WED, March 31 2014"
+            android:textColor="@color/pa_dark_grey"
+            android:textSize="@dimen/txt_big"
+            app:typeface="OpenSans-Regular" />
+
+        <LinearLayout
+            android:layout_marginTop="@dimen/margin4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <com.pa.common.TypefaceTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="STATUS"
+                android:textColor="@color/black"
+                android:textSize="@dimen/txt_big"
+                app:typeface="OpenSans-Bold" />
+
+            <com.pa.common.TypefaceTextView
+                android:layout_marginLeft="@dimen/margin2"
+                android:id="@+id/status"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="SGD 1" android:layout_weight="1"
+                android:textColor="@color/pa_dark_grey"
+                android:textSize="@dimen/txt_big"
+                app:typeface="OpenSans-Bold" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <com.pa.common.ImageViewFitWidth
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginLeft="@dimen/margin4"
+        android:layout_weight="1"
+        android:src="@drawable/orange_arrow" />
+
+</LinearLayout>

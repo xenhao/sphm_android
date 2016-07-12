@@ -1,0 +1,72 @@
+package com.pa.pojo;
+
+public class UserORM {
+	public UserORM(){};
+	
+	public String status;
+	public Result result;
+	
+	public static class Result{
+		public Result(){};
+		public String id,
+		co_country,
+		activation_token,
+		forgot_password_token,
+		agreement_token,
+		is_active,
+		username,
+		usertype,
+		cs_name,
+		cs_address,
+		cs_state,
+		cs_city,
+		cs_email,
+		cs_mobile_number,
+		cs_home_number,
+		cs_postal_code,
+		co_name,
+		co_registration_number,
+		co_business_description ,
+		co_address_1 ,
+		co_address_2 ,
+		co_state ,
+		co_city ,
+		co_postal_code ,
+		co_main_business_number ,
+		co_main_contact_number ,
+		co_main_email ,
+		co_main_contact_email ,
+		co_contact_person_name ,
+		co_contact_person_number ,
+		co_contact_person_email ,
+		co_about ,
+		co_business_hour_start ,
+		co_business_hour_end ,
+		co_business_day ,
+		co_website_url ,
+		co_facebook_url ,
+		co_twitter_url ,
+		co_instagram_url ,
+		co_linkedin_url ,
+		co_profile_pic ,
+		co_service_id_cache ,
+		co_service_name_cache ,
+		co_all_address_cache ,
+		co_overall_rating ,
+		active_session_token ,
+		remember_token ,
+		paypal_credit_card_id ,
+		created_at ,
+		updated_at ,
+		deleted_at ,
+		am_email ,
+		language ,
+		cs_country ,
+		cs_country_short ,
+		co_country_short ,
+		is_verified ,
+		co_is_branch ,
+		currency ,
+        ip;
+	}
+}

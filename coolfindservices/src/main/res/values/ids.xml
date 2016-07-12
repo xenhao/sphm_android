@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+        <item type="id" name="quickaction1" />
+        <item type="id" name="layout2" />
+        <item type="id" name="layout3" />
+        <item type="id" name="questionhierarchy" />
+        
+</resources>

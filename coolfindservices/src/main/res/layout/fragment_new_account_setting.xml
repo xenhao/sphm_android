@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/pa_grey"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/edittext_height3"
+        android:background="@color/pa_orange"
+        android:gravity="center"
+        android:orientation="horizontal" >
+
+        <ImageView
+            android:id="@+id/btnBack"
+            android:layout_width="@dimen/edittext_height"
+            android:layout_height="@dimen/edittext_height"
+            android:layout_marginLeft="@dimen/margin2"
+            android:padding="@dimen/padding"
+            android:src="@drawable/img_back" />
+
+        <com.pa.common.TypefaceTextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="SETTINGS"
+            android:textColor="@color/white"
+            android:textSize="@dimen/txt_extra_big"
+            app:typeface="OpenSans-Bold" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin4"
+        android:gravity="center"
+        android:orientation="horizontal" >
+
+        <com.pa.common.TypefaceTextView
+            android:id="@+id/txtTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Your Account"
+            android:textColor="@color/pa_blue"
+            android:textSize="@dimen/txt_big"
+            app:typeface="OpenSans-Bold" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_marginLeft="@dimen/margin1"
+            android:layout_weight="1"
+            android:background="@color/pa_blue" />
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/pa_grey"
+            android:orientation="vertical" >
+
+            <LinearLayout android:visibility="gone"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:padding="@dimen/margin2" >
+
+                <com.pa.common.TypefaceTextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:paddingLeft="@dimen/margin2"
+                    android:paddingRight="@dimen/margin2"
+                    android:text="USER NAME"
+                    android:textColor="@color/pa_blue"
+                    android:textSize="@dimen/txt_big"
+                    app:typeface="OpenSans-Bold" />
+
+                 <com.pa.common.TypefaceTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/margin2"
+                    android:paddingRight="@dimen/margin2"
+                    android:text=":"
+                    android:textColor="@color/pa_blue"
+                    android:textSize="@dimen/txt_big"
+                    app:typeface="OpenSans-Bold" />
+
+               <com.pa.common.TypefaceTextView
+                   android:id="@+id/user_name"
+                   android:layout_width="0dp"
+                   android:layout_height="wrap_content"
+                   android:layout_weight="3"
+                   android:gravity="right"
+                   android:paddingLeft="@dimen/margin2"
+                   android:paddingRight="@dimen/margin2"
+                   android:text="email@email.com"
+                   android:textColor="@color/pa_dark_grey"
+                   android:textSize="@dimen/txt_big"
+                   app:typeface="OpenSans-Regular" />
+
+            </LinearLayout>
+            
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_marginTop="@dimen/margin2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:padding="@dimen/margin2" >
+
+                <com.pa.common.TypefaceTextView
+                    android:layout_width="0dp"
+                    android:layout_weight="2"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/margin2"
+                    android:paddingRight="@dimen/margin2"
+                    android:text="EMAIL"
+                    android:textColor="@color/pa_blue"
+                    android:textSize="@dimen/txt_big"
+                    app:typeface="OpenSans-Bold" />
+                
+                <com.pa.common.TypefaceTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/margin2"
+                    android:paddingRight="@dimen/margin2"
+                    android:text=":"
+                    android:textColor="@color/pa_blue"
+                    android:textSize="@dimen/txt_big"
+                    app:typeface="OpenSans-Bold" />
+                
+                <com.pa.common.TypefaceTextView
+                    android:id="@+id/email"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3"
+                    android:drawablePadding="@dimen/margin2"
+                    android:gravity="right|center_vertical"
+                    android:paddingLeft="@dimen/margin2"
+                    android:paddingRight="@dimen/margin2"
+                    android:text="email@email.com"
+                    android:textColor="@color/pa_category"
+                    android:textSize="@dimen/txt_big"
+                    app:typeface="OpenSans-Regular" />
+                
+            </LinearLayout>
+            
+            <LinearLayout
+                android:layout_marginTop="@dimen/margin2"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:padding="@dimen/margin2" >
+
+                <com.pa.common.TypefaceTextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:paddingLeft="@dimen/margin2"
+                    android:paddingRight="@dimen/margin2"
+                    android:text="PASSWORD"
+                    android:textColor="@color/pa_blue"
+                    android:textSize="@dimen/txt_big"
+                    app:typeface="OpenSans-Bold" />
+                
+                <com.pa.common.TypefaceTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/margin2"
+                    android:paddingRight="@dimen/margin2"
+                    android:text=":"
+                    android:textColor="@color/pa_blue"
+                    android:textSize="@dimen/txt_big"
+                    app:typeface="OpenSans-Bold" />
+                
+                <com.pa.common.TypefaceTextView
+                    android:id="@+id/password"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3"
+                    android:drawablePadding="@dimen/margin2"
+                    android:drawableRight="@drawable/icon_arrow_right"
+                    android:gravity="right|center_vertical"
+                    android:inputType="textPassword"
+                    android:paddingLeft="@dimen/margin2"
+                    android:paddingRight="@dimen/margin2"
+                    android:text="JOB STATUS"
+                    android:textColor="@color/pa_category"
+                    android:textSize="@dimen/txt_big"
+                    app:typeface="OpenSans-Regular" />
+
+            </LinearLayout>
+            
+            
+           
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

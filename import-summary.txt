@@ -1,0 +1,595 @@
+ECLIPSE ANDROID PROJECT IMPORT SUMMARY
+======================================
+
+Manifest Merging:
+-----------------
+Your project uses libraries that provide manifests, and your Eclipse
+project did not explicitly turn on manifest merging. In Android Gradle
+projects, manifests are always merged (meaning that contents from your
+libraries' manifests will be merged into the app manifest. If you had
+manually copied contents from library manifests into your app manifest
+you may need to remove these for the app to build correctly.
+
+Ignored Files:
+--------------
+The following files were *not* copied into the new Gradle project; you
+should evaluate whether these are still needed in your project and if
+so manually move them:
+
+From BraintreePaymentActivity:
+* .DS_Store
+From FacebookSDK:
+* .DS_Store
+* TestApp/
+* TestApp/.DS_Store
+* TestApp/.classpath
+* TestApp/.project
+* TestApp/AndroidManifest.xml
+* TestApp/SdkTestApp.eml
+* TestApp/SdkTestApp.iml
+* TestApp/ant.properties
+* TestApp/bin/
+* TestApp/bin/.DS_Store
+* TestApp/bin/AndroidManifest.xml
+* TestApp/bin/classes/
+* TestApp/bin/classes/.DS_Store
+* TestApp/bin/classes/com/
+* TestApp/bin/classes/com/.DS_Store
+* TestApp/bin/classes/com/facebook/
+* TestApp/bin/classes/com/facebook/.DS_Store
+* TestApp/bin/classes/com/facebook/sdk/
+* TestApp/bin/classes/com/facebook/sdk/BuildConfig.class
+* TestApp/bin/classes/com/facebook/sdk/R$attr.class
+* TestApp/bin/classes/com/facebook/sdk/R$drawable.class
+* TestApp/bin/classes/com/facebook/sdk/R$layout.class
+* TestApp/bin/classes/com/facebook/sdk/R$string.class
+* TestApp/bin/classes/com/facebook/sdk/R.class
+* TestApp/bin/classes/com/facebook/sdk/StatusActivity.class
+* TestApp/bin/jarlist.cache
+* TestApp/build.xml
+* TestApp/gen/
+* TestApp/gen/.DS_Store
+* TestApp/gen/com/
+* TestApp/gen/com/.DS_Store
+* TestApp/gen/com/facebook/
+* TestApp/gen/com/facebook/.DS_Store
+* TestApp/gen/com/facebook/sdk/
+* TestApp/gen/com/facebook/sdk/BuildConfig.java
+* TestApp/gen/com/facebook/sdk/R.java
+* TestApp/proguard-project.txt
+* TestApp/project.properties
+* TestApp/res/
+* TestApp/res/.DS_Store
+* TestApp/res/drawable-hdpi/
+* TestApp/res/drawable-hdpi/ic_launcher.png
+* TestApp/res/drawable-ldpi/
+* TestApp/res/drawable-ldpi/ic_launcher.png
+* TestApp/res/drawable-mdpi/
+* TestApp/res/drawable-mdpi/ic_launcher.png
+* TestApp/res/layout/
+* TestApp/res/layout/main.xml
+* TestApp/res/values/
+* TestApp/res/values/strings.xml
+* TestApp/src/
+* TestApp/src/.DS_Store
+* TestApp/src/com/
+* TestApp/src/com/.DS_Store
+* TestApp/src/com/facebook/
+* TestApp/src/com/facebook/.DS_Store
+* TestApp/src/com/facebook/sdk/
+* TestApp/src/com/facebook/sdk/StatusActivity.java
+* android-sdk.eml
+* android-sdk.iml
+* ant.properties
+* build.xml
+* proguard-project.txt
+* tests/
+* tests/.DS_Store
+* tests/.classpath
+* tests/.project
+* tests/AndroidManifest.xml
+* tests/SdkTests.eml
+* tests/SdkTests.iml
+* tests/ant.properties
+* tests/assets/
+* tests/assets/DarkScreen.mov
+* tests/bin/
+* tests/bin/.DS_Store
+* tests/bin/AndroidManifest.xml
+* tests/bin/R.txt
+* tests/bin/classes/
+* tests/bin/classes/.DS_Store
+* tests/bin/classes/com/
+* tests/bin/classes/com/.DS_Store
+* tests/bin/classes/com/facebook/
+* tests/bin/classes/com/facebook/.DS_Store
+* tests/bin/classes/com/facebook/AccessTokenTests.class
+* tests/bin/classes/com/facebook/AsyncRequestTests$1.class
+* tests/bin/classes/com/facebook/AsyncRequestTests$1FriendsCallback.class
+* tests/bin/classes/com/facebook/AsyncRequestTests$1MeCallback.class
+* tests/bin/classes/com/facebook/AsyncRequestTests$2.class
+* tests/bin/classes/com/facebook/AsyncRequestTests$3.class
+* tests/bin/classes/com/facebook/AsyncRequestTests$4.class
+* tests/bin/classes/com/facebook/AsyncRequestTests$5.class
+* tests/bin/classes/com/facebook/AsyncRequestTests$6.class
+* tests/bin/classes/com/facebook/AsyncRequestTests.class
+* tests/bin/classes/com/facebook/AuthorizationClientTests$1.class
+* tests/bin/classes/com/facebook/AuthorizationClientTests$2.class
+* tests/bin/classes/com/facebook/AuthorizationClientTests$3.class
+* tests/bin/classes/com/facebook/AuthorizationClientTests$DoNothingAuthorizationClient.class
+* tests/bin/classes/com/facebook/AuthorizationClientTests$MockAuthorizationClient.class
+* tests/bin/classes/com/facebook/AuthorizationClientTests$MockValidatingAuthorizationClient$1.class
+* tests/bin/classes/com/facebook/AuthorizationClientTests$MockValidatingAuthorizationClient$2.class
+* tests/bin/classes/com/facebook/AuthorizationClientTests$MockValidatingAuthorizationClient.class
+* tests/bin/classes/com/facebook/AuthorizationClientTests.class
+* tests/bin/classes/com/facebook/BatchRequestTests$1.class
+* tests/bin/classes/com/facebook/BatchRequestTests$2.class
+* tests/bin/classes/com/facebook/BatchRequestTests$3.class
+* tests/bin/classes/com/facebook/BatchRequestTests$4.class
+* tests/bin/classes/com/facebook/BatchRequestTests$5.class
+* tests/bin/classes/com/facebook/BatchRequestTests$6.class
+* tests/bin/classes/com/facebook/BatchRequestTests.class
+* tests/bin/classes/com/facebook/FacebookActivityTestCase$1.class
+* tests/bin/classes/com/facebook/FacebookActivityTestCase$2.class
+* tests/bin/classes/com/facebook/FacebookActivityTestCase$3.class
+* tests/bin/classes/com/facebook/FacebookActivityTestCase$4.class
+* tests/bin/classes/com/facebook/FacebookActivityTestCase$5.class
+* tests/bin/classes/com/facebook/FacebookActivityTestCase$ExpectFailureCallback.class
+* tests/bin/classes/com/facebook/FacebookActivityTestCase$ExpectSuccessCallback.class
+* tests/bin/classes/com/facebook/FacebookActivityTestCase$GraphObjectPostResult.class
+* tests/bin/classes/com/facebook/FacebookActivityTestCase$MockRequest.class
+* tests/bin/classes/com/facebook/FacebookActivityTestCase$MockRequestBatch.class
+* tests/bin/classes/com/facebook/FacebookActivityTestCase$TestCallback.class
+* tests/bin/classes/com/facebook/FacebookActivityTestCase$TestRequestAsyncTask$1.class
+* tests/bin/classes/com/facebook/FacebookActivityTestCase$TestRequestAsyncTask$2.class
+* tests/bin/classes/com/facebook/FacebookActivityTestCase$TestRequestAsyncTask.class
+* tests/bin/classes/com/facebook/FacebookActivityTestCase.class
+* tests/bin/classes/com/facebook/FacebookActivityTests$FacebookTestActivity.class
+* tests/bin/classes/com/facebook/FacebookActivityTests.class
+* tests/bin/classes/com/facebook/FacebookRequestErrorTests.class
+* tests/bin/classes/com/facebook/FacebookTestCase$FacebookTestActivity.class
+* tests/bin/classes/com/facebook/FacebookTestCase.class
+* tests/bin/classes/com/facebook/GraphRequestTests.class
+* tests/bin/classes/com/facebook/RequestTests$1.class
+* tests/bin/classes/com/facebook/RequestTests$2.class
+* tests/bin/classes/com/facebook/RequestTests$3.class
+* tests/bin/classes/com/facebook/RequestTests.class
+* tests/bin/classes/com/facebook/SessionTests$1.class
+* tests/bin/classes/com/facebook/SessionTests$2.class
+* tests/bin/classes/com/facebook/SessionTests$3.class
+* tests/bin/classes/com/facebook/SessionTests.class
+* tests/bin/classes/com/facebook/SessionTestsBase$1.class
+* tests/bin/classes/com/facebook/SessionTestsBase$1MutableState.class
+* tests/bin/classes/com/facebook/SessionTestsBase$MockTokenCachingStrategy.class
+* tests/bin/classes/com/facebook/SessionTestsBase$ScriptedSession$1.class
+* tests/bin/classes/com/facebook/SessionTestsBase$ScriptedSession$AuthorizeResult.class
+* tests/bin/classes/com/facebook/SessionTestsBase$ScriptedSession.class
+* tests/bin/classes/com/facebook/SessionTestsBase$SessionStatusCallbackRecorder$Call.class
+* tests/bin/classes/com/facebook/SessionTestsBase$SessionStatusCallbackRecorder.class
+* tests/bin/classes/com/facebook/SessionTestsBase$WaitForBroadcastReceiver.class
+* tests/bin/classes/com/facebook/SessionTestsBase.class
+* tests/bin/classes/com/facebook/SettingsTests$1.class
+* tests/bin/classes/com/facebook/SettingsTests$2.class
+* tests/bin/classes/com/facebook/SettingsTests$3.class
+* tests/bin/classes/com/facebook/SettingsTests.class
+* tests/bin/classes/com/facebook/SharedPreferencesTokenCacheTests.class
+* tests/bin/classes/com/facebook/TestBlocker.class
+* tests/bin/classes/com/facebook/TestSessionTests$1.class
+* tests/bin/classes/com/facebook/TestSessionTests.class
+* tests/bin/classes/com/facebook/TestUtils.class
+* tests/bin/classes/com/facebook/android/
+* tests/bin/classes/com/facebook/android/R$attr.class
+* tests/bin/classes/com/facebook/android/R$color.class
+* tests/bin/classes/com/facebook/android/R$dimen.class
+* tests/bin/classes/com/facebook/android/R$drawable.class
+* tests/bin/classes/com/facebook/android/R$id.class
+* tests/bin/classes/com/facebook/android/R$layout.class
+* tests/bin/classes/com/facebook/android/R$string.class
+* tests/bin/classes/com/facebook/android/R$style.class
+* tests/bin/classes/com/facebook/android/R$styleable.class
+* tests/bin/classes/com/facebook/android/R.class
+* tests/bin/classes/com/facebook/internal/
+* tests/bin/classes/com/facebook/internal/FileLruCacheTests$1.class
+* tests/bin/classes/com/facebook/internal/FileLruCacheTests.class
+* tests/bin/classes/com/facebook/internal/SessionTrackerTests$1.class
+* tests/bin/classes/com/facebook/internal/SessionTrackerTests.class
+* tests/bin/classes/com/facebook/internal/ValidateTests.class
+* tests/bin/classes/com/facebook/model/
+* tests/bin/classes/com/facebook/model/GraphObjectFactoryTests$BadBaseInterfaceGraphObject.class
+* tests/bin/classes/com/facebook/model/GraphObjectFactoryTests$BadGetterNameGraphObject.class
+* tests/bin/classes/com/facebook/model/GraphObjectFactoryTests$BadGetterParamsGraphObject.class
+* tests/bin/classes/com/facebook/model/GraphObjectFactoryTests$BadGetterReturnTypeGraphObject.class
+* tests/bin/classes/com/facebook/model/GraphObjectFactoryTests$BadNoParameterMethodNameGraphObject.class
+* tests/bin/classes/com/facebook/model/GraphObjectFactoryTests$BadPropertyOverrideInterfaceGraphObject.class
+* tests/bin/classes/com/facebook/model/GraphObjectFactoryTests$BadSetterNameGraphObject.class
+* tests/bin/classes/com/facebook/model/GraphObjectFactoryTests$BadSetterParamsGraphObject.class
+* tests/bin/classes/com/facebook/model/GraphObjectFactoryTests$BadSetterReturnTypeGraphObject.class
+* tests/bin/classes/com/facebook/model/GraphObjectFactoryTests$BadSingleParameterMethodNameGraphObject.class
+* tests/bin/classes/com/facebook/model/GraphObjectFactoryTests$Base.class
+* tests/bin/classes/com/facebook/model/GraphObjectFactoryTests$DateGraphObject.class
+* tests/bin/classes/com/facebook/model/GraphObjectFactoryTests$Derived.class
+* tests/bin/classes/com/facebook/model/GraphObjectFactoryTests$GoodPropertyOverrideInterfaceGraphObject.class
+* tests/bin/classes/com/facebook/model/GraphObjectFactoryTests$GraphMetric.class
+* tests/bin/classes/com/facebook/model/GraphObjectFactoryTests$GraphObjectClass.class
+* tests/bin/classes/com/facebook/model/GraphObjectFactoryTests$Locations.class
+* tests/bin/classes/com/facebook/model/GraphObjectFactoryTests.class
+* tests/bin/classes/com/facebook/model/JsonUtilTests.class
+* tests/bin/classes/com/facebook/sdk/
+* tests/bin/classes/com/facebook/sdk/.DS_Store
+* tests/bin/classes/com/facebook/sdk/tests/
+* tests/bin/classes/com/facebook/sdk/tests/BuildConfig.class
+* tests/bin/classes/com/facebook/sdk/tests/R$attr.class
+* tests/bin/classes/com/facebook/sdk/tests/R$color.class
+* tests/bin/classes/com/facebook/sdk/tests/R$dimen.class
+* tests/bin/classes/com/facebook/sdk/tests/R$drawable.class
+* tests/bin/classes/com/facebook/sdk/tests/R$id.class
+* tests/bin/classes/com/facebook/sdk/tests/R$layout.class
+* tests/bin/classes/com/facebook/sdk/tests/R$string.class
+* tests/bin/classes/com/facebook/sdk/tests/R$style.class
+* tests/bin/classes/com/facebook/sdk/tests/R$styleable.class
+* tests/bin/classes/com/facebook/sdk/tests/R.class
+* tests/bin/classes/com/facebook/widget/
+* tests/bin/classes/com/facebook/widget/FragmentTestCase$TestFragmentActivity.class
+* tests/bin/classes/com/facebook/widget/FragmentTestCase.class
+* tests/bin/classes/com/facebook/widget/FriendPickerFragmentTests$1.class
+* tests/bin/classes/com/facebook/widget/FriendPickerFragmentTests$2.class
+* tests/bin/classes/com/facebook/widget/FriendPickerFragmentTests$3.class
+* tests/bin/classes/com/facebook/widget/FriendPickerFragmentTests$4$1.class
+* tests/bin/classes/com/facebook/widget/FriendPickerFragmentTests$4.class
+* tests/bin/classes/com/facebook/widget/FriendPickerFragmentTests$TestActivity.class
+* tests/bin/classes/com/facebook/widget/FriendPickerFragmentTests.class
+* tests/bin/classes/com/facebook/widget/GraphObjectPagingLoaderTests$1.class
+* tests/bin/classes/com/facebook/widget/GraphObjectPagingLoaderTests$2.class
+* tests/bin/classes/com/facebook/widget/GraphObjectPagingLoaderTests$3.class
+* tests/bin/classes/com/facebook/widget/GraphObjectPagingLoaderTests$CountingCallback.class
+* tests/bin/classes/com/facebook/widget/GraphObjectPagingLoaderTests$DummyFragment.class
+* tests/bin/classes/com/facebook/widget/GraphObjectPagingLoaderTests$TestActivity.class
+* tests/bin/classes/com/facebook/widget/GraphObjectPagingLoaderTests.class
+* tests/bin/classes/com/facebook/widget/ImageResponseCacheTests.class
+* tests/bin/classes/com/facebook/widget/LoginButtonTest$1.class
+* tests/bin/classes/com/facebook/widget/LoginButtonTest$2.class
+* tests/bin/classes/com/facebook/widget/LoginButtonTest.class
+* tests/bin/classes/com/facebook/widget/PlacePickerFragmentTests$1.class
+* tests/bin/classes/com/facebook/widget/PlacePickerFragmentTests$2.class
+* tests/bin/classes/com/facebook/widget/PlacePickerFragmentTests$3.class
+* tests/bin/classes/com/facebook/widget/PlacePickerFragmentTests$4$1.class
+* tests/bin/classes/com/facebook/widget/PlacePickerFragmentTests$4$2.class
+* tests/bin/classes/com/facebook/widget/PlacePickerFragmentTests$4.class
+* tests/bin/classes/com/facebook/widget/PlacePickerFragmentTests$5.class
+* tests/bin/classes/com/facebook/widget/PlacePickerFragmentTests$6$1.class
+* tests/bin/classes/com/facebook/widget/PlacePickerFragmentTests$6$2.class
+* tests/bin/classes/com/facebook/widget/PlacePickerFragmentTests$6.class
+* tests/bin/classes/com/facebook/widget/PlacePickerFragmentTests$7$1.class
+* tests/bin/classes/com/facebook/widget/PlacePickerFragmentTests$7.class
+* tests/bin/classes/com/facebook/widget/PlacePickerFragmentTests$TestActivity.class
+* tests/bin/classes/com/facebook/widget/PlacePickerFragmentTests.class
+* tests/bin/classes/com/facebook/widget/UserSettingsFragmentTests$TestActivity.class
+* tests/bin/classes/com/facebook/widget/UserSettingsFragmentTests.class
+* tests/bin/classes/com/facebook/widget/WorkQueueTests$CountingRunnable.class
+* tests/bin/classes/com/facebook/widget/WorkQueueTests$ScriptableExecutor.class
+* tests/bin/classes/com/facebook/widget/WorkQueueTests$StressRunnable.class
+* tests/bin/classes/com/facebook/widget/WorkQueueTests.class
+* tests/bin/jarlist.cache
+* tests/build.xml
+* tests/gen/
+* tests/gen/.DS_Store
+* tests/gen/com/
+* tests/gen/com/.DS_Store
+* tests/gen/com/facebook/
+* tests/gen/com/facebook/.DS_Store
+* tests/gen/com/facebook/android/
+* tests/gen/com/facebook/android/R.java
+* tests/gen/com/facebook/sdk/
+* tests/gen/com/facebook/sdk/.DS_Store
+* tests/gen/com/facebook/sdk/tests/
+* tests/gen/com/facebook/sdk/tests/BuildConfig.java
+* tests/gen/com/facebook/sdk/tests/R.java
+* tests/proguard-project.txt
+* tests/project.properties
+* tests/res/
+* tests/res/.DS_Store
+* tests/res/layout/
+* tests/res/layout/friend_picker_test_layout_1.xml
+* tests/res/layout/place_picker_test_layout_1.xml
+* tests/res/values/
+* tests/res/values/strings.xml
+* tests/src/
+* tests/src/.DS_Store
+* tests/src/com/
+* tests/src/com/.DS_Store
+* tests/src/com/facebook/
+* tests/src/com/facebook/.DS_Store
+* tests/src/com/facebook/AccessTokenTests.java
+* tests/src/com/facebook/AsyncRequestTests.java
+* tests/src/com/facebook/AuthorizationClientTests.java
+* tests/src/com/facebook/BatchRequestTests.java
+* tests/src/com/facebook/FacebookActivityTestCase.java
+* tests/src/com/facebook/FacebookActivityTests.java
+* tests/src/com/facebook/FacebookRequestErrorTests.java
+* tests/src/com/facebook/FacebookTestCase.java
+* tests/src/com/facebook/GraphRequestTests.java
+* tests/src/com/facebook/RequestTests.java
+* tests/src/com/facebook/SessionTests.java
+* tests/src/com/facebook/SessionTestsBase.java
+* tests/src/com/facebook/SettingsTests.java
+* tests/src/com/facebook/SharedPreferencesTokenCacheTests.java
+* tests/src/com/facebook/TestBlocker.java
+* tests/src/com/facebook/TestSessionTests.java
+* tests/src/com/facebook/TestUtils.java
+* tests/src/com/facebook/internal/
+* tests/src/com/facebook/internal/FileLruCacheTests.java
+* tests/src/com/facebook/internal/SessionTrackerTests.java
+* tests/src/com/facebook/internal/ValidateTests.java
+* tests/src/com/facebook/model/
+* tests/src/com/facebook/model/GraphObjectFactoryTests.java
+* tests/src/com/facebook/model/JsonUtilTests.java
+* tests/src/com/facebook/widget/
+* tests/src/com/facebook/widget/FragmentTestCase.java
+* tests/src/com/facebook/widget/FriendPickerFragmentTests.java
+* tests/src/com/facebook/widget/GraphObjectPagingLoaderTests.java
+* tests/src/com/facebook/widget/ImageResponseCacheTests.java
+* tests/src/com/facebook/widget/LoginButtonTest.java
+* tests/src/com/facebook/widget/PlacePickerFragmentTests.java
+* tests/src/com/facebook/widget/UserSettingsFragmentTests.java
+* tests/src/com/facebook/widget/WorkQueueTests.java
+From PageAdvisor:
+* .DS_Store
+* challenge_guide.png
+* ic_launcher-web.png
+* proguard-project.txt
+From ProgressWheel:
+* .DS_Store
+* .gitignore
+* README.md
+* build.gradle
+* build.xml
+* proguard-project.txt
+* proguard.cfg
+* sample_image.png
+* sample_image_2.png
+* sample_image_3.png
+* sample_image_4.png
+From ZXingLib:
+* .DS_Store
+* .gitignore
+* proguard.cfg
+From image-chooser-library:
+* .DS_Store
+* .gitignore
+* README.md
+* build.gradle
+* pom.xml
+* proguard-project.txt
+* sample/
+* sample/.DS_Store
+* sample/image-chooser-app/
+* sample/image-chooser-app/.DS_Store
+* sample/image-chooser-app/.classpath
+* sample/image-chooser-app/.gitignore
+* sample/image-chooser-app/.project
+* sample/image-chooser-app/AndroidManifest.xml
+* sample/image-chooser-app/CREDITS
+* sample/image-chooser-app/assets/
+* sample/image-chooser-app/assets/.gitignore
+* sample/image-chooser-app/bin/
+* sample/image-chooser-app/bin/.DS_Store
+* sample/image-chooser-app/bin/AndroidManifest.xml
+* sample/image-chooser-app/bin/R.txt
+* sample/image-chooser-app/bin/classes/
+* sample/image-chooser-app/bin/classes/.DS_Store
+* sample/image-chooser-app/bin/classes/com/
+* sample/image-chooser-app/bin/classes/com/.DS_Store
+* sample/image-chooser-app/bin/classes/com/beanie/
+* sample/image-chooser-app/bin/classes/com/beanie/.DS_Store
+* sample/image-chooser-app/bin/classes/com/beanie/imagechooserapp/
+* sample/image-chooser-app/bin/classes/com/beanie/imagechooserapp/.DS_Store
+* sample/image-chooser-app/bin/classes/com/beanie/imagechooserapp/BuildConfig.class
+* sample/image-chooser-app/bin/classes/com/beanie/imagechooserapp/Config.class
+* sample/image-chooser-app/bin/classes/com/beanie/imagechooserapp/FragmentImageChooserActivity.class
+* sample/image-chooser-app/bin/classes/com/beanie/imagechooserapp/HomeActivity.class
+* sample/image-chooser-app/bin/classes/com/beanie/imagechooserapp/ImageChooserActivity$1.class
+* sample/image-chooser-app/bin/classes/com/beanie/imagechooserapp/ImageChooserActivity$2.class
+* sample/image-chooser-app/bin/classes/com/beanie/imagechooserapp/ImageChooserActivity$3.class
+* sample/image-chooser-app/bin/classes/com/beanie/imagechooserapp/ImageChooserActivity$4.class
+* sample/image-chooser-app/bin/classes/com/beanie/imagechooserapp/ImageChooserActivity.class
+* sample/image-chooser-app/bin/classes/com/beanie/imagechooserapp/MediaChooserActivity.class
+* sample/image-chooser-app/bin/classes/com/beanie/imagechooserapp/R$attr.class
+* sample/image-chooser-app/bin/classes/com/beanie/imagechooserapp/R$dimen.class
+* sample/image-chooser-app/bin/classes/com/beanie/imagechooserapp/R$drawable.class
+* sample/image-chooser-app/bin/classes/com/beanie/imagechooserapp/R$id.class
+* sample/image-chooser-app/bin/classes/com/beanie/imagechooserapp/R$layout.class
+* sample/image-chooser-app/bin/classes/com/beanie/imagechooserapp/R$string.class
+* sample/image-chooser-app/bin/classes/com/beanie/imagechooserapp/R$style.class
+* sample/image-chooser-app/bin/classes/com/beanie/imagechooserapp/R.class
+* sample/image-chooser-app/bin/classes/com/beanie/imagechooserapp/VideoChooserActivity$1.class
+* sample/image-chooser-app/bin/classes/com/beanie/imagechooserapp/VideoChooserActivity$2.class
+* sample/image-chooser-app/bin/classes/com/beanie/imagechooserapp/VideoChooserActivity.class
+* sample/image-chooser-app/bin/classes/com/beanie/imagechooserapp/fragments/
+* sample/image-chooser-app/bin/classes/com/beanie/imagechooserapp/fragments/ImageChooserFragment$1.class
+* sample/image-chooser-app/bin/classes/com/beanie/imagechooserapp/fragments/ImageChooserFragment.class
+* sample/image-chooser-app/bin/classes/com/kbeanie/
+* sample/image-chooser-app/bin/classes/com/kbeanie/.DS_Store
+* sample/image-chooser-app/bin/classes/com/kbeanie/imagechooser/
+* sample/image-chooser-app/bin/classes/com/kbeanie/imagechooser/R$drawable.class
+* sample/image-chooser-app/bin/classes/com/kbeanie/imagechooser/R$string.class
+* sample/image-chooser-app/bin/classes/com/kbeanie/imagechooser/R$style.class
+* sample/image-chooser-app/bin/classes/com/kbeanie/imagechooser/R.class
+* sample/image-chooser-app/bin/jarlist.cache
+* sample/image-chooser-app/gen/
+* sample/image-chooser-app/gen/.DS_Store
+* sample/image-chooser-app/gen/com/
+* sample/image-chooser-app/gen/com/.DS_Store
+* sample/image-chooser-app/gen/com/beanie/
+* sample/image-chooser-app/gen/com/beanie/.DS_Store
+* sample/image-chooser-app/gen/com/beanie/imagechooserapp/
+* sample/image-chooser-app/gen/com/beanie/imagechooserapp/BuildConfig.java
+* sample/image-chooser-app/gen/com/beanie/imagechooserapp/R.java
+* sample/image-chooser-app/gen/com/kbeanie/
+* sample/image-chooser-app/gen/com/kbeanie/.DS_Store
+* sample/image-chooser-app/gen/com/kbeanie/imagechooser/
+* sample/image-chooser-app/gen/com/kbeanie/imagechooser/R.java
+* sample/image-chooser-app/ic_launcher-web.png
+* sample/image-chooser-app/libs/
+* sample/image-chooser-app/libs/GoogleAdMobAdsSdk-6.4.1.jar
+* sample/image-chooser-app/libs/crashlytics.jar
+* sample/image-chooser-app/libs/libGoogleAnalyticsV2.jar
+* sample/image-chooser-app/proguard-project.txt
+* sample/image-chooser-app/project.properties
+* sample/image-chooser-app/res/
+* sample/image-chooser-app/res/.DS_Store
+* sample/image-chooser-app/res/drawable-hdpi/
+* sample/image-chooser-app/res/drawable-hdpi/ic_launcher.png
+* sample/image-chooser-app/res/drawable-mdpi/
+* sample/image-chooser-app/res/drawable-mdpi/ic_launcher.png
+* sample/image-chooser-app/res/drawable-mdpi/image_border.9.png
+* sample/image-chooser-app/res/drawable-xhdpi/
+* sample/image-chooser-app/res/drawable-xhdpi/ic_launcher.png
+* sample/image-chooser-app/res/drawable-xxhdpi/
+* sample/image-chooser-app/res/drawable-xxhdpi/ic_launcher.png
+* sample/image-chooser-app/res/layout/
+* sample/image-chooser-app/res/layout/activity_home.xml
+* sample/image-chooser-app/res/layout/activity_image_chooser.xml
+* sample/image-chooser-app/res/layout/activity_media_chooser.xml
+* sample/image-chooser-app/res/layout/activity_video_chooser.xml
+* sample/image-chooser-app/res/layout/fragment_image_chooser_activity.xml
+* sample/image-chooser-app/res/values-sw600dp/
+* sample/image-chooser-app/res/values-sw600dp/dimens.xml
+* sample/image-chooser-app/res/values-sw720dp-land/
+* sample/image-chooser-app/res/values-sw720dp-land/dimens.xml
+* sample/image-chooser-app/res/values-v11/
+* sample/image-chooser-app/res/values-v11/styles.xml
+* sample/image-chooser-app/res/values-v14/
+* sample/image-chooser-app/res/values-v14/styles.xml
+* sample/image-chooser-app/res/values/
+* sample/image-chooser-app/res/values/dimens.xml
+* sample/image-chooser-app/res/values/strings.xml
+* sample/image-chooser-app/res/values/styles.xml
+* sample/image-chooser-app/src/
+* sample/image-chooser-app/src/.DS_Store
+* sample/image-chooser-app/src/com/
+* sample/image-chooser-app/src/com/.DS_Store
+* sample/image-chooser-app/src/com/beanie/
+* sample/image-chooser-app/src/com/beanie/.DS_Store
+* sample/image-chooser-app/src/com/beanie/imagechooserapp/
+* sample/image-chooser-app/src/com/beanie/imagechooserapp/.DS_Store
+* sample/image-chooser-app/src/com/beanie/imagechooserapp/Config.java
+* sample/image-chooser-app/src/com/beanie/imagechooserapp/FragmentImageChooserActivity.java
+* sample/image-chooser-app/src/com/beanie/imagechooserapp/HomeActivity.java
+* sample/image-chooser-app/src/com/beanie/imagechooserapp/ImageChooserActivity.java
+* sample/image-chooser-app/src/com/beanie/imagechooserapp/MediaChooserActivity.java
+* sample/image-chooser-app/src/com/beanie/imagechooserapp/VideoChooserActivity.java
+* sample/image-chooser-app/src/com/beanie/imagechooserapp/fragments/
+* sample/image-chooser-app/src/com/beanie/imagechooserapp/fragments/ImageChooserFragment.java
+
+Replaced Jars with Dependencies:
+--------------------------------
+The importer recognized the following .jar files as third party
+libraries and replaced them with Gradle dependencies instead. This has
+the advantage that more explicit version information is known, and the
+libraries can be updated automatically. However, it is possible that
+the .jar file in your project was of an older version than the
+dependency we picked, which could render the project not compileable.
+You can disable the jar replacement in the import wizard and try again:
+
+android-support-v4.jar => com.android.support:support-v4:18.0.0
+
+Replaced Libraries with Dependencies:
+-------------------------------------
+The importer recognized the following library projects as third party
+libraries and replaced them with Gradle dependencies instead. This has
+the advantage that more explicit version information is known, and the
+libraries can be updated automatically. However, it is possible that
+the source files in your project were of an older version than the
+dependency we picked, which could render the project not compileable.
+You can disable the library replacement in the import wizard and try
+again:
+
+google-play-services_lib => [com.google.android.gms:play-services:+]
+
+Moved Files:
+------------
+Android Gradle projects use a different directory structure than ADT
+Eclipse projects. Here's how the projects were restructured:
+
+In BraintreePaymentActivity:
+* AndroidManifest.xml => braintreePaymentActivity/src/main/AndroidManifest.xml
+* assets/ => braintreePaymentActivity/src/main/assets
+* libs/braintree-api-1.2.7.jar => braintreePaymentActivity/libs/braintree-api-1.2.7.jar
+* res/ => braintreePaymentActivity/src/main/res/
+* src/ => braintreePaymentActivity/src/main/java/
+* src/.DS_Store => braintreePaymentActivity/src/main/resources/.DS_Store
+* src/com/.DS_Store => braintreePaymentActivity/src/main/resources/com/.DS_Store
+* src/com/braintreepayments/.DS_Store => braintreePaymentActivity/src/main/resources/com/braintreepayments/.DS_Store
+* src/com/braintreepayments/api/.DS_Store => braintreePaymentActivity/src/main/resources/com/braintreepayments/api/.DS_Store
+* src/com/braintreepayments/api/dropin/.DS_Store => braintreePaymentActivity/src/main/resources/com/braintreepayments/api/dropin/.DS_Store
+In FacebookSDK:
+* AndroidManifest.xml => facebookSDK/src/main/AndroidManifest.xml
+* assets/ => facebookSDK/src/main/assets
+* res/ => facebookSDK/src/main/res/
+* src/ => facebookSDK/src/main/java/
+* src/.DS_Store => facebookSDK/src/main/resources/.DS_Store
+* src/com/.DS_Store => facebookSDK/src/main/resources/com/.DS_Store
+* src/com/facebook/.DS_Store => facebookSDK/src/main/resources/com/facebook/.DS_Store
+In ProgressWheel:
+* AndroidManifest.xml => progressWheel/src/main/AndroidManifest.xml
+* assets/ => progressWheel/src/main/assets
+* res/ => progressWheel/src/main/res/
+* src/ => progressWheel/src/main/java/
+* src/.DS_Store => progressWheel/src/main/resources/.DS_Store
+* src/com/.DS_Store => progressWheel/src/main/resources/com/.DS_Store
+* src/com/todddavies/.DS_Store => progressWheel/src/main/resources/com/todddavies/.DS_Store
+* src/com/todddavies/components/.DS_Store => progressWheel/src/main/resources/com/todddavies/components/.DS_Store
+In ZXingLib:
+* AndroidManifest.xml => zXingLib/src/main/AndroidManifest.xml
+* assets/ => zXingLib/src/main/assets
+* libs/core.jar => zXingLib/libs/core.jar
+* res/ => zXingLib/src/main/res/
+* src/ => zXingLib/src/main/java/
+* src/.DS_Store => zXingLib/src/main/resources/.DS_Store
+* src/jim/.DS_Store => zXingLib/src/main/resources/jim/.DS_Store
+* src/jim/h/.DS_Store => zXingLib/src/main/resources/jim/h/.DS_Store
+* src/jim/h/common/.DS_Store => zXingLib/src/main/resources/jim/h/common/.DS_Store
+* src/jim/h/common/android/.DS_Store => zXingLib/src/main/resources/jim/h/common/android/.DS_Store
+* src/jim/h/common/android/lib/.DS_Store => zXingLib/src/main/resources/jim/h/common/android/lib/.DS_Store
+* src/jim/h/common/android/lib/zxing/.DS_Store => zXingLib/src/main/resources/jim/h/common/android/lib/zxing/.DS_Store
+In image-chooser-library:
+* AndroidManifest.xml => imagechooserlibrary/src/main/AndroidManifest.xml
+* assets/ => imagechooserlibrary/src/main/assets
+* res/ => imagechooserlibrary/src/main/res/
+* src/ => imagechooserlibrary/src/main/java/
+* src/.DS_Store => imagechooserlibrary/src/main/resources/.DS_Store
+* src/com/.DS_Store => imagechooserlibrary/src/main/resources/com/.DS_Store
+* src/com/kbeanie/.DS_Store => imagechooserlibrary/src/main/resources/com/kbeanie/.DS_Store
+* src/com/kbeanie/imagechooser/.DS_Store => imagechooserlibrary/src/main/resources/com/kbeanie/imagechooser/.DS_Store
+* src/com/kbeanie/imagechooser/Archive.zip => imagechooserlibrary/src/main/resources/com/kbeanie/imagechooser/Archive.zip
+* src/com/kbeanie/imagechooser/api/.DS_Store => imagechooserlibrary/src/main/resources/com/kbeanie/imagechooser/api/.DS_Store
+In PageAdvisor:
+* AndroidManifest.xml => pageAdvisor/src/main/AndroidManifest.xml
+* assets/ => pageAdvisor/src/main/assets/
+* libs/android-async-http-1.4.4.jar => pageAdvisor/libs/android-async-http-1.4.4.jar
+* libs/android-hipmob-2.4.6.jar => pageAdvisor/libs/android-hipmob-2.4.6.jar
+* libs/android-viewbadger.jar => pageAdvisor/libs/android-viewbadger.jar
+* libs/cwac-wakeful-1.0.3.jar => pageAdvisor/libs/cwac-wakeful-1.0.3.jar
+* libs/jackson-annotations-2.4.2.jar => pageAdvisor/libs/jackson-annotations-2.4.2.jar
+* libs/jackson-core-2.4.2.jar => pageAdvisor/libs/jackson-core-2.4.2.jar
+* libs/jackson-databind-2.4.2.jar => pageAdvisor/libs/jackson-databind-2.4.2.jar
+* libs/libGoogleAnalyticsV2.jar => pageAdvisor/libs/libGoogleAnalyticsV2.jar
+* libs/molpaylib-4.1.2.jar => pageAdvisor/libs/molpaylib-4.1.2.jar
+* libs/universal-image-loader-1.9.2.jar => pageAdvisor/libs/universal-image-loader-1.9.2.jar
+* res/ => pageAdvisor/src/main/res/
+* src/ => pageAdvisor/src/main/java/
+
+Next Steps:
+-----------
+You can now build the project. The Gradle project needs network
+connectivity to download dependencies.
+
+Bugs:
+-----
+If for some reason your project does not build, and you determine that
+it is due to a bug or limitation of the Eclipse to Gradle importer,
+please file a bug at http://b.android.com with category
+Component-Tools.
+
+(This import summary is for your information only, and can be deleted
+after import once you are satisfied with the results.)
