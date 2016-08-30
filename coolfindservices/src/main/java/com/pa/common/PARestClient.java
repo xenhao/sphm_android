@@ -26,9 +26,12 @@ public class PARestClient  {
 		    Log.d(TAG, "Params: " + params.toString());
           }
 		  Log.d(TAG, "------------------------------------------------------------------------");
-	      client.get(getAbsoluteUrl(SERVER, url), params, responseHandler);
+
+          //    use new client
+          AsyncHttpClient newClient = new AsyncHttpClient();
+          newClient.get(getAbsoluteUrl(SERVER, url), params, responseHandler);
 	      //client.setMaxRetriesAndTimeout(3, 60000);
-	      client.setTimeout(60000);
+          newClient.setTimeout(60000);
 
           Map userMap = new HashMap<>();
           userMap.put("update_last_request_at", true);
@@ -45,10 +48,13 @@ public class PARestClient  {
               Log.d(TAG, "Params: " + params.toString());
           }
 		  Log.d(TAG, "------------------------------------------------------------------------");
-	      client.post(getAbsoluteUrl(SERVER, url), params, responseHandler);
+
+          //    use new client
+          AsyncHttpClient newClient = new AsyncHttpClient();
+          newClient.post(getAbsoluteUrl(SERVER, url), params, responseHandler);
 	      //client.setMaxRetriesAndTimeout(3, 120000);
 
-	      client.setTimeout(120000);
+          newClient.setTimeout(120000);
 
           Map userMap = new HashMap<>();
           userMap.put("update_last_request_at", true);
@@ -89,9 +95,12 @@ public class PARestClient  {
             Log.d(TAG, "Params: " + params.toString());
         }
         Log.d(TAG, "------------------------------------------------------------------------");
-        client.get(getDealAbsoluteUrl(SERVER, url), params, responseHandler);
+
+        //    use new client
+        AsyncHttpClient newClient = new AsyncHttpClient();
+        newClient.get(getDealAbsoluteUrl(SERVER, url), params, responseHandler);
         //client.setMaxRetriesAndTimeout(3, 60000);
-        client.setTimeout(60000);
+        newClient.setTimeout(60000);
 
         Map userMap = new HashMap<>();
         userMap.put("update_last_request_at", true);
@@ -108,9 +117,12 @@ public class PARestClient  {
             Log.d(TAG, "Params: " + params.toString());
         }
         Log.d(TAG, "------------------------------------------------------------------------");
-        client.post(getDealAbsoluteUrl(SERVER, url), params, responseHandler);
 
-        client.setTimeout(120000);
+        //    use new client
+        AsyncHttpClient newClient = new AsyncHttpClient();
+        newClient.post(getDealAbsoluteUrl(SERVER, url), params, responseHandler);
+
+        newClient.setTimeout(120000);
 
         Map userMap = new HashMap<>();
         userMap.put("update_last_request_at", true);
