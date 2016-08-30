@@ -240,7 +240,8 @@ public class FragmentEarnFreeCredits extends MyFragment implements
         case R.id.share_txt:
             Intent sendIntent = new Intent(Intent.ACTION_VIEW);
             sendIntent.putExtra("sms_body", smsBody);
-            sendIntent.setType("vnd.android-dir/mms-sms");
+//            sendIntent.setType("vnd.android-dir/mms-sms");
+            sendIntent.setData(Uri.parse("smsto:"));
             startActivity(sendIntent);
             break;
 
