@@ -373,7 +373,8 @@
                 android:text="MOBILE NUMBER"
                 android:textColor="@color/pa_blue"
                 android:textSize="@dimen/txt_big"
-                app:typeface="OpenSans-Bold" />
+                app:typeface="OpenSans-Bold"
+                android:visibility="gone"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -382,7 +383,8 @@
                 android:layout_marginLeft="@dimen/margin4"
                 android:layout_marginRight="@dimen/margin4"
                 android:layout_marginTop="@dimen/margin1"
-                android:orientation="horizontal" >
+                android:orientation="horizontal"
+                android:visibility="gone">
 
                 <com.pa.common.TypefaceTextView
                     android:id="@+id/prefix"
