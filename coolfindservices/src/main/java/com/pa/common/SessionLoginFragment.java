@@ -36,6 +36,7 @@ import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
+import com.facebook.login.LoginBehavior;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 
@@ -162,6 +163,7 @@ public class SessionLoginFragment extends MyFragment {
 		// dialog.show();
 		System.out.println("Click Login");
 		onClickLogout();
+        LoginManager.getInstance().setLoginBehavior(LoginBehavior.WEB_ONLY);
         LoginManager.getInstance().logInWithReadPermissions(this, PERMISSIONS);
 	}
 
