@@ -87,6 +87,9 @@ public class PaymentButton extends RelativeLayout implements OnClickListener {
         boolean isPayPalEnabled = mBraintree.isPayPalEnabled();
         boolean isVenmoEnabled = mBraintree.isVenmoEnabled();
 
+        //****  REMOVE PAYPAL FOR CF ONLY   ****//
+        isPayPalEnabled = false;
+
         if (!isPayPalEnabled && !isVenmoEnabled) {
             setVisibility(GONE);
         } else {
