@@ -83,15 +83,6 @@
                     android:padding="@dimen/margin7"/>
             </RelativeLayout>
 
-            <com.pa.common.ImageViewFitHeight
-                android:layout_marginTop="@dimen/margin6"
-                android:id="@+id/btn_login_logout"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/edittext_height3"
-                android:layout_gravity="center"
-                android:src="@drawable/fb_login"
-                android:visibility="gone"/>
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -201,18 +192,64 @@
                     android:textColor="@color/black" />
             </RadioGroup>
 
+            <com.pa.common.ImageViewFitHeight
+                android:layout_marginTop="@dimen/margin6"
+                android:id="@+id/btn_login_logout1"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/edittext_height3"
+                android:layout_gravity="center"
+                android:src="@drawable/fb_login"
+                android:visibility="gone"/>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <com.pa.common.TypefaceButton
+                    android:id="@+id/btn_login_logout"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/edittext_height3"
+                    android:layout_marginTop="@dimen/margin2"
+                    android:background="@drawable/btn_fb_login"
+                    android:gravity="center"
+                    android:text="CONTINUE WITH FACEBOOK"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/txt_big"
+                    android:textStyle="bold"
+                    app:typeface="OpenSans-Regular"/>
+
+                <ImageView
+                    android:layout_width="@dimen/edittext_height3"
+                    android:layout_height="@dimen/edittext_height3"
+                    android:layout_marginTop="@dimen/margin2"
+                    android:src="@drawable/facebook_btn_active"/>
+            </RelativeLayout>
+
+            <com.pa.common.TypefaceButton
+                android:id="@+id/btnRegister"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/edittext_height3"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/btn_transparent_with_border"
+                android:gravity="center"
+                android:text="CREATE AN ACCOUNT"
+                android:textColor="@color/white"
+                android:textSize="@dimen/txt_big"
+                android:textStyle="bold"
+                app:typeface="OpenSans-Regular" />
+
             <com.pa.common.TypefaceButton
                 android:id="@+id/btnLogin"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/edittext_height3"
                 android:layout_marginTop="@dimen/margin2"
-                android:background="@drawable/btn_transparent_with_border"
+                android:background="@drawable/btn_transparent_no_border"
                 android:gravity="center"
-                android:text="SIGN IN"
+                android:text="LOGIN"
                 android:textColor="@color/white"
                 android:textSize="@dimen/txt_big"
                 android:textStyle="bold"
-                app:typeface="OpenSans-Regular" />
+                app:typeface="OpenSans-Regular"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -254,19 +291,6 @@
                 android:layout_marginTop="@dimen/margin1"
                 android:src="@drawable/btn_effect_continue_as_guest"
                 android:visibility="gone" />
-
-            <com.pa.common.TypefaceButton
-                android:id="@+id/btnRegister"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/edittext_height3"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/btn_transparent_with_border"
-                android:gravity="center"
-                android:text="REGISTER"
-                android:textColor="@color/white"
-                android:textSize="@dimen/txt_big"
-                android:textStyle="bold"
-                app:typeface="OpenSans-Regular" />
 
             <LinearLayout
                 android:id="@+id/txtListYourService"

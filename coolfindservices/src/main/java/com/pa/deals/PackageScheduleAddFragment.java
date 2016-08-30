@@ -425,7 +425,7 @@ public class PackageScheduleAddFragment extends MyFragment {
 //        }
 
         Customization customization = new Customization.CustomizationBuilder()
-                .primaryDescription("Page Advisor | Order Id:" + mPackageJobItem.serial)
+                .primaryDescription("Cool Find | Order Id:" + mPackageJobItem.serial)
                 .secondaryDescription(mPackageJobItem.title)
                 .amount(mPackageJobItem.currency + " " + paymentPrice)
                 .submitButtonText("Pay Now").build();

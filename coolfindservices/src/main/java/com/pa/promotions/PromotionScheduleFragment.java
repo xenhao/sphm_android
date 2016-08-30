@@ -494,7 +494,7 @@ public class PromotionScheduleFragment extends MyFragment
         }
 
         Customization customization = new Customization.CustomizationBuilder()
-                .primaryDescription("Page Advisor | Order Id:" + mItem.serial)
+                .primaryDescription("Cool Find | Order Id:" + mItem.serial)
                 .secondaryDescription(mItem.title)
                 .amount(mItem.currency + " " + paymentPrice)
                 .submitButtonText("Pay Now").build();

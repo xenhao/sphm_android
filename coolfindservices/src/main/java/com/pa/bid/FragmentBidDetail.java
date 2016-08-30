@@ -2075,7 +2075,7 @@ public class FragmentBidDetail extends MyFragment implements OnClickListener,
 		Intent intent = new Intent(getActivity(),
 				BraintreePaymentActivity.class);
 		Customization customization = new CustomizationBuilder()
-				.primaryDescription("Page Advisor | Order Id:" + item.serial)
+				.primaryDescription("Cool Find | Order Id:" + item.serial)
 				.secondaryDescription(item.title)
 				.amount(item.currency + " " + amount)
 				.submitButtonText("Pay Now").build();

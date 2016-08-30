@@ -10,6 +10,7 @@ public class ParserUser {
 	
 	String status;
 	String result;
+	String code;
 	User item;
 	String type;
 	public String getType() {
@@ -24,6 +25,14 @@ public class ParserUser {
 
 	public void setStatus(String status) {
 		this.status = status;
+	}
+
+	public String getCode() {
+		return code;
+	}
+
+	public void setCode(String code) {
+		this.code = code;
 	}
 
 	public String getResult() {
@@ -65,6 +74,7 @@ public class ParserUser {
 			
 			item=data.result;
 			status=data.status;
+			code = data.code;
 			type=data.type;
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -150,7 +160,7 @@ public class ParserUser {
 
 	public static class Wrapper{
 		public Wrapper(){};
-		public String status,type;
+		public String status,type, code;
 		public User result;
 		public ArrayList<String> reason;
 	}

@@ -1141,8 +1141,9 @@ public class FragmentRegister extends SessionLoginFragment implements Config,
 
 							if ("success".equals(parser.getStatus())) {
 								Tracer.d("Register customer success");
-							simpleToast(parser.getStatus() + "\n"
-									+ parser.getResult());
+								//	toast not needed
+//							simpleToast(parser.getStatus() + "\n"
+//									+ parser.getResult());
 								//getActivity().finish();
 								GlobalVar.isRegister=true;
 								GlobalVar.a=f_cs_email;
@@ -1154,8 +1155,23 @@ public class FragmentRegister extends SessionLoginFragment implements Config,
 							} else {
 								com.pa.pojo.ErrorDefault errorReg = new ParserError(
 										new String(result)).getData();
-								simpleToast(TextUtils.join("", errorReg.reason));
+//								simpleToast(TextUtils.join("", errorReg.reason));
 
+								//	change simpleToast to AlertDialog to display failed reason to user
+								AlertDialog.Builder builder = new AlertDialog.Builder(
+										getActivity());
+								builder.setMessage(TextUtils.join("", errorReg.reason));
+								builder.setPositiveButton("OK",
+										new DialogInterface.OnClickListener() {
+
+											@Override
+											public void onClick(DialogInterface dialog,
+																int which) {
+												dialog.dismiss();
+											}
+										});
+
+								builder.show();
 							}
 
 						}

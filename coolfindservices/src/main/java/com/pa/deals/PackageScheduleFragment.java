@@ -576,7 +576,7 @@ public class PackageScheduleFragment extends MyFragment implements View.OnClickL
         Intent intent = new Intent(getActivity(),
                 BraintreePaymentActivity.class);
         Customization customization = new Customization.CustomizationBuilder()
-                .primaryDescription("Page Advisor | Order Id:" + mItem.serial)
+                .primaryDescription("Cool Find | Order Id:" + mItem.serial)
                 .secondaryDescription(mItem.title)
                 .amount(mItem.currency + " " + paymentPrice)
                 .submitButtonText("Pay Now").build();

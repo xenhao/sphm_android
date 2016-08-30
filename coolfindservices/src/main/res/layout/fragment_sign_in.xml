@@ -131,6 +131,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/edittext_height3"
                 android:src="@drawable/fb_login"
+                android:visibility="gone"
                 />
 
             <LinearLayout

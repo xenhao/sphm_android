@@ -7,9 +7,12 @@ import org.apache.http.Header;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -29,6 +32,7 @@ import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ViewSwitcher;
 
 import com.loopj.android.http.AsyncHttpClient;
@@ -52,6 +56,8 @@ import com.coolfindservices.androidconsumer.R;
 import io.intercom.android.sdk.Intercom;
 import io.intercom.android.sdk.identity.Registration;
 
+import static com.pa.common.PARestClient.getAbsoluteUrl;
+
 public class FragmentLogin extends SessionLoginFragment implements
 		OnClickListener {
 	DisplayMetrics dm;
@@ -62,6 +68,7 @@ public class FragmentLogin extends SessionLoginFragment implements
 	EditText username, password, eMobileNumber;
 	TextView privacy_policy, ePrefix;
 	RadioGroup rg;
+	User user;
 
 	
 	@Override
@@ -201,14 +208,15 @@ public class FragmentLogin extends SessionLoginFragment implements
 		GlobalVar.last_name = last_name;
 		GlobalVar.fbid = fbid;
 
-		if (fb_type == TYPE_REGISTER) {
+		if (fb_type == TYPE_REGISTER) {                //simpleToast("Do register via FB");
 			// Toast.makeText(getActivity(), email, Toast.LENGTH_SHORT).show();
 			// doRegisterViaFB(email, name, fbid, dob);
 			// doLoginViaFB(email, name, fbid, dob);
 			GlobalVar.isFB = true;
-			startActivity(new Intent(getActivity(), ActivityRegister.class));
+//			startActivity(new Intent(getActivity(), ActivityRegister.class));
+			doLoginFB();
 
-		} else if (fb_type == TYPE_LOGIN) {
+		} else if (fb_type == TYPE_LOGIN) {            //simpleToast("Do login via FB");
 			Tracer.d("Do login via FB");
 			// doLoginViaFB(email, name, fbid, dob);
 
@@ -216,8 +224,151 @@ public class FragmentLogin extends SessionLoginFragment implements
 			formPassword = fbid;
 			GlobalVar.isFB = true;
 
-			doLogin();
+			String content = "API Call: " + getAbsoluteUrl(pref.getPref(Config.SERVER), Config.API_LOGIN) + "\nusername: " + formUsername + "\npassword: " + formPassword + "\nfbid: " + GlobalVar.fbid;
+
+//		Toast.makeText(getActivity(), content, Toast.LENGTH_LONG).show();
+
+//			AlertDialog.Builder builder = new AlertDialog.Builder(
+//					getActivity());
+//			builder.setMessage(content);
+//			builder.setPositiveButton("OK",
+//					new DialogInterface.OnClickListener() {
+//
+//						@Override
+//						public void onClick(DialogInterface dialog,
+//											int which) {
+//							dialog.dismiss();
+//						}
+//					});
+//
+//			builder.show();
+
+			doLoginFB();
 		}
+
+	}
+
+	//  *** VERY BAD PRACTICE. KILL OFF doLoginFB() ASAP.   ***//
+	private void doLoginFB() {		//simpleToast("doLoginFB() Executed");
+		// TODO Auto-generated method stub
+
+//		pref.savePref(Config.PREF_LAST_USERNAME, formUsername);
+
+		loadingInternetDialog.show();
+		RequestParams params = new RequestParams();
+		params.add("username", formUsername);
+		params.add("password", formPassword);
+
+		if (GlobalVar.isFB) {
+			params.add("fbid", GlobalVar.fbid);
+			// GlobalVar.isFB = false;
+		}
+
+//		String content = "API Call: " + getAbsoluteUrl(pref.getPref(Config.SERVER),Config.API_LOGIN) + "\nusername: " + username + "\npassword: " + password + "\nfbid: " + GlobalVar.fbid;
+//
+////		Toast.makeText(getActivity(), content, Toast.LENGTH_LONG).show();
+//
+//		AlertDialog.Builder builder = new AlertDialog.Builder(
+//				getActivity());
+//		builder.setMessage(content);
+//		builder.setPositiveButton("OK",
+//				new DialogInterface.OnClickListener() {
+//
+//					@Override
+//					public void onClick(DialogInterface dialog,
+//										int which) {
+//						dialog.dismiss();
+//					}
+//				});
+//
+//		builder.show();
+
+		AsyncHttpClient post = new AsyncHttpClient();
+			PARestClient.post(pref.getPref(Config.SERVER), Config.API_LOGIN,
+					params, new AsyncHttpResponseHandler() {
+
+						@Override
+						public void onSuccess(int statusCode, String result) {        //simpleToast("doLoginFB success");
+							// TODO Auto-generated method stub
+							ParserUser parser = new ParserUser(result);
+							if (isStatusSuccess(parser.getStatus())) {
+								user = parser.getUser();// getArr().get(0);
+
+								if ("customer".equals(parser.getType())) {
+									if ("Y".equals(user.is_active)) {
+										pref.savePref(Config.PREF_USERNAME,
+												user.username);
+										pref.savePref(
+												Config.PREF_ACTIVE_SESSION_TOKEN,
+												user.active_session_token);
+										pref.savePref(Config.PREF_USER, "");
+										Log.d("Intercom", "Login as " + pref.getPref(Config.PREF_USERNAME));
+										Intercom.client().registerIdentifiedUser(new Registration().withUserId(pref.getPref(Config.PREF_USERNAME)));
+										NanigansEventManager.getInstance().setUserId(Encryptor.md5(pref.getPref(Config.PREF_USERNAME)));
+
+										startActivity(new Intent(getActivity(),
+												ActivityLanding.class));
+										GlobalVar.isFB = false;        //simpleToast("doLoginFB success");
+									} else {                        //simpleToast("doLoginFB show activation");
+
+										f_phone = user.cs_mobile_number;
+
+										showActivationDialog();
+									}
+								} else {
+									simpleToast("This isn't a customer account. Please recheck your account");
+								}
+
+							} else {        //simpleToast("doLoginFB return not customer");
+
+								//	edited flow
+								if (GlobalVar.isFB) {        //Log.i("check FB", "checked");
+									if (parser.getCode() == null) {
+										//  not planned yet
+									} else {
+										switch (parser.getCode()) {
+											case "101":
+											case "103":
+												//	open registration
+												startActivity(new Intent(getActivity(), ActivityRegister.class));
+												//simpleToast("Information insufficient");
+												break;
+											case "105":
+												//	go to verification
+												f_phone = user.cs_mobile_number;
+												showActivationDialog();
+												break;
+										}
+									}
+								}
+							}
+							loadingInternetDialog.dismiss();
+						}
+
+						@Override
+						public void onFailure(Throwable error, String content) {        //simpleToast("doLoginFB failed");	Log.i("fb error", String.valueOf(error));
+							// TODO Auto-generated method stub
+							super.onFailure(error, content);
+							System.out.println(error + "\n" + content);
+							loadingInternetDialog.dismiss();
+
+//						AlertDialog.Builder builder = new AlertDialog.Builder(
+//								getActivity());
+//						builder.setMessage(content + "\nthrowable:\n" + String.valueOf(error));
+//						builder.setPositiveButton("OK",
+//								new DialogInterface.OnClickListener() {
+//
+//									@Override
+//									public void onClick(DialogInterface dialog,
+//														int which) {
+//										dialog.dismiss();
+//									}
+//								});
+//
+//						builder.show();
+
+						}
+					});
 	}
 
 	private void animateLogo() {
@@ -547,8 +698,6 @@ public class FragmentLogin extends SessionLoginFragment implements
 		return false;
 	}
 
-	User user;
-
 	private void doLogin() {
 		// TODO Auto-generated method stub
 
@@ -576,7 +725,7 @@ public class FragmentLogin extends SessionLoginFragment implements
 							user = parser.getUser();// getArr().get(0);
 
 							if ("customer".equals(parser.getType())) {
-								if (!"N".equals(user.is_active)) {
+								if ("Y".equals(user.is_active)) {
 									pref.savePref(Config.PREF_USERNAME,
 											user.username);
 									pref.savePref(

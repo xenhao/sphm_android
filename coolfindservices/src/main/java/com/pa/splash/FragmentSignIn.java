@@ -91,6 +91,7 @@ public class FragmentSignIn extends SessionLoginFragment implements
         v.findViewById(R.id.registerClick).setOnClickListener(this);
         v.findViewById(R.id.btnLogin).setOnClickListener(this);
         v.findViewById(R.id.passClick).setOnClickListener(this);
+        v.findViewById(R.id.btnBack).setOnClickListener(this);
 //        v.findViewById(R.id.btnGuest).setOnClickListener(this);
 //        v.findViewById(R.id.btnIntercom).setOnClickListener(this);
 //        v.findViewById(R.id.txtListYourService).setOnClickListener(this);
@@ -178,6 +179,9 @@ public class FragmentSignIn extends SessionLoginFragment implements
                 startActivity(new Intent(getActivity(), ActivityRegister.class));
                 Log.i("sign in page ", "register button pushed");
                 break;
+            case R.id.btnBack:
+                getActivity().finish();
+                break;
         }
     }
 
@@ -198,7 +202,41 @@ public class FragmentSignIn extends SessionLoginFragment implements
         return flag;
     }
 
-    private void doLogin() {
+    @Override
+    protected void doneLoginFB(String email, String name, String fbid,
+                               String last_name) {
+        // TODO Auto-generated method stub
+        super.doneLoginFB(email, name, fbid, last_name);
+        loadingInternetDialog.dismiss();
+        pref.savePref(Config.APP_USER_FB_ID, fbid);
+        Tracer.d(email + name + fbid + last_name);
+
+        GlobalVar.email = email;
+        GlobalVar.first_name = name;
+        GlobalVar.last_name = last_name;
+        GlobalVar.fbid = fbid;
+
+        if (fb_type == TYPE_REGISTER) {
+            // Toast.makeText(getActivity(), email, Toast.LENGTH_SHORT).show();
+            // doRegisterViaFB(email, name, fbid, dob);
+            // doLoginViaFB(email, name, fbid, dob);
+            GlobalVar.isFB = true;
+            startActivity(new Intent(getActivity(), ActivityRegister.class));
+
+        } else if (fb_type == TYPE_LOGIN) {
+            Tracer.d("Do login via FB");
+            // doLoginViaFB(email, name, fbid, dob);
+
+            formUsername = "".equals(email) ? fbid : email;
+            formPassword = fbid;
+            GlobalVar.isFB = true;
+
+            doLoginFB();
+        }
+    }
+
+    //  *** VERY BAD PRACTICE. KILL OFF doLoginFB() ASAP.   ***//
+    private void doLoginFB() {
         // TODO Auto-generated method stub
 
         pref.savePref(Config.PREF_LAST_USERNAME, formUsername);
@@ -225,7 +263,7 @@ public class FragmentSignIn extends SessionLoginFragment implements
                             user = parser.getUser();// getArr().get(0);
 
                             if ("customer".equals(parser.getType())) {
-                                if (!"N".equals(user.is_active)) {
+                                if ("Y".equals(user.is_active)) {
                                     pref.savePref(Config.PREF_USERNAME,
                                             user.username);
                                     pref.savePref(
@@ -247,6 +285,113 @@ public class FragmentSignIn extends SessionLoginFragment implements
                                 }
                             } else {
                                 simpleToast("This isn't a customer account. Please recheck your account");
+                            }
+
+                        } else {
+
+                            //	edited flow
+                            if(GlobalVar.isFB) {        Log.i("check FB", "checked");
+                                if(parser.getCode() == null) {
+                                    //  not planned yet
+                                }else{
+                                    switch (parser.getCode()){
+                                        case "101":
+                                        case "103":
+                                            //	open registration
+                                            startActivity(new Intent(getActivity(), ActivityRegister.class));
+                                            //simpleToast("Information insufficient");
+                                            break;
+                                        case "105":
+                                            //	go to verification
+                                            f_phone = user.cs_mobile_number;
+                                            showActivationDialog();
+                                            break;
+                                    }
+                                }
+                            }
+
+                            //  alert dialog to be disabled for this implementation (14/7/2016)
+//                            ParserBasicResult pbr = new ParserBasicResult(
+//                                    result);
+//                            AlertDialog.Builder builder = new AlertDialog.Builder(
+//                                    getActivity());
+//                            builder.setMessage(pbr.getReason());
+//                            builder.setPositiveButton("OK",
+//                                    new DialogInterface.OnClickListener() {
+//
+//                                        @Override
+//                                        public void onClick(DialogInterface dialog,
+//                                                            int which) {
+//                                            dialog.dismiss();
+//                                        }
+//                                    });
+//
+//                            builder.show();
+                        }
+                        loadingInternetDialog.dismiss();
+                    }
+
+                    @Override
+                    public void onFailure(Throwable error, String content) {
+                        // TODO Auto-generated method stub
+                        super.onFailure(error, content);
+                        loadingInternetDialog.dismiss();
+
+                    }
+                });
+
+    }
+
+    private void doLogin() {
+        // TODO Auto-generated method stub
+
+        pref.savePref(Config.PREF_LAST_USERNAME, formUsername);
+
+        loadingInternetDialog.show();
+        RequestParams params = new RequestParams();
+        params.add("username", formUsername);
+        params.add("password", formPassword);
+
+        if (GlobalVar.isFB) {
+            params.add("fbid", GlobalVar.fbid);
+            // GlobalVar.isFB = false;
+        }
+
+        AsyncHttpClient post = new AsyncHttpClient();
+        PARestClient.post(pref.getPref(Config.SERVER), Config.API_LOGIN,
+                params, new AsyncHttpResponseHandler() {
+
+                    @Override
+                    public void onSuccess(int statusCode, String result) {
+                        // TODO Auto-generated method stub
+                        Log.i("Result", result);
+                        ParserUser parser = new ParserUser(result);
+                        if (isStatusSuccess(parser.getStatus())) {
+                            user = parser.getUser();// getArr().get(0);
+
+                            if ("customer".equals(parser.getType())) {
+                                if ("Y".equals(user.is_active)) {
+                                    pref.savePref(Config.PREF_USERNAME,
+                                            user.username);
+                                    pref.savePref(
+                                            Config.PREF_ACTIVE_SESSION_TOKEN,
+                                            user.active_session_token);
+                                    pref.savePref(Config.PREF_USER, "");
+                                    Log.d("Intercom", "Login as " + pref.getPref(Config.PREF_USERNAME));
+                                    Intercom.client().registerIdentifiedUser(new Registration().withUserId(pref.getPref(Config.PREF_USERNAME)));
+                                    NanigansEventManager.getInstance().setUserId(Encryptor.md5(pref.getPref(Config.PREF_USERNAME)));
+
+                                    startActivity(new Intent(getActivity(),
+                                            ActivityLanding.class));
+                                    GlobalVar.isFB = false;
+                                } else {
+
+                                    f_phone = user.cs_mobile_number;
+
+                                    showActivationDialog();
+                                }
+                            } else {
+                                    simpleToast("This isn't a customer account. Please recheck your account");
                             }
 
                         } else {

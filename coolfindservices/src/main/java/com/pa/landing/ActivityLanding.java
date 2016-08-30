@@ -96,7 +96,12 @@ public class ActivityLanding extends MyActivity implements OnClickListener,
 						try {
 							int version=getPackageManager()
 									.getPackageInfo(getPackageName(), 0).versionCode;
-							if (Integer.parseInt(appV.customer_version_android) > version) {
+							int custVersion;
+							try {
+								if (appV.customer_version_android != null) {
+									custVersion = Integer.parseInt(appV.customer_version_android);
+
+									if (custVersion > version) {
 //								AlertDialog.Builder builder=new AlertDialog.Builder(ActivityLanding.this);
 //							
 //								builder.setTitle("Warning");
@@ -117,11 +122,22 @@ public class ActivityLanding extends MyActivity implements OnClickListener,
 //								
 //								
 //								builder.show();
-								
-								showUpdateDialog();
-								
-								
-							} 						} catch (NameNotFoundException e) {
+
+										showUpdateDialog();
+										Log.i("CrashLog", "showed update dialog");
+
+
+									} else {
+										Log.i("CrashLog", "not version 1.2\nVersion: " + custVersion);
+									}
+								} else {
+									Log.i("VersionError", "Version Number is null");
+								}
+							}catch(NullPointerException e){
+								Log.i("VersionError", "Version Number is null");
+								Log.i("VersionError", String.valueOf(e));
+							}
+						} catch (NameNotFoundException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
@@ -199,15 +215,13 @@ public class ActivityLanding extends MyActivity implements OnClickListener,
 				Tracer.d("Exit1");
 				displayExitDialog();
 			} else if (fm.findFragmentById(R.id.content_frame) instanceof FragmentBidDetail) {
-				FragmentBidDetail fragment = (FragmentBidDetail) fm
-						.findFragmentById(R.id.content_frame);
+				FragmentBidDetail fragment = (FragmentBidDetail) fm.findFragmentById(R.id.content_frame);
 				fragment.pageBack();
 
 			} else if (fm.findFragmentById(R.id.content_frame) instanceof FragmentPostOpenBid) {
 				// displayExitFormDialog();
 
-				FragmentPostOpenBid fragment = (FragmentPostOpenBid) fm
-						.findFragmentById(R.id.content_frame);
+				FragmentPostOpenBid fragment = (FragmentPostOpenBid) fm.findFragmentById(R.id.content_frame);
 				fragment.pageBack();
 			} 	//	edit for data caching
 			else if (fm.findFragmentById(R.id.content_frame) instanceof FragmentBid
@@ -358,7 +372,7 @@ public class ActivityLanding extends MyActivity implements OnClickListener,
 					@Override
 					public void onSuccess(int arg0, Header[] arg1, byte[] arg2) {
 						// TODO Auto-generated method stub
-						super.onSuccess(arg0, arg1, arg2);
+						super.onSuccess(arg0, arg1, arg2);							Log.i("LaunchCrash", "get user data success");
 						UserORM user = new ParserUserORM(new String(arg2))
 								.getData();
 						new ProfilUtils(activity).saveUser(user);
