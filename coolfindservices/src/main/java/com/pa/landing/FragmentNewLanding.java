@@ -76,6 +76,9 @@ public class FragmentNewLanding extends MyFragment implements OnClickListener,
 	String[] countrySelection;
     ArrayList<State> storedStates;
 
+	//	boolean switch for random unresponsive getStateData
+	private Boolean retryGetState = false;
+
 	public FragmentNewLanding(){
 		
 	}
@@ -100,7 +103,7 @@ public class FragmentNewLanding extends MyFragment implements OnClickListener,
 		super.onCreate(savedInstanceState);
 		getStateData();
 	}
-	
+
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -131,9 +134,9 @@ public class FragmentNewLanding extends MyFragment implements OnClickListener,
 		// Preset Singapore For Live only
 		if ("2".equals(getActivity().getResources().getString(R.string.server))) {
 			txtCountry2.setText("Singapore");
-			countrySelection = country;
+//			countrySelection = country;
 		} else {
-			countrySelection = country2;
+//			countrySelection = country2;
 		}
 
 		//		Toast.makeText(getActivity(), "Backstack entry count: " + String.valueOf(getActivity().getSupportFragmentManager().getBackStackEntryCount()), Toast.LENGTH_LONG).show();
@@ -224,8 +227,10 @@ public class FragmentNewLanding extends MyFragment implements OnClickListener,
 	@Override
 	public void onResume() {
 		super.onResume();
-
-//		getStateData();
+		//	additional checking to get state data if initial went unresponsive
+		if(countrySelection == null || countrySelection.length <= 2){
+			getStateData();		Log.i("CALLED FROM ONRESUME", "CALLED FROM ONRESUME" + " " + countrySelection);
+		}
 	}
 	
 	void getPendingRating(){
@@ -304,11 +309,28 @@ public class FragmentNewLanding extends MyFragment implements OnClickListener,
                 }
             }
 
-            @Override
-            public void onFinish() {
-                super.onFinish();
-                loadingInternetDialog.hide();
-            }
+			@Override
+			public void onFailure(int statusCode, Throwable error,
+								  String content) {
+				// TODO Auto-generated method stub
+				super.onFailure(statusCode, error, content);
+				Log.d("Country", content);
+				simpleToast(error + "\n" + content);
+
+				loadingInternetDialog.dismiss();
+
+			}
+
+			@Override
+			public void onFinish() {
+				super.onFinish();
+				loadingInternetDialog.dismiss();
+				//	show state selection spinner if this was last minute state query
+				if(retryGetState){
+					showSpinner(getView());
+					retryGetState = false;
+				}
+			}
         };
 
         PARestClient.post(pref.getPref(Config.SERVER), Config.API_LOCATION, params, responseHandler);
@@ -322,11 +344,11 @@ public class FragmentNewLanding extends MyFragment implements OnClickListener,
 		switch (v.getId()) {
 		case R.id.btnSearch:
 			 if (isValid()) {
-				 
+
 			 listener.doFragmentChange(new FragmentMerchantList(f_keyword,txtCountry.getText().toString()),
 			 true, "");
 			 }
-			
+
 //			Intent intent = new Intent(getActivity().getApplicationContext(),CaptureActivity.class);
 //			intent.setAction("com.google.zxing.client.android.SCAN");
 //			// this stops saving ur barcode in barcode scanner app's history
@@ -397,67 +419,13 @@ public class FragmentNewLanding extends MyFragment implements OnClickListener,
 		
 		case R.id.country2:
 		case R.id.country:
-			analytic.trackScreen("Select Country for Service");
-			showSpinnerSelection(countrySelection
-
-					, "Select country", new AdapterView.OnItemClickListener() {
-
-				@Override
-				public void onItemClick(AdapterView<?> arg0, View arg1,
-										int arg2, long arg3) {
-					try {
-						generalDialog.hide();
-						((TextView) v).setText(countrySelection[arg2]);
-						v.setTag(arg2);
-
-						State selectedState = storedStates.get(arg2 - 1);
-						GlobalVar.state = selectedState.state_long;
-						GlobalVar.state_short = selectedState.state_short;
-
-
-						if (Arrays.equals(country2, state)) {
-							v.setTag(R.id.city, state_short[arg2]);
-						}
-
-						final TextView tv1 = (TextView) v
-								.getTag(R.id.co_state);
-						final TextView tv2 = (TextView) v.getTag(R.id.co_city);
-
-						if (tv1 != null && tv2 != null
-								&& Arrays.equals(country2, country)) {
-							// tv2 = (TextView) tv.getTag(R.id.co_city);
-							Tracer.d("debug", "country" + country2[arg2]);
-							if ("Singapore".equals(country2[arg2])) {
-								tv1.setText("Singapore");
-								tv2.setText("Singapore");
-
-							} else {
-								tv1.setText("");
-								tv1.setHint("Select your state");
-
-								tv2.setText("");
-								tv2.setHint("Select your city");
-							}
-
-						}
-
-						if (tv2 != null && Arrays.equals(country2, state)) {
-							// tv2 = (TextView) tv.getTag(R.id.co_city);
-							if ("Singapore".equals(country2[arg2])) {
-								tv1.setText("Singapore");
-								tv2.setText("Singapore");
-
-							} else {
-								tv2.setText("");
-								tv2.setHint("Select your city");
-							}
-						}
-
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
-				}
-			});
+			//	check if state data is available before displaying state selection spinner
+			if(countrySelection != null) {
+				showSpinner(v);
+			}else{
+				retryGetState = true;
+				getStateData();
+			}
 			break;
 
 		case R.id.txtGettingStarted:
@@ -489,6 +457,71 @@ public class FragmentNewLanding extends MyFragment implements OnClickListener,
             break;
 		}
 
+	}
+
+	//	show spinner for state selection
+	private void showSpinner(final View v){
+		analytic.trackScreen("Select Country for Service");
+		showSpinnerSelection(countrySelection
+
+				, "Select country", new AdapterView.OnItemClickListener() {
+
+					@Override
+					public void onItemClick(AdapterView<?> arg0, View arg1,
+											int arg2, long arg3) {
+						try {
+							generalDialog.hide();
+							((TextView) v).setText(countrySelection[arg2]);
+							v.setTag(arg2);
+
+							State selectedState = storedStates.get(arg2 - 1);
+							GlobalVar.state = selectedState.state_long;
+							GlobalVar.state_short = selectedState.state_short;
+
+
+							if (Arrays.equals(country2, state)) {
+								v.setTag(R.id.city, state_short[arg2]);
+							}
+
+							final TextView tv1 = (TextView) v
+									.getTag(R.id.co_state);
+							final TextView tv2 = (TextView) v.getTag(R.id.co_city);
+
+							if (tv1 != null && tv2 != null
+									&& Arrays.equals(country2, country)) {
+								// tv2 = (TextView) tv.getTag(R.id.co_city);
+								Tracer.d("debug", "country" + country2[arg2]);
+								if ("Singapore".equals(country2[arg2])) {
+									tv1.setText("Singapore");
+									tv2.setText("Singapore");
+
+								} else {
+									tv1.setText("");
+									tv1.setHint("Select your state");
+
+									tv2.setText("");
+									tv2.setHint("Select your city");
+								}
+
+							}
+
+							if (tv2 != null && Arrays.equals(country2, state)) {
+								// tv2 = (TextView) tv.getTag(R.id.co_city);
+								if ("Singapore".equals(country2[arg2])) {
+									tv1.setText("Singapore");
+									tv2.setText("Singapore");
+
+								} else {
+									tv2.setText("");
+									tv2.setHint("Select your city");
+								}
+							}
+
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+					}
+				});
 	}
 	
  
