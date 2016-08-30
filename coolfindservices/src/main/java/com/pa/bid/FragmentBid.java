@@ -8,6 +8,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.RelativeSizeSpan;
@@ -58,6 +59,9 @@ public class FragmentBid extends MyFragment implements OnClickListener, Config {
 	int totalData;
 	BadgeView badge;
 	ImageLoader imageLoader;
+
+	private SwipeRefreshLayout mSwipeRefreshLayout;
+	private Boolean isRefresh = false;
 	
 	public FragmentBid(){
 		
@@ -122,6 +126,7 @@ public class FragmentBid extends MyFragment implements OnClickListener, Config {
 		View v = inflater.inflate(R.layout.fragment_bid_list, null);
 		v.findViewById(R.id.btnMenu).setOnClickListener(this);
 		v.findViewById(R.id.btnIntercom).setOnClickListener(this);
+		mSwipeRefreshLayout = (SwipeRefreshLayout) v.findViewById(R.id.swiperefresh);
 		list = (ListView) v.findViewById(R.id.list);
 		job = (LinearLayout) v.findViewById(R.id.job);
 		bid = (RelativeLayout) v.findViewById(R.id.bid);
@@ -133,6 +138,14 @@ public class FragmentBid extends MyFragment implements OnClickListener, Config {
 
 		v.findViewById(R.id.refresh).setOnClickListener(this);
 		v.findViewById(R.id.btnHome).setOnClickListener(this);
+
+		mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+			@Override
+			public void onRefresh() {
+				// Refresh items
+				refreshItems();
+			}
+		});
 		return v;
 	}
 
@@ -158,7 +171,7 @@ public class FragmentBid extends MyFragment implements OnClickListener, Config {
 
 	void getData() {
 		isLoadingMoreContent = true;
-		loadingInternetDialog.show();
+//		loadingInternetDialog.show();
 
 		String username = "";
 		String strUri = "";
@@ -300,6 +313,27 @@ public class FragmentBid extends MyFragment implements OnClickListener, Config {
 						loadingInternetDialog.dismiss();
 
 					}
+
+					@Override
+					public void onStart() {
+						super.onStart();
+						if(!isRefresh) {
+							loadingInternetDialog.show();
+						}
+					}
+
+					@Override
+					public void onFinish() {
+						super.onFinish();
+						if(!isRefresh) {
+							loadingInternetDialog.dismiss();
+						}else{
+							// Stop refresh animation
+							mSwipeRefreshLayout.setRefreshing(false);
+							isRefresh = false;
+						}
+
+					}
 				});
 
 	}
@@ -349,13 +383,20 @@ public class FragmentBid extends MyFragment implements OnClickListener, Config {
 			chooseBid(1);
 			break;
 
-		case R.id.refresh:
-			offset = 1;
-			bidList.clear();
-			getData();
-			break;
+			case R.id.refresh:
+				refreshItems();
+				break;
 		}
 
+	}
+
+	void refreshItems() {
+		// Load items
+		// ...
+		offset = 1;
+		bidList.clear();
+		isRefresh = true;
+		getData();
 	}
 
 	void chooseBid(int type) {

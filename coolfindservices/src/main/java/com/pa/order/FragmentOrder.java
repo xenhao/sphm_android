@@ -6,6 +6,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -60,6 +61,9 @@ public class FragmentOrder extends MyFragment implements OnClickListener, Config
     protected ImageLoader imageLoader;
 
 	private Boolean gotData;
+
+	private SwipeRefreshLayout mSwipeRefreshLayout;
+	private Boolean isRefresh = false;
 
 	public FragmentOrder(){
 		service_order_status = "ongoing";
@@ -134,6 +138,7 @@ public class FragmentOrder extends MyFragment implements OnClickListener, Config
         title           = (TextView) v.findViewById(R.id.title);
         txtBidRequest   = (TextView) v.findViewById(R.id.txt_bid_request);
 		txtPackage		= (TextView) v.findViewById(R.id.txt_package);
+		mSwipeRefreshLayout = (SwipeRefreshLayout) v.findViewById(R.id.swiperefresh);
 //        txtPromotion    = (TextView) v.findViewById(R.id.txt_promotion);
 
 //        txtPromotion.setOnClickListener(this);
@@ -164,6 +169,14 @@ public class FragmentOrder extends MyFragment implements OnClickListener, Config
 				}
 
 				return false;
+			}
+		});
+
+		mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+			@Override
+			public void onRefresh() {
+				// Refresh items
+				refreshItems();
 			}
 		});
 
@@ -209,15 +222,15 @@ public class FragmentOrder extends MyFragment implements OnClickListener, Config
 		list.setAdapter(new MyListAdapter());
 	}
 
-    public void getPromoData() {
-        loadingInternetDialog.show();
+	public void getPromoData() {
+		if(!isRefresh)	loadingInternetDialog.show();
 
-        AsyncHttpResponseHandler promoHandler = new AsyncHttpResponseHandler(){
-            @Override
-            public void onSuccess(String content) {
-                loadingInternetDialog.dismiss();
+		AsyncHttpResponseHandler promoHandler = new AsyncHttpResponseHandler(){
+			@Override
+			public void onSuccess(String content) {
+				if(!isRefresh)	loadingInternetDialog.dismiss();
 
-                try {
+				try {
                     JSONObject object = new JSONObject(content);
                     if (object.has("status_code") && object.getInt("status_code") >= 500) {
                         listener.doLogout();
@@ -246,6 +259,27 @@ public class FragmentOrder extends MyFragment implements OnClickListener, Config
                 super.onFailure(statusCode, error, content);
                 loadingInternetDialog.dismiss();
             }
+
+			@Override
+			public void onStart() {
+				super.onStart();
+				if(!isRefresh) {
+					loadingInternetDialog.show();
+				}
+			}
+
+			@Override
+			public void onFinish() {
+				super.onFinish();
+				if(!isRefresh) {
+					loadingInternetDialog.dismiss();
+				}else{
+					// Stop refresh animation
+					mSwipeRefreshLayout.setRefreshing(false);
+					isRefresh = false;
+				}
+
+			}
         };
 
         RequestParams params = new RequestParams();
@@ -260,7 +294,7 @@ public class FragmentOrder extends MyFragment implements OnClickListener, Config
     }
 	
 	public void getBidData() {
-		loadingInternetDialog.show();
+		if(!isRefresh)	loadingInternetDialog.show();
 		//AsyncHttpClient client = new AsyncHttpClient();
 		RequestParams params = new RequestParams();
 		params.add("customer_username", pref.getPref(Config.PREF_USERNAME));
@@ -279,7 +313,7 @@ public class FragmentOrder extends MyFragment implements OnClickListener, Config
 				// TODO Auto-generated method stub
 				super.onSuccess(content);
 				Tracer.d(content);
-				loadingInternetDialog.dismiss();
+				if(!isRefresh)	loadingInternetDialog.dismiss();
 				if ("authentication fail".equals(content)) {
 					listener.doLogout();
 				} else {
@@ -305,16 +339,37 @@ public class FragmentOrder extends MyFragment implements OnClickListener, Config
 				super.onFailure(statusCode, error, content);
 				loadingInternetDialog.dismiss();
 			}
+
+					@Override
+					public void onStart() {
+						super.onStart();
+						if(!isRefresh) {
+							loadingInternetDialog.show();
+						}
+					}
+
+					@Override
+					public void onFinish() {
+						super.onFinish();
+						if(!isRefresh) {
+							loadingInternetDialog.dismiss();
+						}else{
+							// Stop refresh animation
+							mSwipeRefreshLayout.setRefreshing(false);
+							isRefresh = false;
+						}
+
+					}
 		});
 	}
 
 	public void getPackageData() {
-		loadingInternetDialog.show();
+		if(!isRefresh)	loadingInternetDialog.show();
 
 		AsyncHttpResponseHandler promoHandler = new AsyncHttpResponseHandler(){
 			@Override
 			public void onSuccess(String content) {
-				loadingInternetDialog.dismiss();
+				if(!isRefresh)	loadingInternetDialog.dismiss();
 
 				try {
 					JSONObject object = new JSONObject(content);
@@ -344,6 +399,27 @@ public class FragmentOrder extends MyFragment implements OnClickListener, Config
 			public void onFailure(int statusCode, Throwable error, String content) {
 				super.onFailure(statusCode, error, content);
 				loadingInternetDialog.dismiss();
+			}
+
+			@Override
+			public void onStart() {
+				super.onStart();
+				if(!isRefresh) {
+					loadingInternetDialog.show();
+				}
+			}
+
+			@Override
+			public void onFinish() {
+				super.onFinish();
+				if(!isRefresh) {
+					loadingInternetDialog.dismiss();
+				}else{
+					// Stop refresh animation
+					mSwipeRefreshLayout.setRefreshing(false);
+					isRefresh = false;
+				}
+
 			}
 		};
 
@@ -389,13 +465,20 @@ public class FragmentOrder extends MyFragment implements OnClickListener, Config
 //		case R.id.job_completed:
 //			selectTab(v.getId());
 //			break;
-			
-		case R.id.refresh:
-			arr.clear();
-			page = "1";
-			getData();
-			break;
+
+			case R.id.refresh:
+				refreshItems();
+				break;
 		}
+	}
+
+	void refreshItems() {
+		// Load items
+		// ...
+		arr.clear();
+		page = "1";
+		isRefresh = true;
+		getData();
 	}
 
 	private void changeTabUI(String method) {

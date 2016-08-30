@@ -5,9 +5,11 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -55,6 +57,8 @@ public class PackageFragment extends MyFragment implements View.OnClickListener 
     private TextView mTxtCategory;
     private ImageLoader loader;
     private PackageAdapter mAdapter;
+    private SwipeRefreshLayout mSwipeRefreshLayout;
+    private Boolean isRefresh = false;
     final ArrayList<String> arrCategory = new ArrayList<String>();
     final ArrayList<String> arrCategoryId = new ArrayList<String>();
 
@@ -129,18 +133,18 @@ public class PackageFragment extends MyFragment implements View.OnClickListener 
         v.findViewById(R.id.btnBack).setOnClickListener(this);
         v.findViewById(R.id.btnHome).setOnClickListener(this);
 
-        mLayoutRefresh  = (LinearLayout) v.findViewById(R.id.layout_refresh);
-        mRecyclerView   = (RecyclerView) v.findViewById(R.id.recyclerView);
+        mLayoutRefresh = (LinearLayout) v.findViewById(R.id.layout_refresh);
+        mRecyclerView = (RecyclerView) v.findViewById(R.id.recyclerView);
         mTxtCategory = (TextView) v.findViewById(R.id.txt_category);
-
-        mLayoutManager  = new LinearLayoutManager(getActivity());
+        mSwipeRefreshLayout = (SwipeRefreshLayout) v.findViewById(R.id.swiperefresh);
+        mLayoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(mLayoutManager);
         mLayoutRefresh.setOnClickListener(this);
         mTxtCategory.setOnClickListener(this);
 
-        String imageUrl = PARestClient.getDealAbsoluteUrl(pref.getPref(Config.SERVER),
-                Config.PACKAGE_IMAGE_PATH);
+//        String imageUrl = PARestClient.getDealAbsoluteUrl(pref.getPref(Config.SERVER),
+//                Config.PACKAGE_IMAGE_PATH);
 
 //        loader      = new ImageLoader(getActivity());
 //        mItems      = new ArrayList<>();
@@ -167,6 +171,14 @@ public class PackageFragment extends MyFragment implements View.OnClickListener 
 //
 //        getList(ServiceID);
 //        getCategoryList();
+
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                // Refresh items
+                refreshItems();
+            }
+        });
 
         return v;
     }
@@ -219,6 +231,7 @@ public class PackageFragment extends MyFragment implements View.OnClickListener 
                         + " must implemenet OnFragmentChangeListener");
             }
         } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -297,6 +310,16 @@ public class PackageFragment extends MyFragment implements View.OnClickListener 
 
     }
 
+    void refreshItems() {
+        // Load items
+        // ...
+        if (mItems != null) {
+            mItems.clear();
+        }
+        isRefresh = true;
+        getList(ServiceID);
+    }
+
     private void getList(String serviceId) {
 
         RequestParams params = new RequestParams();
@@ -319,7 +342,9 @@ public class PackageFragment extends MyFragment implements View.OnClickListener 
                     @Override
                     public void onStart() {
                         super.onStart();
-                        loadingInternetDialog.show();
+                        if(!isRefresh) {
+                            loadingInternetDialog.show();
+                        }
                     }
 
                     @Override
@@ -347,7 +372,13 @@ public class PackageFragment extends MyFragment implements View.OnClickListener 
                     @Override
                     public void onFinish() {
                         super.onFinish();
-                        loadingInternetDialog.dismiss();
+                        if(!isRefresh) {
+                            loadingInternetDialog.dismiss();
+                        }else{
+                            // Stop refresh animation
+                            mSwipeRefreshLayout.setRefreshing(false);
+                            isRefresh = false;
+                        }
 
                     }
 
