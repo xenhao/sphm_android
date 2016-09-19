@@ -326,8 +326,9 @@
 
             <com.pa.common.TypefaceTextView
                 android:id="@+id/txtGettingStarted"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:gravity="center"
                 android:text="@string/getting_started"
                 android:textColor="@color/white"
@@ -386,8 +387,9 @@
 
     <include
         layout="@layout/copyright"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:layout_marginBottom="@dimen/margin2"
         android:visibility="visible" />
 

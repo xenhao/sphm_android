@@ -49,12 +49,13 @@
         android:layout_height="0dp"
         android:layout_marginLeft="@dimen/margin6"
         android:layout_marginRight="@dimen/margin6"
+        android:paddingTop="@dimen/edittext_height3"
         android:layout_weight="1"
         android:visibility="gone" >
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical"
             android:layout_gravity="center_vertical" >
 
@@ -283,14 +284,14 @@
                     android:background="@color/white" />
             </LinearLayout>
 
-            <com.pa.common.ImageViewFitHeight
-                android:id="@+id/btnGuest"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/edittext_height3"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="@dimen/margin1"
-                android:src="@drawable/btn_effect_continue_as_guest"
-                android:visibility="gone" />
+            <!--<com.pa.common.ImageViewFitHeight-->
+                <!--android:id="@+id/btnGuest"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="@dimen/edittext_height3"-->
+                <!--android:layout_gravity="center_horizontal"-->
+                <!--android:layout_marginTop="@dimen/margin1"-->
+                <!--android:src="@drawable/btn_effect_continue_as_guest"-->
+                <!--android:visibility="gone" />-->
 
             <LinearLayout
                 android:id="@+id/txtListYourService"
@@ -320,6 +321,19 @@
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
+        <com.pa.common.TypefaceButton
+            android:id="@+id/btnGuest"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/edittext_height3"
+            android:layout_marginTop="@dimen/margin2"
+            android:background="@drawable/btn_transparent_no_border"
+            android:gravity="center"
+            android:text="CONTINUE AS GUEST"
+            android:textColor="@color/white"
+            android:textSize="@dimen/txt_xx_big"
+            android:textStyle="bold"
+            app:typeface="OpenSans-Regular"
+            android:visibility="gone"/>
 
     <include
         android:id="@+id/copyright"

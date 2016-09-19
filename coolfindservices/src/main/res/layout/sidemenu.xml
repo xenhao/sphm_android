@@ -79,7 +79,8 @@
     <ScrollView
         android:layout_below="@id/stickyTop"
         android:layout_width="match_parent"
-        android:layout_height="fill_parent">
+        android:layout_height="fill_parent"
+        android:background="#efeff4">
 
         <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -103,6 +104,7 @@
                 app:typeface="OpenSans-Regular" />
 
             <View
+                android:id="@+id/line1"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/divider"
                 android:layout_marginLeft="@dimen/margin2"
@@ -124,6 +126,7 @@
                 app:typeface="OpenSans-Regular" />
 
             <View
+                android:id="@+id/line2"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/divider"
                 android:layout_marginLeft="@dimen/margin2"
@@ -145,6 +148,7 @@
                 app:typeface="OpenSans-Regular" />
 
             <View
+                android:id="@+id/line3"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/divider"
                 android:layout_marginLeft="@dimen/margin2"
@@ -166,6 +170,7 @@
                 app:typeface="OpenSans-Regular" />
 
             <View
+                android:id="@+id/line4"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/divider"
                 android:layout_marginLeft="@dimen/margin2"
@@ -187,6 +192,7 @@
                 app:typeface="OpenSans-Regular" />
 
             <View
+                android:id="@+id/line5"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/divider"
                 android:layout_marginLeft="@dimen/margin2"
@@ -231,6 +237,7 @@
                 app:typeface="OpenSans-Regular" />
 
             <View
+                android:id="@+id/line6"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/divider"
                 android:layout_marginLeft="@dimen/margin2"
@@ -252,7 +259,9 @@
                 android:visibility="visible"
                 app:typeface="OpenSans-Regular" />
 
-            <View android:visibility="gone"
+            <View
+                android:id="@+id/line7"
+                android:visibility="visible"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/divider"
                 android:layout_marginLeft="@dimen/margin2"
@@ -271,10 +280,12 @@
                 android:text="FAQ"
                 android:textColor="@color/pa_dark_grey"
                 android:textSize="@dimen/txt_big"
-                android:visibility="gone"
+                android:visibility="visible"
                 app:typeface="OpenSans-Regular" />
 
-            <View android:visibility="visible"
+            <View
+                android:id="@+id/line8"
+                android:visibility="visible"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/divider"
                 android:layout_marginLeft="@dimen/margin2"
@@ -342,12 +353,12 @@
                 app:typeface="OpenSans-Regular" />
 
             <View
+                android:id="@+id/line9"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/divider"
                 android:layout_marginLeft="@dimen/margin2"
                 android:layout_marginRight="@dimen/margin2"
                 android:background="@color/pa_dark_grey" />
-            android:visibility="gone" />
 
             <com.pa.common.TypefaceTextView
                 android:id="@+id/menu_logout"
@@ -363,7 +374,22 @@
                 android:textSize="@dimen/txt_big"
                 app:typeface="OpenSans-Regular" />
 
+            <com.pa.common.TypefaceTextView
+                android:id="@+id/menu_login"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin4"
+                android:layout_marginLeft="@dimen/margin2"
+                android:drawableLeft="@drawable/ic_logout"
+                android:drawablePadding="@dimen/padding2"
+                android:gravity="center_vertical"
+                android:text="Login"
+                android:textColor="@color/pa_dark_grey"
+                android:textSize="@dimen/txt_big"
+                app:typeface="OpenSans-Regular" />
+
             <View
+                android:id="@+id/line10"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/divider"
                 android:layout_marginLeft="@dimen/margin2"

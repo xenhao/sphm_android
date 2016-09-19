@@ -3,6 +3,7 @@ package com.pa.splash;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioGroup;
@@ -364,13 +366,12 @@ public class FragmentSignIn extends SessionLoginFragment implements
                     @Override
                     public void onSuccess(int statusCode, String result) {
                         // TODO Auto-generated method stub
-                        Log.i("Result", result);
                         ParserUser parser = new ParserUser(result);
                         if (isStatusSuccess(parser.getStatus())) {
                             user = parser.getUser();// getArr().get(0);
 
                             if ("customer".equals(parser.getType())) {
-                                if ("Y".equals(user.is_active)) {
+                                if (!"N".equals(user.is_active)) {
                                     pref.savePref(Config.PREF_USERNAME,
                                             user.username);
                                     pref.savePref(
@@ -381,9 +382,17 @@ public class FragmentSignIn extends SessionLoginFragment implements
                                     Intercom.client().registerIdentifiedUser(new Registration().withUserId(pref.getPref(Config.PREF_USERNAME)));
                                     NanigansEventManager.getInstance().setUserId(Encryptor.md5(pref.getPref(Config.PREF_USERNAME)));
 
-                                    startActivity(new Intent(getActivity(),
-                                            ActivityLanding.class));
-                                    GlobalVar.isFB = false;
+                                    if(GlobalVar.isGuest) {
+                                        GlobalVar.isGuest = false;
+                                        getActivity().setResult(statusCode, null);
+                                        //  hide keyboard before finishing activity
+                                        ((InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(getView().getWindowToken(),0);
+                                        getActivity().finish();
+                                    }else {
+                                        startActivity(new Intent(getActivity(), ActivityLanding.class));
+                                        GlobalVar.isFB = false;
+                                        GlobalVar.isGuest = false;
+                                    }
                                 } else {
 
                                     f_phone = user.cs_mobile_number;
@@ -391,7 +400,7 @@ public class FragmentSignIn extends SessionLoginFragment implements
                                     showActivationDialog();
                                 }
                             } else {
-                                    simpleToast("This isn't a customer account. Please recheck your account");
+                                simpleToast("This isn't a customer account. Please recheck your account");
                             }
 
                         } else {

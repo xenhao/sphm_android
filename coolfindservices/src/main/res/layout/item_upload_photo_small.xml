@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<!--*   used in multiple areas within app -->
-<!--*   check first before editing -->
+<!--*   used only in FragmentPostopenBid -->
+<!--*   during attaching photo for custom job requests -->
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
@@ -10,7 +10,7 @@
                     <com.pa.common.ImageViewFitWidth
                     android:id="@+id/img"
                     android:layout_marginRight="@dimen/margin1"
-                    android:layout_width="match_parent"
+                    android:layout_width="@dimen/margin60"
                     android:layout_height="0dp"
                     android:scaleType="fitCenter"
                     android:layout_gravity="center"

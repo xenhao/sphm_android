@@ -1,18 +1,18 @@
 package com.pa.splash;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import org.apache.http.Header;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -32,9 +32,9 @@ import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.TextView;
-import android.widget.Toast;
 import android.widget.ViewSwitcher;
 
+import com.appsflyer.AppsFlyerLib;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
@@ -56,36 +56,36 @@ import com.coolfindservices.androidconsumer.R;
 import io.intercom.android.sdk.Intercom;
 import io.intercom.android.sdk.identity.Registration;
 
-import static com.pa.common.PARestClient.getAbsoluteUrl;
-
 public class FragmentLogin extends SessionLoginFragment implements
 		OnClickListener {
 	DisplayMetrics dm;
 	View logo;
-	View layoutLogin, copyright;
+	View layoutLogin;
+	View guestBtn;
+	private static final int GUEST_LOGIN = 1001;
+	private static final int GUEST_LOGIN_SUCCESS = 200;
 	int logoHeight;
 
 	EditText username, password, eMobileNumber;
 	TextView privacy_policy, ePrefix;
 	RadioGroup rg;
-	User user;
 
-	
+
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
+							 Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		View v = inflater.inflate(R.layout.fragment_login, null);
 		logo = v.findViewById(R.id.logo);
 		layoutLogin = v.findViewById(R.id.layoutLogin);
-		copyright 	= v.findViewById(R.id.copyright);
+		guestBtn = v.findViewById(R.id.btnGuest);
 
 		v.findViewById(R.id.btnRegister).setOnClickListener(this);
 		v.findViewById(R.id.btnLogin).setOnClickListener(this);
 		v.findViewById(R.id.forgotPass).setOnClickListener(this);
 		v.findViewById(R.id.btnGuest).setOnClickListener(this);
 		v.findViewById(R.id.btnIntercom).setOnClickListener(this);
-//		v.findViewById(R.id.txtListYourService).setOnClickListener(this);
+		v.findViewById(R.id.txtListYourService).setOnClickListener(this);
 		v.findViewById(R.id.term_of_use).setOnClickListener(this);
 		try {
 			// View copyright=v.findViewById(R.id.copyright);
@@ -138,7 +138,7 @@ public class FragmentLogin extends SessionLoginFragment implements
 			GlobalVar.animateLogo = true;
 			logo.setVisibility(View.GONE);
 			layoutLogin.setVisibility(View.VISIBLE);
-			copyright.setVisibility(View.VISIBLE);
+			guestBtn.setVisibility(View.VISIBLE);
 		}
 
 		if (isActivation) {
@@ -184,8 +184,19 @@ public class FragmentLogin extends SessionLoginFragment implements
 		if(!TextUtils.isEmpty(pref.getPref(Config.PREF_LAST_USERNAME))){
 			username.setText(pref.getPref(Config.PREF_LAST_USERNAME));
 		}
-		
+
 		analytic.trackScreen("Login Page");
+	}
+
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent data){
+		super.onActivityResult(requestCode, resultCode, data);
+		if (requestCode == GUEST_LOGIN) {
+			if (resultCode == GUEST_LOGIN_SUCCESS) {
+				getActivity().finish();
+
+			}
+		}
 	}
 
 	int SERVER = Config.DEFAULT_SERVER;
@@ -196,7 +207,7 @@ public class FragmentLogin extends SessionLoginFragment implements
 
 	@Override
 	protected void doneLoginFB(String email, String name, String fbid,
-			String last_name) {
+							   String last_name) {
 		// TODO Auto-generated method stub
 		super.doneLoginFB(email, name, fbid, last_name);
 		loadingInternetDialog.dismiss();
@@ -208,7 +219,7 @@ public class FragmentLogin extends SessionLoginFragment implements
 		GlobalVar.last_name = last_name;
 		GlobalVar.fbid = fbid;
 
-		if (fb_type == TYPE_REGISTER) {                //simpleToast("Do register via FB");
+		if (fb_type == TYPE_REGISTER) {
 			// Toast.makeText(getActivity(), email, Toast.LENGTH_SHORT).show();
 			// doRegisterViaFB(email, name, fbid, dob);
 			// doLoginViaFB(email, name, fbid, dob);
@@ -216,7 +227,7 @@ public class FragmentLogin extends SessionLoginFragment implements
 //			startActivity(new Intent(getActivity(), ActivityRegister.class));
 			doLoginFB();
 
-		} else if (fb_type == TYPE_LOGIN) {            //simpleToast("Do login via FB");
+		} else if (fb_type == TYPE_LOGIN) {
 			Tracer.d("Do login via FB");
 			// doLoginViaFB(email, name, fbid, dob);
 
@@ -224,35 +235,15 @@ public class FragmentLogin extends SessionLoginFragment implements
 			formPassword = fbid;
 			GlobalVar.isFB = true;
 
-			String content = "API Call: " + getAbsoluteUrl(pref.getPref(Config.SERVER), Config.API_LOGIN) + "\nusername: " + formUsername + "\npassword: " + formPassword + "\nfbid: " + GlobalVar.fbid;
-
-//		Toast.makeText(getActivity(), content, Toast.LENGTH_LONG).show();
-
-//			AlertDialog.Builder builder = new AlertDialog.Builder(
-//					getActivity());
-//			builder.setMessage(content);
-//			builder.setPositiveButton("OK",
-//					new DialogInterface.OnClickListener() {
-//
-//						@Override
-//						public void onClick(DialogInterface dialog,
-//											int which) {
-//							dialog.dismiss();
-//						}
-//					});
-//
-//			builder.show();
-
 			doLoginFB();
 		}
-
 	}
 
 	//  *** VERY BAD PRACTICE. KILL OFF doLoginFB() ASAP.   ***//
-	private void doLoginFB() {		//simpleToast("doLoginFB() Executed");
+	private void doLoginFB() {		//simpleToast("diLoginFB() Executed");
 		// TODO Auto-generated method stub
 
-//		pref.savePref(Config.PREF_LAST_USERNAME, formUsername);
+		pref.savePref(Config.PREF_LAST_USERNAME, formUsername);
 
 		loadingInternetDialog.show();
 		RequestParams params = new RequestParams();
@@ -264,111 +255,114 @@ public class FragmentLogin extends SessionLoginFragment implements
 			// GlobalVar.isFB = false;
 		}
 
-//		String content = "API Call: " + getAbsoluteUrl(pref.getPref(Config.SERVER),Config.API_LOGIN) + "\nusername: " + username + "\npassword: " + password + "\nfbid: " + GlobalVar.fbid;
-//
-////		Toast.makeText(getActivity(), content, Toast.LENGTH_LONG).show();
-//
-//		AlertDialog.Builder builder = new AlertDialog.Builder(
-//				getActivity());
-//		builder.setMessage(content);
-//		builder.setPositiveButton("OK",
-//				new DialogInterface.OnClickListener() {
-//
-//					@Override
-//					public void onClick(DialogInterface dialog,
-//										int which) {
-//						dialog.dismiss();
-//					}
-//				});
-//
-//		builder.show();
-
 		AsyncHttpClient post = new AsyncHttpClient();
-			PARestClient.post(pref.getPref(Config.SERVER), Config.API_LOGIN,
-					params, new AsyncHttpResponseHandler() {
+		PARestClient.post(pref.getPref(Config.SERVER), Config.API_LOGIN,
+				params, new AsyncHttpResponseHandler() {
 
-						@Override
-						public void onSuccess(int statusCode, String result) {        //simpleToast("doLoginFB success");
-							// TODO Auto-generated method stub
-							ParserUser parser = new ParserUser(result);
-							if (isStatusSuccess(parser.getStatus())) {
-								user = parser.getUser();// getArr().get(0);
+					@Override
+					public void onStart(){
+						super.onStart();
+						loadingDialog.show();
+					}
 
-								if ("customer".equals(parser.getType())) {
-									if ("Y".equals(user.is_active)) {
-										pref.savePref(Config.PREF_USERNAME,
-												user.username);
-										pref.savePref(
-												Config.PREF_ACTIVE_SESSION_TOKEN,
-												user.active_session_token);
-										pref.savePref(Config.PREF_USER, "");
-										Log.d("Intercom", "Login as " + pref.getPref(Config.PREF_USERNAME));
-										Intercom.client().registerIdentifiedUser(new Registration().withUserId(pref.getPref(Config.PREF_USERNAME)));
-										NanigansEventManager.getInstance().setUserId(Encryptor.md5(pref.getPref(Config.PREF_USERNAME)));
+					@Override
+					public void onSuccess(int statusCode, String result) {
+						// TODO Auto-generated method stub
+						ParserUser parser = new ParserUser(result);
+						if (isStatusSuccess(parser.getStatus())) {
+							user = parser.getUser();// getArr().get(0);
 
-										startActivity(new Intent(getActivity(),
-												ActivityLanding.class));
+							if ("customer".equals(parser.getType())) {
+								if ("Y".equals(user.is_active)) {
+									pref.savePref(Config.PREF_USERNAME,
+											user.username);
+									pref.savePref(
+											Config.PREF_ACTIVE_SESSION_TOKEN,
+											user.active_session_token);
+									pref.savePref(Config.PREF_USER, "");
+									Log.d("Intercom", "Login as " + pref.getPref(Config.PREF_USERNAME));
+									Intercom.client().registerIdentifiedUser(new Registration().withUserId(pref.getPref(Config.PREF_USERNAME)));
+									NanigansEventManager.getInstance().setUserId(Encryptor.md5(pref.getPref(Config.PREF_USERNAME)));
+
+									if(GlobalVar.isGuest) {
+										GlobalVar.isGuest = false;
+										GlobalVar.isResumeGuest = false;
+										getActivity().finish();
+									}else {
+										startActivity(new Intent(getActivity(), ActivityLanding.class));
 										GlobalVar.isFB = false;        //simpleToast("doLoginFB success");
-									} else {                        //simpleToast("doLoginFB show activation");
-
-										f_phone = user.cs_mobile_number;
-
-										showActivationDialog();
 									}
-								} else {
-									simpleToast("This isn't a customer account. Please recheck your account");
+								} else {						//simpleToast("doLoginFB show activation");
+
+									f_phone = user.cs_mobile_number;
+
+									showActivationDialog();
 								}
+							} else {
+								simpleToast("This isn't a customer account. Please recheck your account");
+							}
 
-							} else {        //simpleToast("doLoginFB return not customer");
+						} else {		//simpleToast("doLoginFB return not customer");
 
-								//	edited flow
-								if (GlobalVar.isFB) {        //Log.i("check FB", "checked");
-									if (parser.getCode() == null) {
-										//  not planned yet
-									} else {
-										switch (parser.getCode()) {
-											case "101":
-											case "103":
-												//	open registration
-												startActivity(new Intent(getActivity(), ActivityRegister.class));
-												//simpleToast("Information insufficient");
-												break;
-											case "105":
-												//	go to verification
-												f_phone = user.cs_mobile_number;
-												showActivationDialog();
-												break;
-										}
+							//	edited flow
+							if(GlobalVar.isFB) {        //Log.i("check FB", "checked");
+								if (parser.getCode() == null) {
+									//  not planned yet
+								} else {
+									String ccode = parser.getCode();
+									switch (parser.getCode()) {
+										case "101":
+										case "103":
+											//	open registration
+											startActivity(new Intent(getActivity(), ActivityRegister.class));
+											//simpleToast("Information insufficient");
+											break;
+										case "105":
+											//	go to verification
+											f_phone = user.cs_mobile_number;
+											showActivationDialog();
+											break;
 									}
 								}
 							}
-							loadingInternetDialog.dismiss();
 						}
+						loadingInternetDialog.dismiss();
+					}
 
-						@Override
-						public void onFailure(Throwable error, String content) {        //simpleToast("doLoginFB failed");	Log.i("fb error", String.valueOf(error));
-							// TODO Auto-generated method stub
-							super.onFailure(error, content);
-							System.out.println(error + "\n" + content);
-							loadingInternetDialog.dismiss();
+					@Override
+					public void onFailure(Throwable error, String content) {		//simpleToast("doLoginFB failed");	Log.i("fb error", String.valueOf(error));
+						// TODO Auto-generated method stub
+						super.onFailure(error, content);
+						loadingInternetDialog.dismiss();
 
-//						AlertDialog.Builder builder = new AlertDialog.Builder(
-//								getActivity());
-//						builder.setMessage(content + "\nthrowable:\n" + String.valueOf(error));
-//						builder.setPositiveButton("OK",
-//								new DialogInterface.OnClickListener() {
-//
-//									@Override
-//									public void onClick(DialogInterface dialog,
-//														int which) {
-//										dialog.dismiss();
-//									}
-//								});
-//
-//						builder.show();
+						AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+								getActivity());
+						alertDialogBuilder.setTitle("FB Sign In Failed");
+						alertDialogBuilder
+								.setMessage(error.toString() + content)
+								.setCancelable(false)
+								.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+									public void onClick(DialogInterface dialog, int id) {
+										dialog.cancel();
+									}
+								})
+								.setNegativeButton("No", new DialogInterface.OnClickListener() {
+									public void onClick(DialogInterface dialog, int id) {
+										dialog.cancel();
+									}
+								});
+						AlertDialog alertDialog = alertDialogBuilder.create();
+						alertDialog.show();
 
-						}
-					});
+					}
+
+					@Override
+					public void onFinish(){
+						super.onFinish();
+						loadingDialog.dismiss();
+					}
+				});
+
 	}
 
 	private void animateLogo() {
@@ -404,7 +398,7 @@ public class FragmentLogin extends SessionLoginFragment implements
 
 	private void animateLogin() {
 		layoutLogin.setVisibility(View.INVISIBLE);
-		copyright.setVisibility(View.INVISIBLE);
+		guestBtn.setVisibility(View.INVISIBLE);
 
 		Animation fadeIn = new AlphaAnimation(0, 1);
 		fadeIn.setInterpolator(new DecelerateInterpolator()); // and this
@@ -427,55 +421,75 @@ public class FragmentLogin extends SessionLoginFragment implements
 			public void onAnimationEnd(Animation animation) {
 				// TODO Auto-generated method stub
 				layoutLogin.setVisibility(View.VISIBLE);
-				copyright.setVisibility(View.VISIBLE);
+				guestBtn.setVisibility(View.VISIBLE);
 			}
 		});
 		layoutLogin.setAnimation(fadeIn);
-		copyright.setAnimation(fadeIn);
+		guestBtn.setAnimation(fadeIn);
+
 	}
 
 	@Override
 	public void onClick(View v) {
 		// TODO Auto-generated method stub
 		switch (v.getId()) {
-		case R.id.btnRegister:
-			GlobalVar.isFB = false;
-			startActivity(new Intent(getActivity(), ActivityRegister.class));
-			break;
-		case R.id.btnLogin:
-			startActivity(new Intent(getActivity(),ActivitySignIn.class));
+			case R.id.btnRegister:
+				GlobalVar.isFB = false;
+				startActivity(new Intent(getActivity(), ActivityRegister.class));
+				break;
+			case R.id.btnLogin:
+				Intent intent = new Intent(getActivity(), ActivitySignIn.class);
+				intent.addFlags(Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
+				if(GlobalVar.isGuest){
+					startActivityForResult(intent, GUEST_LOGIN);
+				}else {
+					startActivity(intent);
+				}
+//			startActivity(new Intent(getActivity(),ActivitySignIn.class));
+//			getActivity().finish();
 //			if (isValidLogin()) {
 //				GlobalVar.isFB = false;
 //				doLogin();
 //			}
-			break;
-		case R.id.forgotPass:
-			// simpleToast("Coming soon");
-			showForgotPass();
-			break;
+				break;
+			case R.id.forgotPass:
+				// simpleToast("Coming soon");
+				showForgotPass();
+				break;
 
-		case R.id.btnGuest:
-			startActivity(new Intent(getActivity(), ActivityLanding.class));
+			case R.id.btnGuest:
+//			Intent intent = new Intent(getActivity(), ActivityLanding.class);
+//			intent.putExtra("isGuest", true);
+//			startActivity(intent);
+				if(GlobalVar.isResumeGuest){
+					GlobalVar.isResumeGuest = false;
+					//	finish activity here as this ActivityLogin was added in front of existing NewActivityLanding
+					getActivity().finish();
+				}else {
+					GlobalVar.isGuest = true;
+					startActivity(new Intent(getActivity(), ActivityLanding.class));
+					//	did not finish activity as this was the original flow
+//				getActivity().finish();
+				}
+				break;
 
-			break;
+			case R.id.btnIntercom:
+				Intercom.client().displayConversationsList();
 
-		case R.id.btnIntercom:
-			Intercom.client().displayConversationsList();
+				break;
 
-			break;
+			case R.id.privacy_policy:
+				// openUrl("http://www.pageadvisor.com/home/subscribe-privacy-policy");
+				showWebDialog("http://pageadvisor.bounche.com/home/privacypolicy");
+				break;
 
-		case R.id.privacy_policy:
-			// openUrl("http://www.pageadvisor.com/home/subscribe-privacy-policy");
-			showWebDialog("http://services.cool-find.com/privacy-policy/");
-			break;
+			case R.id.term_of_use:
+				showWebDialog("http://pageadvisor.bounche.com/home/terms");
+				break;
 
-		case R.id.term_of_use:
-			showWebDialog("http://services.cool-find.com/terms-of-use/");
-			break;
-
-		case R.id.txtListYourService:
-			showWebDialog("http://www.pageadvisor.com/register-your-business/");
-			break;
+			case R.id.txtListYourService:
+				showWebDialog("http://www.pageadvisor.com/register-your-business/");
+				break;
 		}
 	}
 
@@ -526,7 +540,7 @@ public class FragmentLogin extends SessionLoginFragment implements
 
 			@Override
 			public void onClick(View arg0) {
-                dialogForgot.hide();
+				dialogForgot.hide();
 			}
 		});
 		v.findViewById(R.id.btnReset).setOnClickListener(new OnClickListener() {
@@ -555,7 +569,7 @@ public class FragmentLogin extends SessionLoginFragment implements
 	}
 
 	/**
-	 * 
+	 *
 	 */
 	protected void doReset() {
 		// TODO Auto-generated method stub
@@ -568,7 +582,7 @@ public class FragmentLogin extends SessionLoginFragment implements
 		AsyncHttpResponseHandler responseHandler = new AsyncHttpResponseHandler() {
 			/*
 			 * (non-Javadoc)
-			 * 
+			 *
 			 * @see com.loopj.android.http.AsyncHttpResponseHandler#onStart()
 			 */
 			@Override
@@ -580,7 +594,7 @@ public class FragmentLogin extends SessionLoginFragment implements
 
 			/*
 			 * (non-Javadoc)
-			 * 
+			 *
 			 * @see com.loopj.android.http.AsyncHttpResponseHandler#onFinish()
 			 */
 			@Override
@@ -592,10 +606,10 @@ public class FragmentLogin extends SessionLoginFragment implements
 
 			public void onSuccess(int arg0, Header[] arg1, byte[] arg2) {
 				ParserBasicResult parser=new ParserBasicResult(new String(arg2));
-				
+
 				if("success".equals(parser.getStatus())){
-				dialogForgot.dismiss();
-				simpleToast("Try using your new password to login");
+					dialogForgot.dismiss();
+					simpleToast("Try using your new password to login");
 				}else{
 					simpleToast("Invalid reset code");
 				}
@@ -635,7 +649,7 @@ public class FragmentLogin extends SessionLoginFragment implements
 	}
 
 	/**
-	 * 
+	 *
 	 */
 	protected void doGetToken() {
 		// TODO Auto-generated method stub
@@ -645,7 +659,7 @@ public class FragmentLogin extends SessionLoginFragment implements
 		AsyncHttpResponseHandler responseHandler = new AsyncHttpResponseHandler() {
 			/*
 			 * (non-Javadoc)
-			 * 
+			 *
 			 * @see com.loopj.android.http.AsyncHttpResponseHandler#onStart()
 			 */
 			@Override
@@ -657,7 +671,7 @@ public class FragmentLogin extends SessionLoginFragment implements
 
 			/*
 			 * (non-Javadoc)
-			 * 
+			 *
 			 * @see com.loopj.android.http.AsyncHttpResponseHandler#onFinish()
 			 */
 			@Override
@@ -698,11 +712,13 @@ public class FragmentLogin extends SessionLoginFragment implements
 		return false;
 	}
 
+	User user;
+
 	private void doLogin() {
 		// TODO Auto-generated method stub
 
 		pref.savePref(Config.PREF_LAST_USERNAME, formUsername);
-		
+
 		loadingInternetDialog.show();
 		RequestParams params = new RequestParams();
 		params.add("username", formUsername);
@@ -732,13 +748,18 @@ public class FragmentLogin extends SessionLoginFragment implements
 											Config.PREF_ACTIVE_SESSION_TOKEN,
 											user.active_session_token);
 									pref.savePref(Config.PREF_USER, "");
-                                    Log.d("Intercom", "Login as " + pref.getPref(Config.PREF_USERNAME));
-                                    Intercom.client().registerIdentifiedUser(new Registration().withUserId(pref.getPref(Config.PREF_USERNAME)));
-                                    NanigansEventManager.getInstance().setUserId(Encryptor.md5(pref.getPref(Config.PREF_USERNAME)));
+									Log.d("Intercom", "Login as " + pref.getPref(Config.PREF_USERNAME));
+									Intercom.client().registerIdentifiedUser(new Registration().withUserId(pref.getPref(Config.PREF_USERNAME)));
+									NanigansEventManager.getInstance().setUserId(Encryptor.md5(pref.getPref(Config.PREF_USERNAME)));
 
-                                    startActivity(new Intent(getActivity(),
-											ActivityLanding.class));
-									GlobalVar.isFB = false;
+									if(GlobalVar.isGuest) {
+										GlobalVar.isGuest = false;
+										GlobalVar.isResumeGuest = false;
+										getActivity().finish();
+									}else {
+										startActivity(new Intent(getActivity(), ActivityLanding.class));
+										GlobalVar.isFB = false;
+									}
 								} else {
 
 									f_phone = user.cs_mobile_number;
@@ -750,22 +771,22 @@ public class FragmentLogin extends SessionLoginFragment implements
 							}
 
 						} else {
-								ParserBasicResult pbr = new ParserBasicResult(
-										result);
-                                AlertDialog.Builder builder = new AlertDialog.Builder(
-                                        getActivity());
-                                builder.setMessage(pbr.getReason());
-                                builder.setPositiveButton("OK",
-                                        new DialogInterface.OnClickListener() {
+							ParserBasicResult pbr = new ParserBasicResult(
+									result);
+							AlertDialog.Builder builder = new AlertDialog.Builder(
+									getActivity());
+							builder.setMessage(pbr.getReason());
+							builder.setPositiveButton("OK",
+									new DialogInterface.OnClickListener() {
 
-                                            @Override
-                                            public void onClick(DialogInterface dialog,
-                                                                int which) {
-                                                dialog.dismiss();
-                                            }
-                                        });
+										@Override
+										public void onClick(DialogInterface dialog,
+															int which) {
+											dialog.dismiss();
+										}
+									});
 
-                                builder.show();
+							builder.show();
 						}
 						loadingInternetDialog.dismiss();
 					}
@@ -805,7 +826,7 @@ public class FragmentLogin extends SessionLoginFragment implements
 
 	public void showActivationDialog() {
 		analytic.trackScreen("OTP Activation");
-		
+
 		View v = inflater.inflate(R.layout.fragment_activate, null);
 		ePrefix = (TextView) v.findViewById(R.id.prefix);
 		eMobileNumber = (EditText) v.findViewById(R.id.co_main_business_number);
@@ -855,7 +876,7 @@ public class FragmentLogin extends SessionLoginFragment implements
 
 							@Override
 							public void onClick(DialogInterface dialog,
-									int which) {
+												int which) {
 								// TODO Auto-generated method stub
 								dialog.dismiss();
 								dialogActivation.dismiss();
@@ -915,7 +936,7 @@ public class FragmentLogin extends SessionLoginFragment implements
 
 					@Override
 					public void onFailure(int arg0, Header[] arg1, byte[] arg2,
-							Throwable arg3) {
+										  Throwable arg3) {
 						// TODO Auto-generated method stub
 						super.onFailure(arg0, arg1, arg2, arg3);
 
@@ -925,7 +946,7 @@ public class FragmentLogin extends SessionLoginFragment implements
 					public void onSuccess(int arg0, Header[] arg1, byte[] arg2) {
 						// TODO Auto-generated method stub
 						super.onSuccess(arg0, arg1, arg2);
-                        Log.d("Activation", new String(arg2));
+						Log.d("Activation", new String(arg2));
 						ParserActivationStatus parser = new ParserActivationStatus(
 								new String(arg2));
 						ActivationStatus status = parser.getData();
@@ -979,31 +1000,31 @@ public class FragmentLogin extends SessionLoginFragment implements
 									pref.savePref(Config.PREF_USERNAME,
 											user.username);
 									pref.savePref(
-                                            Config.PREF_ACTIVE_SESSION_TOKEN,
-                                            user.active_session_token);
+											Config.PREF_ACTIVE_SESSION_TOKEN,
+											user.active_session_token);
 
-                                    Intercom.client().registerIdentifiedUser(new Registration().withUserId(pref.getPref(Config.PREF_USERNAME)));
+									Intercom.client().registerIdentifiedUser(new Registration().withUserId(pref.getPref(Config.PREF_USERNAME)));
 
 //                                    AppsFlyerLib.sendTrackingWithEvent(getActivity().getApplicationContext(), "Account Creation", "");
-                                    Log.d("Register", "OTP Success 1");
-                                    NanigansEventManager.getInstance().setUserId(Encryptor.md5(pref.getPref(Config.PREF_USERNAME)));
+									Log.d("Register", "OTP Success 1");
+									NanigansEventManager.getInstance().setUserId(Encryptor.md5(pref.getPref(Config.PREF_USERNAME)));
 
-                                    simpleToast("Success. Account has been activated");
-                                    analytic.trackScreen("OTP Success");
+									simpleToast("Success. Account has been activated");
+									analytic.trackScreen("OTP Success");
 
-									startActivity(new Intent(getActivity(),
-                                            ActivityLanding.class));
+									GlobalVar.isGuest = false;
+									startActivity(new Intent(getActivity(), ActivityLanding.class));
 									dialogActivation.dismiss();
 
 								} else {
 									formUsername = GlobalVar.a;
 									formPassword = GlobalVar.b;
-                                    Log.d("Register", "OTP Success 2 " + formUsername);
-                                    NanigansEventManager.getInstance().trackUserRegistration(Encryptor.md5(formUsername));
+									Log.d("Register", "OTP Success 2 " + formUsername);
+									NanigansEventManager.getInstance().trackUserRegistration(Encryptor.md5(formUsername));
 									doLogin();
-                                }
+								}
 
-                            } else {
+							} else {
 								// ParserBasicResult pbr = new
 								// ParserBasicResult(
 								// result);
@@ -1021,7 +1042,7 @@ public class FragmentLogin extends SessionLoginFragment implements
 
 					@Override
 					public void onFailure(int arg0, Header[] arg1, byte[] arg2,
-							Throwable arg3) {
+										  Throwable arg3) {
 						// TODO Auto-generated method stub
 						super.onFailure(arg0, arg1, arg2, arg3);
 					}

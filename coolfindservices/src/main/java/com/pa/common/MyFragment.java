@@ -53,6 +53,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -2063,7 +2064,7 @@ public class MyFragment extends Fragment implements ImageChooserListener {
 	// foto
 	protected ImageView generalImgProfile;
 
-	protected void createPhotoDialog() {
+	protected boolean createPhotoDialog(final FragmentPostOpenBid f) {
 
 		final String[] items = new String[] { "Camera",
 				"Gallery" };
@@ -2071,20 +2072,60 @@ public class MyFragment extends Fragment implements ImageChooserListener {
 				android.R.layout.select_dialog_item, items);
 		AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
-		builder.setTitle("Upload Photo");
+		builder.setTitle("Upload Photo")
+				.setCancelable(false)
+				.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int id) {
+
+
+						setBool(false);
+						dialog.cancel();
+
+					}
+				})
+				.setOnCancelListener(new DialogInterface.OnCancelListener() {
+					@Override
+					public void onCancel(DialogInterface dialog) {
+						try {
+//					FragmentPostOpenBid f = (FragmentPostOpenBid) getParentFragment().getActivity();
+							f.removePhotoFromWrapper(generalView);
+						}catch(Exception e){
+							e.printStackTrace();
+						}
+						Log.v("CANCEL DIALOG", "DIALOG CANCELED");
+//						Toast.makeText(getActivity(), "View Removed", Toast.LENGTH_SHORT).show();
+					}
+				});
 		builder.setAdapter(adapter, new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int item) { // pick from
 																	// camera
 				if (item == 0) {
 					// pick from camera
 					takePicture();
+//					setBool(true);
+//					FragmentPostOpenBid f = (FragmentPostOpenBid) getParentFragment();
+//					f.checkChildCount();
 				} else { // pick from file
 					chooseImage();
+//					setBool(true);
+//					FragmentPostOpenBid f = (FragmentPostOpenBid) getParentFragment();
+//					f.checkChildCount();
 				}
 			}
 		});
 		photoDialogMyF = builder.create();
 		photoDialogMyF.show();
+
+		return didSelectImage();
+	}
+
+	private boolean isSelected = true;
+	private void setBool(boolean b){
+		isSelected = b;
+	}
+
+	public boolean didSelectImage(){
+		return isSelected;
 	}
 
 	private ImageChooserManager imageChooserManager;

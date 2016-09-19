@@ -35,6 +35,7 @@ import com.loopj.android.http.RequestParams;
 import com.pa.bid.FragmentBid;
 import com.pa.bid.FragmentBidDetail;
 import com.pa.common.Config;
+import com.pa.common.GlobalVar;
 import com.pa.common.ImageHelper;
 import com.pa.common.MyActivity;
 import com.pa.common.OnFragmentChangeListener;
@@ -273,10 +274,10 @@ public class ActivityLanding extends MyActivity implements OnClickListener,
 			// ActionBarDrawerToggle ties together the the proper interactions
 			// between the sliding drawer and the action bar app icon
 			mDrawerToggle = new ActionBarDrawerToggle(this, /* host Activity */
-			mDrawerLayout, /* DrawerLayout object */
-			R.drawable.ic_launcher, /* nav drawer image to replace 'Up' caret */
-			R.string.drawer_open, /* "open drawer" description for accessibility */
-			R.string.drawer_close /* "close drawer" description for accessibility */
+					mDrawerLayout, /* DrawerLayout object */
+					R.drawable.ic_launcher, /* nav drawer image to replace 'Up' caret */
+					R.string.drawer_open, /* "open drawer" description for accessibility */
+					R.string.drawer_close /* "close drawer" description for accessibility */
 			) {
 				public void onDrawerClosed(View view) {
 					// getActionBar().setTitle(mTitle);
@@ -293,6 +294,165 @@ public class ActivityLanding extends MyActivity implements OnClickListener,
 				}
 			};
 			mDrawerLayout.setDrawerListener(mDrawerToggle);
+
+			setMenu();
+
+//			if(GlobalVar.isGuest){
+//				mDrawerList.findViewById(R.id.menu_jobs_list).setOnClickListener(this);
+//				mDrawerList.findViewById(R.id.menu_login).setOnClickListener(this);
+//				//	hide all unneeded for guest mode
+//				mDrawerList.findViewById(R.id.menu_about).setVisibility(View.GONE);
+//				mDrawerList.findViewById(R.id.menu_bid).setVisibility(View.GONE);
+//				mDrawerList.findViewById(R.id.menu_help).setVisibility(View.GONE);
+//				mDrawerList.findViewById(R.id.menu_history).setVisibility(View.GONE);
+//				mDrawerList.findViewById(R.id.menu_quotation).setVisibility(View.GONE);
+//				mDrawerList.findViewById(R.id.menu_completed_jobs).setVisibility(View.GONE);
+//				mDrawerList.findViewById(R.id.menu_settings).setVisibility(View.GONE);
+//				mDrawerList.findViewById(R.id.menu_free_credit).setVisibility(View.GONE);
+//				mDrawerList.findViewById(R.id.menu_logout).setVisibility(View.GONE);
+//				mDrawerList.findViewById(R.id.menu_chat).setVisibility(View.GONE);
+//				mDrawerList.findViewById(R.id.menu_faq).setVisibility(View.GONE);
+//				mDrawerList.findViewById(R.id.menu_contact_us).setVisibility(View.GONE);
+//
+//				txtUsername = (TextView) findViewById(R.id.username);
+//				txtUsername.setText("Guest");
+//			}else {
+//				mDrawerList.findViewById(R.id.menu_about).setOnClickListener(this);
+//				mDrawerList.findViewById(R.id.menu_bid).setOnClickListener(this);
+//				mDrawerList.findViewById(R.id.menu_help).setOnClickListener(this);
+//				mDrawerList.findViewById(R.id.menu_history)
+//						.setOnClickListener(this);
+//				mDrawerList.findViewById(R.id.menu_jobs_list).setOnClickListener(
+//						this);
+//				mDrawerList.findViewById(R.id.menu_quotation).setOnClickListener(
+//						this);
+//				mDrawerList.findViewById(R.id.menu_completed_jobs)
+//						.setOnClickListener(this);
+//
+//				mDrawerList.findViewById(R.id.menu_settings).setOnClickListener(
+//						this);
+//
+//				mDrawerList.findViewById(R.id.menu_free_credit).setOnClickListener(
+//						this);
+//
+//				mDrawerList.findViewById(R.id.menu_logout).setOnClickListener(this);
+//				mDrawerList.findViewById(R.id.menu_chat).setOnClickListener(this);
+//				mDrawerList.findViewById(R.id.menu_faq).setOnClickListener(this);
+//				mDrawerList.findViewById(R.id.menu_contact_us).setOnClickListener(this);
+//
+//				txtEmail = (TextView) findViewById(R.id.email);
+//				txtEmail.setText(pref.getPref(Config.PREF_USERNAME));
+//				getUserData();
+//			}
+
+			findViewById(R.id.profile_pic).setOnClickListener(this);
+			profilePic = (ImageView) findViewById(R.id.profile_pic);
+
+			profilePic.setImageBitmap(new ImageHelper()
+					.getCircleBitmap(new BitmapFactory().decodeResource(
+							getResources(), R.drawable.default_profile)));
+
+			if (savedInstanceState == null) {
+				selectItem(0);
+			}
+
+
+//			txtUsername = (TextView) findViewById(R.id.username);
+//			txtEmail = (TextView) findViewById(R.id.email);
+//			txtEmail.setText(pref.getPref(Config.PREF_USERNAME));
+			version=(TextView)findViewById(R.id.version);
+
+			try
+			{
+				String app_ver = this.getPackageManager().getPackageInfo(this.getPackageName(), 0).versionName;
+				version.setText("Version:\n"+app_ver);
+
+			}
+			catch (NameNotFoundException e)
+			{
+				// Log.e(tag, e.getMessage());
+			}
+//			if(!GlobalVar.isGuest) {
+//				txtEmail.setText(pref.getPref(Config.PREF_USERNAME));
+//				getUserData();
+//			}else{
+//				txtUsername.setText("Guest");
+//			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+
+//		if (savedInstanceState == null) {
+//			selectItem(0);
+//		}
+
+		checkVersionData();
+
+//        Thread.setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
+//            @Override
+//            public void uncaughtException(Thread paramThread, Throwable paramThrowable) {
+//                Log.e("Alert", "Lets See if it Works !!!");
+//                Log.e("Alert", paramThrowable.getLocalizedMessage());
+//            }
+//        });
+	}
+
+	private void setMenu(){
+		if(GlobalVar.isGuest){
+			mDrawerList.findViewById(R.id.menu_jobs_list).setOnClickListener(this);
+			mDrawerList.findViewById(R.id.menu_login).setOnClickListener(this);
+			//	hide all unneeded for guest mode
+			mDrawerList.findViewById(R.id.menu_about).setVisibility(View.GONE);
+			mDrawerList.findViewById(R.id.menu_bid).setVisibility(View.GONE);
+			mDrawerList.findViewById(R.id.menu_help).setVisibility(View.GONE);
+			mDrawerList.findViewById(R.id.menu_history).setVisibility(View.GONE);
+			mDrawerList.findViewById(R.id.menu_quotation).setVisibility(View.GONE);
+			mDrawerList.findViewById(R.id.menu_completed_jobs).setVisibility(View.GONE);
+			mDrawerList.findViewById(R.id.menu_settings).setVisibility(View.GONE);
+			mDrawerList.findViewById(R.id.menu_free_credit).setVisibility(View.GONE);
+			mDrawerList.findViewById(R.id.menu_logout).setVisibility(View.GONE);
+			mDrawerList.findViewById(R.id.menu_chat).setVisibility(View.GONE);
+			mDrawerList.findViewById(R.id.menu_faq).setVisibility(View.GONE);
+			mDrawerList.findViewById(R.id.menu_contact_us).setVisibility(View.GONE);
+
+			mDrawerList.findViewById(R.id.line2).setVisibility(View.GONE);
+			mDrawerList.findViewById(R.id.line3).setVisibility(View.GONE);
+			mDrawerList.findViewById(R.id.line4).setVisibility(View.GONE);
+			mDrawerList.findViewById(R.id.line5).setVisibility(View.GONE);
+			mDrawerList.findViewById(R.id.line6).setVisibility(View.GONE);
+			mDrawerList.findViewById(R.id.line7).setVisibility(View.GONE);
+			mDrawerList.findViewById(R.id.line8).setVisibility(View.GONE);
+			mDrawerList.findViewById(R.id.line9).setVisibility(View.GONE);
+			mDrawerList.findViewById(R.id.line10).setVisibility(View.GONE);
+
+			txtUsername = (TextView) findViewById(R.id.username);
+			txtUsername.setText("Guest");
+		}else {
+//			mDrawerList.findViewById(R.id.menu_about).setVisibility(View.VISIBLE);
+			mDrawerList.findViewById(R.id.menu_bid).setVisibility(View.VISIBLE);
+//			mDrawerList.findViewById(R.id.menu_help).setVisibility(View.VISIBLE);
+//			mDrawerList.findViewById(R.id.menu_history).setVisibility(View.VISIBLE);
+			mDrawerList.findViewById(R.id.menu_quotation).setVisibility(View.VISIBLE);
+			mDrawerList.findViewById(R.id.menu_completed_jobs).setVisibility(View.VISIBLE);
+			mDrawerList.findViewById(R.id.menu_settings).setVisibility(View.VISIBLE);
+			mDrawerList.findViewById(R.id.menu_free_credit).setVisibility(View.VISIBLE);
+			mDrawerList.findViewById(R.id.menu_logout).setVisibility(View.VISIBLE);
+			mDrawerList.findViewById(R.id.menu_chat).setVisibility(View.VISIBLE);
+			mDrawerList.findViewById(R.id.menu_faq).setVisibility(View.VISIBLE);
+			mDrawerList.findViewById(R.id.menu_contact_us).setVisibility(View.VISIBLE);
+
+			mDrawerList.findViewById(R.id.line2).setVisibility(View.VISIBLE);
+			mDrawerList.findViewById(R.id.line3).setVisibility(View.VISIBLE);
+			mDrawerList.findViewById(R.id.line4).setVisibility(View.VISIBLE);
+			mDrawerList.findViewById(R.id.line5).setVisibility(View.VISIBLE);
+			mDrawerList.findViewById(R.id.line6).setVisibility(View.VISIBLE);
+			mDrawerList.findViewById(R.id.line7).setVisibility(View.VISIBLE);
+			mDrawerList.findViewById(R.id.line8).setVisibility(View.VISIBLE);
+			mDrawerList.findViewById(R.id.line9).setVisibility(View.VISIBLE);
+			mDrawerList.findViewById(R.id.line10).setVisibility(View.VISIBLE);
+
+			mDrawerList.findViewById(R.id.menu_login).setVisibility(View.GONE);
 
 			mDrawerList.findViewById(R.id.menu_about).setOnClickListener(this);
 			mDrawerList.findViewById(R.id.menu_bid).setOnClickListener(this);
@@ -317,46 +477,11 @@ public class ActivityLanding extends MyActivity implements OnClickListener,
 			mDrawerList.findViewById(R.id.menu_faq).setOnClickListener(this);
 			mDrawerList.findViewById(R.id.menu_contact_us).setOnClickListener(this);
 
-			findViewById(R.id.profile_pic).setOnClickListener(this);
-			profilePic = (ImageView) findViewById(R.id.profile_pic);
-
-			profilePic.setImageBitmap(new ImageHelper()
-					.getCircleBitmap(new BitmapFactory().decodeResource(
-							getResources(), R.drawable.default_profile)));
-
-			if (savedInstanceState == null) {
-				selectItem(0);
-			}
-
-			txtUsername = (TextView) findViewById(R.id.username);
 			txtEmail = (TextView) findViewById(R.id.email);
 			txtEmail.setText(pref.getPref(Config.PREF_USERNAME));
-			version=(TextView)findViewById(R.id.version);
-			
-			try
-			{
-			    String app_ver = this.getPackageManager().getPackageInfo(this.getPackageName(), 0).versionName;
-				version.setText("Version:\n"+app_ver);
-
-			}
-			catch (NameNotFoundException e)
-			{
-			   // Log.e(tag, e.getMessage());
-			}
+			txtUsername = (TextView) findViewById(R.id.username);
 			getUserData();
-		} catch (Exception e) {
-			e.printStackTrace();
 		}
-		
-		checkVersionData();
-
-//        Thread.setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
-//            @Override
-//            public void uncaughtException(Thread paramThread, Throwable paramThrowable) {
-//                Log.e("Alert", "Lets See if it Works !!!");
-//                Log.e("Alert", paramThrowable.getLocalizedMessage());
-//            }
-//        });
 	}
 
 	void getUserData() {
@@ -611,6 +736,8 @@ public class ActivityLanding extends MyActivity implements OnClickListener,
 			selectItem(8);
 			break;
 		case R.id.menu_logout:
+			GlobalVar.isGuest = false;
+			GlobalVar.isResumeGuest = false;
 			logout();
 			startActivity(new Intent(this, SplashActivity.class));
 			this.finish();
@@ -624,6 +751,13 @@ public class ActivityLanding extends MyActivity implements OnClickListener,
 
 		case R.id.menu_free_credit:
 			selectItem(R.id.menu_free_credit);
+			break;
+
+		case R.id.menu_login:
+			Intent intent = new Intent(this, SplashActivity.class);
+			intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+			GlobalVar.isResumeGuest = true;
+			startActivity(intent);
 			break;
 		
 		case R.id.menu_faq:
@@ -676,6 +810,7 @@ public class ActivityLanding extends MyActivity implements OnClickListener,
 		// TODO Auto-generated method stub
 		super.onResume();
         AppEventsLogger.activateApp(this);
+		setMenu();
 	}
 
 }

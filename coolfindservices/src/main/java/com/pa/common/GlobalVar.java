@@ -12,7 +12,9 @@ public class GlobalVar {
 
 	public static String username;
 	public static String email,first_name,last_name,fbid;
-	public static boolean isFB;		
+	public static boolean isFB;
+	public static boolean isGuest = false;
+	public static boolean isResumeGuest = false;
 	
 	public static String country;
 	public static String state;

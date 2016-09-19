@@ -19,6 +19,7 @@ import android.widget.TextView;
 
 import com.braintreepayments.api.dropin.BraintreePaymentActivity;
 import com.braintreepayments.api.dropin.Customization;
+import com.coolfindservices.android.SplashActivity;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.nanigans.android.sdk.NanigansEventManager;
@@ -150,8 +151,32 @@ public class PackageDetailFragment extends MyFragment implements View.OnClickLis
                 Intercom.client().displayConversationsList();
                 break;
             case R.id.btnNext:
-                isDataMapped = false;
-                doNext();
+                if(GlobalVar.isGuest) {
+                    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+                            getActivity());
+                    alertDialogBuilder.setTitle("Sign In");
+                    alertDialogBuilder
+                            .setMessage("Sign In or Register to Proceed?")
+                            .setCancelable(false)
+                            .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    Intent intent = new Intent(getActivity(), SplashActivity.class);
+                                    intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+                                    GlobalVar.isResumeGuest = true;
+                                    startActivity(intent);
+                                }
+                            })
+                            .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    dialog.cancel();
+                                }
+                            });
+                    AlertDialog alertDialog = alertDialogBuilder.create();
+                    alertDialog.show();
+                }else {
+                    isDataMapped = false;
+                    doNext();
+                }
                 break;
             case R.id.btnHome:
                 for(int i = getActivity().getSupportFragmentManager().getBackStackEntryCount(); i > 1; i--)

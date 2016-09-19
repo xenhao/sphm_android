@@ -20,6 +20,7 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnDismissListener;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
@@ -56,6 +57,7 @@ import android.widget.TimePicker;
 import android.widget.TimePicker.OnTimeChangedListener;
 import android.widget.ViewFlipper;
 
+import com.coolfindservices.android.SplashActivity;
 import com.kbeanie.imagechooser.api.ChooserType;
 import com.kbeanie.imagechooser.api.ImageChooserListener;
 import com.loopj.android.http.AsyncHttpClient;
@@ -748,18 +750,42 @@ public class FragmentPostOpenBid extends MyFragment implements OnClickListener,
 		public void onClick(View v) {
 			// TODO Auto-generated method stub
 			switch (v.getId()) {
-			case R.id.btnCancel2:
-				// displayExitFormDialog();
-				getActivity().getSupportFragmentManager()
-						.popBackStackImmediate();
-				break;
-			case R.id.btnNext2:
-				if (isValidStep1()) {
-					pageHistory.add(prev_page);
+				case R.id.btnCancel2:
+					// displayExitFormDialog();
+					getActivity().getSupportFragmentManager()
+							.popBackStackImmediate();
+					break;
+				case R.id.btnNext2:
+					if(GlobalVar.isGuest){
+						AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+								getActivity());
+						alertDialogBuilder.setTitle("Sign In");
+						alertDialogBuilder
+								.setMessage("Sign In or Register to Proceed?")
+								.setCancelable(false)
+								.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+									public void onClick(DialogInterface dialog, int id) {
+										Intent intent = new Intent(getActivity(), SplashActivity.class);
+										intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+										GlobalVar.isResumeGuest = true;
+										startActivity(intent);
+									}
+								})
+								.setNegativeButton("No", new DialogInterface.OnClickListener() {
+									public void onClick(DialogInterface dialog, int id) {
+										dialog.cancel();
+									}
+								});
+						AlertDialog alertDialog = alertDialogBuilder.create();
+						alertDialog.show();
+					}else {
+						if (isValidStep1()) {
+							pageHistory.add(prev_page);
 
-					changeStep(2);
-				}
-				break;
+							changeStep(2);
+						}
+					}
+					break;
 			}
 		}
 	};
@@ -1147,48 +1173,72 @@ public class FragmentPostOpenBid extends MyFragment implements OnClickListener,
 		public void onClick(View v) {
 			// TODO Auto-generated method stub
 			switch (v.getId()) {
-			case R.id.btnCancel2:
-			case R.id.btnBack:
-				if (!isGate1) {
-					changeStep(1);
-					pageHistory.pop();
-				} else {
-					// displayExitFormDialog();
-					getActivity().getSupportFragmentManager()
-							.popBackStackImmediate();
-				}
-				break;
+				case R.id.btnCancel2:
+				case R.id.btnBack:
+					if (!isGate1) {
+						changeStep(1);
+						pageHistory.pop();
+					} else {
+						// displayExitFormDialog();
+						getActivity().getSupportFragmentManager()
+								.popBackStackImmediate();
+					}
+					break;
 
-			// case R.id.btnCancel:
-			// // simpleToast("Soon");
-			// if (isValidStep2()) {
-			//
-			// isOpenBid = false;
-			// isBrowseMerchantByService = true;
-			// pageHistory.add(prev_page);
-			//
-			// changeStep(7);
-			// }
-			// break;
-			// case R.id.btnNext2:
-			// if (isValidStep2()) {
-			// pageHistory.add(prev_page);
-			//
-			// changeStep(3);
-			// }
-			//
-			// break;
-			case R.id.btnNext2:
+				// case R.id.btnCancel:
+				// // simpleToast("Soon");
+				// if (isValidStep2()) {
+				//
+				// isOpenBid = false;
+				// isBrowseMerchantByService = true;
+				// pageHistory.add(prev_page);
+				//
+				// changeStep(7);
+				// }
+				// break;
+				// case R.id.btnNext2:
+				// if (isValidStep2()) {
+				// pageHistory.add(prev_page);
+				//
 				// changeStep(3);
-				isBrowseMerchantByService = false;
+				// }
+				//
+				// break;
+				case R.id.btnNext2:
+					// changeStep(3);
+					if(GlobalVar.isGuest){
+						AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+								getActivity());
+						alertDialogBuilder.setTitle("Sign In");
+						alertDialogBuilder
+								.setMessage("Sign In or Register to Proceed?")
+								.setCancelable(false)
+								.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+									public void onClick(DialogInterface dialog, int id) {
+										Intent intent = new Intent(getActivity(), SplashActivity.class);
+										intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+										GlobalVar.isResumeGuest = true;
+										startActivity(intent);
+									}
+								})
+								.setNegativeButton("No", new DialogInterface.OnClickListener() {
+									public void onClick(DialogInterface dialog, int id) {
+										dialog.cancel();
+									}
+								});
+						AlertDialog alertDialog = alertDialogBuilder.create();
+						alertDialog.show();
+					}else {
+						isBrowseMerchantByService = false;
 
-				if (isValidStep2()) {
-					pageHistory.add(prev_page);
+						if (isValidStep2()) {
+							pageHistory.add(prev_page);
 
-					changeStep(3);
+							changeStep(3);
 
-				}
-				break;
+						}
+					}
+					break;
 			}
 		}
 	};
@@ -1283,20 +1333,23 @@ public class FragmentPostOpenBid extends MyFragment implements OnClickListener,
 				count++;
 			}
 		}
-		return count;
+		return count+1;
 	}
 
 	void addPhotoToWrapper() {
+		//	select image method
 		if (wrapperPhoto.getChildCount() < 4) {
-			View v = inflater.inflate(R.layout.item_upload_photo, null);
+			View v = inflater.inflate(R.layout.item_upload_photo_small, null);
 			ImageView img = (ImageView) v.findViewById(R.id.img);
 			generalIMG = img;
 			generalView = v;
 			// createMyFragmentPhotoDialog();
-			createPhotoDialog();
+			boolean didPickImage = createPhotoDialog(this);
 
 			v.setVisibility(View.GONE);
+//			if(didPickImage) {
 			wrapperPhoto.addView(v);
+//			}
 			v.setOnClickListener(new OnClickListener() {
 
 				@Override
@@ -1305,10 +1358,11 @@ public class FragmentPostOpenBid extends MyFragment implements OnClickListener,
 					showDialogPhotoPreview(v);
 				}
 			});
-			if (getVisibleChild(wrapperPhoto) == 4) {
-				addPhoto.setVisibility(View.GONE);
-			}
+//			if (getVisibleChild(wrapperPhoto) >= 4) {
+//				addPhoto.setVisibility(View.GONE);
+//			}
 		} else {
+//			addPhoto.setVisibility(View.GONE);
 			simpleToast("Max 4 photos");
 		}
 

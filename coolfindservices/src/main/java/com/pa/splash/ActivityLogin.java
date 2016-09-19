@@ -15,7 +15,9 @@ public class ActivityLogin extends MyActivity {
 
 		if (keyCode == KeyEvent.KEYCODE_BACK) {
 
-			if (!back(R.id.container)) {
+			if(GlobalVar.isGuest){
+				this.finish();
+			}else if (!back(R.id.container)) {
 				displayExitDialog();
 			}
 			return true;
