@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2"
+        android:background="@color/pa_orange"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/btnMenu"
+            android:layout_width="@dimen/edittext_height"
+            android:layout_height="@dimen/edittext_height"
+            android:padding="@dimen/padding"
+            android:layout_marginTop="@dimen/padding"
+            android:src="@drawable/btn_effect_menu"
+            android:layout_weight="1"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_marginTop="@dimen/padding"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/pa_logo_old_white"
+            android:layout_weight="10"/>
+
+        <ImageView
+            android:layout_width="@dimen/edittext_height4"
+            android:layout_height="@dimen/edittext_height4"
+            android:src="@drawable/concierge_small"
+            android:layout_marginTop="@dimen/margin1"
+            android:layout_marginEnd="@dimen/padding"
+            android:layout_marginRight="@dimen/padding"
+            android:layout_gravity="center_vertical"
+            android:gravity="center_vertical"
+            android:id="@+id/btnIntercom"
+            android:layout_weight="1"/>
+        </LinearLayout>
+
+        <!--<RelativeLayout-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_gravity="center">-->
+
+        <!--<LinearLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:orientation="horizontal"-->
+            <!--android:layout_marginTop="@dimen/padding2"-->
+            <!--android:weightSum="20">-->
+
+            <com.pa.common.TypefaceTextView
+                android:id="@+id/country2"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/edittext_height3"
+                android:layout_marginTop="@dimen/margin2"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:background="#55FFFFFF"
+                android:drawableRight="@drawable/icon_white_dropdown"
+                android:gravity="center_vertical"
+                android:padding="@dimen/margin2"
+                android:text="Select country"
+                android:textColor="@color/white"
+                android:textSize="@dimen/txt_big"
+                app:typeface="OpenSans-Bold"
+                />
+
+
+
+        <!--</LinearLayout>-->
+
+            <com.pa.common.TypefaceTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal|bottom"
+                android:layout_gravity="center_horizontal|bottom"
+                android:text="Select location where services is to be performed"
+                android:textColor="@color/white"
+                android:textSize="@dimen/txt_medium"
+                app:typeface="OpenSans-Bold" />
+        <!--</RelativeLayout>-->
+    </LinearLayout>
+
+    <GridView
+        android:horizontalSpacing="@dimen/margin1"
+        android:verticalSpacing="@dimen/margin1"
+        android:id="@+id/gridCategory"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="6"
+        android:background="@android:color/transparent"
+        android:cacheColorHint="#00000000"
+        android:divider="@color/black"
+        android:dividerHeight="0dp"
+        android:numColumns="4"
+        android:visibility="visible">
+    </GridView>
+
+    <LinearLayout
+        android:id="@+id/landingFallback"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="6"
+        android:orientation="vertical"
+        android:gravity="center_vertical"
+        android:visibility="gone">
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/edittext_width"
+            android:layout_gravity="center_vertical"
+            android:gravity="center"
+            android:src="@drawable/bg_globe"/>
+        <com.pa.common.TypefaceTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textAlignment="center"
+            android:layout_marginTop="@dimen/padding7"
+            android:textSize="@dimen/txt_xxx_big"
+            android:text="Select Country To Proceed"
+            app:typeface="century-gothic-bold"
+            android:textColor="@color/gray"/>
+    </LinearLayout>
+
+    <com.pa.common.TypefaceTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TEST TEST 123..."
+        android:textColor="@color/orange"
+        android:textSize="50sp"
+        android:gravity="center_vertical"
+        android:layout_gravity="center_vertical"
+        app:typeface="century-gothic-bold"
+        android:visibility="gone"/>
+</LinearLayout>

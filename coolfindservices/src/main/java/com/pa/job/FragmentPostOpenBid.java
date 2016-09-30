@@ -82,6 +82,7 @@ import com.pa.common.TimeUtils;
 import com.pa.common.Tracer;
 import com.pa.common.TypefaceEditText;
 import com.pa.landing.FragmentNewLanding;
+import com.pa.landing.FragmentRevisedLanding;
 import com.pa.parser.ParserCountry;
 import com.pa.parser.ParserFormParam;
 import com.pa.parser.ParserMerchant;
@@ -141,10 +142,13 @@ public class FragmentPostOpenBid extends MyFragment implements OnClickListener,
 
 	String country2 = "sg";
     String userAddressCountry = "", userAddressState = "", userAddressStateShort = "", userAddressCity = "";
+	String backupCountry;
 	
 
 	public FragmentPostOpenBid(ArrayList<ServiceCategory> arr, String country) {
-        initial(arr, country, "", "", "", "");
+		backupCountry = country;
+
+		initial(arr, country, "", "", "", "");
 	}
 
     public FragmentPostOpenBid(ArrayList<ServiceCategory> arr,
@@ -177,6 +181,9 @@ public class FragmentPostOpenBid extends MyFragment implements OnClickListener,
 
 		country2 = country;
         userAddressCountry = !"".equals(serviceRequestCountry) ? serviceRequestCountry : GlobalVar.country;
+		Tracer.d("serviceRequestCountry: " + serviceRequestCountry + "\nGlobalVar.country: " + GlobalVar.country);
+//		simpleToast("serviceRequestCountry: " + serviceRequestCountry + "\nGlobalVar.country: " + GlobalVar.country);
+//		if(country != null)	userAddressCountry = country;
         userAddressState = !"".equals(serviceRequestState) ? serviceRequestState : GlobalVar.state;
         userAddressStateShort = !"".equals(stateShort) ? stateShort : GlobalVar.state_short;
         userAddressCity = !"".equals(serviceRequestCity) ? serviceRequestCity : "";
@@ -269,6 +276,35 @@ public class FragmentPostOpenBid extends MyFragment implements OnClickListener,
 		pageFlipper = (ViewFlipper) v.findViewById(R.id.flipper);
 
 		pageTitle = (TextView) v.findViewById(R.id.page_title);
+
+		//	override back button to only backtrack on steps in this fragment
+		v.setFocusableInTouchMode(true);
+		v.requestFocus();
+		v.setOnKeyListener( new View.OnKeyListener()
+		{
+			@Override
+			public boolean onKey( View v, int keyCode, KeyEvent event )
+			{
+				if( keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN )
+				{	Log.d("OPEN BID BACK PRESS", "[BACK PRESSED]");
+					try {
+						if (!pageHistory.isEmpty()) {
+							int step = pageHistory.pop();
+							changeStep(step, false);
+						} else {
+//							getParentFragment().getChildFragmentManager()
+//									.popBackStackImmediate();
+							for(int i = getActivity().getSupportFragmentManager().getBackStackEntryCount(); i > 1; i--)
+								getActivity().getSupportFragmentManager().popBackStackImmediate();
+						}
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+					return true;
+				}
+				return false;
+			}
+		} );
 
 		return v;
 	}
@@ -471,11 +507,21 @@ public class FragmentPostOpenBid extends MyFragment implements OnClickListener,
 
 	void getSubServiceData(final String parentId) {
 		loadingInternetDialog.show();
+		String ssCountry	= "";
+		String ssState		= "";
+		if(this.country2.equalsIgnoreCase("singapore")){
+			ssCountry	= "sg";
+			ssState		= "";
+		}else{
+			ssCountry	= "my";
+			ssState		= pref.getPref(Config.PREF_LAST_STATE).replace(malaysia_prefix, "");
+		}
+
 		// AsyncHttpClient get = new AsyncHttpClient();
 		RequestParams params = new RequestParams();
 		params.add("parent_id", "[" + parentId + "]");
-		params.add("country", this.country2);
-        params.add("state", pref.getPref(Config.PREF_LAST_STATE));
+		params.add("country", ssCountry);
+        params.add("state", ssState);
 		params.add("session_username", pref.getPref(Config.PREF_USERNAME));
 		params.add("active_session_token", pref.getPref(Config.PREF_ACTIVE_SESSION_TOKEN));
 
@@ -1374,6 +1420,7 @@ public class FragmentPostOpenBid extends MyFragment implements OnClickListener,
 
 	}
 
+	@Override
 	public void onActivityResult(int requestCode, int resultCode,
 			android.content.Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
@@ -2279,7 +2326,17 @@ public class FragmentPostOpenBid extends MyFragment implements OnClickListener,
 
             txtState.setTag(R.id.co_city, txtCity);
 
-            txtCountry.setText(userAddressCountry);
+			if(TextUtils.isEmpty(userAddressCountry)){
+				if("singapore".equalsIgnoreCase(GlobalVar.country))
+					txtCountry.setText(GlobalVar.country);
+				else
+					txtCountry.setText("Malaysia");
+			}else {
+				if("singapore".equalsIgnoreCase(userAddressCountry))
+					txtCountry.setText(userAddressCountry);
+				else
+					txtCountry.setText("Malaysia");
+			}	//simpleToast("txtCountry: " + txtCountry.getText().toString() + "\nuserAddressCountry: " + userAddressCountry);
 
             if ("Singapore".equalsIgnoreCase(txtCountry.getText().toString())) {
                 txtState.setVisibility(View.GONE); // Hide State whenever it's Singapore
@@ -2366,7 +2423,11 @@ public class FragmentPostOpenBid extends MyFragment implements OnClickListener,
 				if (isValidStep4()) {
 					pageHistory.add(prev_page);
 
-					changeStep(5);
+					try {
+						changeStep(5);
+					}catch(Exception e){
+						e.printStackTrace();
+					}
 				}
 				break;
 
@@ -2488,16 +2549,20 @@ public class FragmentPostOpenBid extends MyFragment implements OnClickListener,
 	TextView txtBidPeriod;
 
 	void showStep5(boolean redo) {
-		pageTitle.setText("BID PERIOD AND BUDGET");
-		analytic.trackScreen("Bid Period and Budget");
-		if (redo) {
-			txtBidPeriod = (TextView) step5.findViewById(R.id.txtBidPeriod);
-			e_max_budget = (EditText) step5.findViewById(R.id.txtBudget);
-			step5.findViewById(R.id.btnCancel2).setOnClickListener(
-					step5listener);
-			step5.findViewById(R.id.btnNext2).setOnClickListener(step5listener);
+		try {
+			pageTitle.setText("BID PERIOD AND BUDGET");
+			analytic.trackScreen("Bid Period and Budget");
+			if (redo) {
+				txtBidPeriod = (TextView) step5.findViewById(R.id.txtBidPeriod);
+				e_max_budget = (EditText) step5.findViewById(R.id.txtBudget);
+				step5.findViewById(R.id.btnCancel2).setOnClickListener(
+						step5listener);
+				step5.findViewById(R.id.btnNext2).setOnClickListener(step5listener);
 
-			txtBidPeriod.setOnClickListener(step5listener);
+				txtBidPeriod.setOnClickListener(step5listener);
+			}
+		}catch(Exception e){
+			e.printStackTrace();
 		}
 	}
 
@@ -2519,8 +2584,12 @@ public class FragmentPostOpenBid extends MyFragment implements OnClickListener,
 				}
 				break;
 			case R.id.txtBidPeriod:
-				showSpinnerSelection(BID_PERIOD, (TextView) v,
-						"Select bid period");
+				try {
+					showSpinnerSelection(BID_PERIOD, (TextView) v,
+							"Select bid period");
+				}catch(Exception e){
+					e.printStackTrace();
+				}
 				break;
 			}
 		}
@@ -3414,8 +3483,10 @@ public class FragmentPostOpenBid extends MyFragment implements OnClickListener,
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				flagForDialogBid = 0;
-				listener.doFragmentChange(new FragmentNewLanding(), false,
-						"Home");
+//				listener.doFragmentChange(new FragmentNewLanding(), false,
+//						"Home");
+						listener.doFragmentChange(new FragmentRevisedLanding(), false,
+								"Home");
 				dialogBidSuccess.dismiss();
 
 			}
@@ -3466,8 +3537,10 @@ public class FragmentPostOpenBid extends MyFragment implements OnClickListener,
 			public void onDismiss(DialogInterface dialog) {
 				// TODO Auto-generated method stub
 				if (flagForDialogBid == -1) {
-					listener.doFragmentChange(new FragmentNewLanding(), false,
-							"Home");
+//					listener.doFragmentChange(new FragmentNewLanding(), false,
+//							"Home");
+							listener.doFragmentChange(new FragmentRevisedLanding(), false,
+									"Home");
 
 				}
 			}

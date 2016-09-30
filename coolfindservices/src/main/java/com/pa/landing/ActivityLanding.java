@@ -210,7 +210,7 @@ public class ActivityLanding extends MyActivity implements OnClickListener,
 
 		if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
 
-			if (fm.findFragmentById(R.id.content_frame) instanceof FragmentNewLanding
+			if (fm.findFragmentById(R.id.content_frame) instanceof FragmentRevisedLanding/*FragmentNewLanding*/
 //					|| fm.findFragmentById(R.id.content_frame) instanceof FragmentBid
 					/*|| fm.findFragmentById(R.id.content_frame) instanceof FragmentOrder*/) {
 				Tracer.d("Exit1");
@@ -229,7 +229,8 @@ public class ActivityLanding extends MyActivity implements OnClickListener,
 					|| fm.findFragmentById(R.id.content_frame) instanceof FragmentOrder
 					|| fm.findFragmentById(R.id.content_frame) instanceof FragmentProfilLandingNew
 					|| fm.findFragmentById(R.id.content_frame) instanceof FragmentContactUs
-					|| fm.findFragmentById(R.id.content_frame) instanceof FragmentEarnFreeCredits) {
+					|| fm.findFragmentById(R.id.content_frame) instanceof FragmentEarnFreeCredits
+					|| fm.findFragmentById(R.id.content_frame) instanceof FragmentCategoryTab) {
 				for(int i = this.getSupportFragmentManager().getBackStackEntryCount(); i > 1; i--)
 					this.getSupportFragmentManager().popBackStackImmediate();
 			} else {
@@ -576,7 +577,7 @@ public class ActivityLanding extends MyActivity implements OnClickListener,
 				} else{
 					fm.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
 //				listener.doFragmentChange(new FragmentNewLanding(), true, "");
-					replaceFragment(R.id.content_frame, new FragmentNewLanding());
+					replaceFragment(R.id.content_frame, new FragmentRevisedLanding());
 					Log.i("Backstack entry count: ", String.valueOf(this.getSupportFragmentManager().getBackStackEntryCount()));
 				}
 //			Toast.makeText(ActivityLanding.this, "Backstack entry count: " + String.valueOf(this.getSupportFragmentManager().getBackStackEntryCount()), Toast.LENGTH_LONG).show();

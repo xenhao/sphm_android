@@ -1,7 +1,9 @@
 package com.pa.splash;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -27,6 +29,7 @@ import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
 import android.view.animation.DecelerateInterpolator;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioGroup;
@@ -48,8 +51,10 @@ import com.pa.common.Tracer;
 import com.pa.landing.ActivityLanding;
 import com.pa.parser.ParserActivationStatus;
 import com.pa.parser.ParserBasicResult;
+import com.pa.parser.ParserState;
 import com.pa.parser.ParserUser;
 import com.pa.pojo.ActivationStatus;
+import com.pa.pojo.State;
 import com.pa.pojo.User;
 import com.coolfindservices.androidconsumer.R;
 
@@ -61,7 +66,7 @@ public class FragmentLogin extends SessionLoginFragment implements
 	DisplayMetrics dm;
 	View logo;
 	View layoutLogin;
-	View guestBtn;
+	View guestBtn, loginBtn, listServiceBtn, copyRight;
 	private static final int GUEST_LOGIN = 1001;
 	private static final int GUEST_LOGIN_SUCCESS = 200;
 	int logoHeight;
@@ -70,15 +75,25 @@ public class FragmentLogin extends SessionLoginFragment implements
 	TextView privacy_policy, ePrefix;
 	RadioGroup rg;
 
+	//	variables for country selection
+	TextView txtCountry2;
+	String[] countrySelection;
+	ArrayList<State> storedStates;
+	//	boolean switch for random unresponsive getStateData
+	private Boolean retryGetState = false;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 							 Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		View v = inflater.inflate(R.layout.fragment_login, null);
-		logo = v.findViewById(R.id.logo);
-		layoutLogin = v.findViewById(R.id.layoutLogin);
-		guestBtn = v.findViewById(R.id.btnGuest);
+
+		logo			= v.findViewById(R.id.logo);
+		layoutLogin		= v.findViewById(R.id.layoutLogin);
+		guestBtn		= v.findViewById(R.id.btnGuest);
+		loginBtn		= v.findViewById(R.id.btnLogin);
+//		listServiceBtn	= v.findViewById(R.id.txtListYourService);
+		copyRight		= v.findViewById(R.id.copyright);
 
 		v.findViewById(R.id.btnRegister).setOnClickListener(this);
 		v.findViewById(R.id.btnLogin).setOnClickListener(this);
@@ -109,6 +124,18 @@ public class FragmentLogin extends SessionLoginFragment implements
 
 		rg = (RadioGroup) v.findViewById(R.id.group);
 //		rg.check(R.id.g2);
+
+		txtCountry2=(TextView)v.findViewById(R.id.country2);
+		txtCountry2.setOnClickListener(this);
+
+		// Preset Singapore For Live only
+		if ("2".equals(getActivity().getResources().getString(R.string.server))) {
+			txtCountry2.setText("Singapore");
+//			countrySelection = country;
+		} else {
+//			countrySelection = country2;
+		}
+
 		return v;
 	}
 
@@ -127,6 +154,151 @@ public class FragmentLogin extends SessionLoginFragment implements
 	}
 
 	@Override
+	public void onCreate(Bundle savedInstanceState){
+		super.onCreate(savedInstanceState);
+//		getStateData();
+	}
+
+	@Override
+	public void onResume(){
+		super.onResume();
+		//	additional checking to get state data if initial went unresponsive
+//		if(countrySelection == null || countrySelection.length <= 2){
+//			getStateData();		Log.i("CALLED FROM ONRESUME", "CALLED FROM ONRESUME" + " " + countrySelection);
+//		}
+	}
+
+	void getStateData(){
+		RequestParams params=new RequestParams();
+		params.add("session_username", pref.getPref(Config.PREF_USERNAME));
+		params.add("active_session_token", pref.getPref(Config.PREF_ACTIVE_SESSION_TOKEN));
+//        params.add("country_only", "true");
+		params.add("state_only", "true");
+
+		AsyncHttpResponseHandler responseHandler=new AsyncHttpResponseHandler(){
+
+			@Override
+			public void onStart() {
+				super.onStart();
+				loadingInternetDialog.show();
+			}
+
+			@Override
+			public void onSuccess(int statusCode, String content) {
+				super.onSuccess(statusCode, content);
+				Log.d("Country", content);
+				ParserState parser = new ParserState(content);
+				if (parser.getStatus().equalsIgnoreCase("success")) {
+					// Merge states to Malaysia
+					ArrayList<String> merged = new ArrayList<String>();
+					merged.add("Singapore");
+
+					storedStates = parser.getStates();
+
+					Iterator<State> iterator = storedStates.iterator();
+					State state;
+					while (iterator.hasNext()) {
+						state = iterator.next();
+						merged.add(malaysia_prefix + state.state_long);
+					}
+
+					countrySelection = merged.toArray(new String[merged.size()]);
+				}
+			}
+
+			@Override
+			public void onFailure(int statusCode, Throwable error,
+								  String content) {
+				// TODO Auto-generated method stub
+				super.onFailure(statusCode, error, content);
+				Log.d("Country", content);
+				simpleToast(error + "\n" + content);
+
+				loadingInternetDialog.dismiss();
+
+			}
+
+			@Override
+			public void onFinish() {
+				super.onFinish();
+				loadingInternetDialog.dismiss();
+				//	show state selection spinner if this was last minute state query
+				if(retryGetState){
+					showSpinner(getView());
+					retryGetState = false;
+				}
+			}
+		};
+
+		PARestClient.post(pref.getPref(Config.SERVER), Config.API_LOCATION, params, responseHandler);
+	}
+
+	//	show spinner for state selection
+	private void showSpinner(final View v){
+		analytic.trackScreen("Select Country for Service");
+		showSpinnerSelection(countrySelection
+
+				, "Select country", new AdapterView.OnItemClickListener() {
+
+					@Override
+					public void onItemClick(AdapterView<?> arg0, View arg1,
+											int arg2, long arg3) {
+						try {
+							generalDialog.hide();
+							((TextView) v).setText(countrySelection[arg2]);
+							v.setTag(arg2);
+
+							State selectedState = storedStates.get(arg2 > 0 ? arg2 - 1 : arg2);
+							GlobalVar.state = selectedState.state_long;
+							GlobalVar.state_short = selectedState.state_short;
+
+
+							if (Arrays.equals(country2, state)) {
+								v.setTag(R.id.city, state_short[arg2]);
+							}
+
+							final TextView tv1 = (TextView) v
+									.getTag(R.id.co_state);
+							final TextView tv2 = (TextView) v.getTag(R.id.co_city);
+
+							if (tv1 != null && tv2 != null
+									&& Arrays.equals(country2, country)) {
+								// tv2 = (TextView) tv.getTag(R.id.co_city);
+								Tracer.d("debug", "country" + country2[arg2]);
+								if ("Singapore".equals(country2[arg2])) {
+									tv1.setText("Singapore");
+									tv2.setText("Singapore");
+									simpleToast("when is this executed5???");
+								} else {
+									tv1.setText("");
+									tv1.setHint("Select your state");
+
+									tv2.setText("");
+									tv2.setHint("Select your city");
+								}
+
+							}
+
+							if (tv2 != null && Arrays.equals(country2, state)) {
+								// tv2 = (TextView) tv.getTag(R.id.co_city);
+								if ("Singapore".equals(country2[arg2])) {
+									tv1.setText("Singapore");
+									tv2.setText("Singapore");
+									simpleToast("when is this executed4???");
+								} else {
+									tv2.setText("");
+									tv2.setHint("Select your city");
+								}
+							}
+							simpleToast("when is this executed3???");
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+					}
+				});
+	}
+
+	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		Tracer.d("FragmentLogin created");
@@ -139,6 +311,9 @@ public class FragmentLogin extends SessionLoginFragment implements
 			logo.setVisibility(View.GONE);
 			layoutLogin.setVisibility(View.VISIBLE);
 			guestBtn.setVisibility(View.VISIBLE);
+			loginBtn.setVisibility(View.VISIBLE);
+//			listServiceBtn.setVisibility(View.VISIBLE);
+			copyRight.setVisibility(View.VISIBLE);
 		}
 
 		if (isActivation) {
@@ -399,6 +574,9 @@ public class FragmentLogin extends SessionLoginFragment implements
 	private void animateLogin() {
 		layoutLogin.setVisibility(View.INVISIBLE);
 		guestBtn.setVisibility(View.INVISIBLE);
+		loginBtn.setVisibility(View.INVISIBLE);
+//		listServiceBtn.setVisibility(View.INVISIBLE);
+		copyRight.setVisibility(View.INVISIBLE);
 
 		Animation fadeIn = new AlphaAnimation(0, 1);
 		fadeIn.setInterpolator(new DecelerateInterpolator()); // and this
@@ -422,10 +600,16 @@ public class FragmentLogin extends SessionLoginFragment implements
 				// TODO Auto-generated method stub
 				layoutLogin.setVisibility(View.VISIBLE);
 				guestBtn.setVisibility(View.VISIBLE);
+				loginBtn.setVisibility(View.VISIBLE);
+//				listServiceBtn.setVisibility(View.VISIBLE)
+				copyRight.setVisibility(View.VISIBLE);
 			}
 		});
 		layoutLogin.setAnimation(fadeIn);
 		guestBtn.setAnimation(fadeIn);
+		loginBtn.setAnimation(fadeIn);
+//		listServiceBtn.setAnimation(fadeIn)
+		copyRight.setAnimation(fadeIn);
 
 	}
 
@@ -490,6 +674,16 @@ public class FragmentLogin extends SessionLoginFragment implements
 			case R.id.txtListYourService:
 				showWebDialog("http://www.pageadvisor.com/register-your-business/");
 				break;
+
+			case R.id.country2:
+			case R.id.country:
+				//	check if state data is available before displaying state selection spinner
+				if(countrySelection != null) {
+					showSpinner(v);
+				}else{
+					retryGetState = true;
+					getStateData();
+				}
 		}
 	}
 

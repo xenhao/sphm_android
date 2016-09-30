@@ -27,35 +27,36 @@
     <color name="p6">#c86ef2</color>
     <color name="pa_blue">#ff1074a4</color> <!-- #2176c5 -->
     <color name="pa_grey">#ffececec</color>
-        <color name="pa_medium_grey">#ffe2e2e2</color>
+    <color name="pa_medium_grey">#ffe2e2e2</color>
     <color name="pa_line_grey">#ffb1b0b0</color>
     <color name="pa_dark_grey">#ffa7a4a4</color>
     <color name="pa_category">#4d4c4c</color>
     <color name="pa_free_credit">#ff5c5c5c</color>
-    
+
     <color name="pa_light_blue">#4e96da</color>
-	<color name="pa_orange">#fc940e</color> <!-- #fd9500 -->
-	<color name="pa_light_orange">#fc940e</color>
-	<color name="row_odd">#e5f7fd</color>
-	<color name="row_even">#bfebfb</color>
-	<color name="merchant_list_row_odd">#fff4e7</color>
-	<color name="merchant_list_row_oven">#ffffff</color>
-		
-	<color name="pa_blue_btn">#ff2487c5</color>
-		<color name="pa_blue_btn_on">#ff096097</color>
-		
-	<color name="pa_gray_btn">#ffb0b2b3</color>
-	<color name="pa_gray_btn_on">#ff838485</color>
-	
-	<color name="label">#ff484848</color>
-	<color name="header">#ff2487c5</color>
-	<color name="normal">#ff686868</color>
-	<color name="placeholder">#ff989898</color>
+    <color name="pa_orange">#fc940e</color> <!-- #fd9500 -->
+    <color name="pa_light_orange">#fc940e</color>
+    <color name="orange">#ff6600</color>
+    <color name="row_odd">#e5f7fd</color>
+    <color name="row_even">#bfebfb</color>
+    <color name="merchant_list_row_odd">#fff4e7</color>
+    <color name="merchant_list_row_oven">#ffffff</color>
+
+    <color name="pa_blue_btn">#ff2487c5</color>
+    <color name="pa_blue_btn_on">#ff096097</color>
+
+    <color name="pa_gray_btn">#ffb0b2b3</color>
+    <color name="pa_gray_btn_on">#ff838485</color>
+
+    <color name="label">#ff484848</color>
+    <color name="header">#ff2487c5</color>
+    <color name="normal">#ff686868</color>
+    <color name="placeholder">#ff989898</color>
 
     <!-- Merchant Offer List -->
     <color name="merchant_offer_blue">#2b88c3</color>
     <color name="merchant_offer_orange">#fa932a</color>
-	
+
     <color name="black_transparent">#f9eade</color>
     <color name="trans_black">#99000000</color>
 </resources>

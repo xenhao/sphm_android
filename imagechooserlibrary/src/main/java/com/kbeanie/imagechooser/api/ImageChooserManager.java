@@ -214,7 +214,8 @@ public class ImageChooserManager extends BChooser implements
 	@Override
 	public void submit(int requestCode, Intent data) {
 		if (requestCode != type) {
-			onError("onActivityResult requestCode is different from the type the chooser was initialized with.");
+			//	BAD EDIT
+//			onError("onActivityResult requestCode is different from the type the chooser was initialized with.");
 		} else {
 			switch (requestCode) {
 			case ChooserType.REQUEST_PICK_PICTURE:

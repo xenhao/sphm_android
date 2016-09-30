@@ -51,7 +51,7 @@ public class PackageFragment extends MyFragment implements View.OnClickListener 
     private String ServiceID = "";
     private String ServiceName = "  Browse Category";
 
-    private LinearLayout mLayoutRefresh;
+    private LinearLayout mLayoutRefresh, mEmptyState;
     private RecyclerView mRecyclerView;
     private RecyclerView.LayoutManager mLayoutManager;
     private TextView mTxtCategory;
@@ -68,6 +68,7 @@ public class PackageFragment extends MyFragment implements View.OnClickListener 
     private boolean hasNext = false;
     private OnFragmentChangeListener listener;
     private Handler handler;
+    private String serviceIDNum;
 
     private String imageUrl;
 
@@ -80,6 +81,17 @@ public class PackageFragment extends MyFragment implements View.OnClickListener 
 
         Bundle args = new Bundle();
         args.putString(PARAMS_TAG_COUNTRY, country);
+        fragment.setArguments(args);
+
+        return fragment;
+    }
+
+    public static PackageFragment newInstance(String category, String country) {
+        PackageFragment fragment = new PackageFragment();
+
+        Bundle args = new Bundle();
+        args.putString(PARAMS_TAG_COUNTRY, country);
+        args.putString("service category", category);
         fragment.setArguments(args);
 
         return fragment;
@@ -120,8 +132,11 @@ public class PackageFragment extends MyFragment implements View.OnClickListener 
             state   = paramsCountry.replace(malaysia_prefix, "");
         }
 
-        getList("");
+        ServiceID = getArguments().getString("service category");
+
+//        getList("");
         getCategoryList();
+//        getList(arrCategoryId.get(arrCategory.indexOf(ServiceID)));
     }
 
     @Override
@@ -137,6 +152,7 @@ public class PackageFragment extends MyFragment implements View.OnClickListener 
         mRecyclerView = (RecyclerView) v.findViewById(R.id.recyclerView);
         mTxtCategory = (TextView) v.findViewById(R.id.txt_category);
         mSwipeRefreshLayout = (SwipeRefreshLayout) v.findViewById(R.id.swiperefresh);
+        mEmptyState = (LinearLayout) v.findViewById(R.id.empty_state);
         mLayoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(mLayoutManager);
@@ -180,6 +196,16 @@ public class PackageFragment extends MyFragment implements View.OnClickListener 
             }
         });
 
+        //        if(mAdapter.getItemCount() < 0){
+//        if(mRecyclerView.getChildCount() < 0){
+        if(mRecyclerView.getAdapter().getItemCount() == 0){
+            mEmptyState.setVisibility(View.VISIBLE);
+            mSwipeRefreshLayout.setVisibility(View.GONE);
+        }else{
+            mEmptyState.setVisibility(View.GONE);
+            mSwipeRefreshLayout.setVisibility(View.VISIBLE);
+        }
+
         return v;
     }
 
@@ -206,7 +232,7 @@ public class PackageFragment extends MyFragment implements View.OnClickListener 
                 if (mItems != null) {
                     mItems.clear();
                 }
-                getList(ServiceID);
+                getList(serviceIDNum);
                 break;
             case R.id.txt_category:
                 showCategorySpinnerSelection(package_category, mTxtCategory, "  Browse Category");
@@ -306,6 +332,23 @@ public class PackageFragment extends MyFragment implements View.OnClickListener 
                         Log.i("Category", error.getMessage());
                     }
 
+                    @Override
+                    public void onFinish(){
+                        super.onFinish();
+                        try {
+                            if(arrCategory.indexOf(ServiceID) == -1) {
+                                //  show empty state
+                                mSwipeRefreshLayout.setVisibility(View.GONE);
+                                mEmptyState.setVisibility(View.VISIBLE);
+                            }else{
+                                serviceIDNum = arrCategoryId.get(arrCategory.indexOf(ServiceID));
+                                getList(serviceIDNum);
+                            }
+                        }catch (Exception e){
+                            e.printStackTrace();
+                        }
+                    }
+
                 });
 
     }
@@ -317,7 +360,7 @@ public class PackageFragment extends MyFragment implements View.OnClickListener 
             mItems.clear();
         }
         isRefresh = true;
-        getList(ServiceID);
+        getList(serviceIDNum);
     }
 
     private void getList(String serviceId) {
@@ -329,7 +372,7 @@ public class PackageFragment extends MyFragment implements View.OnClickListener 
         params.add("page", page + "");
         params.add("country", country);
         params.add("state", state);
-        params.add("service_id",serviceId);
+        params.add("service_id", serviceId);
 
         Log.i("Package Fragment", params.toString());
         Log.i("Package Fragment", pref.getPref(Config.SERVER) + Config.DEAL_API_GET_PACKAGE);
@@ -357,7 +400,7 @@ public class PackageFragment extends MyFragment implements View.OnClickListener 
                                 .setCancelable(false)
                                 .setPositiveButton("Yes",new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int id) {
-                                        getList(ServiceID);
+                                        getList(serviceIDNum);
                                     }
                                 })
                                 .setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -394,6 +437,9 @@ public class PackageFragment extends MyFragment implements View.OnClickListener 
                                 mItems.addAll(parser.getResult());
                                 Log.i("Promotion", mItems.size() + " ");
                                 mAdapter.notifyDataSetChanged();
+
+                                mEmptyState.setVisibility(View.GONE);
+                                mSwipeRefreshLayout.setVisibility(View.VISIBLE);
                             }
                         } catch (Exception ex) {
                             ex.printStackTrace();
@@ -562,10 +608,10 @@ public class PackageFragment extends MyFragment implements View.OnClickListener 
                         tv.setText(strSelection[arg2]);
                         tv.setTag(arg2);
 
-                        ServiceID   = arrCategoryId.get(arg2);
+                        serviceIDNum   = arrCategoryId.get(arg2);
                         ServiceName = arrCategory.get(arg2);
 
-                        getList(ServiceID);
+                        getList(serviceIDNum);
 
                     } catch (Exception e) {
                         e.printStackTrace();

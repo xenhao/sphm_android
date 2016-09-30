@@ -9,39 +9,39 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/edittext_height3"
-        android:background="@color/pa_light_orange"
-        android:gravity="center"
-        android:orientation="horizontal">
-
-        <ImageView
-            android:id="@+id/btnBack"
-            android:layout_width="@dimen/edittext_height"
-            android:layout_height="@dimen/edittext_height"
-            android:padding="@dimen/padding"
-            android:src="@drawable/img_back" />
-
-        <com.pa.common.TypefaceTextView
-            android:id="@+id/page_title"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="PACKAGES"
+            android:layout_height="@dimen/edittext_height3"
+            android:background="@color/pa_light_orange"
             android:gravity="center"
-            android:textColor="@color/white"
-            android:textSize="@dimen/txt_extra_big"
-            app:typeface="OpenSans-Bold" />
+            android:orientation="horizontal">
 
-        <ImageView
-            android:id="@+id/btnIntercom"
-            android:layout_width="@dimen/edittext_height"
-            android:layout_height="@dimen/edittext_height"
-            android:padding="@dimen/padding"
-            android:src="@drawable/icon_chat" />
+            <ImageView
+                android:id="@+id/btnBack"
+                android:layout_width="@dimen/edittext_height"
+                android:layout_height="@dimen/edittext_height"
+                android:padding="@dimen/padding"
+                android:src="@drawable/img_back" />
 
-    </LinearLayout>
+            <com.pa.common.TypefaceTextView
+                android:id="@+id/page_title"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="PACKAGES"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:textSize="@dimen/txt_extra_big"
+                app:typeface="OpenSans-Bold" />
+
+            <ImageView
+                android:id="@+id/btnIntercom"
+                android:layout_width="@dimen/edittext_height"
+                android:layout_height="@dimen/edittext_height"
+                android:padding="@dimen/padding"
+                android:src="@drawable/icon_chat" />
+
+        </LinearLayout>
 
         <ImageView
             android:id="@+id/btnHome"
@@ -65,13 +65,15 @@
         android:textAppearance="@style/Placeholder"
         android:textSize="@dimen/txt_extra_big"
         android:textStyle="bold"
-        app:typeface="OpenSans-Bold"/>
+        app:typeface="OpenSans-Bold"
+        android:visibility="gone"/>
 
     <android.support.v4.widget.SwipeRefreshLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/swiperefresh"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:visibility="gone">
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
@@ -81,6 +83,27 @@
         </android.support.v7.widget.RecyclerView>
     </android.support.v4.widget.SwipeRefreshLayout>
 
+    <LinearLayout
+        android:id="@+id/empty_state"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="visible">
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/bg_nopromotion"
+            android:layout_gravity="center_vertical"
+            android:gravity="center_vertical"/>
+        <com.pa.common.TypefaceTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="No Packages Available"
+            android:textColor="@color/gray"
+            android:layout_gravity="center_horizontal"
+            android:textSize="@dimen/txt_xxx_big"
+            app:typeface="century-gothic-bold"/>
+    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/layout_refresh"

@@ -1,0 +1,896 @@
+package com.pa.landing;
+
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.LayerDrawable;
+import android.os.Bundle;
+import android.text.TextUtils;
+import android.util.Log;
+import android.view.KeyEvent;
+import android.view.LayoutInflater;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
+import android.widget.BaseAdapter;
+import android.widget.EditText;
+import android.widget.Filter;
+import android.widget.Filterable;
+import android.widget.GridView;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RatingBar;
+import android.widget.TextView;
+
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
+import com.pa.common.Config;
+import com.pa.common.GlobalVar;
+import com.pa.common.ImageLoader;
+import com.pa.common.MyFragment;
+import com.pa.common.OnFragmentChangeListener;
+import com.pa.common.PARestClient;
+import com.pa.common.Tracer;
+import com.pa.parser.ParserParentServiceCategoryNew;
+import com.pa.parser.ParserPendingRating;
+import com.pa.parser.ParserState;
+import com.pa.pojo.JobItem;
+import com.pa.pojo.PendingRating;
+import com.pa.pojo.ServiceCategory;
+import com.pa.pojo.State;
+import com.coolfindservices.android.RegisterActivity;
+import com.coolfindservices.androidconsumer.R;
+
+import org.apache.http.Header;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.Iterator;
+
+import io.intercom.android.sdk.Intercom;
+
+/**
+ * Created by VintedgeMac on 22/09/2016.
+ */
+
+public class FragmentRevisedLanding extends MyFragment implements View.OnClickListener, Config {
+
+    GridView gridCat;
+    GridAdapter gridAdapter;
+    ServiceAutoCompleteAdapter adapter;
+    static ArrayList<ServiceCategory> arrServiceCategory = new ArrayList<ServiceCategory>();
+    OnFragmentChangeListener listener;
+    ImageLoader loader;
+    AutoCompleteTextView findService;
+    ArrayList<String> arrSuggest = new ArrayList<String>();
+    private Date _lastTypeTime = null;
+
+    TextView txtCountry2;
+    String[] countrySelection;
+    ArrayList<State> storedStates;
+
+    private LinearLayout fallBack;
+    private String serviceCountry, serviceState, f_country2;
+
+    //	boolean switch for random unresponsive getStateData
+    private Boolean retryGetState = false;
+
+    String prevKeyword = "";
+
+    JobItem job=null;
+    Dialog dialogRateMerchant;
+    EditText txtRatingMsg;
+    TextView txtRatingServiceName;
+    RatingBar ratingPoint;
+    String f_rating, f_rating_message;
+
+    @Override
+    public void onAttach(Activity activity) {
+        // TODO Auto-generated method stub
+        super.onAttach(activity);
+        try {
+            if (activity instanceof OnFragmentChangeListener) {
+                listener = (OnFragmentChangeListener) activity;
+            } else {
+                throw new ClassCastException(activity.toString()
+                        + " must implemenet OnFragmentChangeListener");
+            }
+        } catch (Exception e) {
+        }
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState){
+        super.onCreate(savedInstanceState);
+
+        gridAdapter = new GridAdapter();
+
+        try {
+//            getServiceData(0);
+            getStateData();
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View v = inflater.inflate(R.layout.fragment_revised_landing, null);
+
+        v.findViewById(R.id.btnMenu).setOnClickListener(this);
+        v.findViewById(R.id.btnIntercom).setOnClickListener(this);
+
+        fallBack = (LinearLayout) v.findViewById(R.id.landingFallback);
+        gridCat = (GridView) v.findViewById(R.id.gridCategory);
+
+        txtCountry2 = (TextView) v.findViewById(R.id.country2);
+        txtCountry2.setOnClickListener(this);
+
+        // Preset Singapore For Live only
+        if ("2".equals(getActivity().getResources().getString(R.string.server))) {
+//            txtCountry2.setText("Singapore");
+//			countrySelection = country;
+        } else {
+//			countrySelection = country2;
+        }
+
+        return v;
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState){
+        super.onActivityCreated(savedInstanceState);
+
+        try {
+            loader=new ImageLoader(getActivity());
+
+            gridCat.setAdapter(gridAdapter);
+
+
+            adapter = new ServiceAutoCompleteAdapter(getActivity(),
+                    R.layout.list_item_pa, arrSuggest);
+
+            if(!TextUtils.isEmpty(pref.getPref(Config.PREF_LAST_COUNTRY))){
+                txtCountry2.setText(pref.getPref(Config.PREF_LAST_COUNTRY));
+            }
+
+            if("select country".equalsIgnoreCase(txtCountry2.getText().toString())){
+                gridCat.setVisibility(View.GONE);
+                fallBack.setVisibility(View.VISIBLE);
+            }else if("singapore".equalsIgnoreCase(txtCountry2.getText().toString())){
+                serviceCountry  = "sg";
+                serviceState    = "";
+                if(gridAdapter.isEmpty()){
+                    getServiceData(0);
+                }else{
+//                    gridAdapter.notifyDataSetChanged();
+                    fallBack.setVisibility(View.GONE);
+                    gridAdapter.notifyDataSetChanged();
+                    gridCat.setVisibility(View.VISIBLE);
+                }
+            }else{
+                //  set serviceCountry to malaysia location
+                serviceCountry  = "my";
+                serviceState    = txtCountry2.getText().toString().replace(malaysia_prefix, "");
+                if(gridAdapter.isEmpty()){
+                    getServiceData(0);
+                }else{
+                    fallBack.setVisibility(View.GONE);
+                    gridAdapter.notifyDataSetChanged();
+                    gridCat.setVisibility(View.VISIBLE);
+                }
+//                fallBack.setVisibility(View.GONE);
+//                gridAdapter.notifyDataSetChanged();
+//                gridCat.setVisibility(View.VISIBLE);
+            }
+
+            getPendingRating();
+
+            doRegisGCM();
+
+            analytic.trackScreen("Select a Service");
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    void doRegisGCM(){
+        RegisterActivity register=new RegisterActivity(getActivity());
+
+        RequestParams params=new RequestParams();
+        params.add("device_os","android");
+        params.add("device_token",	register.getRegistrationId());
+        params.add("active_session_token",pref.getPref(Config.PREF_ACTIVE_SESSION_TOKEN));
+        params.add("session_username",pref.getPref(Config.PREF_USERNAME));
+
+
+        AsyncHttpResponseHandler responseHandler=new AsyncHttpResponseHandler(){};
+        PARestClient.post(pref.getPref(Config.SERVER), Config.API_REGISTER_DEVICE, params, responseHandler);
+
+    }
+
+    void getPendingRating(){
+        RequestParams params=new RequestParams();
+        params.add("session_username", pref.getPref(Config.PREF_USERNAME));
+        params.add("active_session_token", pref.getPref(Config.PREF_ACTIVE_SESSION_TOKEN));
+
+        AsyncHttpResponseHandler responseHandler=new AsyncHttpResponseHandler(){
+            @Override
+            public void onSuccess(int arg0, Header[] arg1, byte[] arg2) {
+                // TODO Auto-generated method stub
+                super.onSuccess(arg0, arg1, arg2);
+                try{
+                    ParserPendingRating parser=new ParserPendingRating(new String(arg2));
+                    PendingRating pr=parser.getData();
+                    if("N".equals(pr.rated)){
+                        job=new JobItem();
+
+                        job.request_title=pr.rating_data.request_title;
+                        job.serial=pr.rating_data.serial;
+                        job.preferred_time1_start=pr.rating_data.preferred_time1_start;
+                        job.preferred_time2_start=-1+"";
+                        job.company_name=pr.rating_data.company_name;
+                        job.merchant_username=pr.rating_data.merchant_username;
+
+                        showRateMerchant();
+                    }
+                }catch(Exception e){
+
+                }
+
+            }
+        };
+
+        PARestClient.get(pref.getPref(Config.SERVER),"user/pending-rating", params, responseHandler);
+
+        GlobalVar.state = pref.getPref(Config.PREF_LAST_STATE);
+        GlobalVar.state_short = pref.getPref(Config.PREF_LAST_STATE_SHORT);
+    }
+
+    void showRateMerchant() {
+        View v = inflater.inflate(R.layout.dialog_rate, null);
+
+        TextView title=(TextView)v.findViewById(R.id.title);
+        TextView order_id=(TextView)v.findViewById(R.id.txtOrderId);
+        TextView date=(TextView)v.findViewById(R.id.txtDate);
+
+        title.setText(job.request_title);
+        order_id.setText(job.serial);
+        date.setText(getPreferredTime(job.preferred_time1_start,
+                job.preferred_time2_start));
+
+
+        ratingPoint = (RatingBar) v.findViewById(R.id.ratingBar1);
+        txtRatingMsg = (EditText) v.findViewById(R.id.txtRatingMessage);
+        txtRatingServiceName = (TextView) v.findViewById(R.id.txtServiceName);
+        txtRatingServiceName.setText(job.company_name);
+
+
+        LayerDrawable stars = (LayerDrawable) ratingPoint.getProgressDrawable();
+        stars.getDrawable(2).setColorFilter(getResources().getColor(R.color.pa_orange), PorterDuff.Mode.SRC_ATOP);
+
+        ratingPoint.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getAction() == MotionEvent.ACTION_UP) {
+                    float touchPositionX = event.getX();
+                    float width = ratingPoint.getWidth();
+                    float starsf = (touchPositionX / width) * 5.0f;
+                    int stars = (int) starsf + 1;
+                    ratingPoint.setRating(stars);
+
+                    // Toast.makeText(MainActivity.this, String.valueOf("test"),
+                    // Toast.LENGTH_SHORT).show();
+                    v.setPressed(false);
+                }
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                    v.setPressed(true);
+                }
+
+                if (event.getAction() == MotionEvent.ACTION_CANCEL) {
+                    v.setPressed(false);
+                }
+
+                return true;
+            }
+        });
+
+        v.findViewById(R.id.btnCancel2).setOnClickListener(
+                new View.OnClickListener() {
+
+                    @Override
+                    public void onClick(View v) {
+                        // TODO Auto-generated method stub
+                        dialogRateMerchant.dismiss();
+                    }
+                });
+
+        v.findViewById(R.id.btnCancel2).setVisibility(View.GONE);
+
+        v.findViewById(R.id.btnNext2).setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                // TODO Auto-generated method stub
+                if (isValidRate()) {
+                    doRate();
+                    dialogRateMerchant.dismiss();
+                }
+            }
+        });
+
+
+        dialogRateMerchant = new Dialog(getActivity(), R.style.PauseDialog);
+        //dialogRateMerchant.setCancelable(false);
+        dialogRateMerchant.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialog) {
+                //do whatever you want the back key to do
+                simpleToast("You must give the rating to continue using app");
+            }
+        });
+
+        dialogRateMerchant.setOnKeyListener(new DialogInterface.OnKeyListener() {
+
+            @Override
+            public boolean onKey(DialogInterface paramDialogInterface, int paramInt,
+                                 KeyEvent paramKeyEvent) {
+                // TODO Auto-generated method stub
+                if (paramKeyEvent.getKeyCode()== KeyEvent.KEYCODE_BACK){
+                    simpleToast("You must give the rating to continue using app");
+                    return true;
+                }
+
+                return false;
+            }
+        });
+
+        dialogRateMerchant.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+        dialogRateMerchant.getWindow().setLayout(
+                WindowManager.LayoutParams.MATCH_PARENT,
+                WindowManager.LayoutParams.MATCH_PARENT);
+        dialogRateMerchant.setContentView(v);
+        dialogRateMerchant.getWindow().setSoftInputMode(
+                WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+        dialogRateMerchant.setCancelable(false);
+        dialogRateMerchant.show();
+
+    }
+
+    protected boolean isValidRate() {
+        boolean flag = true;
+        // TODO Auto-generated method stub
+        f_rating = ratingPoint.getRating() + "";
+        f_rating_message = txtRatingMsg.getText().toString();
+
+        if (ratingPoint.getRating() <= 3) {
+            if (!formCheckString(f_rating_message, "Rating message")) {
+                flag = false;
+            }
+        }
+
+        return flag;
+
+    }
+
+    protected void doRate() {
+        // TODO Auto-generated method stub
+        RequestParams params = new RequestParams();
+
+        params.add("session_username", pref.getPref(Config.PREF_USERNAME));
+        params.add("active_session_token",
+                pref.getPref(Config.PREF_ACTIVE_SESSION_TOKEN));
+        params.add("merchant_username", job.merchant_username);
+        params.add("review_score", f_rating);
+        params.add("review_description", f_rating_message);
+        params.add("service_order_serial", job.serial);
+
+        AsyncHttpClient client = new AsyncHttpClient();
+        PARestClient.post(pref.getPref(Config.SERVER), Config.API_RATE_MERCHANT, params,
+                new AsyncHttpResponseHandler() {
+
+                    @Override
+                    public void onStart() {
+                        // TODO Auto-generated method stub
+                        super.onStart();
+                        loadingInternetDialog.show();
+                    }
+
+                    @Override
+                    public void onSuccess(int statusCode, String content) {
+                        // TODO Auto-generated method stub
+                        super.onSuccess(statusCode, content);
+
+                        try {
+                            JSONObject obj = new JSONObject(content);
+                            if ("success".equals(obj.getString("status"))) {
+                                dialogRateMerchant.dismiss();
+                                //reDraw();
+                            } else {
+                                simpleToast("Error" + obj.getString("reason"));
+                            }
+                        } catch (Exception e) {
+
+                        }
+                        loadingInternetDialog.dismiss();
+
+                    }
+
+                    @Override
+                    public void onFailure(int statusCode, Throwable error,
+                                          String content) {
+                        // TODO Auto-generated method stub
+                        super.onFailure(statusCode, error, content);
+                        simpleToast("Error");
+
+                        loadingInternetDialog.dismiss();
+
+                    }
+                });
+    }
+
+    //	show spinner for state selection
+    private void showSpinner(final View v){
+        analytic.trackScreen("Select Country for Service");
+        showSpinnerSelection(countrySelection
+
+                , "Select country", new AdapterView.OnItemClickListener() {
+
+                    @Override
+                    public void onItemClick(AdapterView<?> arg0, View arg1,
+                                            int arg2, long arg3) {
+                        try {
+                            generalDialog.hide();
+                            ((TextView) v).setText(countrySelection[arg2]);
+                            v.setTag(arg2);
+
+                            State selectedState = storedStates.get(arg2 > 0 ? arg2 - 1 : arg2);
+                            GlobalVar.state = selectedState.state_long;
+                            GlobalVar.state_short = selectedState.state_short;
+
+
+                            if (Arrays.equals(country2, state)) {
+                                v.setTag(R.id.city, state_short[arg2]);
+                            }
+
+                            final TextView tv1 = (TextView) v
+                                    .getTag(R.id.co_state);
+                            final TextView tv2 = (TextView) v.getTag(R.id.co_city);
+
+                            if (tv1 != null && tv2 != null
+                                    && Arrays.equals(country2, country)) {
+                                // tv2 = (TextView) tv.getTag(R.id.co_city);
+                                Tracer.d("debug", "country" + country2[arg2]);
+                                if ("Singapore".equals(country2[arg2])) {
+                                    tv1.setText("Singapore");
+                                    tv2.setText("Singapore");
+//                                    simpleToast("when is this executed5???");
+                                } else {
+                                    tv1.setText("");
+                                    tv1.setHint("Select your state");
+
+                                    tv2.setText("");
+                                    tv2.setHint("Select your city");
+                                }
+
+                            }
+
+                            if (tv2 != null && Arrays.equals(country2, state)) {
+                                // tv2 = (TextView) tv.getTag(R.id.co_city);
+                                if ("Singapore".equals(country2[arg2])) {
+                                    tv1.setText("Singapore");
+                                    tv2.setText("Singapore");
+//                                    simpleToast("when is this executed4???");
+                                } else {
+                                    tv2.setText("");
+                                    tv2.setHint("Select your city");
+                                }
+                            }
+//                            simpleToast("when is this executed3???");
+//                            Toast.makeText(getActivity(), "country: " + country + "\ncountry2: " + country2 + "\ncountrySelection: " + countrySelection + "\ntxtCountry2: " + txtCountry2.getText().toString()
+//                                    , Toast.LENGTH_LONG).show();
+                            //  get service data list
+                            getServiceData(0);
+
+                            try {
+                                f_country2 = txtCountry2.getText().toString();
+
+                                //  save country settings
+                                pref.savePref(Config.PREF_LAST_COUNTRY, f_country2);
+                                pref.savePref(Config.PREF_LAST_STATE, GlobalVar.state);
+                                pref.savePref(Config.PREF_LAST_STATE_SHORT, GlobalVar.state_short);
+
+                                if (f_country2.toLowerCase().contains("malaysia"))
+                                    GlobalVar.country = "Malaysia";
+                                else
+                                    GlobalVar.country = f_country2;
+                            }catch(Exception e){
+                                e.printStackTrace();
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+
+        //	additional checking to get state data if initial went unresponsive
+        if(countrySelection == null || countrySelection.length <= 2){
+            getStateData();		Log.i("CALLED FROM ONRESUME", "CALLED FROM ONRESUME" + " " + countrySelection);
+        }
+    }
+
+    void getStateData() {
+        RequestParams params = new RequestParams();
+        params.add("session_username", pref.getPref(Config.PREF_USERNAME));
+        params.add("active_session_token", pref.getPref(Config.PREF_ACTIVE_SESSION_TOKEN));
+//        params.add("country_only", "true");
+        params.add("state_only", "true");
+
+        AsyncHttpResponseHandler responseHandler = new AsyncHttpResponseHandler() {
+
+            @Override
+            public void onStart() {
+                super.onStart();
+                loadingInternetDialog.show();
+            }
+
+            @Override
+            public void onSuccess(int statusCode, String content) {
+                super.onSuccess(statusCode, content);
+                Log.d("Country", content);
+                ParserState parser = new ParserState(content);
+                if (parser.getStatus().equalsIgnoreCase("success")) {
+                    // Merge states to Malaysia
+                    ArrayList<String> merged = new ArrayList<String>();
+                    merged.add("Singapore");
+
+                    storedStates = parser.getStates();
+
+                    Iterator<State> iterator = storedStates.iterator();
+                    State state;
+                    while (iterator.hasNext()) {
+                        state = iterator.next();
+                        merged.add(malaysia_prefix + state.state_long);
+                    }
+
+                    countrySelection = merged.toArray(new String[merged.size()]);
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Throwable error,
+                                  String content) {
+                // TODO Auto-generated method stub
+                super.onFailure(statusCode, error, content);
+                Log.d("Country", content);
+                simpleToast(error + "\n" + content);
+
+                loadingInternetDialog.dismiss();
+
+            }
+
+            @Override
+            public void onFinish() {
+                super.onFinish();
+                loadingInternetDialog.dismiss();
+                //	show state selection spinner if this was last minute state query
+                if (retryGetState) {
+                    showSpinner(getView());
+                    retryGetState = false;
+                }
+            }
+        };
+
+        PARestClient.post(pref.getPref(Config.SERVER), Config.API_LOCATION, params, responseHandler);
+    }
+
+    void getServiceData(int parentId) {
+        loadingInternetDialog.show();
+
+        if ("singapore".equalsIgnoreCase(txtCountry2.getText().toString())) {
+            serviceCountry = "sg";
+            serviceState = "";
+        } else if ("select country".equalsIgnoreCase(txtCountry2.getText().toString())) {
+            //  clear grid adapter if not country is selected
+            arrServiceCategory = new ArrayList<ServiceCategory>();
+            gridAdapter.notifyDataSetChanged();
+            return;
+        } else {
+            serviceCountry = "my";
+            serviceState = txtCountry2.getText().toString().replace(malaysia_prefix, "");
+        }
+
+        Tracer.d(API_SERVICE_CATEGORY_HIERARCHICAL + "?parent_id=[" + parentId
+                + "]");
+        RequestParams params = new RequestParams();
+        params.add("parent_id", "[" + parentId + "]");
+        params.add("country", serviceCountry);
+        params.add("state", serviceState);
+        params.add("session_username", pref.getPref(Config.PREF_USERNAME));
+        params.add("active_session_token", pref.getPref(Config.PREF_ACTIVE_SESSION_TOKEN));
+        PARestClient.get(pref.getPref(Config.SERVER), API_SERVICE_CATEGORY_HIERARCHICAL, params, new AsyncHttpResponseHandler() {
+            @Override
+            public void onFailure(Throwable error, String content) {
+                // TODO Auto-generated method stub
+                super.onFailure(error, content);
+                loadingInternetDialog.dismiss();
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+                        getActivity());
+
+                // set title
+                alertDialogBuilder.setTitle("Network Error");
+
+                // set dialog message
+                alertDialogBuilder
+                        .setMessage("Click yes to reload!")
+                        .setCancelable(false)
+                        .setPositiveButton("Yes",
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog,
+                                                        int id) {
+                                        // if this button is clicked, close
+                                        // current activity
+                                        getServiceData(0);
+                                    }
+                                })
+                        .setNegativeButton("No",
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog,
+                                                        int id) {
+                                        // if this button is clicked, just close
+                                        // the dialog box and do nothing
+                                        dialog.cancel();
+                                    }
+                                });
+
+                // create alert dialog
+                AlertDialog alertDialog = alertDialogBuilder.create();
+                alertDialog.show();
+
+
+            }
+
+            @Override
+            public void onSuccess(int statusCode, String result) {
+                // TODO Auto-generated method stub
+                super.onSuccess(statusCode, result);
+                try {
+                    System.out.println(result);
+                    ParserParentServiceCategoryNew parser = new ParserParentServiceCategoryNew(
+                            result);
+                    if ("success".equals(parser.status)) {
+                        if (parser.arr.get(0).children == null)
+                            arrServiceCategory = new ArrayList<ServiceCategory>();
+                        else
+                            arrServiceCategory = parser.arr.get(0).children;
+
+                        Tracer.d("Service size:" + arrServiceCategory.size());
+
+                        //  hide fall back page before generate grids
+                        fallBack.setVisibility(View.GONE);
+                        //  restore visibility to grid
+                        gridCat.setVisibility(View.VISIBLE);
+
+                        // drawCategory();
+                        gridAdapter.notifyDataSetChanged();
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+//				loadingInternetDialog.dismiss();
+            }
+
+            @Override
+            public void onFinish() {
+                // TODO Auto-generated method stub
+                super.onFinish();
+                loadingInternetDialog.dismiss();
+            }
+        });
+    }
+
+    @Override
+    public void onClick(final View v) {
+        switch(v.getId()){
+            case R.id.btnMenu:
+                ActivityLanding parent = (ActivityLanding) getActivity();
+                parent.menuClick();
+                break;
+            case R.id.btnIntercom:
+                Intercom.client().displayConversationsList();
+                break;
+            case R.id.country2:
+            case R.id.country:
+                //	check if state data is available before displaying state selection spinner
+                if(countrySelection != null) {
+                    showSpinner(v);
+                }else{
+                    retryGetState = true;
+                    getStateData();
+                }
+                break;
+        }
+    }
+
+    private class ServiceAutoCompleteAdapter extends ArrayAdapter<String>
+            implements Filterable {
+        private ArrayList<String> resultList;
+
+        public ServiceAutoCompleteAdapter(Context context,
+                                          int textViewResourceId, ArrayList<String> arr) {
+            super(context, textViewResourceId);
+            resultList = new ArrayList<String>(arr);
+        }
+
+        @Override
+        public int getCount() {
+            return resultList.size();
+        }
+
+        @Override
+        public String getItem(int index) {
+            return resultList.get(index);
+        }
+
+        @Override
+        public Filter getFilter() {
+            Filter filter = new Filter() {
+                @Override
+                protected FilterResults performFiltering(CharSequence constraint) {
+                    FilterResults filterResults = new FilterResults();
+                    if (constraint != null) {
+                        // Retrieve the autocomplete results.
+                        // resultList = autocomplete(constraint.toString());
+
+                        // Assign the data to the FilterResults
+                        filterResults.values = resultList;
+                        filterResults.count = resultList.size();
+                    }
+                    return filterResults;
+                }
+
+                @Override
+                protected void publishResults(CharSequence constraint,
+                                              FilterResults results) {
+                    if (results != null && results.count > 0) {
+                        notifyDataSetChanged();
+                    } else {
+                        notifyDataSetInvalidated();
+                    }
+                }
+            };
+            return filter;
+        }
+    }
+
+    class GridAdapter extends BaseAdapter {
+        GridAdapter.GridHolder holder;
+
+        @Override
+        public int getCount() {
+            // TODO Auto-generated method stub
+            return arrServiceCategory.size();
+        }
+
+        @Override
+        public Object getItem(int position) {
+            // TODO Auto-generated method stub
+            return arrServiceCategory.get(position);
+        }
+
+        @Override
+        public long getItemId(int position) {
+            // TODO Auto-generated method stub
+            return position;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            // TODO Auto-generated method stub
+            try{
+                if (convertView == null) {
+                    convertView = inflater.inflate(R.layout.item_grid_category,
+                            null);
+                    holder = new GridHolder();
+                    holder.t = (TextView) convertView.findViewById(R.id.txtCat);
+                    holder.img = (ImageView) convertView.findViewById(R.id.img);
+                    convertView.setTag(holder);
+
+                } else {
+                    holder = (GridHolder) convertView.getTag();
+                }
+
+                String uri="";
+                if ("0".equals(pref.getPref(Config.SERVER))) {
+                    uri = "http://" + DOMAIN_DEV + "/";
+
+                } else if ("1".equals(pref.getPref(Config.SERVER))) {
+
+                    uri = "http://" + DOMAIN_STAGING + "/";
+
+                }
+                else if ("2".equals(pref.getPref(Config.SERVER))) {
+
+                    uri = "http://" + DOMAIN_LIVE + "/";
+
+                }
+
+                String url=uri+arrServiceCategory.get(position).icon_image
+                        +"?session_username="+pref.getPref(Config.PREF_USERNAME)
+                        +"&active_session_token="+pref.getPref(Config.PREF_ACTIVE_SESSION_TOKEN)
+                        ;
+                Tracer.d(url);
+                holder.img.setTag(url);
+                loader.DisplayImage(url, getActivity(), holder.img,false);
+
+                holder.t.setText(arrServiceCategory.get(position).service_name);
+
+                convertView.setTag(R.id.action_settings, position);
+                convertView.setOnClickListener(new View.OnClickListener() {
+
+                    @Override
+                    public void onClick(View v) {
+                        // TODO Auto-generated method stub
+                        try {
+                            int pos = (Integer) v.getTag(R.id.action_settings);
+                            ServiceCategory sc = arrServiceCategory.get(pos);
+                            ArrayList<ServiceCategory> arr = new ArrayList<ServiceCategory>();
+                            arr.add(sc);
+//                            listener.doFragmentChange(new FragmentPostOpenBid(arr, serviceCountry),
+//                                    true, "");
+//                            Toast.makeText(getActivity(), "arr: " + sc.id + "\nserviceCountry: " + txtCountry2.getText().toString(), Toast.LENGTH_LONG).show();
+                            //  set GlobalVar.country before proceeding
+                            GlobalVar.country = txtCountry2.getText().toString();
+                            listener.doFragmentChange(new FragmentCategoryTab(arrServiceCategory.get(pos).service_name, txtCountry2.getText().toString(), arr),
+                                    true, "");
+
+                            analytic.trackCustomDimension("Category", 1, arrServiceCategory.get(pos).service_name);
+                        }catch(Exception e){
+                            e.printStackTrace();
+                        }
+
+                    }
+                });
+
+                if(url.contains("default")){
+                    holder.img.setVisibility(View.GONE);
+                    holder.t.setVisibility(View.VISIBLE);
+                }else{
+                    holder.img.setVisibility(View.VISIBLE);
+                    holder.t.setVisibility(View.GONE);
+
+                }
+
+
+
+            }catch(Exception e){
+                e.printStackTrace();
+            }
+            return convertView;
+        }
+
+        class GridHolder {
+            TextView t;
+            ImageView img;
+        }
+
+    }
+}

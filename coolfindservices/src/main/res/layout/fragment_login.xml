@@ -2,7 +2,7 @@
               xmlns:app="http://schemas.android.com/apk/res-auto"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:background="@drawable/bg"
+              android:background="@color/pa_orange"
               android:orientation="vertical">
 
     <LinearLayout
@@ -43,13 +43,30 @@
         </LinearLayout>
     </LinearLayout>
 
+    <com.pa.common.TypefaceButton
+        android:id="@+id/btnLogin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin6"
+        android:layout_marginEnd="@dimen/margin6"
+        android:layout_marginRight="@dimen/margin6"
+        android:background="@drawable/btn_transparent_no_border"
+        android:gravity="center"
+        android:layout_gravity="end"
+        android:text="Log In"
+        android:textColor="@color/white"
+        android:textSize="@dimen/txt_big"
+        android:textStyle="bold"
+        app:typeface="century-gothic-bold"
+        android:visibility="gone"/>
+
     <ScrollView
         android:id="@+id/layoutLogin"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginLeft="@dimen/margin6"
         android:layout_marginRight="@dimen/margin6"
-        android:paddingTop="@dimen/edittext_height3"
+
         android:layout_weight="1"
         android:visibility="gone" >
 
@@ -59,9 +76,19 @@
             android:orientation="vertical"
             android:layout_gravity="center_vertical" >
 
+            <com.pa.common.TypefaceTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Welcome To"
+                android:textColor="@color/white"
+                android:textSize="30sp"
+                android:textStyle="bold"
+                app:typeface="century-gothic-bold"/>
+
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="-20dp"
                 android:padding="@dimen/padding"
                 android:gravity="center"
                 android:weightSum="5"
@@ -77,7 +104,7 @@
                     android:visibility="gone"/>
                 <ImageView
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="@dimen/margin130"
                     android:gravity="center"
                     android:layout_alignParentTop="true"
                     android:src="@drawable/cf_logo_loginpage"
@@ -193,14 +220,119 @@
                     android:textColor="@color/black" />
             </RadioGroup>
 
-            <com.pa.common.ImageViewFitHeight
-                android:layout_marginTop="@dimen/margin6"
-                android:id="@+id/btn_login_logout1"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/edittext_height3"
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin10"
                 android:layout_gravity="center"
-                android:src="@drawable/fb_login"
-                android:visibility="gone"/>
+                android:visibility="invisible">
+
+                <!--<ImageView-->
+                <!--android:layout_width="@dimen/edittext_height4"-->
+                <!--android:layout_height="@dimen/edittext_height4"-->
+                <!--android:layout_marginTop="@dimen/margin1"-->
+                <!--android:src="@drawable/location01"-->
+                <!--android:layout_alignParentTop="true"-->
+                <!--android:layout_alignParentLeft="true"-->
+                <!--android:layout_alignParentStart="true"-->
+                <!--android:gravity="center_vertical"-->
+                <!--android:id="@+id/imageView4" />-->
+
+                <LinearLayout
+                    android:id="@+id/country_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/edittext_height3"
+                    android:paddingRight="@dimen/edittext_height3"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:layout_gravity="center"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true">
+
+                    <LinearLayout
+
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <ImageView
+                            android:layout_width="@dimen/edittext_height4"
+                            android:layout_height="@dimen/edittext_height4"
+                            android:layout_marginTop="@dimen/margin1"
+                            android:src="@drawable/location01"
+                            android:layout_alignParentTop="true"
+                            android:layout_alignParentLeft="true"
+                            android:layout_alignParentStart="true"
+                            android:gravity="center_vertical"
+                            android:layout_gravity="center_vertical"
+                            android:id="@+id/imageView4" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+                            <com.pa.common.TypefaceTextView
+                                android:id="@+id/country2"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+
+                                android:layout_marginLeft="30dp"
+                                android:layout_marginRight="30dp"
+                                android:drawableRight="@drawable/icon_white_dropdown"
+                                android:drawableEnd="@drawable/icon_white_dropdown"
+                                android:gravity="center|center_vertical"
+                                android:padding="@dimen/margin2"
+                                android:text="Select Country"
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/txt_big"
+                                app:typeface="century-gothic" />
+
+                            <View
+                                android:id="@+id/line2"
+                                android:layout_width="match_parent"
+                                android:layout_height=".5dp"
+                                android:layout_marginLeft="@dimen/margin2"
+                                android:layout_marginRight="@dimen/margin2"
+                                android:paddingLeft="@dimen/edittext_height3"
+                                android:paddingRight="@dimen/edittext_height3"
+                                android:gravity="bottom"
+                                android:layout_gravity="center"
+                                android:layout_below="@+id/country2"
+                                android:background="@color/white" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <!--<View-->
+                    <!--android:id="@+id/line2"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height=".5dp"-->
+                    <!--android:layout_marginLeft="@dimen/margin2"-->
+                    <!--android:layout_marginRight="@dimen/margin2"-->
+                    <!--android:paddingLeft="@dimen/edittext_height3"-->
+                    <!--android:paddingRight="@dimen/edittext_height3"-->
+                    <!--android:gravity="bottom"-->
+                    <!--android:layout_gravity="center"-->
+                    <!--android:layout_below="@+id/country2"-->
+                    <!--android:background="@color/white" />-->
+
+
+                </LinearLayout>
+
+                <com.pa.common.TypefaceTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Select location where services is to be performed"
+                    android:gravity="center"
+                    android:layout_gravity="center|bottom"
+                    android:layout_marginTop="@dimen/margin2"
+                    android:layout_below="@+id/country_layout"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:textSize="@dimen/txt_small"
+                    android:textColor="@color/white"
+                    app:typeface="century-gothic"/>
+            </RelativeLayout>
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -213,17 +345,17 @@
                     android:layout_marginTop="@dimen/margin2"
                     android:background="@drawable/btn_fb_login"
                     android:gravity="center"
-                    android:text="CONTINUE WITH FACEBOOK"
-                    android:textColor="@color/white"
+                    android:text="Continue With Facebook"
+                    android:textColor="@color/pa_orange"
                     android:textSize="@dimen/txt_big"
                     android:textStyle="bold"
-                    app:typeface="OpenSans-Regular"/>
+                    app:typeface="century-gothic-bold"/>
 
                 <ImageView
                     android:layout_width="@dimen/edittext_height3"
                     android:layout_height="@dimen/edittext_height3"
                     android:layout_marginTop="@dimen/margin2"
-                    android:src="@drawable/facebook_btn_active"/>
+                    android:src="@drawable/temp_orange_fb"/>
             </RelativeLayout>
 
             <com.pa.common.TypefaceButton
@@ -233,24 +365,24 @@
                 android:layout_marginTop="10dp"
                 android:background="@drawable/btn_transparent_with_border"
                 android:gravity="center"
-                android:text="CREATE AN ACCOUNT"
+                android:text="Create Account"
                 android:textColor="@color/white"
                 android:textSize="@dimen/txt_big"
                 android:textStyle="bold"
-                app:typeface="OpenSans-Regular" />
+                app:typeface="century-gothic-bold" />
 
-            <com.pa.common.TypefaceButton
-                android:id="@+id/btnLogin"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/edittext_height3"
-                android:layout_marginTop="@dimen/margin2"
-                android:background="@drawable/btn_transparent_no_border"
-                android:gravity="center"
-                android:text="LOGIN"
-                android:textColor="@color/white"
-                android:textSize="@dimen/txt_big"
-                android:textStyle="bold"
-                app:typeface="OpenSans-Regular"/>
+            <!--<com.pa.common.TypefaceButton-->
+            <!--android:id="@+id/btnLogin"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="@dimen/edittext_height3"-->
+            <!--android:layout_marginTop="@dimen/margin2"-->
+            <!--android:background="@drawable/btn_transparent_no_border"-->
+            <!--android:gravity="center"-->
+            <!--android:text="Log In"-->
+            <!--android:textColor="@color/white"-->
+            <!--android:textSize="@dimen/txt_big"-->
+            <!--android:textStyle="bold"-->
+            <!--app:typeface="OpenSans-Regular"/>-->
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -285,30 +417,45 @@
             </LinearLayout>
 
             <!--<com.pa.common.ImageViewFitHeight-->
-                <!--android:id="@+id/btnGuest"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="@dimen/edittext_height3"-->
-                <!--android:layout_gravity="center_horizontal"-->
-                <!--android:layout_marginTop="@dimen/margin1"-->
-                <!--android:src="@drawable/btn_effect_continue_as_guest"-->
-                <!--android:visibility="gone" />-->
+            <!--android:id="@+id/btnGuest"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="@dimen/edittext_height3"-->
+            <!--android:layout_gravity="center_horizontal"-->
+            <!--android:layout_marginTop="@dimen/margin1"-->
+            <!--android:src="@drawable/btn_effect_continue_as_guest"-->
+            <!--android:visibility="gone" />-->
 
             <LinearLayout
-                android:id="@+id/txtListYourService"
+
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/edittext_height3"
                 android:orientation="vertical"
-                android:visibility="gone">
+                android:visibility="visible">
 
-                <com.pa.common.TypefaceTextView
+                <com.pa.common.TypefaceButton
+                    android:id="@+id/btnGuest"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="@dimen/edittext_height3"
+                    android:layout_marginTop="0dp"
+                    android:background="@drawable/btn_transparent_no_border"
                     android:gravity="center"
-                    android:layout_gravity="center_horizontal"
-                    android:text="@string/list_your_service"
+                    android:layout_gravity="center"
+                    android:text="CONTINUE AS GUEST"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/txt_xx_big" />
+                    android:textSize="@dimen/txt_big"
+                    android:textStyle="bold"
+                    app:typeface="century-gothic-bold"
+                    android:visibility="visible"/>
+
+                <!--<com.pa.common.TypefaceTextView-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:gravity="center"-->
+                <!--android:layout_gravity="center_horizontal"-->
+                <!--android:text="List Your Company"-->
+                <!--android:textColor="@color/white"-->
+                <!--android:textSize="@dimen/txt_big"-->
+                <!--app:typeface="century-gothic-bold"/>-->
 
                 <com.pa.common.TypefaceTextView
                     android:layout_width="match_parent"
@@ -316,30 +463,55 @@
                     android:gravity="center"
                     android:text="(for service provider)"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/txt_big" />
+                    android:textSize="@dimen/txt_big"
+                    android:visibility="gone"/>
 
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
-        <com.pa.common.TypefaceButton
-            android:id="@+id/btnGuest"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/edittext_height3"
-            android:layout_marginTop="@dimen/margin2"
-            android:background="@drawable/btn_transparent_no_border"
-            android:gravity="center"
-            android:text="CONTINUE AS GUEST"
-            android:textColor="@color/white"
-            android:textSize="@dimen/txt_xx_big"
-            android:textStyle="bold"
-            app:typeface="OpenSans-Regular"
-            android:visibility="gone"/>
+    <!--<com.pa.common.TypefaceButton-->
+    <!--android:id="@+id/btnGuest"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="@dimen/edittext_height3"-->
+    <!--android:layout_marginTop="@dimen/margin2"-->
+    <!--android:background="@drawable/btn_transparent_no_border"-->
+    <!--android:gravity="center"-->
+    <!--android:layout_gravity="center"-->
+    <!--android:text="CONTINUE AS GUEST"-->
+    <!--android:textColor="@color/white"-->
+    <!--android:textSize="@dimen/txt_xx_big"-->
+    <!--android:textStyle="bold"-->
+    <!--app:typeface="century-gothic-bold"-->
+    <!--android:visibility="visible"/>-->
+
+    <com.pa.common.TypefaceTextView
+        android:id="@+id/txtListYourService"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/edittext_height2"
+        android:gravity="center"
+        android:layout_gravity="center_horizontal"
+        android:text="List Your Company"
+        android:textColor="@color/white"
+        android:textSize="@dimen/txt_big"
+        app:typeface="century-gothic-bold"
+        android:visibility="gone"/>
 
     <include
         android:id="@+id/copyright"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/margin2"
+        android:visibility="gone"
         layout="@layout/copyright" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:adjustViewBounds="true"
+        android:scaleType="centerCrop"
+        android:src="@drawable/country_01" />
 
 </LinearLayout>

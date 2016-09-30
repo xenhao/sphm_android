@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="2">
+        <com.pa.common.TypefaceTextView
+            android:id="@+id/package_Tab"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/edittext_height3"
+            android:background="@color/aqua"
+            android:layout_weight="1"
+            android:text="PACKAGES"
+            android:layout_gravity="center_horizontal|center_vertical"
+            android:gravity="center"
+            android:textColor="@color/gray"
+            app:typeface="century-gothic-bold"/>
+        <com.pa.common.TypefaceTextView
+            android:id="@+id/quote_Tab"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/edittext_height3"
+            android:layout_weight="1"
+            android:text="REQUEST QUOTATION"
+            android:background="@color/blue"
+            android:layout_gravity="center_horizontal|center_vertical"
+            android:gravity="center"
+            android:textColor="@color/gray"
+            app:typeface="century-gothic-bold"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:id="@+id/tabContainer"
+        android:layout_weight="1">
+
+    </LinearLayout>
+
+</LinearLayout>
+
+
+
+
+
+
+    <!--<TabHost-->
+    <!--<android.support.v4.app.FragmentTabHost-->
+        <!--android:id="@+id/tabHost"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:layout_centerHorizontal="true">-->
+        <!--<LinearLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:orientation="vertical">-->
+            <!--<TabWidget-->
+                <!--android:id="@android:id/tabs"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content">-->
+            <!--</TabWidget>-->
+            <!--<FrameLayout-->
+                <!--android:id="@android:id/tabcontent"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="match_parent">-->
+                <!--&lt;!&ndash;<LinearLayout&ndash;&gt;-->
+                <!--<LinearLayout-->
+
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="match_parent"-->
+                    <!--android:orientation="vertical">-->
+                    <!--<include-->
+                        <!--android:id="@+id/first_Tab"-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="match_parent"-->
+                        <!--android:orientation="vertical"-->
+                        <!--layout="@layout/fragment_package"/>-->
+                <!--</LinearLayout>-->
+                <!--<LinearLayout-->
+                    <!--android:id="@+id/second_Tab"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="match_parent"-->
+                    <!--android:orientation="vertical">-->
+                    <!--<include-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:contentDescription="@string/app_name"-->
+                        <!--layout="@layout/fragment_post_open_bid"-->
+                        <!--android:layout_gravity="center_horizontal"/>-->
+                <!--</LinearLayout>-->
+                <!--</FrameLayout>-->
+        <!--</LinearLayout>-->
+    <!--</android.support.v4.app.FragmentTabHost>-->
+    <!--</TabHost>-->
+<!--</RelativeLayout>-->
+
