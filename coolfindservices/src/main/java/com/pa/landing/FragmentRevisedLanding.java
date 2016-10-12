@@ -859,7 +859,7 @@ public class FragmentRevisedLanding extends MyFragment implements View.OnClickLi
 //                            Toast.makeText(getActivity(), "arr: " + sc.id + "\nserviceCountry: " + txtCountry2.getText().toString(), Toast.LENGTH_LONG).show();
                             //  set GlobalVar.country before proceeding
                             GlobalVar.country = txtCountry2.getText().toString();
-                            listener.doFragmentChange(new FragmentCategoryTab(arrServiceCategory.get(pos).service_name, txtCountry2.getText().toString(), arr),
+                            listener.doFragmentChange(new FragmentCategoryTab(arrServiceCategory.get(pos).service_name, arrServiceCategory.get(pos).id, txtCountry2.getText().toString(), arr),
                                     true, "");
 
                             analytic.trackCustomDimension("Category", 1, arrServiceCategory.get(pos).service_name);

@@ -31,15 +31,16 @@ public class FragmentCategoryTab extends MyFragment implements View.OnClickListe
     private TextView packageTab, quoteTab;
     private boolean isPackage;
 
-    String serviceCountry, arrr;
+    String serviceCountry, serviceName, serviceID;
     private ArrayList<ServiceCategory> serviceCategoryArrayList;
     //  mandatory empty constructor
     public FragmentCategoryTab(){}
 
     @SuppressLint("ValidFragment")
-    public FragmentCategoryTab(String arr, String country, ArrayList<ServiceCategory> arrayList) {
+    public FragmentCategoryTab(String ServiceName, String ServiceId, String country, ArrayList<ServiceCategory> arrayList) {
 //        initial(arr, country, "", "", "", "");
-        arrr = arr;
+        serviceName = ServiceName;
+        serviceID = ServiceId;
         serviceCountry = country;
         serviceCategoryArrayList = arrayList;
     }
@@ -65,7 +66,7 @@ public class FragmentCategoryTab extends MyFragment implements View.OnClickListe
 
         try {
             //  default view (packages)
-            replaceFragment(R.id.tabContainer, PackageFragment.newInstance(arrr, serviceCountry), true);
+            replaceFragment(R.id.tabContainer, PackageFragment.newInstance(serviceID, serviceCountry), true);
             //  set tab state
 //            tabState(isPackage);
             isPackage = true;

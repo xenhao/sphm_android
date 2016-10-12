@@ -135,7 +135,8 @@ public class PackageFragment extends MyFragment implements View.OnClickListener 
         ServiceID = getArguments().getString("service category");
 
 //        getList("");
-        getCategoryList();
+//        getCategoryList();
+        getList(ServiceID);
 //        getList(arrCategoryId.get(arrCategory.indexOf(ServiceID)));
     }
 
@@ -232,7 +233,7 @@ public class PackageFragment extends MyFragment implements View.OnClickListener 
                 if (mItems != null) {
                     mItems.clear();
                 }
-                getList(serviceIDNum);
+                getList(ServiceID);
                 break;
             case R.id.txt_category:
                 showCategorySpinnerSelection(package_category, mTxtCategory, "  Browse Category");
@@ -342,7 +343,7 @@ public class PackageFragment extends MyFragment implements View.OnClickListener 
                                 mEmptyState.setVisibility(View.VISIBLE);
                             }else{
                                 serviceIDNum = arrCategoryId.get(arrCategory.indexOf(ServiceID));
-                                getList(serviceIDNum);
+//                                getList(serviceIDNum);
                             }
                         }catch (Exception e){
                             e.printStackTrace();
@@ -360,7 +361,7 @@ public class PackageFragment extends MyFragment implements View.OnClickListener 
             mItems.clear();
         }
         isRefresh = true;
-        getList(serviceIDNum);
+        getList(ServiceID);
     }
 
     private void getList(String serviceId) {
@@ -400,7 +401,7 @@ public class PackageFragment extends MyFragment implements View.OnClickListener 
                                 .setCancelable(false)
                                 .setPositiveButton("Yes",new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int id) {
-                                        getList(serviceIDNum);
+                                        getList(ServiceID);
                                     }
                                 })
                                 .setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -436,10 +437,19 @@ public class PackageFragment extends MyFragment implements View.OnClickListener 
                                 mItems.clear();
                                 mItems.addAll(parser.getResult());
                                 Log.i("Promotion", mItems.size() + " ");
-                                mAdapter.notifyDataSetChanged();
+//                                mAdapter.notifyDataSetChanged();
 
-                                mEmptyState.setVisibility(View.GONE);
-                                mSwipeRefreshLayout.setVisibility(View.VISIBLE);
+                                //  check if packages available
+                                if(mItems.size() <= 0) {
+                                    //  no package available in this category
+                                    mEmptyState.setVisibility(View.VISIBLE);
+                                    mSwipeRefreshLayout.setVisibility(View.GONE);
+                                }else{
+                                    //  packages available, hide empty state & show packages
+                                    mAdapter.notifyDataSetChanged();
+                                    mEmptyState.setVisibility(View.GONE);
+                                    mSwipeRefreshLayout.setVisibility(View.VISIBLE);
+                                }
                             }
                         } catch (Exception ex) {
                             ex.printStackTrace();
@@ -611,7 +621,7 @@ public class PackageFragment extends MyFragment implements View.OnClickListener 
                         serviceIDNum   = arrCategoryId.get(arg2);
                         ServiceName = arrCategory.get(arg2);
 
-                        getList(serviceIDNum);
+                        getList(ServiceID);
 
                     } catch (Exception e) {
                         e.printStackTrace();
