@@ -7,15 +7,21 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:orientation="vertical">
-                    <com.pa.common.ImageViewFitWidth
-                    android:id="@+id/img"
-                    android:layout_marginRight="@dimen/margin1"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:scaleType="fitCenter"
-                    android:layout_gravity="center"
-                    android:layout_marginBottom="5dp"
-                    android:src="@drawable/icon_add_photo"/>
-    
+    <!--<com.pa.common.ImageViewFitWidth-->
+    <!--android:id="@+id/img"-->
+    <!--android:layout_marginRight="@dimen/margin1"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="0dp"-->
+    <!--android:scaleType="fitCenter"-->
+    <!--android:layout_gravity="center"-->
+    <!--android:layout_marginBottom="5dp"-->
+    <!--android:src="@drawable/icon_add_photo"/>-->
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/img"
+        android:layout_gravity="center" />
+
 
 </LinearLayout>

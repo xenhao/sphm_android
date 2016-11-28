@@ -15,6 +15,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Window;
 import android.widget.Toast;
@@ -238,6 +239,9 @@ public class MyActivity extends FragmentActivity {
 				i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 				i.putExtra("exit", true);
 				startActivity(i);
+				//	clear memory
+				finish();
+				onDestroy();
 			}
 		});
 		alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE,"NO",new DialogInterface.OnClickListener() {
@@ -290,8 +294,41 @@ public class MyActivity extends FragmentActivity {
 		Tracer.d("ON PAUSE");
 		
 	}
-	
 
+	@Override
+	public void onStop(){
+		super.onStop();
+		Log.i("ONSTOP", "onStop called");
+	}
+
+//	@Override
+//	protected void onStart() {
+//		super.onStart();
+//		branch = Branch.getInstance(getApplicationContext());
+//		branch.initSession(new Branch.BranchReferralInitListener(){
+//			@Override
+//			public void onInitFinished(JSONObject referringParams, BranchError error) {
+//				if (error == null) {
+//					// params are the deep linked params associated with the link that the user clicked -> was re-directed to this app
+//					// params will be empty if no data found
+//					// ... insert custom logic here ...
+//				} else {
+//					Log.i("MyApp", error.getMessage());
+//				}
+//			}
+//		}, this.getIntent().getData(), this);
+//	}
+//
+//	@Override
+//	protected void onNewIntent(Intent intent) {
+//		this.setIntent(intent);
+//	}
+//
+//	@Override
+//	protected void onStop() {
+//		super.onStop();
+//		branch.closeSession();
+//	}
 
 	
 	

@@ -168,7 +168,7 @@ public class RegisterActivity implements com.pa.common.Config{
 	}
 
     private void sendRegistrationIdToBackend(String regId) {
-        Intercom.client().setupGCM(regId, R.drawable.ic_launcher);
+//        Intercom.client().setupGCM(regId, R.drawable.ic_launcher);
     }
 	
 	

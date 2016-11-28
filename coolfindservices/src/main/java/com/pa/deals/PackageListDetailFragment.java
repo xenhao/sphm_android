@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -25,9 +26,11 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.ViewFlipper;
 
+import com.coolfindservices.android.SplashActivity;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.pa.common.Config;
+import com.pa.common.GlobalVar;
 import com.pa.common.ImageLoader;
 import com.pa.common.MyFragment;
 import com.pa.common.OnFragmentChangeListener;
@@ -221,7 +224,31 @@ public class PackageListDetailFragment extends MyFragment implements View.OnClic
 //                validatePromoCode(promoCode, v.getRootView());
 //                break;
             case R.id.btn_merchant_profile:
-                onGetMerchantProfile();
+                if(GlobalVar.isGuest) {
+                    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+                            getActivity());
+                    alertDialogBuilder.setTitle("Sign In");
+                    alertDialogBuilder
+                            .setMessage("Sign In or Register to Proceed?")
+                            .setCancelable(false)
+                            .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    Intent intent = new Intent(getActivity(), SplashActivity.class);
+                                    intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+                                    GlobalVar.isResumeGuest = true;
+                                    startActivity(intent);
+                                }
+                            })
+                            .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    dialog.cancel();
+                                }
+                            });
+                    AlertDialog alertDialog = alertDialogBuilder.create();
+                    alertDialog.show();
+                }else {
+                    onGetMerchantProfile();
+                }
                 break;
         }
     }

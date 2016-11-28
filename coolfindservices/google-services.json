@@ -1,0 +1,63 @@
+{
+  "project_info": {
+    "project_number": "137594190980",
+    "firebase_url": "https://cool-find-6663e.firebaseio.com",
+    "project_id": "cool-find-6663e",
+    "storage_bucket": "cool-find-6663e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:137594190980:android:19dda1d796f11c8d",
+        "android_client_info": {
+          "package_name": "com.coolfindservices.androidconsumer"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "137594190980-u366mmvpl6g472a0sf9m2j4ckfbf6a10.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.coolfindservices.androidconsumer",
+            "certificate_hash": "CC30A3EAD8A25AD93FA64C437855026593105EB9"
+          }
+        },
+        {
+          "client_id": "137594190980-em9k92ajreiofot64g88tj6aot7pgris.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAoSS3fHDhLB6V2JJXCxpCY7RN23HWduRY"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "137594190980-em9k92ajreiofot64g88tj6aot7pgris.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "137594190980-ipfup6t9ko64s85j1uvcu7cd5l4tru31.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.pageadvisor.cfconsumer",
+                "app_store_id": "1137018245"
+              }
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -9,6 +9,7 @@ import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.Configuration;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.support.annotation.IdRes;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -53,6 +54,9 @@ import com.pa.pojo.UserORM;
 import com.pa.profil_new.FragmentProfilLandingNew;
 import com.coolfindservices.android.SplashActivity;
 import com.coolfindservices.androidconsumer.R;
+import com.roughike.bottombar.BottomBar;
+import com.roughike.bottombar.OnTabReselectListener;
+import com.roughike.bottombar.OnTabSelectListener;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -75,13 +79,16 @@ public class ActivityLanding extends MyActivity implements OnClickListener,
 	ImageView profilePic;
 	TextView txtUsername,txtEmail;
 	TextView version;
+	public String username4Fragment = "";
 
-	
+	private BottomBar bottomBar;
+
+
 	void checkVersionData(){
 		RequestParams params=new RequestParams();
 		params.add("type","android");
 
-		
+
 		PARestClient.get(pref.getPref(Config.SERVER),
 				Config.API_CEK_APP_VERSION, params,
 				new AsyncHttpResponseHandler() {
@@ -93,22 +100,17 @@ public class ActivityLanding extends MyActivity implements OnClickListener,
 						ParserAppVersion parser = new ParserAppVersion(
 								new String(arg2));
 						AppVersion appV = parser.getData();
-						
-						try {
-							int version=getPackageManager()
-									.getPackageInfo(getPackageName(), 0).versionCode;
-							int custVersion;
-							try {
-								if (appV.customer_version_android != null) {
-									custVersion = Integer.parseInt(appV.customer_version_android);
 
-									if (custVersion > version) {
+						try {
+							double version=getPackageManager()
+									.getPackageInfo(getPackageName(), 0).versionCode;
+							if (Double.parseDouble(appV.customer_version_android) > version) {
 //								AlertDialog.Builder builder=new AlertDialog.Builder(ActivityLanding.this);
-//							
+//
 //								builder.setTitle("Warning");
 //								builder.setMessage("New version available. Please update to continue using PA Merchant App.");
 //								builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-//									
+//
 //									@Override
 //									public void onClick(DialogInterface dialog, int which) {
 //										// TODO Auto-generated method stub
@@ -120,38 +122,27 @@ public class ActivityLanding extends MyActivity implements OnClickListener,
 //										SplashActivity.this.finish();
 //									}
 //								});
-//								
-//								
+//
+//
 //								builder.show();
 
-										showUpdateDialog();
-										Log.i("CrashLog", "showed update dialog");
+								showUpdateDialog();
 
 
-									} else {
-										Log.i("CrashLog", "not version 1.2\nVersion: " + custVersion);
-									}
-								} else {
-									Log.i("VersionError", "Version Number is null");
-								}
-							}catch(NullPointerException e){
-								Log.i("VersionError", "Version Number is null");
-								Log.i("VersionError", String.valueOf(e));
-							}
-						} catch (NameNotFoundException e) {
+							} 						} catch (NameNotFoundException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
 
 					}
-					
+
 					@Override
 					public void onStart() {
 						// TODO Auto-generated method stub
 						super.onStart();
-					loadingInternetDialog.show();
+						loadingInternetDialog.show();
 					}
-					
+
 					@Override
 					public void onFinish() {
 						// TODO Auto-generated method stub
@@ -165,27 +156,28 @@ public class ActivityLanding extends MyActivity implements OnClickListener,
 	Dialog dialogUpdate;
 	void showUpdateDialog(){
 		View v=inflater.inflate(R.layout.activity_splash, null);
-		
+
 		v.findViewById(R.id.btnUpdate).setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
 				if("2".equals(getResources().getString(R.string.server))){
-					openUrl(PARestClient.getAbsoluteUrl(pref.getPref(Config.SERVER), "home/update-app?platform=android"));
+//					openUrl(PARestClient.getAbsoluteUrl(pref.getPref(Config.SERVER), "home/update-app?platform=android"));
+					openUrl("https://play.google.com/store/apps/details?id=com.pageadvisor.androidconsumer");
 				}
 				else
-					if(PARestClient.getAbsoluteUrl(pref.getPref(Config.SERVER), "").contains(Config.DOMAIN_DEV)){
-						openUrl("http://bit.ly/pa_dev");
-					}
+				if(PARestClient.getAbsoluteUrl(pref.getPref(Config.SERVER), "").contains(Config.DOMAIN_DEV)){
+					openUrl("http://bit.ly/pa_dev");
+				}
 				else{
 					openUrl("http://bit.ly/pa_staging");
 				}
-			
+
 			}
 		});
-		
+
 		dialogUpdate = new Dialog(this, R.style.PauseDialog);
-		
+
 		dialogUpdate.setCancelable(true);
 		dialogUpdate.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
 		dialogUpdate.getWindow().setLayout(
@@ -198,8 +190,6 @@ public class ActivityLanding extends MyActivity implements OnClickListener,
 		dialogUpdate.show();
 	}
 
-
-
 	/**
 	 * 	Edited on 30 June 2016 for data caching
 	 * 	getting rid of over reliance on calling data from backend
@@ -211,28 +201,52 @@ public class ActivityLanding extends MyActivity implements OnClickListener,
 		if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
 
 			if (fm.findFragmentById(R.id.content_frame) instanceof FragmentRevisedLanding/*FragmentNewLanding*/
-//					|| fm.findFragmentById(R.id.content_frame) instanceof FragmentBid
-					/*|| fm.findFragmentById(R.id.content_frame) instanceof FragmentOrder*/) {
+					|| fm.findFragmentById(R.id.content_frame) instanceof FragmentBid
+//					|| fm.findFragmentById(R.id.content_frame) instanceof FragmentOrder
+					|| fm.findFragmentById(R.id.content_frame) instanceof FragmentOthers
+					/*|| fm.findFragmentById(R.id.content_frame) instanceof  FragmentOthers*/) {
 				Tracer.d("Exit1");
 				displayExitDialog();
 			} else if (fm.findFragmentById(R.id.content_frame) instanceof FragmentBidDetail) {
-				FragmentBidDetail fragment = (FragmentBidDetail) fm.findFragmentById(R.id.content_frame);
+				FragmentBidDetail fragment = (FragmentBidDetail) fm
+						.findFragmentById(R.id.content_frame);
 				fragment.pageBack();
 
 			} else if (fm.findFragmentById(R.id.content_frame) instanceof FragmentPostOpenBid) {
 				// displayExitFormDialog();
 
-				FragmentPostOpenBid fragment = (FragmentPostOpenBid) fm.findFragmentById(R.id.content_frame);
+				FragmentPostOpenBid fragment = (FragmentPostOpenBid) fm
+						.findFragmentById(R.id.content_frame);
 				fragment.pageBack();
 			} 	//	edit for data caching
-			else if (fm.findFragmentById(R.id.content_frame) instanceof FragmentBid
-					|| fm.findFragmentById(R.id.content_frame) instanceof FragmentOrder
-					|| fm.findFragmentById(R.id.content_frame) instanceof FragmentProfilLandingNew
-					|| fm.findFragmentById(R.id.content_frame) instanceof FragmentContactUs
-					|| fm.findFragmentById(R.id.content_frame) instanceof FragmentEarnFreeCredits
-					|| fm.findFragmentById(R.id.content_frame) instanceof FragmentCategoryTab) {
+			else if (/*fm.findFragmentById(R.id.content_frame) instanceof FragmentBid*/
+//					|| fm.findFragmentById(R.id.content_frame) instanceof FragmentOrder
+//					|| fm.findFragmentById(R.id.content_frame) instanceof FragmentProfilLandingNew
+//					|| fm.findFragmentById(R.id.content_frame) instanceof FragmentContactUs
+//					|| fm.findFragmentById(R.id.content_frame) instanceof FragmentEarnFreeCredits
+					/*||*/ fm.findFragmentById(R.id.content_frame) instanceof FragmentCategoryTab
+					/*|| fm.findFragmentById(R.id.content_frame) instanceof FragmentOthers*/) {
 				for(int i = this.getSupportFragmentManager().getBackStackEntryCount(); i > 1; i--)
 					this.getSupportFragmentManager().popBackStackImmediate();
+				bottomBar.selectTabAtPosition(0);
+			} else if(fm.findFragmentById(R.id.content_frame) instanceof FragmentProfilLandingNew
+					|| fm.findFragmentById(R.id.content_frame) instanceof FragmentContactUs
+					|| fm.findFragmentById(R.id.content_frame) instanceof FragmentEarnFreeCredits
+					/*|| fm.findFragmentById(R.id.content_frame) instanceof FragmentCategoryTab*/){
+				this.getSupportFragmentManager().popBackStackImmediate();
+				bottomBar.selectTabAtPosition(3);
+			} else if(fm.findFragmentById(R.id.content_frame) instanceof FragmentOrder){
+				FragmentOrder fragment = (FragmentOrder) fm
+						.findFragmentById(R.id.content_frame);
+				if(fragment.getTitle().equalsIgnoreCase("JOB HISTORY")){
+					//	go back to others setting page
+					this.getSupportFragmentManager().popBackStackImmediate();
+					bottomBar.selectTabAtPosition(3);
+				}else{	//	fragment title is "APPOINTMENT LIST"
+					//	show exit dialog as this is now same level as homepage
+					Tracer.d("Exit1");
+					displayExitDialog();
+				}
 			} else {
 
 				if (!back(R.id.content_frame)) {
@@ -248,13 +262,17 @@ public class ActivityLanding extends MyActivity implements OnClickListener,
 		return super.onKeyDown(keyCode, event);
 	}
 
+	public void setBottomBar(int iconIndex){
+		bottomBar.selectTabAtPosition(iconIndex);
+	}
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
 		try {
 			setContentView(R.layout.landing);
-			findViewById(R.id.menu).setOnClickListener(this);
+//			findViewById(R.id.menu).setOnClickListener(this);
 
 			mTitle = mDrawerTitle = getTitle();
 			mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -295,6 +313,8 @@ public class ActivityLanding extends MyActivity implements OnClickListener,
 				}
 			};
 			mDrawerLayout.setDrawerListener(mDrawerToggle);
+
+			mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
 
 			setMenu();
 
@@ -353,9 +373,67 @@ public class ActivityLanding extends MyActivity implements OnClickListener,
 					.getCircleBitmap(new BitmapFactory().decodeResource(
 							getResources(), R.drawable.default_profile)));
 
-			if (savedInstanceState == null) {
-				selectItem(0);
-			}
+			//	display home page
+//			if (savedInstanceState == null) {
+//				selectItem(0);		Log.i("getList Log", "display home called");
+//			}
+
+			//	setup bottom navigation
+			bottomBar = (BottomBar) findViewById(R.id.bottomBar);
+			bottomBar.setOnTabSelectListener(new OnTabSelectListener() {
+				@Override
+				public void onTabSelected(@IdRes int tabId) {
+					switch(tabId){
+						case (R.id.tab_home):
+							selectItem(0);		Log.i("getList Log", "display home called");
+							break;
+						case (R.id.tab_jobrequest):
+							selectItem(1);
+							break;
+						case (R.id.tab_appointments):
+							selectItem(2);
+							break;
+						case (R.id.tab_others):
+							selectItem(R.id.tab_others);
+//							simpleToast("display all others options");
+							break;
+					}
+				}
+			});
+
+			//	enable bottom navigation reselect
+			bottomBar.setOnTabReselectListener(new OnTabReselectListener() {
+				@Override
+				public void onTabReSelected(@IdRes int tabId) {
+					switch(tabId){
+						case (R.id.tab_home):
+							//	trigger reselect only if no same page
+							if (!(fm.findFragmentById(R.id.content_frame) instanceof FragmentRevisedLanding))
+								selectItem(0);		Log.i("getList Log", "reselect display home called");
+							break;
+						case (R.id.tab_jobrequest):
+							//	trigger reselect only if no same page
+							if (!(fm.findFragmentById(R.id.content_frame) instanceof FragmentBid))
+								selectItem(1);
+							break;
+						case (R.id.tab_appointments):
+							//	trigger reselect only if not on the same page
+							if (!(fm.findFragmentById(R.id.content_frame) instanceof FragmentOrder)) {
+								if (((FragmentOrder) fm.findFragmentById(R.id.content_frame)).getTitle().equalsIgnoreCase("APPOINTMENT LIST"))
+									selectItem(2);
+							}
+							break;
+						case (R.id.tab_others):
+							//	trigger reselect only if no same page
+							if (!(fm.findFragmentById(R.id.content_frame) instanceof FragmentOthers))
+								selectItem(R.id.tab_others);
+//							simpleToast("display all others options");
+							break;
+					}
+				}
+			});
+
+
 
 
 //			txtUsername = (TextView) findViewById(R.id.username);
@@ -401,82 +479,79 @@ public class ActivityLanding extends MyActivity implements OnClickListener,
 
 	private void setMenu(){
 		if(GlobalVar.isGuest){
-			mDrawerList.findViewById(R.id.menu_jobs_list).setOnClickListener(this);
-			mDrawerList.findViewById(R.id.menu_login).setOnClickListener(this);
-			//	hide all unneeded for guest mode
-			mDrawerList.findViewById(R.id.menu_about).setVisibility(View.GONE);
-			mDrawerList.findViewById(R.id.menu_bid).setVisibility(View.GONE);
-			mDrawerList.findViewById(R.id.menu_help).setVisibility(View.GONE);
-			mDrawerList.findViewById(R.id.menu_history).setVisibility(View.GONE);
-			mDrawerList.findViewById(R.id.menu_quotation).setVisibility(View.GONE);
-			mDrawerList.findViewById(R.id.menu_completed_jobs).setVisibility(View.GONE);
-			mDrawerList.findViewById(R.id.menu_settings).setVisibility(View.GONE);
-			mDrawerList.findViewById(R.id.menu_free_credit).setVisibility(View.GONE);
-			mDrawerList.findViewById(R.id.menu_logout).setVisibility(View.GONE);
-			mDrawerList.findViewById(R.id.menu_chat).setVisibility(View.GONE);
-			mDrawerList.findViewById(R.id.menu_faq).setVisibility(View.GONE);
-			mDrawerList.findViewById(R.id.menu_contact_us).setVisibility(View.GONE);
-
-			mDrawerList.findViewById(R.id.line2).setVisibility(View.GONE);
-			mDrawerList.findViewById(R.id.line3).setVisibility(View.GONE);
-			mDrawerList.findViewById(R.id.line4).setVisibility(View.GONE);
-			mDrawerList.findViewById(R.id.line5).setVisibility(View.GONE);
-			mDrawerList.findViewById(R.id.line6).setVisibility(View.GONE);
-			mDrawerList.findViewById(R.id.line7).setVisibility(View.GONE);
-			mDrawerList.findViewById(R.id.line8).setVisibility(View.GONE);
-			mDrawerList.findViewById(R.id.line9).setVisibility(View.GONE);
-			mDrawerList.findViewById(R.id.line10).setVisibility(View.GONE);
+//			mDrawerList.findViewById(R.id.menu_jobs_list).setOnClickListener(this);
+//			mDrawerList.findViewById(R.id.menu_login).setOnClickListener(this);
+//			//	hide all unneeded for guest mode
+//			mDrawerList.findViewById(R.id.menu_about).setVisibility(View.GONE);
+//			mDrawerList.findViewById(R.id.menu_bid).setVisibility(View.GONE);
+//			mDrawerList.findViewById(R.id.menu_help).setVisibility(View.GONE);
+//			mDrawerList.findViewById(R.id.menu_history).setVisibility(View.GONE);
+//			mDrawerList.findViewById(R.id.menu_quotation).setVisibility(View.GONE);
+//			mDrawerList.findViewById(R.id.menu_completed_jobs).setVisibility(View.GONE);
+//			mDrawerList.findViewById(R.id.menu_settings).setVisibility(View.GONE);
+//			mDrawerList.findViewById(R.id.menu_free_credit).setVisibility(View.GONE);
+//			mDrawerList.findViewById(R.id.menu_logout).setVisibility(View.GONE);
+//			mDrawerList.findViewById(R.id.menu_chat).setVisibility(View.GONE);
+//			mDrawerList.findViewById(R.id.menu_faq).setVisibility(View.GONE);
+//			mDrawerList.findViewById(R.id.menu_contact_us).setVisibility(View.GONE);
+//
+//			mDrawerList.findViewById(R.id.line2).setVisibility(View.GONE);
+//			mDrawerList.findViewById(R.id.line3).setVisibility(View.GONE);
+//			mDrawerList.findViewById(R.id.line4).setVisibility(View.GONE);
+//			mDrawerList.findViewById(R.id.line5).setVisibility(View.GONE);
+//			mDrawerList.findViewById(R.id.line6).setVisibility(View.GONE);
+//			mDrawerList.findViewById(R.id.line7).setVisibility(View.GONE);
+//			mDrawerList.findViewById(R.id.line8).setVisibility(View.GONE);
+//			mDrawerList.findViewById(R.id.line9).setVisibility(View.GONE);
+//			mDrawerList.findViewById(R.id.line10).setVisibility(View.GONE);
 
 			txtUsername = (TextView) findViewById(R.id.username);
 			txtUsername.setText("Guest");
 		}else {
-//			mDrawerList.findViewById(R.id.menu_about).setVisibility(View.VISIBLE);
-			mDrawerList.findViewById(R.id.menu_bid).setVisibility(View.VISIBLE);
-//			mDrawerList.findViewById(R.id.menu_help).setVisibility(View.VISIBLE);
-//			mDrawerList.findViewById(R.id.menu_history).setVisibility(View.VISIBLE);
-			mDrawerList.findViewById(R.id.menu_quotation).setVisibility(View.VISIBLE);
-			mDrawerList.findViewById(R.id.menu_completed_jobs).setVisibility(View.VISIBLE);
-			mDrawerList.findViewById(R.id.menu_settings).setVisibility(View.VISIBLE);
-			mDrawerList.findViewById(R.id.menu_free_credit).setVisibility(View.VISIBLE);
-			mDrawerList.findViewById(R.id.menu_logout).setVisibility(View.VISIBLE);
-			mDrawerList.findViewById(R.id.menu_chat).setVisibility(View.VISIBLE);
-			mDrawerList.findViewById(R.id.menu_faq).setVisibility(View.VISIBLE);
-			mDrawerList.findViewById(R.id.menu_contact_us).setVisibility(View.VISIBLE);
-
-			mDrawerList.findViewById(R.id.line2).setVisibility(View.VISIBLE);
-			mDrawerList.findViewById(R.id.line3).setVisibility(View.VISIBLE);
-			mDrawerList.findViewById(R.id.line4).setVisibility(View.VISIBLE);
-			mDrawerList.findViewById(R.id.line5).setVisibility(View.VISIBLE);
-			mDrawerList.findViewById(R.id.line6).setVisibility(View.VISIBLE);
-			mDrawerList.findViewById(R.id.line7).setVisibility(View.VISIBLE);
-			mDrawerList.findViewById(R.id.line8).setVisibility(View.VISIBLE);
-			mDrawerList.findViewById(R.id.line9).setVisibility(View.VISIBLE);
-			mDrawerList.findViewById(R.id.line10).setVisibility(View.VISIBLE);
-
-			mDrawerList.findViewById(R.id.menu_login).setVisibility(View.GONE);
-
-			mDrawerList.findViewById(R.id.menu_about).setOnClickListener(this);
-			mDrawerList.findViewById(R.id.menu_bid).setOnClickListener(this);
-			mDrawerList.findViewById(R.id.menu_help).setOnClickListener(this);
-			mDrawerList.findViewById(R.id.menu_history)
-					.setOnClickListener(this);
-			mDrawerList.findViewById(R.id.menu_jobs_list).setOnClickListener(
-					this);
-			mDrawerList.findViewById(R.id.menu_quotation).setOnClickListener(
-					this);
-			mDrawerList.findViewById(R.id.menu_completed_jobs)
-					.setOnClickListener(this);
-
-			mDrawerList.findViewById(R.id.menu_settings).setOnClickListener(
-					this);
-
-			mDrawerList.findViewById(R.id.menu_free_credit).setOnClickListener(
-					this);
-
-			mDrawerList.findViewById(R.id.menu_logout).setOnClickListener(this);
-			mDrawerList.findViewById(R.id.menu_chat).setOnClickListener(this);
-			mDrawerList.findViewById(R.id.menu_faq).setOnClickListener(this);
-			mDrawerList.findViewById(R.id.menu_contact_us).setOnClickListener(this);
+//			mDrawerList.findViewById(R.id.menu_bid).setVisibility(View.VISIBLE);
+//			mDrawerList.findViewById(R.id.menu_quotation).setVisibility(View.VISIBLE);
+//			mDrawerList.findViewById(R.id.menu_completed_jobs).setVisibility(View.VISIBLE);
+//			mDrawerList.findViewById(R.id.menu_settings).setVisibility(View.VISIBLE);
+//			mDrawerList.findViewById(R.id.menu_free_credit).setVisibility(View.VISIBLE);
+//			mDrawerList.findViewById(R.id.menu_logout).setVisibility(View.VISIBLE);
+//			mDrawerList.findViewById(R.id.menu_chat).setVisibility(View.VISIBLE);
+//			mDrawerList.findViewById(R.id.menu_faq).setVisibility(View.VISIBLE);
+//			mDrawerList.findViewById(R.id.menu_contact_us).setVisibility(View.VISIBLE);
+//
+//			mDrawerList.findViewById(R.id.line2).setVisibility(View.VISIBLE);
+//			mDrawerList.findViewById(R.id.line3).setVisibility(View.VISIBLE);
+//			mDrawerList.findViewById(R.id.line4).setVisibility(View.VISIBLE);
+//			mDrawerList.findViewById(R.id.line5).setVisibility(View.VISIBLE);
+//			mDrawerList.findViewById(R.id.line6).setVisibility(View.VISIBLE);
+//			mDrawerList.findViewById(R.id.line7).setVisibility(View.VISIBLE);
+//			mDrawerList.findViewById(R.id.line8).setVisibility(View.VISIBLE);
+//			mDrawerList.findViewById(R.id.line9).setVisibility(View.VISIBLE);
+//			mDrawerList.findViewById(R.id.line10).setVisibility(View.VISIBLE);
+//
+//			mDrawerList.findViewById(R.id.menu_login).setVisibility(View.GONE);
+//
+//			mDrawerList.findViewById(R.id.menu_about).setOnClickListener(this);
+//			mDrawerList.findViewById(R.id.menu_bid).setOnClickListener(this);
+//			mDrawerList.findViewById(R.id.menu_help).setOnClickListener(this);
+//			mDrawerList.findViewById(R.id.menu_history)
+//					.setOnClickListener(this);
+//			mDrawerList.findViewById(R.id.menu_jobs_list).setOnClickListener(
+//					this);
+//			mDrawerList.findViewById(R.id.menu_quotation).setOnClickListener(
+//					this);
+//			mDrawerList.findViewById(R.id.menu_completed_jobs)
+//					.setOnClickListener(this);
+//
+//			mDrawerList.findViewById(R.id.menu_settings).setOnClickListener(
+//					this);
+//
+//			mDrawerList.findViewById(R.id.menu_free_credit).setOnClickListener(
+//					this);
+//
+//			mDrawerList.findViewById(R.id.menu_logout).setOnClickListener(this);
+//			mDrawerList.findViewById(R.id.menu_chat).setOnClickListener(this);
+//			mDrawerList.findViewById(R.id.menu_faq).setOnClickListener(this);
+//			mDrawerList.findViewById(R.id.menu_contact_us).setOnClickListener(this);
 
 			txtEmail = (TextView) findViewById(R.id.email);
 			txtEmail.setText(pref.getPref(Config.PREF_USERNAME));
@@ -498,24 +573,26 @@ public class ActivityLanding extends MyActivity implements OnClickListener,
 					@Override
 					public void onSuccess(int arg0, Header[] arg1, byte[] arg2) {
 						// TODO Auto-generated method stub
-						super.onSuccess(arg0, arg1, arg2);							Log.i("LaunchCrash", "get user data success");
+						super.onSuccess(arg0, arg1, arg2);
 						UserORM user = new ParserUserORM(new String(arg2))
 								.getData();
 						new ProfilUtils(activity).saveUser(user);
 						txtUsername.setText(user.result.cs_name);
+						//	save user name for fragment use
+						username4Fragment = user.result.cs_name;
 
-                        Map userMap = new HashMap<>();
-                        userMap.put("name", user.result.cs_name);
-                        userMap.put("email", user.result.cs_email);
-                        userMap.put("signed_up_at", user.result.created_at);
-                        userMap.put("last_seen_ip", user.result.ip);
+						Map userMap = new HashMap<>();
+						userMap.put("name", user.result.cs_name);
+						userMap.put("email", user.result.cs_email);
+						userMap.put("signed_up_at", user.result.created_at);
+						userMap.put("last_seen_ip", user.result.ip);
 
-                        Map customAttributes = new HashMap <>();
-                        customAttributes.put("user_type", "consumer");
-                        customAttributes.put("mobile_no", user.result.cs_mobile_number);
-                        userMap.put("custom_attributes", customAttributes);
+						Map customAttributes = new HashMap <>();
+						customAttributes.put("user_type", "consumer");
+						customAttributes.put("mobile_no", user.result.cs_mobile_number);
+						userMap.put("custom_attributes", customAttributes);
 
-                        Intercom.client().updateUser(userMap);
+						Intercom.client().updateUser(userMap);
 					}
 				});
 	}
@@ -546,8 +623,8 @@ public class ActivityLanding extends MyActivity implements OnClickListener,
 		}
 		// Handle action buttons
 		switch (item.getItemId()) {
-		default:
-			return super.onOptionsItemSelected(item);
+			default:
+				return super.onOptionsItemSelected(item);
 		}
 	}
 
@@ -556,7 +633,7 @@ public class ActivityLanding extends MyActivity implements OnClickListener,
 			ListView.OnItemClickListener {
 		@Override
 		public void onItemClick(AdapterView<?> parent, View view, int position,
-				long id) {
+								long id) {
 			selectItem(position);
 		}
 	}
@@ -574,11 +651,12 @@ public class ActivityLanding extends MyActivity implements OnClickListener,
 				if(this.getSupportFragmentManager().getBackStackEntryCount() > 1){
 					for(int i = this.getSupportFragmentManager().getBackStackEntryCount(); i > 1; i--)
 						this.getSupportFragmentManager().popBackStackImmediate();
+					Log.i("Backstack entry count0: ", String.valueOf(this.getSupportFragmentManager().getBackStackEntryCount()));
 				} else{
 					fm.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
 //				listener.doFragmentChange(new FragmentNewLanding(), true, "");
 					replaceFragment(R.id.content_frame, new FragmentRevisedLanding());
-					Log.i("Backstack entry count: ", String.valueOf(this.getSupportFragmentManager().getBackStackEntryCount()));
+					Log.i("Backstack entry count1: ", String.valueOf(this.getSupportFragmentManager().getBackStackEntryCount()));
 				}
 //			Toast.makeText(ActivityLanding.this, "Backstack entry count: " + String.valueOf(this.getSupportFragmentManager().getBackStackEntryCount()), Toast.LENGTH_LONG).show();
 				break;
@@ -622,6 +700,9 @@ public class ActivityLanding extends MyActivity implements OnClickListener,
 				doChat();
 				analytic.trackScreen("Consumer Chat");
 				break;
+			case R.id.tab_others:
+				replaceFragment(R.id.content_frame, new FragmentOthers() ,true);
+				break;
 			default:
 				simpleToast("Coming Soon");
 				break;
@@ -633,13 +714,13 @@ public class ActivityLanding extends MyActivity implements OnClickListener,
 		mDrawerLayout.closeDrawer(mDrawerList);
 	}
 
-    public void gotoHome(){
-        selectItem(0);
-    }
+	public void gotoHome(){
+		selectItem(0);
+	}
 
 	private void doChat() {
 		UserORM user=new ProfilUtils(this).getUser();
-		
+
 		// TODO Auto-generated method stub
 //		Intent i = new Intent(this, com.hipmob.android.HipmobCore.class);
 //
@@ -654,27 +735,27 @@ public class ActivityLanding extends MyActivity implements OnClickListener,
 //        startActivity(i);
 		Intercom.client().displayConversationsList();
 	}
-	
+
 	void doFAQ(){
 		UserORM user=new ProfilUtils(this).getUser();
 
 		Intent i = new Intent(this, com.hipmob.android.HipmobHelpDeskSearchActivity.class);
-        
+
 		// REQUIRED: set the appid to the key you're provided
 		i.putExtra(com.hipmob.android.HipmobHelpDeskSearchActivity.KEY_APPID, Config.HIPMOB_APPID);
-		 
+
 		// OPTIONAL: pass the context so we know where the search originated
 		//i.putExtra(com.hipmob.android.HipmobHelpDeskSearchActivity.KEY_CONTEXT, "Bill Payment");
-		             
+
 		// OPTIONAL: set the window title
 		i.putExtra(com.hipmob.android.HipmobHelpDeskSearchActivity.KEY_TITLE, "Frequently Asked Question");
-		 
+
 		// OPTIONAL: set the default search query that controls what should get shown first
 		i.putExtra(com.hipmob.android.HipmobHelpDeskSearchActivity.KEY_DEFAULT_QUERY, "page");
-		 
+
 		// OPTIONAL: set the user identifier
 		i.putExtra(com.hipmob.android.HipmobCore.KEY_USERID, user.result.username);
-        i.putExtra(HipmobCore.KEY_NAME, user.result.cs_name);
+		i.putExtra(HipmobCore.KEY_NAME, user.result.cs_name);
 
 		// launch the search view
 		startActivity(i);
@@ -695,7 +776,7 @@ public class ActivityLanding extends MyActivity implements OnClickListener,
 	protected void onPostCreate(Bundle savedInstanceState) {
 		super.onPostCreate(savedInstanceState);
 		// Sync the toggle state after onRestoreInstanceState has occurred.
-		mDrawerToggle.syncState();
+//		mDrawerToggle.syncState();
 	}
 
 	@Override
@@ -709,61 +790,61 @@ public class ActivityLanding extends MyActivity implements OnClickListener,
 	public void onClick(View v) {
 		// TODO Auto-generated method stub
 		switch (v.getId()) {
-		case R.id.menu_jobs_list:
-			selectItem(0);
-			break;
-		case R.id.menu_bid:
-			selectItem(1);
-			break;
-		case R.id.menu_quotation:
-			selectItem(2);
-			break;
-		case R.id.menu_completed_jobs:
-			selectItem(R.id.menu_completed_jobs);
-			break;
-		case R.id.menu_history:
-			selectItem(3);
-			break;
-		case R.id.menu_settings:
-			selectItem(4);
-			break;
-		case R.id.menu_help:
-			selectItem(5);
-			break;
-		case R.id.menu_about:
-			selectItem(6);
-			break;
-		case R.id.menu_contact_us:
-			selectItem(8);
-			break;
-		case R.id.menu_logout:
-			GlobalVar.isGuest = false;
-			GlobalVar.isResumeGuest = false;
-			logout();
-			startActivity(new Intent(this, SplashActivity.class));
-			this.finish();
-			break;
-		case R.id.menu:
-			mDrawerLayout.openDrawer(mDrawerList);
-			break;
-		case R.id.profile_pic:
-			selectItem(7);
-			break;
+			case R.id.menu_jobs_list:
+				selectItem(0);
+				break;
+			case R.id.menu_bid:
+				selectItem(1);
+				break;
+			case R.id.menu_quotation:
+				selectItem(2);
+				break;
+			case R.id.menu_completed_jobs:
+				selectItem(R.id.menu_completed_jobs);
+				break;
+			case R.id.menu_history:
+				selectItem(3);
+				break;
+			case R.id.menu_settings:
+				selectItem(4);
+				break;
+			case R.id.menu_help:
+				selectItem(5);
+				break;
+			case R.id.menu_about:
+				selectItem(6);
+				break;
+			case R.id.menu_contact_us:
+				selectItem(8);
+				break;
+			case R.id.menu_logout:
+				GlobalVar.isGuest = false;
+				GlobalVar.isResumeGuest = false;
+				logout();
+				startActivity(new Intent(this, SplashActivity.class));
+				this.finish();
+				break;
+			case R.id.menu:
+//			mDrawerLayout.openDrawer(mDrawerList);
+				break;
+			case R.id.profile_pic:
+				selectItem(7);
+				break;
 
-		case R.id.menu_free_credit:
-			selectItem(R.id.menu_free_credit);
-			break;
+			case R.id.menu_free_credit:
+				selectItem(R.id.menu_free_credit);
+				break;
 
-		case R.id.menu_login:
-			Intent intent = new Intent(this, SplashActivity.class);
-			intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-			GlobalVar.isResumeGuest = true;
-			startActivity(intent);
-			break;
-		
-		case R.id.menu_faq:
-		case R.id.menu_chat:selectItem(v.getId());
-		break;
+			case R.id.menu_login:
+				Intent intent = new Intent(this, SplashActivity.class);
+				intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+				GlobalVar.isResumeGuest = true;
+				startActivity(intent);
+				break;
+
+			case R.id.menu_faq:
+			case R.id.menu_chat:selectItem(v.getId());
+				break;
 		}
 	}
 
@@ -789,13 +870,13 @@ public class ActivityLanding extends MyActivity implements OnClickListener,
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode,
-			Intent intent) {
+									Intent intent) {
 		// TODO Auto-generated method stub
 		super.onActivityResult(requestCode, resultCode, intent);
 		Tracer.d("OnActivityResult ActivityLanding"+requestCode+" "+resultCode);
 //		if (requestCode == IntentIntegrator.REQUEST_CODE) {
-			Fragment f = fm.findFragmentById(R.id.content_frame);
-			f.onActivityResult(requestCode, resultCode, intent);
+		Fragment f = fm.findFragmentById(R.id.content_frame);
+		f.onActivityResult(requestCode, resultCode, intent);
 //		}
 //		else
 //		if (requestCode == FragmentBidDetail.REQUEST_CODE_PAYMENT||requestCode == FragmentBidDetail.REQUEST_CODE_PROFILE_SHARING|| requestCode == FragmentBidDetail.REQUEST_CODE_FUTURE_PAYMENT) {
@@ -803,14 +884,14 @@ public class ActivityLanding extends MyActivity implements OnClickListener,
 //				f.onActivityResult(requestCode, resultCode, intent);
 //
 //			}			
-		
+
 	}
 
 	@Override
 	protected void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
-        AppEventsLogger.activateApp(this);
+		AppEventsLogger.activateApp(this);
 		setMenu();
 	}
 

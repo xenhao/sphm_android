@@ -20,6 +20,8 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.Target;
 import com.coolfindservices.androidconsumer.R;
 
 public class ImageLoader {
@@ -30,8 +32,13 @@ public class ImageLoader {
     private File cacheDir;
     int REQUIRED_SIZE=70;
     boolean isScale=true;
-    
+
+    private Context mContext;
+
     public ImageLoader(Context context){
+
+        mContext = context;
+
         //Make the background thead low priority. This way it will not affect the UI performance
         photoLoaderThread.setPriority(Thread.NORM_PRIORITY-1);
         
@@ -57,13 +64,18 @@ public class ImageLoader {
     public void DisplayImage(String url, Activity activity, ImageView imageView)
     {
     	isScale=true;
-    	if(cache.containsKey(url))
-            imageView.setImageBitmap(cache.get(url));
-        else
-        {
-            queuePhoto(url, activity, imageView);
-            imageView.setImageResource(stub_id);
-        }   
+//    	if(cache.containsKey(url))
+//            imageView.setImageBitmap(cache.get(url));
+//        else
+//        {
+//            queuePhoto(url, activity, imageView);
+//            imageView.setImageResource(stub_id);
+//        }
+
+        //  remove view tag before it can be used by Glide
+        imageView.setTag(null);
+        //  Glide image loader
+        Glide.with(activity).load(url).into(imageView);
        
     }
         
@@ -75,13 +87,18 @@ public class ImageLoader {
         else{
         	isScale=false;
         }
-    	if(cache.containsKey(url))
-            imageView.setImageBitmap(cache.get(url));
-        else
-        {
-            queuePhoto(url, activity, imageView);
-            imageView.setImageResource(stub_id);
-        }   
+//    	if(cache.containsKey(url))
+//            imageView.setImageBitmap(cache.get(url));
+//        else
+//        {
+//            queuePhoto(url, activity, imageView);
+//            imageView.setImageResource(stub_id);
+//        }
+
+        //  remove view tag before it can be used by Glide
+        imageView.setTag(null);
+        //  Glide image loader
+        Glide.with(activity).load(url).into(imageView);
        
     }
   
@@ -237,6 +254,17 @@ public class ImageLoader {
                         cache.put(photoToLoad.url, bmp);
                         Object tag=photoToLoad.imageView.getTag();
                         if(tag!=null && ((String)tag).equals(photoToLoad.url)){
+
+                            //  Glide image cache
+                            Glide
+                                    .with(mContext)
+                                    .load(photoToLoad.url)
+                                    .downloadOnly(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL)
+//                                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+//                                    .into(photoToLoad.imageView)
+                            ;
+
+
                             BitmapDisplayer bd=new BitmapDisplayer(bmp, photoToLoad.imageView);
                             Activity a=(Activity)photoToLoad.imageView.getContext();
                             a.runOnUiThread(bd);

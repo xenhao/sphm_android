@@ -25,6 +25,8 @@ public interface Config {
 	// "http://"+DOMAIN+"/pageadvisor3/public/"
 	"http://" + DOMAIN + "/";
 	String API_MERCHANT_IMAGE=MAIN_URI+"user/merchant-image?image_name=";
+	//	new probably temporary merchant images URL prefix
+	String MERCHANT_IMAGE_PREFIX = "http://api.pageadvisor.com/img/merchant.php?src=";
 	String API_CHANGE_USER_PASSWORD = MAIN_URI + "user/user-change-password";
 
 	String API_SERVICE_CATEGORY_HIERARCHICAL = MAIN_URI

@@ -38,7 +38,7 @@
             android:layout_gravity="center"
             android:layout_width="36dp" android:layout_height="36dp"
             android:src="@drawable/ic_home_white"
-            />
+            android:visibility="invisible"/>
     </LinearLayout>
 
     <ScrollView

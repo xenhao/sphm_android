@@ -16,7 +16,8 @@
             android:layout_width="@dimen/edittext_height"
             android:layout_height="@dimen/edittext_height"
             android:padding="@dimen/padding"
-            android:src="@drawable/btn_effect_menu" />
+            android:src="@drawable/btn_effect_menu"
+            android:visibility="gone"/>
 
         <com.pa.common.TypefaceTextView
             android:layout_width="0dp"

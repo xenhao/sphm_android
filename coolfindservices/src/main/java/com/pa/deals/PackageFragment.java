@@ -21,6 +21,7 @@ import android.widget.ListView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.pa.common.Config;
@@ -438,6 +439,7 @@ public class PackageFragment extends MyFragment implements View.OnClickListener 
                                 mItems.addAll(parser.getResult());
                                 Log.i("Promotion", mItems.size() + " ");
 //                                mAdapter.notifyDataSetChanged();
+                                cacheGlide(mItems);
 
                                 //  check if packages available
                                 if(mItems.size() <= 0) {
@@ -456,6 +458,14 @@ public class PackageFragment extends MyFragment implements View.OnClickListener 
                         }
                     }
                 });
+    }
+
+    private void cacheGlide(ArrayList<PackageListItem> items){
+        for(int i = 0; i < items.size(); i++){
+            if(items.get(i).cover_photo != null){
+                Glide.with(getActivity()).load(imageUrl+items.get(i).cover_photo).preload();
+            }
+        }
     }
 
     public static class PackageAdapter extends RecyclerView.Adapter<PackageAdapter.ViewHolder> {

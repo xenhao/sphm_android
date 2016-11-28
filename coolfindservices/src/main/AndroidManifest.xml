@@ -2,12 +2,13 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.coolfindservices.androidconsumer"
-    android:versionCode="34"
-    android:versionName="2.0.3">
+    android:versionCode="37"
+    android:versionName="2.1.10">
 
     <uses-sdk
         android:minSdkVersion="14"
-        android:targetSdkVersion="18" />
+        android:targetSdkVersion="18"
+        tools:overrideLibrary="io.intercom.android, io.intercom.android.sdk, io.intercom.android.sdk.gcm"/>
 
     <permission
         android:name="com.coolfindservices.androidconsumer.permission.C2D_MESSAGE"
@@ -63,7 +64,7 @@
         <meta-data android:name="com.google.android.gms.version"
                    android:value="@integer/google_play_services_version" />
 
-        <provider android:authorities="com.facebook.app.FacebookContentProvider267822476903311"
+        <provider android:authorities="@string/content_provider"
                   android:name="com.facebook.FacebookContentProvider"
                   android:exported="true"/>
 
@@ -87,7 +88,8 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
 
-                <data android:scheme="com.coolfindservices.consumer" />
+                <data android:scheme="com.coolfindservices.consumer"/>
+                <data   android:scheme="coolfind"/>
             </intent-filter>
         </activity>
         <activity
@@ -105,12 +107,26 @@
         <activity
             android:name="com.pa.bid.ActivityBid"
             android:screenOrientation="portrait" >
+            <!--<intent-filter>-->
+            <!--<action android:name="android.intent.action.VIEW" />-->
+
+            <!--<category android:name="android.intent.category.DEFAULT" />-->
+            <!--<category android:name="android.intent.category.BROWSABLE" />-->
+
+            <!--<data   android:scheme="coolfind" android:host="bid"/>-->
+            <!--</intent-filter>-->
         </activity>
         <activity
             android:name="com.pa.landing.ActivityLanding"
             android:screenOrientation="portrait"
             android:launchMode="singleTop"
             android:configChanges="keyboardHidden|orientation|screenSize" >
+            <!--<intent-filter  android:label="@string/app_name">-->
+                <!--<action android:name="android.intent.action.VIEW"   />-->
+                <!--<category   android:name="android.intent.category.DEFAULT"/>-->
+                <!--<category   android:name="android.intent.category.BROWSABLE"/>-->
+                <!--<data   android:scheme="coolfind"/>-->
+            <!--</intent-filter>-->
         </activity>
         <activity
             android:name="jim.h.common.android.lib.zxing.CaptureActivity"

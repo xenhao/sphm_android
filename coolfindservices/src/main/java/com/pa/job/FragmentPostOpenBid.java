@@ -81,6 +81,7 @@ import com.pa.common.ProfilUtils;
 import com.pa.common.TimeUtils;
 import com.pa.common.Tracer;
 import com.pa.common.TypefaceEditText;
+import com.pa.landing.ActivityLanding;
 import com.pa.landing.FragmentNewLanding;
 import com.pa.landing.FragmentRevisedLanding;
 import com.pa.parser.ParserCountry;
@@ -3492,15 +3493,19 @@ public class FragmentPostOpenBid extends MyFragment implements OnClickListener,
 			}
 		});
 
+		final ActivityLanding activityLanding = (ActivityLanding) getActivity();
+
 		v.findViewById(R.id.btnViewJobList).setOnClickListener(
 				new OnClickListener() {
 
 					@Override
 					public void onClick(View v) {
 						// TODO Auto-generated method stub
+						activityLanding.setBottomBar(1);
 						flagForDialogBid = 1;
-						listener.doFragmentChange(new FragmentBid(), false,
-								"Bid");
+//						listener.doFragmentChange(new FragmentBid(), false,
+//								"Bid");
+						((ActivityLanding) getActivity()).replaceFragment(new FragmentBid(), false);
 						dialogBidSuccess.dismiss();
 
 					}
@@ -3512,9 +3517,11 @@ public class FragmentPostOpenBid extends MyFragment implements OnClickListener,
 					@Override
 					public void onClick(View v) {
 						// TODO Auto-generated method stub
+						activityLanding.setBottomBar(1);
 						flagForDialogBid = 2;
-						listener.doFragmentChange(new FragmentBidDetail(
-								service_request_serial), false, "Bid");
+//						listener.doFragmentChange(new FragmentBidDetail(
+//								service_request_serial), false, "Bid");
+						((ActivityLanding) getActivity()).replaceFragment(new FragmentBidDetail(service_request_serial), false);
 						dialogBidSuccess.dismiss();
 
 					}

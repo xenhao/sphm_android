@@ -132,7 +132,20 @@
                     android:paddingLeft="@dimen/margin4"
                     android:paddingRight="@dimen/margin4"
                     android:paddingTop="@dimen/margin4"
-                    android:text="@string/cancel_order_reason"
+                    android:text="Reason: "
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/txt_big"
+                    app:typeface="OpenSans-Regular" />
+                <com.pa.common.TypefaceTextView
+                    android:id="@+id/failure_reason"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="left"
+                    android:paddingBottom="@dimen/margin4"
+                    android:paddingLeft="@dimen/margin4"
+                    android:paddingRight="@dimen/margin4"
+                    android:paddingTop="@dimen/margin4"
+                    android:text=""
                     android:textColor="@color/black"
                     android:textSize="@dimen/txt_big"
                     app:typeface="OpenSans-Regular" />

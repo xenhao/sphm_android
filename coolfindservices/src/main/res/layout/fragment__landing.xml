@@ -28,7 +28,8 @@
                     android:layout_height="@dimen/edittext_height"
                     android:layout_marginLeft="@dimen/margin2"
                     android:padding="@dimen/padding"
-                    android:src="@drawable/btn_effect_menu" />
+                    android:src="@drawable/btn_effect_menu"
+                    android:visibility="gone"/>
 
                 <com.pa.common.TypefaceTextView
                     android:id="@+id/name"

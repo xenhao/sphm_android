@@ -21,6 +21,7 @@ import android.widget.TextView;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.pa.common.Config;
+import com.pa.common.GlobalVar;
 import com.pa.common.ImageLoader;
 import com.pa.common.MyFragment;
 import com.pa.common.OnFragmentChangeListener;
@@ -207,16 +208,26 @@ public class FragmentOrder extends MyFragment implements OnClickListener, Config
 
 	}
 
-    public void getData() {
-        if (isMethod.equalsIgnoreCase("PR")) {
-            getPromoData();
-        }else if (isMethod.equalsIgnoreCase("PA")){
+	public String getTitle(){
+		return title.getText().toString();
+	}
+
+	public void getData() {
+		if (isMethod.equalsIgnoreCase("PR")) {
+			getPromoData();
+		}else if (isMethod.equalsIgnoreCase("PA")){
 			getPackageData();
 		}
 		else {
-            getBidData();
-        }
-    }
+			try {
+				getBidData();
+			}catch (Exception e){
+				Log.i(LOG_TAG, "History crash");
+				e.printStackTrace();
+			}
+
+		}
+	}
 
 	private void setAdapter(){
 		list.setAdapter(new MyListAdapter());
@@ -364,7 +375,7 @@ public class FragmentOrder extends MyFragment implements OnClickListener, Config
 	}
 
 	public void getPackageData() {
-		if(!isRefresh)	loadingInternetDialog.show();
+		if(!isRefresh && !GlobalVar.isGuest)	loadingInternetDialog.show();
 
 		AsyncHttpResponseHandler promoHandler = new AsyncHttpResponseHandler(){
 			@Override
@@ -431,7 +442,10 @@ public class FragmentOrder extends MyFragment implements OnClickListener, Config
 		params.add("page", page);
 		params.add("limit", "100");
 
-		PARestClient.dealGet(pref.getPref(Config.SERVER), Config.DEAL_API_GET_PACKAGE_ORDER, params, promoHandler);
+		if(!GlobalVar.isGuest)
+			PARestClient.dealGet(pref.getPref(Config.SERVER), Config.DEAL_API_GET_PACKAGE_ORDER, params, promoHandler);
+		else
+			simpleToast("No appointments at ahe moment.");
 
 
 	}

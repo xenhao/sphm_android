@@ -540,7 +540,7 @@ public class PromotionDetailFragment extends MyFragment implements View.OnClickL
                             showDialogOrderSuccess();
                         } else {
                             Log.d("Payment", "Cancel because it is not success");
-                            showDialogOrderCancel();
+                            showDialogOrderCancel(parser.getStatus());
                         }
                         forceLoadingInternetDialog.dismiss();
                     };
@@ -548,18 +548,20 @@ public class PromotionDetailFragment extends MyFragment implements View.OnClickL
                     @Override
                     public void onFailure(int statusCode, Throwable error, String content) {
                         // TODO Auto-generated method stub
-                        showDialogOrderCancel();
+                        showDialogOrderCancel(content);
                         forceLoadingInternetDialog.setCancelable(true);
                     }
                 });
     }
 
-    private void showDialogOrderCancel() {
+    private void showDialogOrderCancel(String reason) {
         View v = inflater.inflate(R.layout.dialog_order_cancel, null);
         TextView txtServiceRequestID = (TextView) v
                 .findViewById(R.id.txtServiceRequestID);
+        TextView failureReason = (TextView) v.findViewById(R.id.failure_reason);
 
         txtServiceRequestID.setText(mItem.serial);
+        failureReason.setText(reason);
 
         v.findViewById(R.id.btnReturnToPayment).setOnClickListener(new View.OnClickListener() {
 

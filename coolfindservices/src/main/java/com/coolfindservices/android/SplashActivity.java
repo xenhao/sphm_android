@@ -123,8 +123,9 @@ public class SplashActivity extends MyActivity {
 					.length() > 0) {
                 Log.d("Intercom", "Login as "+pref.getPref(Config.PREF_USERNAME));
                 Intercom.client().registerIdentifiedUser(new Registration().withUserId(pref.getPref(Config.PREF_USERNAME)));
-				Intercom.client().openGCMMessage(getIntent().getData());
-                NanigansEventManager.getInstance().setUserId(Encryptor.md5(pref.getPref(Config.PREF_USERNAME)));
+//				Intercom.client().openGCMMessage(getIntent().getData());
+				Intercom.client().openGcmMessage();
+				NanigansEventManager.getInstance().setUserId(Encryptor.md5(pref.getPref(Config.PREF_USERNAME)));
 				startActivity(new Intent(
                         SplashActivity.this,
                         ActivityLanding.class));
@@ -172,7 +173,7 @@ public class SplashActivity extends MyActivity {
 			}
 		} catch (Exception e) {
 		}
-		;
+		this.setIntent(intent);
 	}
 
     @Override

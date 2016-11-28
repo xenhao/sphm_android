@@ -19,14 +19,16 @@
             android:layout_width="@dimen/edittext_height"
             android:layout_height="@dimen/edittext_height"
             android:padding="@dimen/padding"
-            android:src="@drawable/btn_effect_menu" />
+            android:src="@drawable/btn_effect_menu"
+            android:visibility="gone"/>
 
             <com.pa.common.ImageViewFitHeight
             android:id="@+id/btnHome"
             android:layout_gravity="center"
             android:layout_width="36dp"
             android:layout_height="36dp"
-            android:src="@drawable/ic_home_white" />
+            android:src="@drawable/ic_home_white"
+                android:visibility="invisible"/>
 
         <com.pa.common.TypefaceTextView
             android:id="@+id/title"

@@ -162,7 +162,12 @@ public class ParserJob {
 					item.total = curr.getString("total");
 					item.updated_at = curr.getString("updated_at");
 
-					item.company_name = curr.getString("company_name");
+					try {
+						if(curr.has("company_name"))
+							item.company_name = curr.getString("company_name");
+					}catch(Exception e){
+						e.printStackTrace();
+					}
 					item.request_title = curr.getString("request_title");
 					item.service_order_address = curr
 							.getString("service_order_address");

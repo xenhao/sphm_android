@@ -6,6 +6,9 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.coolfindservices.androidconsumer.BuildConfig;
+import com.google.firebase.crash.FirebaseCrash;
+
 public class MainActivity extends Activity {
 
 	ShareExternalServer appUtil;
@@ -37,6 +40,20 @@ public class MainActivity extends Activity {
 
 		};
 		shareRegidTask.execute(null, null, null);
+
+		try {
+			//	firebase crash reporting
+			if (BuildConfig.FLAVOR.equalsIgnoreCase("live")) {
+				Thread.setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
+					@Override
+					public void uncaughtException(Thread thread, Throwable ex) {
+						FirebaseCrash.report(ex);
+					}
+				});
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+		}
 	}
 
 }

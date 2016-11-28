@@ -19,7 +19,7 @@
         
         android:layout_height="wrap_content"
         android:id="@+id/img"
-        android:src="@drawable/cool_find_logo"
+        android:src="@drawable/blank"
         />
 
 </LinearLayout>

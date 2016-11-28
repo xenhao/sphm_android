@@ -259,7 +259,7 @@ public class FragmentNewLanding extends MyFragment implements OnClickListener,
 					showRateMerchant();
 				}
 				}catch(Exception e){
-					
+
 				}
 				
 			}

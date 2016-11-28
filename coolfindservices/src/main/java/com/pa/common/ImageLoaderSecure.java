@@ -6,6 +6,8 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.Target;
 import com.coolfindservices.androidconsumer.R;
 
 import java.io.File;
@@ -25,7 +27,12 @@ public class ImageLoaderSecure {
 
     private File cacheDir;
 
+    private Context mContext;
+
     public ImageLoaderSecure(Context context){
+
+        mContext = context;
+
         //Make the background thead low priority. This way it will not affect the UI performance
         photoLoaderThread.setPriority(Thread.NORM_PRIORITY-1);
 
@@ -41,13 +48,18 @@ public class ImageLoaderSecure {
     final int stub_id=R.drawable.default_img;
     public void DisplayImage(String url, Activity activity, ImageView imageView)
     {
-        if(cache.containsKey(url))
-            imageView.setImageBitmap(cache.get(url));
-        else
-        {
-            queuePhoto(url, activity, imageView);
-            imageView.setImageResource(stub_id);
-        }
+//        if(cache.containsKey(url))
+//            imageView.setImageBitmap(cache.get(url));
+//        else
+//        {
+//            queuePhoto(url, activity, imageView);
+//            imageView.setImageResource(stub_id);
+//        }
+
+        //  remove view tag before it can be used by Glide
+        imageView.setTag(null);
+        //  Glide image loader
+        Glide.with(activity).load(url).into(imageView);
     }
 
     private void queuePhoto(String url, Activity activity, ImageView imageView)
@@ -173,6 +185,14 @@ public class ImageLoaderSecure {
                         Bitmap bmp=getBitmap(photoToLoad.url);
                         cache.put(photoToLoad.url, bmp);
                         if(((String)photoToLoad.imageView.getTag()).equals(photoToLoad.url)){
+                            //  Glide image cache
+                            Glide
+                                    .with(mContext)
+                                    .load(photoToLoad.url)
+                                    .downloadOnly(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL)
+//                                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+//                                    .into(photoToLoad.imageView)
+                            ;
                             BitmapDisplayer bd=new BitmapDisplayer(bmp, photoToLoad.imageView);
                             Activity a=(Activity)photoToLoad.imageView.getContext();
                             a.runOnUiThread(bd);

@@ -34,6 +34,7 @@ import com.pa.common.MyFragment;
 import com.pa.common.OnFragmentChangeListener;
 import com.pa.common.PARestClient;
 import com.pa.common.ProfilUtils;
+import com.pa.landing.ActivityLanding;
 import com.pa.order.FragmentOrder;
 import com.pa.parser.ParserBasicResult;
 import com.pa.parser.ParserDealBraintreeClientToken;
@@ -804,11 +805,15 @@ public class PackagePreviewFragment extends MyFragment implements View.OnClickLi
                 .findViewById(R.id.txtServiceRequestID);
         txtServiceRequestID.setText(mItem.serial);
 
+        final ActivityLanding activityLanding = (ActivityLanding) getActivity();
+
         v.findViewById(R.id.btnBack).setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                mListener.doFragmentChange(new FragmentOrder(false, "PA"), true, "");
+                activityLanding.setBottomBar(2);
+//                mListener.doFragmentChange(new FragmentOrder(false, "PA"), true, "");
+                ((ActivityLanding) getActivity()).replaceFragment(new FragmentOrder(false, "PA"), true);
                 dialogOrderSuccess.hide();
             }
         });
@@ -816,7 +821,9 @@ public class PackagePreviewFragment extends MyFragment implements View.OnClickLi
         v.findViewById(R.id.btnNext2).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mListener.doFragmentChange(new FragmentOrder(false, "PA"), true, "");
+                activityLanding.setBottomBar(2);
+//                mListener.doFragmentChange(new FragmentOrder(false, "PA"), true, "");
+                ((ActivityLanding) getActivity()).replaceFragment(new FragmentOrder(false, "PA"), true);
                 dialogOrderSuccess.hide();
             }
         });
