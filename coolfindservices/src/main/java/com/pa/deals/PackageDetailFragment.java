@@ -127,6 +127,10 @@ public class PackageDetailFragment extends MyFragment implements View.OnClickLis
         if(!isDataMapped)
             mapInitialData();
 //        onGetOrderDetail();
+
+        //	hide bottom navigation bar
+        ((ActivityLanding) getActivity()).showBottomBar(false);
+
         return v;
     }
 

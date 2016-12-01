@@ -29,6 +29,7 @@ import com.pa.common.ImageLoader;
 import com.pa.common.MyFragment;
 import com.pa.common.OnFragmentChangeListener;
 import com.pa.common.PARestClient;
+import com.pa.landing.ActivityLanding;
 import com.pa.parser.ParserDealGetPackage;
 import com.pa.pojo.PackageListItem;
 import com.coolfindservices.androidconsumer.R;
@@ -207,6 +208,9 @@ public class PackageFragment extends MyFragment implements View.OnClickListener 
             mEmptyState.setVisibility(View.GONE);
             mSwipeRefreshLayout.setVisibility(View.VISIBLE);
         }
+
+        //	show bottom navigation bar
+        ((ActivityLanding) getActivity()).showBottomBar(true);
 
         return v;
     }

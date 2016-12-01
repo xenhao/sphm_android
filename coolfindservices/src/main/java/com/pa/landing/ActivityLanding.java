@@ -266,6 +266,10 @@ public class ActivityLanding extends MyActivity implements OnClickListener,
 		bottomBar.selectTabAtPosition(iconIndex);
 	}
 
+	public void showBottomBar(boolean show){
+		bottomBar.setVisibility(show ? View.VISIBLE : View.GONE);
+	}
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);

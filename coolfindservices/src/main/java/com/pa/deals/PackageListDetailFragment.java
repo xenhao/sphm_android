@@ -174,8 +174,21 @@ public class PackageListDetailFragment extends MyFragment implements View.OnClic
 
 //        getList();
 
+        //	show bottom navigation bar
+        ((ActivityLanding) getActivity()).showBottomBar(true);
+
         return v;
 
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        try {
+            analytic.trackScreen("Package List Details");
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
 
     public void setItem(PackageListItem mItem) {

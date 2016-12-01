@@ -252,6 +252,10 @@ public class PackagePreviewFragment extends MyFragment implements View.OnClickLi
         });
 
         onInitialData();
+
+        //	hide bottom navigation bar
+        ((ActivityLanding) getActivity()).showBottomBar(false);
+
         return v;
     }
 

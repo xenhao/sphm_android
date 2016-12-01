@@ -30,6 +30,7 @@ import com.pa.common.MyFragment;
 import com.pa.common.OnFragmentChangeListener;
 import com.pa.common.PARestClient;
 import com.pa.common.Tracer;
+import com.pa.landing.ActivityLanding;
 import com.pa.order.FragmentOrder;
 import com.pa.parser.ParserBasicResult;
 import com.pa.parser.ParserDealBraintreeClientToken;
@@ -142,6 +143,10 @@ public class PackageScheduleAddFragment extends MyFragment {
         mBtnNext.setOnClickListener(mClickListener);
 
         onInitial();
+
+        //	hide bottom navigation bar
+        ((ActivityLanding) getActivity()).showBottomBar(false);
+
         return v;
     }
 

@@ -46,7 +46,8 @@ public class FragmentOthers extends MyFragment implements View.OnClickListener{
         catch (PackageManager.NameNotFoundException e)
         {
             // Log.e(tag, e.getMessage());
-            simpleToast("version number error: " + e.getMessage() + "\n" + e);
+//            simpleToast("version number error: " + e.getMessage() + "\n" + e);
+            e.printStackTrace();
         }
 
         setupPage(v);
@@ -122,6 +123,12 @@ public class FragmentOthers extends MyFragment implements View.OnClickListener{
             txtUsername.setText(((ActivityLanding)getActivity()).username4Fragment);
 //            getUserData();
         }
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState){
+        super.onActivityCreated(savedInstanceState);
+        analytic.trackScreen("Others Page");
     }
 
     @Override

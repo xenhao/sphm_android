@@ -27,6 +27,7 @@ import com.pa.common.MyFragment;
 import com.pa.common.OnFragmentChangeListener;
 import com.pa.common.PARestClient;
 import com.pa.common.ProfilUtils;
+import com.pa.landing.ActivityLanding;
 import com.pa.order.FragmentOrder;
 import com.pa.parser.ParserBasicResult;
 import com.pa.parser.ParserDealBraintreeClientToken;
@@ -158,6 +159,10 @@ public class PackageScheduleFragment extends MyFragment implements View.OnClickL
             Log.i("backstack: ", "attempted to call ArrayList to " + String.valueOf(mScheduleItems) + "\n[SIZE]: " + mScheduleItems.size());
             mapScheduleData();
         }
+
+        //	hide bottom navigation bar
+        ((ActivityLanding) getActivity()).showBottomBar(false);
+
         return v;
     }
 

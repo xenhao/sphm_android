@@ -26,6 +26,7 @@ import com.pa.common.ImageLoader;
 import com.pa.common.MyFragment;
 import com.pa.common.OnFragmentChangeListener;
 import com.pa.common.PARestClient;
+import com.pa.landing.ActivityLanding;
 import com.pa.parser.ParseDealGetPackageListDetail;
 import com.pa.pojo.PackageListDetailItem;
 import com.coolfindservices.androidconsumer.R;
@@ -119,6 +120,9 @@ public class PackagePromoFragment extends MyFragment implements View.OnClickList
 
         getPromoList();
         getCategoryList();
+
+        //	hide bottom navigation bar
+        ((ActivityLanding) getActivity()).showBottomBar(false);
 
         return v;
     }

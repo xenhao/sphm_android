@@ -859,6 +859,8 @@ public class FragmentPostOpenBid extends MyFragment implements OnClickListener,
 			showStep1(redo);
 			break;
 		case 2:
+			//	hide bottom navigation bar
+			((ActivityLanding) getActivity()).showBottomBar(false);
 			showStep2(redo);
 			break;
 		case 3:
@@ -1122,6 +1124,8 @@ public class FragmentPostOpenBid extends MyFragment implements OnClickListener,
 				isOpenBid = false;
 				pageHistory.add(prev_page);
 
+				//	hide bottom navigation bar
+				((ActivityLanding) getActivity()).showBottomBar(false);
 				changeStep(3);
 				break;
 			case R.id.btnCancel2:
