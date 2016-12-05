@@ -68,6 +68,8 @@ public class FragmentOthers extends MyFragment implements View.OnClickListener{
             v.findViewById(R.id.menu_logout).setVisibility(View.GONE);
             v.findViewById(R.id.menu_chat).setVisibility(View.GONE);
             v.findViewById(R.id.menu_faq).setVisibility(View.GONE);
+            v.findViewById(R.id.menu_privacy).setVisibility(View.GONE);
+            v.findViewById(R.id.menu_terms).setVisibility(View.GONE);
             v.findViewById(R.id.menu_contact_us).setVisibility(View.GONE);
 
             v.findViewById(R.id.line4).setVisibility(View.GONE);
@@ -75,6 +77,8 @@ public class FragmentOthers extends MyFragment implements View.OnClickListener{
             v.findViewById(R.id.line6).setVisibility(View.GONE);
             v.findViewById(R.id.line7).setVisibility(View.GONE);
             v.findViewById(R.id.line8).setVisibility(View.GONE);
+            v.findViewById(R.id.line81).setVisibility(View.GONE);
+            v.findViewById(R.id.line82).setVisibility(View.GONE);
             v.findViewById(R.id.line9).setVisibility(View.GONE);
             v.findViewById(R.id.line10).setVisibility(View.GONE);
 
@@ -89,6 +93,8 @@ public class FragmentOthers extends MyFragment implements View.OnClickListener{
             v.findViewById(R.id.menu_logout).setVisibility(View.VISIBLE);
             v.findViewById(R.id.menu_chat).setVisibility(View.VISIBLE);
             v.findViewById(R.id.menu_faq).setVisibility(View.VISIBLE);
+            v.findViewById(R.id.menu_privacy).setVisibility(View.VISIBLE);
+            v.findViewById(R.id.menu_terms).setVisibility(View.VISIBLE);
             v.findViewById(R.id.menu_contact_us).setVisibility(View.VISIBLE);
 
             v.findViewById(R.id.line4).setVisibility(View.VISIBLE);
@@ -96,6 +102,8 @@ public class FragmentOthers extends MyFragment implements View.OnClickListener{
             v.findViewById(R.id.line6).setVisibility(View.VISIBLE);
             v.findViewById(R.id.line7).setVisibility(View.VISIBLE);
             v.findViewById(R.id.line8).setVisibility(View.VISIBLE);
+            v.findViewById(R.id.line81).setVisibility(View.VISIBLE);
+            v.findViewById(R.id.line82).setVisibility(View.VISIBLE);
             v.findViewById(R.id.line9).setVisibility(View.VISIBLE);
             v.findViewById(R.id.line10).setVisibility(View.VISIBLE);
 
@@ -115,6 +123,8 @@ public class FragmentOthers extends MyFragment implements View.OnClickListener{
             v.findViewById(R.id.menu_logout).setOnClickListener(this);
             v.findViewById(R.id.menu_chat).setOnClickListener(this);
             v.findViewById(R.id.menu_faq).setOnClickListener(this);
+            v.findViewById(R.id.menu_privacy).setOnClickListener(this);
+            v.findViewById(R.id.menu_terms).setOnClickListener(this);
             v.findViewById(R.id.menu_contact_us).setOnClickListener(this);
 
             txtEmail = (TextView) v.findViewById(R.id.email);
@@ -177,6 +187,14 @@ public class FragmentOthers extends MyFragment implements View.OnClickListener{
             case R.id.menu_faq:
             case R.id.menu_chat:
                 ((ActivityLanding)getActivity()).selectItem(v.getId());
+                break;
+
+            case R.id.menu_privacy:
+                showWebDialog("http://pageadvisor.bounche.com/home/privacypolicy");
+                break;
+
+            case R.id.menu_terms:
+                showWebDialog("http://pageadvisor.bounche.com/home/terms");
                 break;
         }
     }

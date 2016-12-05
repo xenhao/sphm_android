@@ -204,6 +204,54 @@
                 android:background="@color/pa_dark_grey" />
 
             <com.pa.common.TypefaceTextView
+                android:id="@+id/menu_privacy"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin4"
+                android:layout_marginLeft="@dimen/margin2"
+                android:drawableLeft="@drawable/ic_privacy_policy"
+                android:drawablePadding="@dimen/padding2"
+                android:gravity="center_vertical"
+                android:text="Privacy Policy"
+                android:textColor="@color/pa_dark_grey"
+                android:textSize="@dimen/txt_big"
+                android:visibility="visible"
+                app:typeface="OpenSans-Regular" />
+
+            <View
+                android:id="@+id/line81"
+                android:visibility="visible"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/divider"
+                android:layout_marginLeft="@dimen/margin2"
+                android:layout_marginRight="@dimen/margin2"
+                android:background="@color/pa_dark_grey" />
+
+            <com.pa.common.TypefaceTextView
+                android:id="@+id/menu_terms"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin4"
+                android:layout_marginLeft="@dimen/margin2"
+                android:drawableLeft="@drawable/ic_terms_and_condition"
+                android:drawablePadding="@dimen/padding2"
+                android:gravity="center_vertical"
+                android:text="Terms &amp; Conditions"
+                android:textColor="@color/pa_dark_grey"
+                android:textSize="@dimen/txt_big"
+                android:visibility="visible"
+                app:typeface="OpenSans-Regular" />
+
+            <View
+                android:id="@+id/line82"
+                android:visibility="visible"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/divider"
+                android:layout_marginLeft="@dimen/margin2"
+                android:layout_marginRight="@dimen/margin2"
+                android:background="@color/pa_dark_grey" />
+
+            <com.pa.common.TypefaceTextView
                 android:id="@+id/menu_help"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

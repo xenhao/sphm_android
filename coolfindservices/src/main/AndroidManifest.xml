@@ -2,8 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.coolfindservices.androidconsumer"
-    android:versionCode="38"
-    android:versionName="2.1.11">
+    android:versionCode="39"
+    android:versionName="2.1.12">
 
     <uses-sdk
         android:minSdkVersion="14"
