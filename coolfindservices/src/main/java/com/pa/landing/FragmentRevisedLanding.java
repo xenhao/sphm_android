@@ -131,6 +131,7 @@ public class FragmentRevisedLanding extends MyFragment implements View.OnClickLi
     private float dpi;
     private SliderLayout sliderLayout;
     private PagerIndicator pagerIndicator;
+    private LinearLayout sliderContainer;
 
     @Override
     public void onAttach(Activity activity) {
@@ -296,6 +297,8 @@ public class FragmentRevisedLanding extends MyFragment implements View.OnClickLi
         sliderLayout = (SliderLayout) v.findViewById(R.id.slider);
         sliderLayout.setClickable(true);
 
+        sliderContainer = (LinearLayout) v.findViewById(R.id.slider_container);
+
         pagerIndicator = (PagerIndicator) v.findViewById(R.id.custom_indicator);
 
         //  set banner layout_weight & page indicator size depend on device DPI(screen density)
@@ -303,14 +306,19 @@ public class FragmentRevisedLanding extends MyFragment implements View.OnClickLi
         if(dpi < 2.0) {
 //            pagerIndicator.setDefaultSelectedIndicatorSize();
 //            pagerIndicator.setDefaultUnselectedIndicatorSize();
-            params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 2.5f);
+            params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, 2.5f);
+        }else if(2.0 < dpi && dpi< 4.0){
+            pagerIndicator.setDefaultSelectedIndicatorSize(8, 8, PagerIndicator.Unit.DP);
+            pagerIndicator.setDefaultUnselectedIndicatorSize(4, 4, PagerIndicator.Unit.DP);
+            params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, 4.0f);
         }
         else {
             pagerIndicator.setDefaultSelectedIndicatorSize(8, 8, PagerIndicator.Unit.DP);
             pagerIndicator.setDefaultUnselectedIndicatorSize(4, 4, PagerIndicator.Unit.DP);
-            params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 3.5f);
+            params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, 3.5f);
         }
         sliderLayout.setLayoutParams(params);
+        sliderContainer.setLayoutParams(params);
         //***************************************************************
 
         txtCountry2 = (TextView) v.findViewById(R.id.country2);
@@ -361,6 +369,7 @@ public class FragmentRevisedLanding extends MyFragment implements View.OnClickLi
                     if(hasPromo){    //getList("485", true);
 //                    mSnappyRecyclerView.setVisibility(View.VISIBLE);
                         sliderLayout.setVisibility(View.VISIBLE);
+                        sliderContainer.setVisibility(View.VISIBLE);
                         pagerIndicator.setVisibility(View.VISIBLE);
                     }
                 }
@@ -378,6 +387,7 @@ public class FragmentRevisedLanding extends MyFragment implements View.OnClickLi
                     if(hasPromo){    //getList("485", true);
 //                    mSnappyRecyclerView.setVisibility(View.VISIBLE);
                         sliderLayout.setVisibility(View.VISIBLE);
+                        sliderContainer.setVisibility(View.VISIBLE);
                         pagerIndicator.setVisibility(View.VISIBLE);
                     }
                 }
@@ -815,7 +825,7 @@ public class FragmentRevisedLanding extends MyFragment implements View.OnClickLi
             serviceCountry = "sg";
             serviceState = "";
         } else if ("select country".equalsIgnoreCase(txtCountry2.getText().toString())) {
-            //  clear grid adapter if no country is selected
+            //  clear grid adapter if not country is selected
             arrServiceCategory = new ArrayList<ServiceCategory>();
             gridAdapter.notifyDataSetChanged();
             return;
@@ -935,6 +945,7 @@ public class FragmentRevisedLanding extends MyFragment implements View.OnClickLi
         //  no promotional items, hide layout
 //        mSnappyRecyclerView.setVisibility(View.GONE);       //simpleToast("hide promo layout");
         sliderLayout.setVisibility(View.GONE);
+        sliderContainer.setVisibility(View.GONE);
         pagerIndicator.setVisibility(View.GONE);
         hasPromo = false;
         return list;
@@ -1075,6 +1086,7 @@ public class FragmentRevisedLanding extends MyFragment implements View.OnClickLi
         //  set duration before banner change
         sliderLayout.setDuration(5000);
         sliderLayout.setVisibility(hasPromo ? View.VISIBLE : View.GONE);
+        sliderContainer.setVisibility(hasPromo ? View.VISIBLE : View.GONE);
         pagerIndicator.setVisibility(hasPromo ? View.VISIBLE : View.GONE);
     }
 
