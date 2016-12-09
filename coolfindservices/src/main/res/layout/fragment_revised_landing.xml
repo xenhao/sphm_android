@@ -113,21 +113,13 @@
             android:layout_weight="1"/>
     </LinearLayout>
 
-    <LinearLayout
+    <com.daimajia.slider.library.SliderLayout
+        android:id="@+id/slider"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/slider_container"
-        android:layout_weight="4">
-        <com.daimajia.slider.library.SliderLayout
-            android:id="@+id/slider"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:clickable="true"
-            android:visibility="gone"
-            app:layout_scrollFlags="scroll|snap"
-
-            />
-    </LinearLayout>
+        android:clickable="true"
+        android:visibility="gone"
+        />
     <com.daimajia.slider.library.Indicators.PagerIndicator
         android:id="@+id/custom_indicator"
         android:layout_width="wrap_content"
@@ -135,7 +127,6 @@
         android:gravity="center"
         style="@style/AndroidImageSlider_Corner_Oval_Orange"
         android:visibility="gone"
-        app:layout_scrollFlags="scroll|snap"
         />
 
     <com.pa.common.SnappyRecyclerView
