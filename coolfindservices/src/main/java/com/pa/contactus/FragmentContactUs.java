@@ -33,6 +33,7 @@ public class FragmentContactUs  extends MyFragment {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_contact_us, null);
         v.findViewById(R.id.btnMenu).setOnClickListener(fragmentListener);
+        v.findViewById(R.id.btnBack).setOnClickListener(fragmentListener);
         v.findViewById(R.id.btnContactUs).setOnClickListener(fragmentListener);
 
         return v;
@@ -111,7 +112,10 @@ public class FragmentContactUs  extends MyFragment {
                 case R.id.btnMenu:
                     ActivityLanding parent = (ActivityLanding) getActivity();
                     parent.menuClick();
+                    break;
 
+                case R.id.btnBack:
+                    getActivity().getSupportFragmentManager().popBackStackImmediate();
                     break;
 
 

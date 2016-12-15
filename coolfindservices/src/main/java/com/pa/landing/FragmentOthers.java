@@ -190,11 +190,11 @@ public class FragmentOthers extends MyFragment implements View.OnClickListener{
                 break;
 
             case R.id.menu_privacy:
-                showWebDialog("http://pageadvisor.bounche.com/home/privacypolicy");
+                showWebDialog("http://services.cool-find.com/privacy-policy");
                 break;
 
             case R.id.menu_terms:
-                showWebDialog("http://pageadvisor.bounche.com/home/terms");
+                showWebDialog("http://services.cool-find.com/terms-of-use");
                 break;
         }
     }
