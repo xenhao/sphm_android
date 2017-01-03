@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/pa_grey"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/edittext_height3"
+        android:background="@color/pa_orange"
+        android:gravity="center_vertical"
+        android:padding="@dimen/padding2">
+
+        <ImageView
+            android:id="@+id/btnBack"
+            android:layout_width="@dimen/edittext_height"
+            android:layout_height="@dimen/edittext_height"
+            android:padding="@dimen/padding"
+            android:src="@drawable/img_back"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true" />
+
+        <com.pa.common.TypefaceTextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="MERCHANT PROFILE"
+            android:textColor="@color/white"
+            android:textSize="@dimen/txt_extra_big"
+            app:typeface="OpenSans-Bold"
+            android:layout_centerInParent="true"
+            android:id="@+id/dialog_title"/>
+    </RelativeLayout>
+
+    <!--<TextView-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="NEW MERCHANT PROFILE"-->
+        <!--android:textSize="50sp"-->
+        <!--android:textColor="@color/red"-->
+        <!--android:layout_gravity="center"-->
+        <!--android:gravity="center"/>-->
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/merchant_profile_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none"
+        android:layout_gravity="center" />
+
+</LinearLayout>

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:layout_marginTop="@dimen/margin3">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/padding2"
+        android:paddingLeft="@dimen/padding2"
+        android:paddingRight="@dimen/padding2">
+
+        <com.pa.common.TypefaceTextView
+            android:id="@+id/itemTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center_vertical"
+            android:layout_toLeftOf="@+id/btnMore"
+            android:layout_toStartOf="@+id/btnMore"
+            android:text="Gallery"
+            android:textColor="@android:color/black"
+            android:textSize="18sp"
+            app:typeface="century-gothic-bold"/>
+
+        <com.pa.common.TypefaceTextView
+            android:id="@+id/btnMore"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center_vertical"
+            android:text="More"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:clickable="true"
+            app:typeface="century-gothic-bold"
+            android:visibility="gone"/>
+
+    </RelativeLayout>
+
+    <com.pa.common.TypefaceTextView
+        android:id="@+id/no_images"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="No Images"
+        android:textColor="@color/pa_dark_grey"
+        android:textSize="18sp"
+        app:typeface="OpenSans-Regular"
+        android:gravity="center"
+        android:visibility="gone"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:divider="@android:color/transparent"
+        android:id="@+id/grid"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:orientation="horizontal"
+        >
+    </android.support.v7.widget.RecyclerView>
+
+</LinearLayout>

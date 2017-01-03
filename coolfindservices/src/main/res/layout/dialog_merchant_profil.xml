@@ -6,31 +6,33 @@
     android:background="@color/white"
     android:orientation="vertical" >
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/edittext_height3"
         android:background="@color/pa_orange"
-        android:gravity="center"
-        android:orientation="horizontal" >
+        android:gravity="center_vertical">
 
         <ImageView
             android:id="@+id/btnBack"
             android:layout_width="@dimen/edittext_height"
             android:layout_height="@dimen/edittext_height"
-            android:layout_marginLeft="@dimen/margin2"
+            android:layout_margin="@dimen/margin2"
             android:padding="@dimen/padding"
-            android:src="@drawable/img_back" />
+            android:src="@drawable/img_back"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true" />
 
         <com.pa.common.TypefaceTextView
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
             android:text="MERCHANT PROFILE"
             android:textColor="@color/white"
             android:textSize="@dimen/txt_extra_big"
-            app:typeface="OpenSans-Bold" />
-    </LinearLayout>
+            app:typeface="OpenSans-Bold"
+            android:layout_centerInParent="true"/>
+    </RelativeLayout>
 
     <!--
          <ScrollView
@@ -53,50 +55,105 @@
             android:orientation="vertical" >
 
             <!--<FrameLayout-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content" >-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content" >-->
 
-                <ImageView
-                    android:layout_gravity="center"
-                    android:id="@+id/img_cover_timeline"
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center">
+                <android.support.v7.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:scaleType="fitCenter"
-                    android:src="@drawable/default_cover_timeline" />
+                    app:cardCornerRadius="5dp"
+                    app:cardElevation="5dp"
+                    app:cardUseCompatPadding="true"
+                    app:cardPreventCornerOverlap="false">
+                    <ImageView
+                        android:layout_gravity="center"
+                        android:id="@+id/img_cover_timeline"
+                        android:layout_width="match_parent"
+                        android:layout_height="250dp"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/default_cover_timeline" />
 
-                <com.pa.common.ImageViewFitHeight
-                    android:visibility="gone"
-                    android:id="@+id/img_profile_pic"
-                    android:layout_width="0dp"
-                    android:layout_height="@dimen/profilecircle2"
-                    android:layout_centerInParent="true"
-                    android:layout_gravity="center"
-                    android:src="@drawable/icon_car" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:orientation="vertical"
+                        android:layout_marginTop="@dimen/margin130">
 
-                
+                        <com.pa.common.ImageViewFitHeight
+                            android:visibility="gone"
+                            android:id="@+id/img_profile_pic"
+                            android:layout_width="0dp"
+                            android:layout_height="@dimen/profilecircle2"
+                            android:layout_gravity="center"
+                            android:src="@drawable/icon_car" />
+
+                        <RatingBar
+                            android:id="@+id/ratingBar1"
+                            style="?android:attr/ratingBarStyleSmall"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:max="5"
+                            android:numStars="5"
+                            android:rating="3" />
+
+                        <com.pa.common.TypefaceTextView
+                            android:id="@+id/ratingCount"
+                            android:layout_width="wrap_content"
+                            android:layout_height="@dimen/edittext_height"
+                            android:gravity="center"
+                            android:layout_gravity="center_horizontal"
+                            android:text=""
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/txt_big"
+                            app:typeface="OpenSans-Regular" />
+
+                        <com.pa.common.TypefaceTextView
+                            android:id="@+id/ratingCount1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:gravity="center"
+                            android:text=""
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/txt_big"
+                            app:typeface="OpenSans-Regular" />
+
+                        <com.pa.common.TypefaceTextView
+                            android:layout_gravity="bottom"
+                            android:id="@+id/txtName"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/edittext_height"
+                            android:gravity="center"
+                            android:text="Merchant name"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/txt_extra_big"
+                            app:typeface="century-gothic-bold"
+                            android:layout_marginTop="15dp"/>
+                    </LinearLayout>
+                </android.support.v7.widget.CardView>
+
+
+            </RelativeLayout>
+
             <!--</FrameLayout>-->
-<com.pa.common.TypefaceTextView
-                    android:layout_gravity="bottom"
-                    android:id="@+id/txtName"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/edittext_height"
-                    android:background="#55000000"
-                    android:gravity="center"
-                    android:text="Merchant name"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/txt_extra_big"
-                    app:typeface="OpenSans-Bold" />
 
-<com.pa.common.TypefaceTextView
-                    android:id="@+id/ratingCount1"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text=""
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/txt_big"
-                    app:typeface="OpenSans-Bold" />
-                    
+
+            <!--<com.pa.common.TypefaceTextView-->
+            <!--android:id="@+id/ratingCount1"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:gravity="center"-->
+            <!--android:text=""-->
+            <!--android:textColor="@color/black"-->
+            <!--android:textSize="@dimen/txt_big"-->
+            <!--app:typeface="OpenSans-Bold" />-->
+
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -111,25 +168,25 @@
                     android:layout_weight="4"
                     android:orientation="horizontal" >
 
-                    <RatingBar
-                        android:id="@+id/ratingBar1"
-                        style="?android:attr/ratingBarStyleSmall"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:max="5"
-                        android:numStars="5"
-                        android:rating="3" />
-                      <com.pa.common.TypefaceTextView
-                    android:id="@+id/ratingCount"
-                    android:layout_width="wrap_content"
-                    android:layout_height="@dimen/edittext_height"
-                    android:gravity="center"
-                    android:text=""
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/txt_big"
-                    app:typeface="OpenSans-Bold" />
-                    
+                    <!--<RatingBar-->
+                    <!--android:id="@+id/ratingBar1"-->
+                    <!--style="?android:attr/ratingBarStyleSmall"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_gravity="center"-->
+                    <!--android:max="5"-->
+                    <!--android:numStars="5"-->
+                    <!--android:rating="3" />-->
+                    <!--<com.pa.common.TypefaceTextView-->
+                    <!--android:id="@+id/ratingCount"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="@dimen/edittext_height"-->
+                    <!--android:gravity="center"-->
+                    <!--android:text=""-->
+                    <!--android:textColor="@color/black"-->
+                    <!--android:textSize="@dimen/txt_big"-->
+                    <!--app:typeface="OpenSans-Bold" />-->
+
                 </LinearLayout>
             </LinearLayout>
 
@@ -229,7 +286,7 @@
             <LinearLayout
                 android:paddingLeft="@dimen/margin4"
                 android:paddingRight="@dimen/margin4"
-                
+
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1" >
@@ -241,13 +298,13 @@
 
                     <include layout="@layout/profil1" />
                     <include layout="@layout/profil2" />
-                                        <include layout="@layout/profil3" />
-                    
+                    <include layout="@layout/profil3" />
+
                 </ViewFlipper>
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
 
-<!--      </ScrollView> -->
+    <!--      </ScrollView> -->
 
 </LinearLayout>

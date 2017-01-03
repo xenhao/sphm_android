@@ -652,7 +652,8 @@ public class ActivityLanding extends MyActivity implements OnClickListener,
 		switch (position) {
 			case 0:
 
-				if(this.getSupportFragmentManager().getBackStackEntryCount() > 1){
+				if(this.getSupportFragmentManager().getBackStackEntryCount() > 1 && (!(fm.findFragmentById(R.id.content_frame) instanceof FragmentOrder)
+						&& !(fm.findFragmentById(R.id.content_frame) instanceof FragmentBid))){
 					for(int i = this.getSupportFragmentManager().getBackStackEntryCount(); i > 1; i--)
 						this.getSupportFragmentManager().popBackStackImmediate();
 					Log.i("Backstack entry count0: ", String.valueOf(this.getSupportFragmentManager().getBackStackEntryCount()));

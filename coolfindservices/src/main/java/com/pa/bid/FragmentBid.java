@@ -9,6 +9,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.CardView;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.RelativeSizeSpan;
@@ -146,6 +147,9 @@ public class FragmentBid extends MyFragment implements OnClickListener, Config {
 				refreshItems();
 			}
 		});
+
+		((ActivityLanding)getActivity()).showBottomBar(true);
+
 		return v;
 	}
 
@@ -537,13 +541,17 @@ public class FragmentBid extends MyFragment implements OnClickListener, Config {
 						}
 					});
 
+					CardView cardView = (CardView) convertView.findViewById(R.id.bid_card);
 					if (position % 2 == 1) {
-						convertView.setBackgroundColor(getResources().getColor(
+//						convertView.setBackgroundColor(getResources().getColor(
+//								R.color.merchant_list_row_oven));
+						cardView.setCardBackgroundColor(getResources().getColor(
 								R.color.merchant_list_row_oven));
 					} else {
-						convertView.setBackgroundColor(getResources().getColor(
+//						convertView.setBackgroundColor(getResources().getColor(
+//								R.color.merchant_list_row_odd));
+						cardView.setCardBackgroundColor(getResources().getColor(
 								R.color.merchant_list_row_odd));
-
 					}
 					if (!item.serial.contains("VP-")) {
 						String bid_count = item.bid_count + "\nBid(s)";

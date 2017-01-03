@@ -3,10 +3,13 @@ package com.pa.deals;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -26,10 +29,12 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.ViewFlipper;
 
+import com.bumptech.glide.Glide;
 import com.coolfindservices.android.SplashActivity;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.pa.common.Config;
+import com.pa.common.GlideImageLoader;
 import com.pa.common.GlobalVar;
 import com.pa.common.ImageLoader;
 import com.pa.common.MyFragment;
@@ -37,6 +42,7 @@ import com.pa.common.OnFragmentChangeListener;
 import com.pa.common.PARestClient;
 import com.pa.common.TimeUtils;
 import com.pa.landing.ActivityLanding;
+import com.pa.merchant_profile.MerchantProfileDialog;
 import com.pa.parser.ParseDealGetPackageListDetail;
 import com.pa.parser.ParserMerchantProfile;
 import com.pa.pojo.MerchantProfile;
@@ -50,6 +56,8 @@ import org.apache.http.Header;
 import java.util.ArrayList;
 
 import io.intercom.android.sdk.Intercom;
+import io.intercom.android.sdk.commons.utilities.StringUtils;
+import io.intercom.android.sdk.utilities.ColorUtils;
 
 /**
  * Created by Steven on 02/11/2015.
@@ -65,6 +73,7 @@ public class PackageListDetailFragment extends MyFragment implements View.OnClic
     private MerchantProfile mMerchantProfile;
     private String MY_URI;
     private ImageLoader loader, mMerchantLoader;
+    private GlideImageLoader glideLoader;
     private PackageListItem mItem = null;
     private PackageListDetailAdapter mAdapter;
     private RecyclerView mRecyclerView;
@@ -112,6 +121,7 @@ public class PackageListDetailFragment extends MyFragment implements View.OnClic
 
         loader          = new ImageLoader(getActivity());
         mMerchantLoader = new ImageLoader(getActivity());
+        glideLoader     = new GlideImageLoader();
         mItems      = new ArrayList<>();
         mAdapter    = new PackageListDetailAdapter(getActivity(), mItems, imageUrl, loader);
 
@@ -144,7 +154,7 @@ public class PackageListDetailFragment extends MyFragment implements View.OnClic
 
 //        String imageUrl = PARestClient.getDealAbsoluteUrl(pref.getPref(Config.SERVER),
 //                Config.PACKAGE_IMAGE_PATH);
-//
+
 //        loader          = new ImageLoader(getActivity());
 //        mMerchantLoader = new ImageLoader(getActivity());
 //        mItems      = new ArrayList<>();
@@ -152,9 +162,17 @@ public class PackageListDetailFragment extends MyFragment implements View.OnClic
         mRecyclerView.setAdapter(mAdapter);
 
         String coverUrl = imageUrl + "/cover/" + mItem.cover_photo;
-        mCoverImage.setTag(coverUrl);
-        loader.setDefaultImage(R.drawable.promo_placeholder);
-        loader.DisplayImage(coverUrl, getActivity(), mCoverImage, false);
+//        mCoverImage.setTag(coverUrl);
+//        loader.setDefaultImage(R.drawable.promo_placeholder);
+//        loader.DisplayImage(coverUrl, getActivity(), mCoverImage, false);
+
+        //  Glide image loader
+        glideLoader.displayImageGlide(getActivity(),coverUrl, R.drawable.promo_placeholder, mCoverImage);
+//        if(TextUtils.isEmpty(mItem.cover_photo))
+//            Glide.with(getActivity()).load(R.drawable.promo_placeholder).into(mCoverImage);
+//        else
+//            Glide.with(getActivity()).load(coverUrl).into(mCoverImage);
+
         mMerchantLoader.setRequiredSize(210);
         if (mItem.mgp != null && mItem.mgp.equalsIgnoreCase("Y")) {
             mImgMgp.setVisibility(View.VISIBLE);
@@ -266,7 +284,7 @@ public class PackageListDetailFragment extends MyFragment implements View.OnClic
         }
     }
 
-//    public void setItem(PackageListItem mItem) {
+    //    public void setItem(PackageListItem mItem) {
 //        this.mItem = mItem;
 //    }
     private void doNext()
@@ -453,7 +471,9 @@ public class PackageListDetailFragment extends MyFragment implements View.OnClic
                     mMerchantProfile = parser.getData();
                     arr_image = mMerchantProfile.gallery_image;
                     arr_review = mMerchantProfile.reviews;
-                    onShowMerchantProfileDialog();
+//                    onShowMerchantProfileDialog();
+                    //  new merchant profile
+                    new MerchantProfileDialog(getContext(), mMerchantProfile, arr_image, arr_review);
                 }catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -554,6 +574,7 @@ public class PackageListDetailFragment extends MyFragment implements View.OnClic
 
         ImageView cover_timeline = (ImageView) v
                 .findViewById(R.id.img_cover_timeline);
+        cover_timeline.setColorFilter(Color.argb(150, 50, 50, 50));
         TextView txtName = (TextView) v.findViewById(R.id.txtName);
         TextView ratingCount = (TextView) v.findViewById(R.id.ratingCount);
         TextView ratingCount1 = (TextView) v.findViewById(R.id.ratingCount1);
@@ -563,10 +584,22 @@ public class PackageListDetailFragment extends MyFragment implements View.OnClic
         TextView about = (TextView) v.findViewById(R.id.about);
         TextView service = (TextView) v.findViewById(R.id.service);
 
-        cover_timeline.setTag(MY_URI + "user/merchant-image?image_name="
-                + mMerchantProfile.cover_photo);
-        mMerchantLoader.DisplayImage(MY_URI + "user/merchant-image?image_name="
-                + mMerchantProfile.cover_photo, getActivity(), cover_timeline);
+//        cover_timeline.setTag(MY_URI + "user/merchant-image?image_name="
+//                + mMerchantProfile.cover_photo);
+//        mMerchantLoader.DisplayImage(MY_URI + "user/merchant-image?image_name="
+//                + mMerchantProfile.cover_photo, getActivity(), cover_timeline);
+
+        //  new
+//        cover_timeline.setTag(Config.MERCHANT_IMAGE_PREFIX
+//                + mMerchantProfile.cover_photo);
+//        mMerchantLoader.DisplayImage(Config.MERCHANT_IMAGE_PREFIX
+//                + mMerchantProfile.cover_photo, getActivity(), cover_timeline);
+
+        glideLoader.displayImageGlide(getActivity() ,MY_URI + "user/merchant-image?image_name=" + mMerchantProfile.cover_photo, R.drawable.default_img, cover_timeline);
+//        if(TextUtils.isEmpty(mMerchantProfile.cover_photo))
+//            Glide.with(this).load(R.drawable.default_img).into(cover_timeline);
+//        else
+//            Glide.with(this).load(MY_URI + "user/merchant-image?image_name=" + mMerchantProfile.cover_photo).into(cover_timeline);
 
         txtName.setText(mMerchantProfile.merchant_name);
         ratingCount.setText(" " + mMerchantProfile.overall_rating + " out of 5");
@@ -701,9 +734,20 @@ public class PackageListDetailFragment extends MyFragment implements View.OnClic
                 holder = (MyHolder) convertView.getTag();
             }
             String uri = arr_image.get(position);
-            holder.img.setTag(MY_URI + "user/merchant-image?image_name=" + uri);
-            mMerchantLoader.DisplayImage(MY_URI + "user/merchant-image?image_name="
-                    + uri, getActivity(), holder.img);
+//            holder.img.setTag(MY_URI + "user/merchant-image?image_name=" + uri);
+//            mMerchantLoader.DisplayImage(MY_URI + "user/merchant-image?image_name="
+//                    + uri, getActivity(), holder.img);
+
+            //  new
+//            holder.img.setTag(Config.MERCHANT_IMAGE_PREFIX + uri);
+//            mMerchantLoader.DisplayImage(Config.MERCHANT_IMAGE_PREFIX
+//                    + uri, getActivity(), holder.img);
+
+            glideLoader.displayImageGlide(getContext() ,MY_URI + "user/merchant-image?image_name=" + uri, R.drawable.default_img, holder.img);
+//            if(TextUtils.isEmpty(mMerchantProfile.cover_photo))
+//                Glide.with(getContext()).load(R.drawable.default_img).into(holder.img);
+//            else
+//                Glide.with(getContext()).load(MY_URI + "user/merchant-image?image_name=" + uri).into(holder.img);
 
             holder.img.setOnClickListener(new View.OnClickListener() {
                 @Override

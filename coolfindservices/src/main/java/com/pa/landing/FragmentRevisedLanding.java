@@ -71,6 +71,7 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -112,7 +113,7 @@ public class FragmentRevisedLanding extends MyFragment implements View.OnClickLi
 
     String prevKeyword = "";
 
-    JobItem job = null;
+    JobItem job=null;
     Dialog dialogRateMerchant;
     EditText txtRatingMsg;
     TextView txtRatingServiceName;
@@ -149,7 +150,7 @@ public class FragmentRevisedLanding extends MyFragment implements View.OnClickLi
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
 
         gridAdapter = new GridAdapter();
@@ -157,7 +158,7 @@ public class FragmentRevisedLanding extends MyFragment implements View.OnClickLi
         try {
 //            getServiceData(0);
             getStateData();
-        } catch (Exception e) {
+        }catch(Exception e){
             e.printStackTrace();
         }
 
@@ -165,9 +166,9 @@ public class FragmentRevisedLanding extends MyFragment implements View.OnClickLi
         imageUrl = PARestClient.getDealAbsoluteUrl(pref.getPref(Config.SERVER),
                 Config.PACKAGE_IMAGE_PATH);
 
-        loader = new ImageLoader(getActivity());
-        mItems = new ArrayList<>();
-        mAdapter = new PackageAdapter(getActivity(), mItems, imageUrl, loader);
+        loader      = new ImageLoader(getActivity());
+        mItems      = new ArrayList<>();
+        mAdapter    = new PackageAdapter(getActivity(), mItems, imageUrl, loader);
 
 //        getList("485", false, "onCreate");
 
@@ -179,79 +180,9 @@ public class FragmentRevisedLanding extends MyFragment implements View.OnClickLi
         dpi = getResources().getDisplayMetrics().density;
     }
 
-//    private void checkPermission(){
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-//            //	storage permission
-//            if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-//                if (ActivityCompat.shouldShowRequestPermissionRationale(getActivity(),
-//                        Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-//                    AlertDialog.Builder builder = new AlertDialog.Builder(
-//                            getActivity(), R.style.AlertDialogStyle);
-//                    builder.setTitle("Permission Disclosure");
-//                    builder.setMessage("This page will not function as intended if Storage Permission is not granted.");
-//                    builder.setPositiveButton("OK",
-//                            new DialogInterface.OnClickListener() {
-//
-//                                @Override
-//                                public void onClick(DialogInterface dialog,
-//                                                    int which) {
-//                                    // TODO Auto-generated method stub
-//                                    requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, STORAGE_PERMISSION);
-//                                }
-//                            });
-//
-//                    builder.show();
-//                } else {
-//                    requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, STORAGE_PERMISSION);
-//                }
-//            }
-//        }
-//    }
-
-//    @Override
-//    public void onRequestPermissionsResult(int requestCode,
-//                                           String permissions[], int[] grantResults) {
-//        switch (requestCode) {
-//            case STORAGE_PERMISSION:
-//                // If request is cancelled, the result arrays are empty.
-//                if (/*grantResults.length > 0
-//						&&*/ grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-//
-//                    // permission was granted, yay! Do the
-//                    // contacts-related task you need to do.
-//
-//                } else {
-//
-//                    // permission denied, boo! Disable the
-//                    // functionality that depends on this permission.
-//                    AlertDialog.Builder builder = new AlertDialog.Builder(
-//                            getActivity(), R.style.AlertDialogStyle);
-//                    builder.setTitle("Storage Permission Denied");
-//                    builder.setMessage("Device storage permission denied, app might not function as intended.");
-//                    builder.setPositiveButton("OK",
-//                            new DialogInterface.OnClickListener() {
-//
-//                                @Override
-//                                public void onClick(DialogInterface dialog,
-//                                                    int which) {
-//                                    // TODO Auto-generated method stub
-//                                    dialog.dismiss();
-////									dialogActivation.dismiss();
-//                                }
-//                            });
-//
-//                    builder.show();
-//                }
-//                break;
-//        }
-//    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
-        //  check permissions   *not needed in coolfind as target API is still 22 ;)
-        //checkPermission();
 
         View v = inflater.inflate(R.layout.fragment_revised_landing, null);
 
@@ -303,11 +234,15 @@ public class FragmentRevisedLanding extends MyFragment implements View.OnClickLi
 
         //  set banner layout_weight & page indicator size depend on device DPI(screen density)
         LinearLayout.LayoutParams params;
-        if (dpi < 2.0) {
+        if(dpi < 2.0) {
 //            pagerIndicator.setDefaultSelectedIndicatorSize();
 //            pagerIndicator.setDefaultUnselectedIndicatorSize();
             params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, 2.5f);
-        } else if (2.0 < dpi && dpi < 4.0) {
+        } else if(2.0 < dpi && dpi <= 3.0){
+            pagerIndicator.setDefaultSelectedIndicatorSize(8, 8, PagerIndicator.Unit.DP);
+            pagerIndicator.setDefaultUnselectedIndicatorSize(4, 4, PagerIndicator.Unit.DP);
+            params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, 3.0f);
+        } else if(3.0 < dpi && dpi < 4.0){
             pagerIndicator.setDefaultSelectedIndicatorSize(8, 8, PagerIndicator.Unit.DP);
             pagerIndicator.setDefaultUnselectedIndicatorSize(4, 4, PagerIndicator.Unit.DP);
             params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, 4.0f);
@@ -331,15 +266,17 @@ public class FragmentRevisedLanding extends MyFragment implements View.OnClickLi
 //			countrySelection = country2;
         }
 
+        ((ActivityLanding)getActivity()).showBottomBar(true);
+
         return v;
     }
 
     @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
+    public void onActivityCreated(Bundle savedInstanceState){
         super.onActivityCreated(savedInstanceState);
 
         try {
-            loader = new ImageLoader(getActivity());
+            loader=new ImageLoader(getActivity());
 
             gridCat.setAdapter(gridAdapter);
 
@@ -347,43 +284,43 @@ public class FragmentRevisedLanding extends MyFragment implements View.OnClickLi
             adapter = new ServiceAutoCompleteAdapter(getActivity(),
                     R.layout.list_item_pa, arrSuggest);
 
-            if (!TextUtils.isEmpty(pref.getPref(Config.PREF_LAST_COUNTRY))) {
+            if(!TextUtils.isEmpty(pref.getPref(Config.PREF_LAST_COUNTRY))){
                 txtCountry2.setText(pref.getPref(Config.PREF_LAST_COUNTRY));
             }
 
-            if ("select country".equalsIgnoreCase(txtCountry2.getText().toString())) {
+            if("select country".equalsIgnoreCase(txtCountry2.getText().toString())){
                 gridCat.setVisibility(View.GONE);
                 fallBack.setVisibility(View.VISIBLE);
-            } else if ("singapore".equalsIgnoreCase(txtCountry2.getText().toString())) {
-                serviceCountry = "sg";
-                serviceState = "";
-                if (gridAdapter.isEmpty()) {
+            }else if("singapore".equalsIgnoreCase(txtCountry2.getText().toString())){
+                serviceCountry  = "sg";
+                serviceState    = "";
+                if(gridAdapter.isEmpty()){
                     getServiceData(0);
-                } else {
+                }else{
 //                    gridAdapter.notifyDataSetChanged();
                     fallBack.setVisibility(View.GONE);
                     gridAdapter.notifyDataSetChanged();
                     gridCat.setVisibility(View.VISIBLE);
                     //  show promotions layout
-                    if (hasPromo) {    //getList("485", true);
+                    if(hasPromo){    //getList("485", true);
 //                    mSnappyRecyclerView.setVisibility(View.VISIBLE);
                         sliderLayout.setVisibility(View.VISIBLE);
                         sliderContainer.setVisibility(View.VISIBLE);
                         pagerIndicator.setVisibility(View.VISIBLE);
                     }
                 }
-            } else {
+            }else{
                 //  set serviceCountry to malaysia location
-                serviceCountry = "my";
-                serviceState = txtCountry2.getText().toString().replace(malaysia_prefix, "");
-                if (gridAdapter.isEmpty()) {
+                serviceCountry  = "my";
+                serviceState    = txtCountry2.getText().toString().replace(malaysia_prefix, "");
+                if(gridAdapter.isEmpty()){
                     getServiceData(0);
-                } else {
+                }else{
                     fallBack.setVisibility(View.GONE);
                     gridAdapter.notifyDataSetChanged();
                     gridCat.setVisibility(View.VISIBLE);
                     //  show promotions layout
-                    if (hasPromo) {    //getList("485", true);
+                    if(hasPromo){    //getList("485", true);
 //                    mSnappyRecyclerView.setVisibility(View.VISIBLE);
                         sliderLayout.setVisibility(View.VISIBLE);
                         sliderContainer.setVisibility(View.VISIBLE);
@@ -397,7 +334,7 @@ public class FragmentRevisedLanding extends MyFragment implements View.OnClickLi
 
             try {
                 getPendingRating();
-            } catch (Exception e) {
+            }catch(Exception e){
                 Log.i("FragmentRevisedLanding", "No pending ratings.");
                 e.printStackTrace();
             }
@@ -405,60 +342,59 @@ public class FragmentRevisedLanding extends MyFragment implements View.OnClickLi
             doRegisGCM();
 
             analytic.trackScreen("Select a Service");
-        } catch (Exception e) {
+        }catch(Exception e){
             e.printStackTrace();
         }
     }
 
-    void doRegisGCM() {
-        RegisterActivity register = new RegisterActivity(getActivity());
+    void doRegisGCM(){
+        RegisterActivity register=new RegisterActivity(getActivity());
 
-        RequestParams params = new RequestParams();
-        params.add("device_os", "android");
-        params.add("device_token", register.getRegistrationId());
-        params.add("active_session_token", pref.getPref(Config.PREF_ACTIVE_SESSION_TOKEN));
-        params.add("session_username", pref.getPref(Config.PREF_USERNAME));
+        RequestParams params=new RequestParams();
+        params.add("device_os","android");
+        params.add("device_token",	register.getRegistrationId());
+        params.add("active_session_token",pref.getPref(Config.PREF_ACTIVE_SESSION_TOKEN));
+        params.add("session_username",pref.getPref(Config.PREF_USERNAME));
 
 
-        AsyncHttpResponseHandler responseHandler = new AsyncHttpResponseHandler() {
-        };
+        AsyncHttpResponseHandler responseHandler=new AsyncHttpResponseHandler(){};
         PARestClient.post(pref.getPref(Config.SERVER), Config.API_REGISTER_DEVICE, params, responseHandler);
 
     }
 
-    void getPendingRating() {
-        RequestParams params = new RequestParams();
+    void getPendingRating(){
+        RequestParams params=new RequestParams();
         params.add("session_username", pref.getPref(Config.PREF_USERNAME));
         params.add("active_session_token", pref.getPref(Config.PREF_ACTIVE_SESSION_TOKEN));
 
-        AsyncHttpResponseHandler responseHandler = new AsyncHttpResponseHandler() {
+        AsyncHttpResponseHandler responseHandler=new AsyncHttpResponseHandler(){
             @Override
             public void onSuccess(int arg0, Header[] arg1, byte[] arg2) {
                 // TODO Auto-generated method stub
                 super.onSuccess(arg0, arg1, arg2);  //FirebaseCrash.report(new Exception("My first Android non-fatal error"));
-                try {
-                    ParserPendingRating parser = new ParserPendingRating(new String(arg2));
-                    PendingRating pr = parser.getData();
-                    if ("N".equals(pr.rated)) {
-                        job = new JobItem();
+                try{
+                    ParserPendingRating parser=new ParserPendingRating(new String(arg2));
+                    PendingRating pr=parser.getData();
+                    if("N".equals(pr.rated)){
+                        job=new JobItem();
 
-                        job.request_title = pr.rating_data.request_title;
-                        job.serial = pr.rating_data.serial;
-                        job.preferred_time1_start = pr.rating_data.preferred_time1_start;
-                        job.preferred_time2_start = -1 + "";
-                        job.company_name = pr.rating_data.company_name;
-                        job.merchant_username = pr.rating_data.merchant_username;
+                        job.request_title=pr.rating_data.request_title;
+                        job.serial=pr.rating_data.serial;
+                        job.preferred_time1_start=pr.rating_data.preferred_time1_start;
+                        job.preferred_time2_start=-1+"";
+                        job.company_name=pr.rating_data.company_name;
+                        job.merchant_username=pr.rating_data.merchant_username;
 
                         showRateMerchant();
                     }
-                } catch (Exception e) {
+                }catch(Exception e){
                     //FirebaseCrash.report(new Exception("Nothing to rate error"));
                 }
 
             }
         };
 
-        PARestClient.get(pref.getPref(Config.SERVER), "user/pending-rating", params, responseHandler);
+        PARestClient.get(pref.getPref(Config.SERVER),"user/pending-rating", params, responseHandler);
 
         GlobalVar.state = pref.getPref(Config.PREF_LAST_STATE);
         GlobalVar.state_short = pref.getPref(Config.PREF_LAST_STATE_SHORT);
@@ -467,9 +403,9 @@ public class FragmentRevisedLanding extends MyFragment implements View.OnClickLi
     void showRateMerchant() {
         View v = inflater.inflate(R.layout.dialog_rate, null);
 
-        TextView title = (TextView) v.findViewById(R.id.title);
-        TextView order_id = (TextView) v.findViewById(R.id.txtOrderId);
-        TextView date = (TextView) v.findViewById(R.id.txtDate);
+        TextView title=(TextView)v.findViewById(R.id.title);
+        TextView order_id=(TextView)v.findViewById(R.id.txtOrderId);
+        TextView date=(TextView)v.findViewById(R.id.txtDate);
 
         title.setText(job.request_title);
         order_id.setText(job.serial);
@@ -553,7 +489,7 @@ public class FragmentRevisedLanding extends MyFragment implements View.OnClickLi
             public boolean onKey(DialogInterface paramDialogInterface, int paramInt,
                                  KeyEvent paramKeyEvent) {
                 // TODO Auto-generated method stub
-                if (paramKeyEvent.getKeyCode() == KeyEvent.KEYCODE_BACK) {
+                if (paramKeyEvent.getKeyCode()== KeyEvent.KEYCODE_BACK){
                     simpleToast("You must give the rating to continue using app");
                     return true;
                 }
@@ -572,7 +508,7 @@ public class FragmentRevisedLanding extends MyFragment implements View.OnClickLi
                     WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
             dialogRateMerchant.setCancelable(false);
             dialogRateMerchant.show();
-        } catch (Exception e) {
+        }catch(Exception e){
             e.printStackTrace();
         }
 
@@ -607,7 +543,7 @@ public class FragmentRevisedLanding extends MyFragment implements View.OnClickLi
         params.add("service_order_serial", job.serial);
 
         AsyncHttpClient client = new AsyncHttpClient();
-        PARestClient.post(pref.getPref(Config.SERVER), Config.API_RATE_MERCHANT, params,
+        PARestClient.post(pref.getPref(Config.SERVER),Config.API_RATE_MERCHANT, params,
                 new AsyncHttpResponseHandler() {
 
                     @Override
@@ -652,7 +588,7 @@ public class FragmentRevisedLanding extends MyFragment implements View.OnClickLi
     }
 
     //	show spinner for state selection
-    private void showSpinner(final View v) {
+    private void showSpinner(final View v){
         analytic.trackScreen("Select Country for Service");
         showSpinnerSelection(countrySelection
 
@@ -726,7 +662,7 @@ public class FragmentRevisedLanding extends MyFragment implements View.OnClickLi
                                     GlobalVar.country = "Malaysia";
                                 else
                                     GlobalVar.country = f_country2;
-                            } catch (Exception e) {
+                            }catch(Exception e){
                                 e.printStackTrace();
                             }
                         } catch (Exception e) {
@@ -737,17 +673,16 @@ public class FragmentRevisedLanding extends MyFragment implements View.OnClickLi
     }
 
     @Override
-    public void onResume() {
+    public void onResume(){
         super.onResume();
 
         //	additional checking to get state data if initial went unresponsive
-        if (countrySelection == null || countrySelection.length <= 2) {
-            getStateData();
-            Log.i("CALLED FROM ONRESUME", "CALLED FROM ONRESUME" + " " + countrySelection);
+        if(countrySelection == null || countrySelection.length <= 2){
+            getStateData();		Log.i("CALLED FROM ONRESUME", "CALLED FROM ONRESUME" + " " + countrySelection);
         }
 
         //  check for promo availability
-        if (hasPromo)    //getList("485", true);
+        if(hasPromo)    //getList("485", true);
 //        mSnappyRecyclerView.setVisibility(View.VISIBLE);
             setupSlider(mItems, hasPromo);
     }
@@ -896,7 +831,8 @@ public class FragmentRevisedLanding extends MyFragment implements View.OnClickLi
                     if ("success".equals(parser.status)) {
                         if (parser.arr.get(0).children == null) {
                             arrServiceCategory = new ArrayList<ServiceCategory>();
-                        } else {
+                        }
+                        else {
 //                            arrServiceCategory = parser.arr.get(0).children;
                             //  check if contains promotion & extract it
                             arrServiceCategory = containsId(parser.arr.get(0).children, "485");
@@ -953,7 +889,7 @@ public class FragmentRevisedLanding extends MyFragment implements View.OnClickLi
 
     @Override
     public void onClick(final View v) {
-        switch (v.getId()) {
+        switch(v.getId()){
             case R.id.btnMenu:
                 ActivityLanding parent = (ActivityLanding) getActivity();
                 parent.menuClick();
@@ -964,9 +900,9 @@ public class FragmentRevisedLanding extends MyFragment implements View.OnClickLi
             case R.id.country2:
             case R.id.country:
                 //	check if state data is available before displaying state selection spinner
-                if (countrySelection != null) {
+                if(countrySelection != null) {
                     showSpinner(v);
-                } else {
+                }else{
                     retryGetState = true;
                     getStateData();
                 }
@@ -1011,13 +947,13 @@ public class FragmentRevisedLanding extends MyFragment implements View.OnClickLi
                         alertDialogBuilder
                                 .setMessage("Click yes to reload!")
                                 .setCancelable(false)
-                                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                .setPositiveButton("Yes",new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int id) {
                                         getList(serviceId, showLayout, "recursive");     //  promotions category ID
                                     }
                                 })
                                 .setNegativeButton("No", new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int id) {
+                                    public void onClick( DialogInterface dialog, int id) {
                                         dialog.cancel();
                                     }
                                 });
@@ -1063,12 +999,12 @@ public class FragmentRevisedLanding extends MyFragment implements View.OnClickLi
                 });
     }
 
-    private void setupSlider(final ArrayList<PackageListItem> items, boolean hasPromo) {
+    private void setupSlider(final ArrayList<PackageListItem> items, boolean hasPromo){
         //  clear sliders of previous data before repopulating them
         sliderLayout.removeAllSliders();
-        for (int i = 0; i < items.size(); i++) {
+        for(int i = 0; i < items.size(); i++){
             DefaultSliderView defaultSliderView = new DefaultSliderView(getContext());
-            defaultSliderView.image(imageUrl + "/cover/" + items.get(i).cover_photo);
+            defaultSliderView.image(imageUrl+"/cover/"+items.get(i).cover_photo);
             defaultSliderView.setOnSliderClickListener(new BaseSliderView.OnSliderClickListener() {
                 @Override
                 public void onSliderClick(BaseSliderView slider) {
@@ -1090,9 +1026,8 @@ public class FragmentRevisedLanding extends MyFragment implements View.OnClickLi
         pagerIndicator.setVisibility(hasPromo ? View.VISIBLE : View.GONE);
     }
 
-    /**
-     * SnappyRecyclerView Adapter
-     * *not used for auto scroll banner*
+    /**     SnappyRecyclerView Adapter
+     *      *not used for auto scroll banner*
      */
     public static class PackageAdapter extends RecyclerView.Adapter<com.pa.landing.FragmentRevisedLanding.PackageAdapter.ViewHolder> {
 
@@ -1104,13 +1039,13 @@ public class FragmentRevisedLanding extends MyFragment implements View.OnClickLi
 
             public ViewHolder(View v) {
                 super(v);
-                mCoverImage = (ImageView) v.findViewById(R.id.coverImage);
-                mTitle = (TextView) v.findViewById(R.id.title);
-                mDiscountedPrice = (TextView) v.findViewById(R.id.discountedPrice);
-                mCompanyName = (TextView) v.findViewById(R.id.companyName);
-                ratingBar = (RatingBar) v.findViewById(R.id.ratingBar1);
-                mImgMgp = (ImageView) v.findViewById(R.id.img_mpg);
-                mLinearLayout = (LinearLayout) v.findViewById(R.id.item_details);
+                mCoverImage         = (ImageView) v.findViewById(R.id.coverImage);
+                mTitle              = (TextView) v.findViewById(R.id.title);
+                mDiscountedPrice    = (TextView) v.findViewById(R.id.discountedPrice);
+                mCompanyName        = (TextView)v.findViewById(R.id.companyName);
+                ratingBar           = (RatingBar) v.findViewById(R.id.ratingBar1);
+                mImgMgp             = (ImageView) v.findViewById(R.id.img_mpg);
+                mLinearLayout       = (LinearLayout) v.findViewById(R.id.item_details);
                 //  hide details for promo items, used only here on the home page
                 mLinearLayout.setVisibility(View.GONE);
             }
@@ -1152,20 +1087,22 @@ public class FragmentRevisedLanding extends MyFragment implements View.OnClickLi
         public void onBindViewHolder(com.pa.landing.FragmentRevisedLanding.PackageAdapter.ViewHolder holder, final int position) {
             PackageListItem item = mItems.get(position);
 
-            if (item.cover_photo == null) {
+            if(item.cover_photo == null ){
                 holder.mCoverImage.setImageResource(R.drawable.promo_placeholder);
-            } else {
+            }
+            else{
                 String coverUrl = mImageUrl + "/cover/" + item.cover_photo;
 //                holder.mCoverImage.setTag(coverUrl);
 
 //                mImageLoader.DisplayImage(coverUrl, mActivity, holder.mCoverImage, false);
                 //  Glide image loader
                 try {
-                    if (TextUtils.isEmpty(coverUrl))
-                        Glide.with(mActivity).load(R.drawable.promo_placeholder).into(holder.mCoverImage);
-                    else
-                        Glide.with(mActivity).load(coverUrl).into(holder.mCoverImage);
-                } catch (Exception e) {
+                    Glide.with(mActivity).load(coverUrl).placeholder(R.drawable.promo_placeholder).into(holder.mCoverImage);
+//                    if (TextUtils.isEmpty(coverUrl))
+//                        Glide.with(mActivity).load(R.drawable.promo_placeholder).into(holder.mCoverImage);
+//                    else
+//                        Glide.with(mActivity).load(coverUrl).into(holder.mCoverImage);
+                }catch(Exception e){
                     e.printStackTrace();
                 }
             }
@@ -1272,7 +1209,7 @@ public class FragmentRevisedLanding extends MyFragment implements View.OnClickLi
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             // TODO Auto-generated method stub
-            try {
+            try{
                 if (convertView == null) {
                     convertView = inflater.inflate(R.layout.item_grid_category,
                             null);
@@ -1285,7 +1222,7 @@ public class FragmentRevisedLanding extends MyFragment implements View.OnClickLi
                     holder = (GridHolder) convertView.getTag();
                 }
 
-                String uri = "";
+                String uri="";
                 if ("0".equals(pref.getPref(Config.SERVER))) {
                     uri = "http://" + DOMAIN_DEV + "/";
 
@@ -1293,56 +1230,59 @@ public class FragmentRevisedLanding extends MyFragment implements View.OnClickLi
 
                     uri = "http://" + DOMAIN_STAGING + "/";
 
-                } else if ("2".equals(pref.getPref(Config.SERVER))) {
+                }
+                else if ("2".equals(pref.getPref(Config.SERVER))) {
 
                     uri = "http://" + DOMAIN_LIVE + "/";
 
                 }
 
-                String url = uri + arrServiceCategory.get(position).icon_image
-                        + "?session_username=" + pref.getPref(Config.PREF_USERNAME)
-                        + "&active_session_token=" + pref.getPref(Config.PREF_ACTIVE_SESSION_TOKEN);
+                String url=uri+arrServiceCategory.get(position).icon_image
+                        +"?session_username="+pref.getPref(Config.PREF_USERNAME)
+                        +"&active_session_token="+pref.getPref(Config.PREF_ACTIVE_SESSION_TOKEN)
+                        ;
                 Tracer.d(url);
 //                holder.img.setTag(url);
 //                loader.DisplayImage(url, getActivity(), holder.img,false);
                 //  Glide image loader
                 try {
-                    if (TextUtils.isEmpty(url))
-                        Glide.with(getActivity()).load(R.drawable.default_img).into(holder.img);
-                    else {
+//                    if (TextUtils.isEmpty(url))
+//                        Glide.with(getActivity()).load(R.drawable.default_img).into(holder.img);
+//                    else {
 //                        Glide.with(getActivity()).load(url).into(holder.img);
-                        //  image loading flickering fix
-                        String oldImage = url;
-                        Glide
-                                .with(getActivity())
-                                .load(url)
-                                .thumbnail(Glide // this thumbnail request has to have the same RESULT cache key
-                                        .with(getActivity()) // as the outer request, which usually simply means
-                                        .load(oldImage) // same size/transformation(e.g. centerCrop)/format(e.g. asBitmap)
-                                        .fitCenter() // have to be explicit here to match outer load exactly
-                                )
-                                .listener(new RequestListener<String, GlideDrawable>() {
-                                    @Override
-                                    public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
-                                        e.printStackTrace();
-                                        return false;
-                                    }
+                    //  image loading flickering fix
+                    String oldImage = url;
+                    Glide
+                            .with(getActivity())
+                            .load(url)
+                            .placeholder(R.drawable.default_img)
+                            .dontAnimate()
+                            .thumbnail(Glide // this thumbnail request has to have the same RESULT cache key
+                                    .with(getActivity()) // as the outer request, which usually simply means
+                                    .load(oldImage) // same size/transformation(e.g. centerCrop)/format(e.g. asBitmap)
+                                    .fitCenter() // have to be explicit here to match outer load exactly
+                            )
+                            .listener(new RequestListener<String, GlideDrawable>() {
+                                @Override
+                                public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
+                                    e.printStackTrace();
+                                    return false;
+                                }
 
-                                    @Override
-                                    public boolean onResourceReady(GlideDrawable resource, String model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
-                                        if (isFirstResource) {
-                                            return false; // thumbnail was not shown, do as usual
-                                        }
-                                        return new DrawableCrossFadeFactory<Drawable>(/* customize animation here */)
-                                                .build(false, false) // force crossFade() even if coming from memory cache
-                                                .animate(resource, (GlideAnimation.ViewAdapter) target);
+                                @Override public boolean onResourceReady(GlideDrawable resource, String model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
+                                    if (isFirstResource) {
+                                        return false; // thumbnail was not shown, do as usual
                                     }
-                                })
-                                //.fitCenter() // this is implicitly added when .into() is called if there's no scaleType in xml or the value is fitCenter there
-                                .into(holder.img);
+                                    return new DrawableCrossFadeFactory<Drawable>(/* customize animation here */)
+                                            .build(false, false) // force crossFade() even if coming from memory cache
+                                            .animate(resource, (GlideAnimation.ViewAdapter)target);
+                                }
+                            })
+                            //.fitCenter() // this is implicitly added when .into() is called if there's no scaleType in xml or the value is fitCenter there
+                            .into(holder.img);
 
-                    }
-                } catch (Exception e) {
+//                    }
+                }catch(Exception e){
                     e.printStackTrace();
                 }
 
@@ -1368,24 +1308,25 @@ public class FragmentRevisedLanding extends MyFragment implements View.OnClickLi
                                     true, "");
 
                             analytic.trackCustomDimension("Category", 1, arrServiceCategory.get(pos).service_name);
-                        } catch (Exception e) {
+                        }catch(Exception e){
                             e.printStackTrace();
                         }
 
                     }
                 });
 
-                if (url.contains("default")) {
+                if(url.contains("default")){
                     holder.img.setVisibility(View.GONE);
                     holder.t.setVisibility(View.VISIBLE);
-                } else {
+                }else{
                     holder.img.setVisibility(View.VISIBLE);
                     holder.t.setVisibility(View.GONE);
 
                 }
 
 
-            } catch (Exception e) {
+
+            }catch(Exception e){
                 e.printStackTrace();
             }
             return convertView;
@@ -1397,4 +1338,64 @@ public class FragmentRevisedLanding extends MyFragment implements View.OnClickLi
         }
 
     }
+
+    /**
+     * A simple pager adapter that represents 5 ScreenSlidePageFragment objects, in
+     * sequence.
+     */
+//    private class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
+//        public ScreenSlidePagerAdapter(FragmentManager fm) {
+//            super(fm);
+//        }
+//
+//        @Override
+//        public Fragment getItem(int position) {
+//            return new ScreenSlidePageFragment();
+//        }
+//
+//        @Override
+//        public int getCount() {
+//            return NUM_PAGES;
+//        }
+//    }
+//
+//    public class CustomPagerAdapter extends PagerAdapter {
+//
+//        private Context mContext;
+//
+//        public CustomPagerAdapter(Context context) {
+//            mContext = context;
+//        }
+//
+//        @Override
+//        public Object instantiateItem(ViewGroup collection, int position) {
+//            CustomPagerEnum customPagerEnum = CustomPagerEnum.values()[position];
+//            LayoutInflater inflater = LayoutInflater.from(mContext);
+//            ViewGroup layout = (ViewGroup) inflater.inflate(customPagerEnum.getLayoutResId(), collection, false);
+//            collection.addView(layout);
+//            return layout;
+//        }
+//
+//        @Override
+//        public void destroyItem(ViewGroup collection, int position, Object view) {
+//            collection.removeView((View) view);
+//        }
+//
+//        @Override
+//        public int getCount() {
+//            return CustomPagerEnum.values().length;
+//        }
+//
+//        @Override
+//        public boolean isViewFromObject(View view, Object object) {
+//            return view == object;
+//        }
+//
+//        @Override
+//        public CharSequence getPageTitle(int position) {
+//            CustomPagerEnum customPagerEnum = CustomPagerEnum.values()[position];
+//            return mContext.getString(customPagerEnum.getTitleResId());
+//        }
+//
+//    }
 }

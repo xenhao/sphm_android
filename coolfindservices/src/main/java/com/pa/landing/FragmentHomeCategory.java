@@ -15,6 +15,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -34,9 +35,11 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.pa.common.Config;
+import com.pa.common.GlideImageLoader;
 import com.pa.common.GlobalVar;
 import com.pa.common.ImageLoader;
 import com.pa.common.MyFragment;
@@ -66,26 +69,27 @@ public class FragmentHomeCategory extends MyFragment implements
 	GridView gridCat;
 	GridAdapter gridAdapter;
 	ImageLoader loader;
+	private GlideImageLoader glideImageLoader;
 	String country, state = "";
 
 	public FragmentHomeCategory(){
 
 	}
 
-    public static FragmentHomeCategory newInstance(String country) {
-        FragmentHomeCategory f = new FragmentHomeCategory();
+	public static FragmentHomeCategory newInstance(String country) {
+		FragmentHomeCategory f = new FragmentHomeCategory();
 
-        // Supply index input as an argument.
-        Bundle args = new Bundle();
-        args.putString("country", country);
-        f.setArguments(args);
+		// Supply index input as an argument.
+		Bundle args = new Bundle();
+		args.putString("country", country);
+		f.setArguments(args);
 
-        return f;
-    }
+		return f;
+	}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
+							 Bundle savedInstanceState) {
 		View v = inflater.inflate(R.layout.fragment_home, null);
 		v.findViewById(R.id.btnMenu).setOnClickListener(this);
 		v.findViewById(R.id.btnIntercom).setOnClickListener(this);
@@ -129,16 +133,17 @@ public class FragmentHomeCategory extends MyFragment implements
 		super.onActivityCreated(savedInstanceState);
 		analytic.trackScreen("Service Main Cat");
 		Tracer.d("Size arr list"+arrServiceCategory.size());;
-		
+
 		loader=new ImageLoader(getActivity());
-		
+		glideImageLoader = new GlideImageLoader();
+
 		if (isLogedIn()) {
 			initLogedIn();
 		} else {
 			initGuest();
 		}
 
-		
+
 		gridCat.setAdapter(gridAdapter);
 
 
@@ -150,7 +155,7 @@ public class FragmentHomeCategory extends MyFragment implements
 
 					@Override
 					public void onItemClick(AdapterView<?> paramAdapterView,
-							View paramView, int paramInt, long paramLong) {
+											View paramView, int paramInt, long paramLong) {
 						// TODO Auto-generated method stub
 						// simpleToast("ID:"+arrServiceCategory.get(paramInt).id);
 						prevKeyword = findService.getText().toString();
@@ -160,14 +165,14 @@ public class FragmentHomeCategory extends MyFragment implements
 
 			@Override
 			public void onTextChanged(CharSequence paramCharSequence,
-					int paramInt1, int paramInt2, int paramInt3) {
+									  int paramInt1, int paramInt2, int paramInt3) {
 				// TODO Auto-generated method stub
 
 			}
 
 			@Override
 			public void beforeTextChanged(CharSequence paramCharSequence,
-					int paramInt1, int paramInt2, int paramInt3) {
+										  int paramInt1, int paramInt2, int paramInt3) {
 				// TODO Auto-generated method stub
 				_lastTypeTime = new Date();
 			}
@@ -231,7 +236,7 @@ public class FragmentHomeCategory extends MyFragment implements
 		});
 	}
 
-    void initLogedIn() {
+	void initLogedIn() {
 		// btnAppointment.setImageResource(R.drawable.icon_appointment);
 		// btnAppointment.setOnClickListener(userListener);
 		bottomMenu1.setOnClickListener(userListener);
@@ -249,15 +254,15 @@ public class FragmentHomeCategory extends MyFragment implements
 	public void onClick(View v) {
 		// TODO Auto-generated method stub
 		switch (v.getId()) {
-		case R.id.btnMenu:
-			ActivityLanding parent = (ActivityLanding) getActivity();
-			parent.menuClick();
+			case R.id.btnMenu:
+				ActivityLanding parent = (ActivityLanding) getActivity();
+				parent.menuClick();
 
-			break;
-		case R.id.btnIntercom:
-            Intercom.client().displayConversationsList();
+				break;
+			case R.id.btnIntercom:
+				Intercom.client().displayConversationsList();
 
-			break;
+				break;
 		}
 	}
 
@@ -308,7 +313,7 @@ public class FragmentHomeCategory extends MyFragment implements
 
 				@Override
 				public void onFailure(int statusCode, Throwable error,
-						String content) {
+									  String content) {
 					// TODO Auto-generated method stub
 					super.onFailure(statusCode, error, content);
 				}
@@ -323,19 +328,19 @@ public class FragmentHomeCategory extends MyFragment implements
 		public void onClick(View v) {
 			// TODO Auto-generated method stub
 			switch (v.getId()) {
-			case R.id.btn_appointment:
-				GlobalVar.animateLogo = false;
-				Tracer.d("Appointment pressed");
-				Intent i = new Intent(getActivity(), ActivityLogin.class);
-				i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-				startActivity(i);
+				case R.id.btn_appointment:
+					GlobalVar.animateLogo = false;
+					Tracer.d("Appointment pressed");
+					Intent i = new Intent(getActivity(), ActivityLogin.class);
+					i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+					startActivity(i);
 
-				break;
+					break;
 
-			case R.id.bottom_menu_1:
-				listener.doFragmentChange(new FragmentGuestJob(), true,
-						"Guest post a job");
-				break;
+				case R.id.bottom_menu_1:
+					listener.doFragmentChange(new FragmentGuestJob(), true,
+							"Guest post a job");
+					break;
 			}
 		}
 	};
@@ -346,14 +351,14 @@ public class FragmentHomeCategory extends MyFragment implements
 		public void onClick(View v) {
 			// TODO Auto-generated method stub
 			switch (v.getId()) {
-			case R.id.btn_appointment:
-				simpleToast("coming soon");
-				break;
+				case R.id.btn_appointment:
+					simpleToast("coming soon");
+					break;
 
-			case R.id.bottom_menu_1:
-				listener.doFragmentChange(new FragmentUserPostAJob(), true,
-						"Guest post a job");
-				break;
+				case R.id.bottom_menu_1:
+					listener.doFragmentChange(new FragmentUserPostAJob(), true,
+							"Guest post a job");
+					break;
 
 			}
 		}
@@ -364,7 +369,7 @@ public class FragmentHomeCategory extends MyFragment implements
 		private ArrayList<String> resultList;
 
 		public ServiceAutoCompleteAdapter(Context context,
-				int textViewResourceId, ArrayList<String> arr) {
+										  int textViewResourceId, ArrayList<String> arr) {
 			super(context, textViewResourceId);
 			resultList = new ArrayList<String>(arr);
 		}
@@ -398,7 +403,7 @@ public class FragmentHomeCategory extends MyFragment implements
 
 				@Override
 				protected void publishResults(CharSequence constraint,
-						FilterResults results) {
+											  FilterResults results) {
 					if (results != null && results.count > 0) {
 						notifyDataSetChanged();
 					} else {
@@ -413,15 +418,15 @@ public class FragmentHomeCategory extends MyFragment implements
 	void getServiceData(int parentId) {
 		loadingInternetDialog.show();
 
-        String argState = getArguments().getString("country");
+		String argState = getArguments().getString("country");
 
-        if("singapore".equalsIgnoreCase(argState)){
-            country="sg";
-            state = "";
-        }else{
-            country="my";
-            state = argState.replace(malaysia_prefix, "");
-        }
+		if("singapore".equalsIgnoreCase(argState)){
+			country="sg";
+			state = "";
+		}else{
+			country="my";
+			state = argState.replace(malaysia_prefix, "");
+		}
 
 		Tracer.d(API_SERVICE_CATEGORY_HIERARCHICAL + "?parent_id=[" + parentId
 				+ "]");
@@ -450,7 +455,7 @@ public class FragmentHomeCategory extends MyFragment implements
 						.setPositiveButton("Yes",
 								new DialogInterface.OnClickListener() {
 									public void onClick(DialogInterface dialog,
-											int id) {
+														int id) {
 										// if this button is clicked, close
 										// current activity
 										getServiceData(0);
@@ -459,7 +464,7 @@ public class FragmentHomeCategory extends MyFragment implements
 						.setNegativeButton("No",
 								new DialogInterface.OnClickListener() {
 									public void onClick(DialogInterface dialog,
-											int id) {
+														int id) {
 										// if this button is clicked, just close
 										// the dialog box and do nothing
 										dialog.cancel();
@@ -482,10 +487,10 @@ public class FragmentHomeCategory extends MyFragment implements
 					ParserParentServiceCategoryNew parser = new ParserParentServiceCategoryNew(
 							result);
 					if ("success".equals(parser.status)) {
-                        if (parser.arr.get(0).children == null)
-                            arrServiceCategory = new ArrayList<ServiceCategory>();
-                        else
-						    arrServiceCategory = parser.arr.get(0).children;
+						if (parser.arr.get(0).children == null)
+							arrServiceCategory = new ArrayList<ServiceCategory>();
+						else
+							arrServiceCategory = parser.arr.get(0).children;
 
 						Tracer.d("Service size:" + arrServiceCategory.size());
 						// drawCategory();
@@ -496,16 +501,16 @@ public class FragmentHomeCategory extends MyFragment implements
 				}
 //				loadingInternetDialog.dismiss();
 			}
-			
+
 			@Override
-					public void onFinish() {
-						// TODO Auto-generated method stub
-						super.onFinish();
-						loadingInternetDialog.dismiss();
+			public void onFinish() {
+				// TODO Auto-generated method stub
+				super.onFinish();
+				loadingInternetDialog.dismiss();
 			}
 		});
 
-	
+
 
 	}
 
@@ -534,72 +539,79 @@ public class FragmentHomeCategory extends MyFragment implements
 		public View getView(int position, View convertView, ViewGroup parent) {
 			// TODO Auto-generated method stub
 			try{
-			if (convertView == null) {
-				convertView = inflater.inflate(R.layout.item_grid_category,
-						null);
-				holder = new GridHolder();
-				holder.t = (TextView) convertView.findViewById(R.id.txtCat);
-				holder.img = (ImageView) convertView.findViewById(R.id.img);
-				convertView.setTag(holder);
+				if (convertView == null) {
+					convertView = inflater.inflate(R.layout.item_grid_category,
+							null);
+					holder = new GridHolder();
+					holder.t = (TextView) convertView.findViewById(R.id.txtCat);
+					holder.img = (ImageView) convertView.findViewById(R.id.img);
+					convertView.setTag(holder);
 
-			} else {
-				holder = (GridHolder) convertView.getTag();
-			}
+				} else {
+					holder = (GridHolder) convertView.getTag();
+				}
 
-			String uri="";
-			if ("0".equals(pref.getPref(Config.SERVER))) {
-				uri = "http://" + DOMAIN_DEV + "/";
+				String uri="";
+				if ("0".equals(pref.getPref(Config.SERVER))) {
+					uri = "http://" + DOMAIN_DEV + "/";
 
-			} else if ("1".equals(pref.getPref(Config.SERVER))) {
+				} else if ("1".equals(pref.getPref(Config.SERVER))) {
 
-				uri = "http://" + DOMAIN_STAGING + "/";
-
-			}
-			else if ("2".equals(pref.getPref(Config.SERVER))) {
-
-				uri = "http://" + DOMAIN_LIVE + "/";
-
-			}
-			
-			String url=uri+arrServiceCategory.get(position).icon_image
-					+"?session_username="+pref.getPref(Config.PREF_USERNAME)
-					+"&active_session_token="+pref.getPref(Config.PREF_ACTIVE_SESSION_TOKEN)
-					;
-			Tracer.d(url);
-			holder.img.setTag(url);
-			loader.DisplayImage(url, getActivity(), holder.img,false);
-			
-			holder.t.setText(arrServiceCategory.get(position).service_name);
-
-			convertView.setTag(R.id.action_settings, position);
-			convertView.setOnClickListener(new OnClickListener() {
-
-				@Override
-				public void onClick(View v) {
-					// TODO Auto-generated method stub
-					int pos = (Integer) v.getTag(R.id.action_settings);
-					ServiceCategory sc=arrServiceCategory.get(pos);
-					ArrayList<ServiceCategory> arr = new ArrayList<ServiceCategory>();
-					arr.add(sc);
-					listener.doFragmentChange(new FragmentPostOpenBid(arr,country),
-							true, "");
-					
-					analytic.trackCustomDimension("Category",1, arrServiceCategory.get(pos).service_name);
+					uri = "http://" + DOMAIN_STAGING + "/";
 
 				}
-			});
-			
-			if(url.contains("default")){
-				holder.img.setVisibility(View.GONE);
-				holder.t.setVisibility(View.VISIBLE);
-			}else{
-				holder.img.setVisibility(View.VISIBLE);
-				holder.t.setVisibility(View.GONE);
+				else if ("2".equals(pref.getPref(Config.SERVER))) {
 
-			}
-			
-			
-		
+					uri = "http://" + DOMAIN_LIVE + "/";
+
+				}
+
+				String url=uri+arrServiceCategory.get(position).icon_image
+						+"?session_username="+pref.getPref(Config.PREF_USERNAME)
+						+"&active_session_token="+pref.getPref(Config.PREF_ACTIVE_SESSION_TOKEN)
+						;
+				Tracer.d(url);
+//			holder.img.setTag(url);
+//			loader.DisplayImage(url, getActivity(), holder.img,false);
+
+				//  Glide image loader
+				glideImageLoader.displayImageGlide(getActivity(), url, R.drawable.default_img, holder.img);
+//				if(TextUtils.isEmpty(arrServiceCategory.get(position).icon_image))
+//					Glide.with(getActivity()).load(R.drawable.default_img).into(holder.img);
+//				else
+//					Glide.with(getActivity()).load(url).into(holder.img);
+
+				holder.t.setText(arrServiceCategory.get(position).service_name);
+
+				convertView.setTag(R.id.action_settings, position);
+				convertView.setOnClickListener(new OnClickListener() {
+
+					@Override
+					public void onClick(View v) {
+						// TODO Auto-generated method stub
+						int pos = (Integer) v.getTag(R.id.action_settings);
+						ServiceCategory sc=arrServiceCategory.get(pos);
+						ArrayList<ServiceCategory> arr = new ArrayList<ServiceCategory>();
+						arr.add(sc);
+						listener.doFragmentChange(new FragmentPostOpenBid(arr,country),
+								true, "");
+
+						analytic.trackCustomDimension("Category",1, arrServiceCategory.get(pos).service_name);
+
+					}
+				});
+
+				if(url.contains("default")){
+					holder.img.setVisibility(View.GONE);
+					holder.t.setVisibility(View.VISIBLE);
+				}else{
+					holder.img.setVisibility(View.VISIBLE);
+					holder.t.setVisibility(View.GONE);
+
+				}
+
+
+
 			}catch(Exception e){
 				e.printStackTrace();
 			}

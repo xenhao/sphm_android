@@ -58,6 +58,7 @@ import com.appsflyer.AppsFlyerLib;
 import com.braintreepayments.api.dropin.BraintreePaymentActivity;
 import com.braintreepayments.api.dropin.Customization;
 import com.braintreepayments.api.dropin.Customization.CustomizationBuilder;
+import com.bumptech.glide.Glide;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
@@ -70,6 +71,7 @@ import com.pa.common.Codes;
 import com.pa.common.Config;
 import com.pa.common.DocumentType;
 import com.pa.common.FormUtils;
+import com.pa.common.GlideImageLoader;
 import com.pa.common.ImageLoader;
 import com.pa.common.ImageLoaderSecure;
 import com.pa.common.ImageViewFitWidth;
@@ -80,7 +82,6 @@ import com.pa.common.ProfilUtils;
 import com.pa.common.TimeUtils;
 import com.pa.common.Tracer;
 import com.pa.job.FragmentPostOpenBid;
-import com.pa.landing.ActivityLanding;
 import com.pa.order.FragmentOrder;
 import com.pa.order.FragmentOrderDetail;
 import com.pa.parser.ParserActivationStatus;
@@ -156,12 +157,13 @@ public class FragmentBidDetail extends MyFragment implements OnClickListener,
 
 	LinearLayout wrapperGallery;
 	TextView galleryParent;
-    LinearLayout wrapperComment;
+	LinearLayout wrapperComment;
 	TextView commentParent;
 	TextView viewMoreComments;
 	LinearLayout contentGallery;
 	ImageLoaderSecure imageLoader;
 	ImageLoader imageLoaderNormal;
+	private GlideImageLoader glideImageLoader;
 	QuickAction mQuickAction;
 	TextView txtOtherComment;
 	ImageViewFitWidth imgLogo;
@@ -218,7 +220,7 @@ public class FragmentBidDetail extends MyFragment implements OnClickListener,
 	};
 
 	void getDataV2() {
-        Log.d("Flow", "getDataV2() has called");
+		Log.d("Flow", "getDataV2() has called");
 		loadingInternetDialog.show();
 		// Tracer.d(Config.API_BID_DETAIL + "?service_request_serial=" +
 		// serial);
@@ -260,9 +262,15 @@ public class FragmentBidDetail extends MyFragment implements OnClickListener,
 											+ "&active_session_token="
 											+ pref.getPref(Config.PREF_ACTIVE_SESSION_TOKEN);
 
-									imageLoaderNormal.DisplayImage(url,
-											getActivity(), imgLogo);
-									imgLogo.setTag(url);
+//									imageLoaderNormal.DisplayImage(url,
+//											getActivity(), imgLogo);
+//									imgLogo.setTag(url);
+									//	change to Glide for image loading
+									glideImageLoader.displayImageGlide(getActivity(), url, R.drawable.default_img, imgLogo);
+//									if(TextUtils.isEmpty(parser.service_icon))
+//										Glide.with(getActivity()).load(R.drawable.default_img).into(imgLogo);
+//									else
+//										Glide.with(getActivity()).load(url).into(imgLogo);
 									detail = item.arrBidDetail.get(0);
 									arrDetail = item.arrBidDetail;
 									drawData(detail);
@@ -270,19 +278,19 @@ public class FragmentBidDetail extends MyFragment implements OnClickListener,
 									txtCloseTime
 											.setText("Expiring in"
 													+ strTimeDiff(
-															new Date(),
-															new Date(
-																	1000 * Long
-																			.parseLong(item.service_request_stop))));
+													new Date(),
+													new Date(
+															1000 * Long
+																	.parseLong(item.service_request_stop))));
 
 									txtAddress
 											.setText(item.service_request_address
 													+ " , "
 													+ getCityAddress(
-															item.service_request_city,
-															item.service_request_state,
-															item.service_request_country,
-															item.service_request_postal_code));
+													item.service_request_city,
+													item.service_request_state,
+													item.service_request_country,
+													item.service_request_postal_code));
 									txtFirstDate
 											.setText(getPreferredTime(item.preferred_time1_start));
 									txtSecondDate
@@ -303,7 +311,7 @@ public class FragmentBidDetail extends MyFragment implements OnClickListener,
 									if ("submitted"
 											.equals(item.service_request_status)
 											|| "under_consideration"
-													.equals(item.service_request_status)) {
+											.equals(item.service_request_status)) {
 										txtBidStatus
 												.setBackgroundColor(getResources()
 														.getColor(
@@ -335,9 +343,15 @@ public class FragmentBidDetail extends MyFragment implements OnClickListener,
 												+ pref.getPref(Config.PREF_ACTIVE_SESSION_TOKEN)
 												+ "&session_username="
 												+ pref.getPref(Config.PREF_USERNAME);
-										imageLoader.DisplayImage(url2,
-												getActivity(), img);
-										img.setTag(url2);
+//										imageLoader.DisplayImage(url2,
+//												getActivity(), img);
+//										img.setTag(url2);
+										//	change to Glide for image loading
+										glideImageLoader.displayImageGlide(getActivity(), url2, R.drawable.default_img, img);
+//										if(TextUtils.isEmpty(uri))
+//											Glide.with(getActivity()).load(R.drawable.default_img).into(img);
+//										else
+//											Glide.with(getActivity()).load(url2).into(img);
 
 										Tracer.d("debug", url);
 										contentGallery.addView(attach);
@@ -372,7 +386,7 @@ public class FragmentBidDetail extends MyFragment implements OnClickListener,
 
 					@Override
 					public void onFailure(int arg0, Header[] arg1, byte[] arg2,
-							Throwable arg3) {
+										  Throwable arg3) {
 						// TODO Auto-generated method stub
 						super.onFailure(arg0, arg1, arg2, arg3);
 
@@ -427,73 +441,73 @@ public class FragmentBidDetail extends MyFragment implements OnClickListener,
 
 	}
 
-    ArrayList<CommentResult.Comment> bidComments = new ArrayList<>();
+	ArrayList<CommentResult.Comment> bidComments = new ArrayList<>();
 
-    void getComments() {
-        Log.d("Flow", "getComments() has called");
+	void getComments() {
+		Log.d("Flow", "getComments() has called");
 
-        RequestParams params = new RequestParams();
-        params.add("service_request_serial", item.serial);
-        params.add("session_username", pref.getPref(Config.PREF_USERNAME));
-        params.add("active_session_token",
-                pref.getPref(Config.PREF_ACTIVE_SESSION_TOKEN));
+		RequestParams params = new RequestParams();
+		params.add("service_request_serial", item.serial);
+		params.add("session_username", pref.getPref(Config.PREF_USERNAME));
+		params.add("active_session_token",
+				pref.getPref(Config.PREF_ACTIVE_SESSION_TOKEN));
 
-        PARestClient.get(pref.getPref(Config.SERVER),
-                Config.API_BID_COMMENTS, params,
-                new AsyncHttpResponseHandler() {
-                    @Override
-                    public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                        super.onSuccess(statusCode, headers, responseBody);
+		PARestClient.get(pref.getPref(Config.SERVER),
+				Config.API_BID_COMMENTS, params,
+				new AsyncHttpResponseHandler() {
+					@Override
+					public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+						super.onSuccess(statusCode, headers, responseBody);
 
-                        Log.d(TAG, "Response " + new String(responseBody));
+						Log.d(TAG, "Response " + new String(responseBody));
 
-                        CommentResult result = new ParserComment(new String(responseBody))
-                                .getData();
+						CommentResult result = new ParserComment(new String(responseBody))
+								.getData();
 
-                        bidComments = result.result;
+						bidComments = result.result;
 
-                        if (bidComments.size() == 0) return;
+						if (bidComments.size() == 0) return;
 
-                        int numberOfCommentToDisplay = 2;
-                        int start = bidComments.size() - numberOfCommentToDisplay;
-                        if (start < 0) start = 0;
+						int numberOfCommentToDisplay = 2;
+						int start = bidComments.size() - numberOfCommentToDisplay;
+						if (start < 0) start = 0;
 
-                        for (int i = start; i < bidComments.size(); i++) {
-                            CommentResult.Comment comment = bidComments.get(i);
+						for (int i = start; i < bidComments.size(); i++) {
+							CommentResult.Comment comment = bidComments.get(i);
 
-                            View commentView = View.inflate(getActivity(), R.layout.item_comment, null);
+							View commentView = View.inflate(getActivity(), R.layout.item_comment, null);
 
-                            TextView author = ((TextView) commentView.findViewById(R.id.commentAuthor));
-                            author.setTextColor(getResources().getColor(R.color.black));
-                            if (comment.author.equalsIgnoreCase("consumer"))
-                                author.setText("You");
-                            else
-                                author.setText(comment.author);
-                            ((TextView) commentView.findViewById(R.id.commentText)).setText(comment.comment);
-                            ((TextView) commentView.findViewById(R.id.commentDate)).setText(comment.date);
+							TextView author = ((TextView) commentView.findViewById(R.id.commentAuthor));
+							author.setTextColor(getResources().getColor(R.color.black));
+							if (comment.author.equalsIgnoreCase("consumer"))
+								author.setText("You");
+							else
+								author.setText(comment.author);
+							((TextView) commentView.findViewById(R.id.commentText)).setText(comment.comment);
+							((TextView) commentView.findViewById(R.id.commentDate)).setText(comment.date);
 
-                            wrapperComment.addView(commentView);
-                        }
+							wrapperComment.addView(commentView);
+						}
 
-                        if (bidComments.size() > numberOfCommentToDisplay) {
-                            viewMoreComments.setVisibility(View.VISIBLE);
-                            viewMoreComments.setText(Html.fromHtml("<u>View " + (bidComments.size() - numberOfCommentToDisplay) + " earlier comments</u>"));
-                        }
+						if (bidComments.size() > numberOfCommentToDisplay) {
+							viewMoreComments.setVisibility(View.VISIBLE);
+							viewMoreComments.setText(Html.fromHtml("<u>View " + (bidComments.size() - numberOfCommentToDisplay) + " earlier comments</u>"));
+						}
 
-                    }
+					}
 
-                    @Override
-                    public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-                        super.onFailure(statusCode, headers, responseBody, error);
+					@Override
+					public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+						super.onFailure(statusCode, headers, responseBody, error);
 
-                        String errorContent = new String(responseBody);
-                        Log.d("Comments", "Error " + errorContent);
-                    }
-                });
-    }
+						String errorContent = new String(responseBody);
+						Log.d("Comments", "Error " + errorContent);
+					}
+				});
+	}
 
 	void getData() {
-        Log.d("Flow", "getData() has called");
+		Log.d("Flow", "getData() has called");
 		try {
 			loadingInternetDialog.show();
 			Tracer.d(Config.API_BID_DETAIL + "?service_request_serial="
@@ -533,9 +547,15 @@ public class FragmentBidDetail extends MyFragment implements OnClickListener,
 												+ "&active_session_token="
 												+ pref.getPref(Config.PREF_ACTIVE_SESSION_TOKEN);
 										Tracer.d("Detail" + url);
-										imgLogo.setTag(url);
-										imageLoaderNormal.DisplayImage(url,
-												getActivity(), imgLogo);
+//										imgLogo.setTag(url);
+//										imageLoaderNormal.DisplayImage(url,
+//												getActivity(), imgLogo);
+										//	change to Glide for image loading
+										glideImageLoader.displayImageGlide(getActivity(),url, R.drawable.default_img, imgLogo);
+//										if(TextUtils.isEmpty(parser.service_icon))
+//											Glide.with(getActivity()).load(R.drawable.default_img).into(imgLogo);
+//										else
+//											Glide.with(getActivity()).load(url).into(imgLogo);
 
 										Tracer.d("Sukses bid detail");
 										Tracer.d(result);
@@ -543,14 +563,14 @@ public class FragmentBidDetail extends MyFragment implements OnClickListener,
 												+ parser.getArr().size());
 										// detail = parser.getArr().get(0);
 										item.arrBidDetail = parser.getArr();// new
-																			// ArrayList<BidDetail>();
+										// ArrayList<BidDetail>();
 										// item.arrBidDetail.add(detail);
 										arrDetail = item.arrBidDetail;
 
 										item.highest_bid = (parser.highest_bid);
 										item.lowest_bid = (parser.lowest_bid);
 										item.bid_count = (parser.bid_count);
-                                        item.state_short = parser.state_short;
+										item.state_short = parser.state_short;
 										cancellationPolicy = parser.cancellation_policy;
 
 										drawData(detail);
@@ -564,7 +584,7 @@ public class FragmentBidDetail extends MyFragment implements OnClickListener,
 
 						@Override
 						public void onFailure(int arg0, Header[] arg1,
-								byte[] arg2, Throwable arg3) {
+											  byte[] arg2, Throwable arg3) {
 							// TODO Auto-generated method stub
 							super.onFailure(arg0, arg1, arg2, arg3);
 
@@ -714,16 +734,16 @@ public class FragmentBidDetail extends MyFragment implements OnClickListener,
 	private TextView txtSecondDate;
 
 	private void showServiceDetail(String service_name,
-			String service_detail_description) {
+								   String service_detail_description) {
 		OnClickListener clickListener = new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				switch (v.getId()) {
-				case R.id.btnBack:
-					dialogServiceDetailDescription.dismiss();
-					break;
+					case R.id.btnBack:
+						dialogServiceDetailDescription.dismiss();
+						break;
 				}
 			}
 		};
@@ -758,9 +778,9 @@ public class FragmentBidDetail extends MyFragment implements OnClickListener,
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
+							 Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
-        View v = inflater.inflate(R.layout.fragment_service_request_detail,
+		View v = inflater.inflate(R.layout.fragment_service_request_detail,
 				null);
 		if (null != item && !item.serial.contains("VP-")
 				|| !TextUtils.isEmpty(serial)) {
@@ -804,12 +824,12 @@ public class FragmentBidDetail extends MyFragment implements OnClickListener,
 			contentGallery = (LinearLayout) v
 					.findViewById(R.id.gallery_content);
 			galleryParent = (TextView) v.findViewById(R.id.galleryParent);
-            wrapperComment = (LinearLayout) v
-                    .findViewById(R.id.wrapper_comment);
-            commentParent = (TextView) v.findViewById(R.id.commentParent);
-            viewMoreComments = (TextView) v.findViewById(R.id.view_more_comments);
-            viewMoreComments.setOnClickListener(this);
-            v.findViewById(R.id.post_new_comment).setOnClickListener(this);
+			wrapperComment = (LinearLayout) v
+					.findViewById(R.id.wrapper_comment);
+			commentParent = (TextView) v.findViewById(R.id.commentParent);
+			viewMoreComments = (TextView) v.findViewById(R.id.view_more_comments);
+			viewMoreComments.setOnClickListener(this);
+			v.findViewById(R.id.post_new_comment).setOnClickListener(this);
 
 			txtDescription.setOnClickListener(this);
 			v.findViewById(R.id.wrapper_refresh).setOnClickListener(
@@ -952,7 +972,7 @@ public class FragmentBidDetail extends MyFragment implements OnClickListener,
 					.setOnClickListener(accordionListener);
 
 			galleryParent.setOnClickListener(accordionListener);
-            commentParent.setOnClickListener(accordionListener);
+			commentParent.setOnClickListener(accordionListener);
 
 			// showMerchantProfilDialog();
 			// getMerchantProfil("aircon1");
@@ -966,12 +986,12 @@ public class FragmentBidDetail extends MyFragment implements OnClickListener,
 			if (item != null) {
 				drawItem();
 				getData();
-                getComments();
+				getComments();
 
 			} else if (serial.length() > 0) {
 				try {
 					getDataV2();
-                    getComments();
+					getComments();
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -997,8 +1017,14 @@ public class FragmentBidDetail extends MyFragment implements OnClickListener,
 					+ "?active_session_token="
 					+ pref.getPref(Config.PREF_ACTIVE_SESSION_TOKEN)
 					+ "&session_username=" + pref.getPref(Config.PREF_USERNAME);
-			imageLoader.DisplayImage(url, getActivity(), img);
-			img.setTag(url);
+//			imageLoader.DisplayImage(url, getActivity(), img);
+//			img.setTag(url);
+			//	change to Glide for image loading
+			glideImageLoader.displayImageGlide(getActivity(), uri, R.drawable.default_img, img);
+//			if(TextUtils.isEmpty(uri))
+//				Glide.with(getActivity()).load(R.drawable.default_img).into(img);
+//			else
+//				Glide.with(getActivity()).load(url).into(img);
 
 			Tracer.d("debug", url);
 			contentGallery.addView(v);
@@ -1041,10 +1067,10 @@ public class FragmentBidDetail extends MyFragment implements OnClickListener,
 
 		if ("taken".equals(item.service_request_status)
 				|| "closed".equals(item.service_request_status)
-                || "canceled".equals(item.service_request_status)
-                || "expired".equals(item.service_request_status)) {
-            wrapperAction.setVisibility(View.GONE);
-            getProposal();
+				|| "canceled".equals(item.service_request_status)
+				|| "expired".equals(item.service_request_status)) {
+			wrapperAction.setVisibility(View.GONE);
+			getProposal();
 		} else {
 			wrapperAction.setVisibility(View.VISIBLE);
 
@@ -1058,15 +1084,15 @@ public class FragmentBidDetail extends MyFragment implements OnClickListener,
 
 		txtCloseTime.setText("closing in "
 				+ strTimeDiff(
-						new Date(),
-						new Date(1000 * closingTime)));
+				new Date(),
+				new Date(1000 * closingTime)));
 
 		txtAddress.setText(item.service_request_address
 				+ " , "
 				+ getCityAddress(item.service_request_city,
-						item.service_request_state,
-						item.service_request_country,
-						item.service_request_postal_code));
+				item.service_request_state,
+				item.service_request_country,
+				item.service_request_postal_code));
 		txtFirstDate.setText(getPreferredTime(item.preferred_time1_start));
 		txtSecondDate.setText(getPreferredTime(item.preferred_time2_start));
 		txtBudget.setText(currency + " "
@@ -1113,6 +1139,7 @@ public class FragmentBidDetail extends MyFragment implements OnClickListener,
 
 		imageLoader = new ImageLoaderSecure(getActivity());
 		imageLoaderNormal = new ImageLoader(getActivity());
+		glideImageLoader = new GlideImageLoader();
 
 //		if ("0".equals(pref.getPref(Config.SERVER))) {
 //			MY_URI = "http://" + DOMAIN_DEV + "/";
@@ -1127,59 +1154,59 @@ public class FragmentBidDetail extends MyFragment implements OnClickListener,
 //			MY_URI = "http://" + DOMAIN_LIVE + "/";
 //
 //		}
-		
+
 		MY_URI=PARestClient.getAbsoluteUrl(pref.getPref(Config.SERVER), "");
 	}
 
 	@Override
-	public void onClick(View v) {		//	REAL ONCLICK
+	public void onClick(View v) {		// REAL ONCLICK
 		// TODO Auto-generated method stub
 		switch (v.getId()) {
-		case R.id.btnOfferVO:
-			doPayWithBraintree();
-			break;
-		case R.id.btnBack:
-		// if (item != null) {
-		// getActivity().getSupportFragmentManager().popBackStack();
-		// } else
-		{
+			case R.id.btnOfferVO:
+				doPayWithBraintree();
+				break;
+			case R.id.btnBack:
+				// if (item != null) {
+				// getActivity().getSupportFragmentManager().popBackStack();
+				// } else
+			{
 //			listener.doFragmentChange(new FragmentBid(), true, "");
-			getActivity().getSupportFragmentManager().popBackStackImmediate();
-		}
-			break;
-
-		case R.id.btnHome:
-//			((ActivityLanding) getActivity()).selectItem(0);
-			for(int i = getActivity().getSupportFragmentManager().getBackStackEntryCount(); i > 1; i--)
 				getActivity().getSupportFragmentManager().popBackStackImmediate();
+			}
 			break;
 
-		case R.id.btnCancel2:
-			// close bid
-			showCloseDialog();
-			break;
-		case R.id.btnNext2:
-			// cancel Request
-			showCancelBid();
-			break;
-		case R.id.txtDescription:
-			View view = inflater.inflate(R.layout.quickaction_for_title, null);
-			TextView tv = (TextView) view.findViewById(R.id.txt_content);
-			tv.setText(item.title);
-			mQuickAction.setRootView(view);
+			case R.id.btnHome:
+//			((ActivityLanding) getActivity()).selectItem(0);
+				for(int i = getActivity().getSupportFragmentManager().getBackStackEntryCount(); i > 1; i--)
+					getActivity().getSupportFragmentManager().popBackStackImmediate();
+				break;
 
-			mQuickAction.show(v);
-			break;
-		case R.id.post_new_comment:
-		case R.id.view_more_comments:
-            Fragment fragment = new FragmentBidComment();
-            Bundle bundle = new Bundle();
-            bundle.putParcelableArrayList(FragmentBidComment.ARG_COMMENTS, bidComments);
-            bundle.putString(FragmentBidComment.ARG_SERIAL, item.serial);
-            fragment.setArguments(bundle);
+			case R.id.btnCancel2:
+				// close bid
+				showCloseDialog();
+				break;
+			case R.id.btnNext2:
+				// cancel Request
+				showCancelBid();
+				break;
+			case R.id.txtDescription:
+				View view = inflater.inflate(R.layout.quickaction_for_title, null);
+				TextView tv = (TextView) view.findViewById(R.id.txt_content);
+				tv.setText(item.title);
+				mQuickAction.setRootView(view);
 
-            listener.doFragmentChange(fragment, true, "Bid Comment");
-			break;
+				mQuickAction.show(v);
+				break;
+			case R.id.post_new_comment:
+			case R.id.view_more_comments:
+				Fragment fragment = new FragmentBidComment();
+				Bundle bundle = new Bundle();
+				bundle.putParcelableArrayList(FragmentBidComment.ARG_COMMENTS, bidComments);
+				bundle.putString(FragmentBidComment.ARG_SERIAL, item.serial);
+				fragment.setArguments(bundle);
+
+				listener.doFragmentChange(fragment, true, "Bid Comment");
+				break;
 		}
 	}
 
@@ -1214,16 +1241,16 @@ public class FragmentBidDetail extends MyFragment implements OnClickListener,
 						try {
 							Tracer.d("Proposal");
 							ParserProposal parser = new ParserProposal(content);
-                            Log.d("Proposal", content);
+							Log.d("Proposal", content);
 							if ("success".equals(parser.status)) {
 								arrProposal.clear();
 								arrProposal = parser.getData();
-                                Collections.sort(arrProposal,
+								Collections.sort(arrProposal,
 										new ProposalComparator());
 
-                                Log.d("Proposal", "status " + item.service_request_status);
-                                if (!"expired".equals(item.service_request_status) && !"taken".equals(item.service_request_status))
-								    drawProposal();
+								Log.d("Proposal", "status " + item.service_request_status);
+								if (!"expired".equals(item.service_request_status) && !"taken".equals(item.service_request_status))
+									drawProposal();
 								loadingInternetDialog.dismiss();
 							} else
 
@@ -1256,13 +1283,13 @@ public class FragmentBidDetail extends MyFragment implements OnClickListener,
 															ArrayList<ServiceCategory> arr = new ArrayList<ServiceCategory>();
 															arr.add(sc);
 
-                                                            listener.doFragmentChange(new FragmentPostOpenBid(
-                                                                    arr,
-                                                                    item.currency,
-                                                                    item.service_request_country,
-                                                                    item.service_request_state,
-                                                                    item.state_short,
-                                                                    item.service_request_city), true, "");
+															listener.doFragmentChange(new FragmentPostOpenBid(
+																	arr,
+																	item.currency,
+																	item.service_request_country,
+																	item.service_request_state,
+																	item.state_short,
+																	item.service_request_city), true, "");
 
 														}
 													});
@@ -1298,20 +1325,20 @@ public class FragmentBidDetail extends MyFragment implements OnClickListener,
 							// listener.doFragmentChange(
 							// new FragmentPostOpenBid(), true,
 							// "Post open bid");
-                            Tracer.d("POST REVISE" + detail.service_id);
+							Tracer.d("POST REVISE" + detail.service_id);
 							ServiceCategory sc = new ServiceCategory();
 							sc.id = item.id;
 							sc.service_name = item.service_category_name;
 							ArrayList<ServiceCategory> arr = new ArrayList<ServiceCategory>();
-                            arr.add(sc);
+							arr.add(sc);
 
 							listener.doFragmentChange(new FragmentPostOpenBid(
 									arr,
-                                    item.currency,
-                                    item.service_request_country,
-                                    item.service_request_state,
-                                    item.state_short,
-                                    item.service_request_city), true, "");
+									item.currency,
+									item.service_request_country,
+									item.service_request_state,
+									item.state_short,
+									item.service_request_city), true, "");
 
 						}
 					});
@@ -1490,23 +1517,23 @@ public class FragmentBidDetail extends MyFragment implements OnClickListener,
 	}
 
 	Dialog dialogMerchantOffer;
-    EditText inputPromoCode;
-    float discountedAmount = 0;
-    String validatedPromoCode = "", creditSerial = "";
-    View containerFreeCredits, containerPromoCode;
-    TextView freeCredits;
-    Button btnCredits;
-    AccordionGroup accordionGroup;
-    boolean isNoPayment = false;
+	EditText inputPromoCode;
+	float discountedAmount = 0;
+	String validatedPromoCode = "", creditSerial = "";
+	View containerFreeCredits, containerPromoCode;
+	TextView freeCredits;
+	Button btnCredits;
+	AccordionGroup accordionGroup;
+	boolean isNoPayment = false;
 
 	void showMerchantOffer() {
 		analytic.trackScreen("Merchant Offer Summary");
-		
+
 		final Proposal proposal = arrProposal.get(selectedProposal);
 
-        discountedAmount = 0;
-        validatedPromoCode = "";
-        creditSerial = "";
+		discountedAmount = 0;
+		validatedPromoCode = "";
+		creditSerial = "";
 
 		View v = inflater.inflate(R.layout.dialog_merchant_offer_detail, null);
 		tnc = (TextView) v.findViewById(R.id.tnc);
@@ -1578,8 +1605,8 @@ public class FragmentBidDetail extends MyFragment implements OnClickListener,
 
 		TextView txtRemarks = (TextView) v.findViewById(R.id.txtRemarks);
 		txtRemarks.setText(TextUtils.isEmpty(proposal.service_description) ?
-                "No remarks from merchant" :
-                proposal.service_description);
+				"No remarks from merchant" :
+				proposal.service_description);
 
 		TextView txtCancel = (TextView) v.findViewById(R.id.txtCancel);
 		txtCancel.setText(FormUtils.printEmptyFormValue(cancellationPolicy));
@@ -1589,10 +1616,10 @@ public class FragmentBidDetail extends MyFragment implements OnClickListener,
 			@Override
 			public void onClick(View v) {
 
-                if (isNoPayment) {
-                    doNoPayment();
-                    return;
-                }
+				if (isNoPayment) {
+					doNoPayment();
+					return;
+				}
 
 				// TODO Auto-generated method stub
 				// showConfirmAMerchant();
@@ -1601,30 +1628,30 @@ public class FragmentBidDetail extends MyFragment implements OnClickListener,
 						getActivity());
 				builder.setTitle("Alert");
 				builder.setMessage("By Accepting this offer you will be charged ( "
-                        + txtPrice.getText().toString()
-                        + " ) for this job to your credit card. Click yes to confirm.");
+						+ txtPrice.getText().toString()
+						+ " ) for this job to your credit card. Click yes to confirm.");
 				builder.setNegativeButton("YES",
-                        new DialogInterface.OnClickListener() {
+						new DialogInterface.OnClickListener() {
 
-                            @Override
-                            public void onClick(DialogInterface dialog,
-                                                int which) {
-                                // TODO Auto-generated method stub
-                                // doOrder();
-                                doPayment();
-                            }
-                        });
+							@Override
+							public void onClick(DialogInterface dialog,
+												int which) {
+								// TODO Auto-generated method stub
+								// doOrder();
+								doPayment();
+							}
+						});
 
 				builder.setPositiveButton("NO",
-                        new DialogInterface.OnClickListener() {
+						new DialogInterface.OnClickListener() {
 
-                            @Override
-                            public void onClick(DialogInterface dialog,
-                                                int which) {
-                                // TODO Auto-generated method stub
-                                dialog.dismiss();
-                            }
-                        });
+							@Override
+							public void onClick(DialogInterface dialog,
+												int which) {
+								// TODO Auto-generated method stub
+								dialog.dismiss();
+							}
+						});
 
 				builder.show();
 			}
@@ -1644,9 +1671,9 @@ public class FragmentBidDetail extends MyFragment implements OnClickListener,
 		txtAddress.setText(item.service_request_address
 				+ ","
 				+ getCityAddress(item.service_request_city,
-						item.service_request_state,
-						item.service_request_country,
-						item.service_request_postal_code));
+				item.service_request_state,
+				item.service_request_country,
+				item.service_request_postal_code));
 
 		txtFirstPreferDate
 				.setText(getPreferredTime(proposal.preferred_time1_start,
@@ -1682,14 +1709,14 @@ public class FragmentBidDetail extends MyFragment implements OnClickListener,
 				.printEmptyFormValue(item.other_remarks));
 		wrapperServiceDetail.addView(otherComments);
 
-		
+
 		//verified
 		View verified=v.findViewById(R.id.verified);
 		if("Y".equals(proposal.is_verified)){
 			verified.setVisibility(View.VISIBLE);
 		}else{
 			verified.setVisibility(View.GONE);
-			
+
 		}
 		v.findViewById(R.id.btnBack).setOnClickListener(new OnClickListener() {
 
@@ -1697,7 +1724,7 @@ public class FragmentBidDetail extends MyFragment implements OnClickListener,
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				dialogMerchantOffer.hide();
-                hideKeyboard(inputPromoCode);
+				hideKeyboard(inputPromoCode);
 			}
 		});
 		v.findViewById(R.id.btnBack2).setOnClickListener(new OnClickListener() {
@@ -1718,259 +1745,265 @@ public class FragmentBidDetail extends MyFragment implements OnClickListener,
 					}
 				});
 
-        LinearLayout merchantGallery = (LinearLayout) v.findViewById(R.id.merchant_gallery);
-        for (String uri : proposal.arrAttachment) {
-            View vPhoto = inflater.inflate(R.layout.item_upload_photo, null);
-            ImageView img = (ImageView) vPhoto.findViewById(R.id.img);
+		LinearLayout merchantGallery = (LinearLayout) v.findViewById(R.id.merchant_gallery);
+		for (String uri : proposal.arrAttachment) {
+			View vPhoto = inflater.inflate(R.layout.item_upload_photo, null);
+			ImageView img = (ImageView) vPhoto.findViewById(R.id.img);
 
-            String url = PARestClient.getAbsoluteUrl(
-                    pref.getPref(Config.SERVER), Config.API_SERVICE_IMAGE)
-                    + "/"
-                    + uri
-                    + "?active_session_token="
-                    + pref.getPref(Config.PREF_ACTIVE_SESSION_TOKEN)
-                    + "&session_username=" + pref.getPref(Config.PREF_USERNAME);
-            imageLoader.DisplayImage(url, getActivity(), img);
-            img.setTag(url);
+			String url = PARestClient.getAbsoluteUrl(
+					pref.getPref(Config.SERVER), Config.API_SERVICE_IMAGE)
+					+ "/"
+					+ uri
+					+ "?active_session_token="
+					+ pref.getPref(Config.PREF_ACTIVE_SESSION_TOKEN)
+					+ "&session_username=" + pref.getPref(Config.PREF_USERNAME);
+//            imageLoader.DisplayImage(url, getActivity(), img);
+//            img.setTag(url);
+			//	change to Glide for image loading
+			glideImageLoader.displayImageGlide(getActivity(), url, R.drawable.default_img, img);
+//			if(TextUtils.isEmpty(uri))
+//				Glide.with(getActivity()).load(R.drawable.default_img).into(img);
+//			else
+//				Glide.with(getActivity()).load(url).into(img);
 
-            Tracer.d("debug", url);
-            merchantGallery.addView(vPhoto);
+			Tracer.d("debug", url);
+			merchantGallery.addView(vPhoto);
 
-            vPhoto.setOnClickListener(new OnClickListener() {
+			vPhoto.setOnClickListener(new OnClickListener() {
 
-                @Override
-                public void onClick(View v) {
-                    showDialogPhotoPreview(v);
-                }
-            });
-        }
+				@Override
+				public void onClick(View v) {
+					showDialogPhotoPreview(v);
+				}
+			});
+		}
 
-        if (merchantGallery.getChildCount() < 1)
-            ((View)merchantGallery.getParent()).setVisibility(View.GONE);
+		if (merchantGallery.getChildCount() < 1)
+			((View)merchantGallery.getParent()).setVisibility(View.GONE);
 
-        inputPromoCode = (EditText) v.findViewById(R.id.inputPromoCode);
-        v.findViewById(R.id.btnPromoCode).setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String promoCode = inputPromoCode.getText().toString();
+		inputPromoCode = (EditText) v.findViewById(R.id.inputPromoCode);
+		v.findViewById(R.id.btnPromoCode).setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				String promoCode = inputPromoCode.getText().toString();
 
-                if ("".equals(promoCode)) {
-                    showMessageDialog("The Promo Code field is required");
-                    return;
-                }
+				if ("".equals(promoCode)) {
+					showMessageDialog("The Promo Code field is required");
+					return;
+				}
 
-                hideKeyboard(inputPromoCode);
+				hideKeyboard(inputPromoCode);
 
-                validatePromoCode(promoCode, v.getRootView());
-            }
-        });
+				validatePromoCode(promoCode, v.getRootView());
+			}
+		});
 
-        accordionGroup = new AccordionGroup((LinearLayout) v.findViewById(R.id.accordion));
-        accordionGroup.setup();
+		accordionGroup = new AccordionGroup((LinearLayout) v.findViewById(R.id.accordion));
+		accordionGroup.setup();
 
-        containerFreeCredits = v.findViewById(R.id.containerFreeCredits);
-        containerPromoCode = v.findViewById(R.id.containerPromoCode);
-        freeCredits = (TextView) v.findViewById(R.id.freeCredits);
-        btnCredits = (Button) v.findViewById(R.id.btnCredits);
-        btnCredits.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                deductCredits(v.getRootView());
-            }
-        });
+		containerFreeCredits = v.findViewById(R.id.containerFreeCredits);
+		containerPromoCode = v.findViewById(R.id.containerPromoCode);
+		freeCredits = (TextView) v.findViewById(R.id.freeCredits);
+		btnCredits = (Button) v.findViewById(R.id.btnCredits);
+		btnCredits.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				deductCredits(v.getRootView());
+			}
+		});
 
 		dialogMerchantOffer = new Dialog(getActivity(), R.style.PauseDialog);
 
 		dialogMerchantOffer.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
 		dialogMerchantOffer.getWindow().setLayout(
-                WindowManager.LayoutParams.MATCH_PARENT,
-                WindowManager.LayoutParams.MATCH_PARENT);
+				WindowManager.LayoutParams.MATCH_PARENT,
+				WindowManager.LayoutParams.MATCH_PARENT);
 		dialogMerchantOffer.setContentView(v);
 		dialogMerchantOffer.getWindow().setSoftInputMode(
-                WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+				WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 
 		dialogMerchantOffer.show();
 
-        getUserFreeCredits();
+		getUserFreeCredits();
 	}
 
-    private void getUserFreeCredits() {
-        RequestParams params = new RequestParams();
-        params.add("session_username", pref.getPref(Config.PREF_USERNAME));
-        params.add("active_session_token",
-                pref.getPref(Config.PREF_ACTIVE_SESSION_TOKEN));
+	private void getUserFreeCredits() {
+		RequestParams params = new RequestParams();
+		params.add("session_username", pref.getPref(Config.PREF_USERNAME));
+		params.add("active_session_token",
+				pref.getPref(Config.PREF_ACTIVE_SESSION_TOKEN));
 
-        if ("sgd".equals(item.currency.toLowerCase())) {
-            params.add("country", "sg");
-        } else if ("myr".equals(item.currency.toLowerCase())) {
-            params.add("country", "my");
-        }
+		if ("sgd".equals(item.currency.toLowerCase())) {
+			params.add("country", "sg");
+		} else if ("myr".equals(item.currency.toLowerCase())) {
+			params.add("country", "my");
+		}
 
-        Log.d("FreeCredits", "getUserFreeCredits");
+		Log.d("FreeCredits", "getUserFreeCredits");
 
-        PARestClient.get(pref.getPref(Config.SERVER),
-                Config.API_GET_USER_FREE_CREDITS,
-                params,
-                new AsyncHttpResponseHandler() {
-                    @Override
-                    public void onStart() {
-                        super.onStart();
-                        loadingInternetDialog.show();
-                    }
+		PARestClient.get(pref.getPref(Config.SERVER),
+				Config.API_GET_USER_FREE_CREDITS,
+				params,
+				new AsyncHttpResponseHandler() {
+					@Override
+					public void onStart() {
+						super.onStart();
+						loadingInternetDialog.show();
+					}
 
-                    @Override
-                    public void onSuccess(int arg0, Header[] arg1, byte[] arg2) {
-                        super.onSuccess(arg0, arg1, arg2);
-                        Log.d("FreeCredits", new String(arg2));
-                        UserFreeCreditsResult result = new ParserUserFreeCredits(new String(arg2))
-                                .getData();
-                        if ("success".equals(result.status)) {
-                            freeCredits.setText(item.currency + " " + result.result.cs_credit);
-                        }
-                        loadingInternetDialog.hide();
-                    }
+					@Override
+					public void onSuccess(int arg0, Header[] arg1, byte[] arg2) {
+						super.onSuccess(arg0, arg1, arg2);
+						Log.d("FreeCredits", new String(arg2));
+						UserFreeCreditsResult result = new ParserUserFreeCredits(new String(arg2))
+								.getData();
+						if ("success".equals(result.status)) {
+							freeCredits.setText(item.currency + " " + result.result.cs_credit);
+						}
+						loadingInternetDialog.hide();
+					}
 
-                    @Override
-                    public void onFailure(int arg0, Header[] arg1, byte[] arg2,
-                                          Throwable arg3) {
-                        super.onFailure(arg0, arg1, arg2, arg3);
-                        loadingInternetDialog.dismiss();
-                    }
-                });
-    }
+					@Override
+					public void onFailure(int arg0, Header[] arg1, byte[] arg2,
+										  Throwable arg3) {
+						super.onFailure(arg0, arg1, arg2, arg3);
+						loadingInternetDialog.dismiss();
+					}
+				});
+	}
 
-    private void deductCredits(final View parentView) {
-        RequestParams params = new RequestParams();
-        params.add("service_proposal_serial", arrProposal.get(selectedProposal).serial);
-        params.add("session_username", pref.getPref(Config.PREF_USERNAME));
-        params.add("active_session_token",
-                pref.getPref(Config.PREF_ACTIVE_SESSION_TOKEN));
+	private void deductCredits(final View parentView) {
+		RequestParams params = new RequestParams();
+		params.add("service_proposal_serial", arrProposal.get(selectedProposal).serial);
+		params.add("session_username", pref.getPref(Config.PREF_USERNAME));
+		params.add("active_session_token",
+				pref.getPref(Config.PREF_ACTIVE_SESSION_TOKEN));
 
-        Log.d("FreeCredits", "deductCredits");
+		Log.d("FreeCredits", "deductCredits");
 
-        PARestClient.post(pref.getPref(Config.SERVER),
-                Config.API_DEDUCT_CREDITS,
-                params,
-                new AsyncHttpResponseHandler() {
-                    @Override
-                    public void onStart() {
-                        super.onStart();
-                        btnCredits.setEnabled(false);
-                        loadingInternetDialog.show();
-                    }
+		PARestClient.post(pref.getPref(Config.SERVER),
+				Config.API_DEDUCT_CREDITS,
+				params,
+				new AsyncHttpResponseHandler() {
+					@Override
+					public void onStart() {
+						super.onStart();
+						btnCredits.setEnabled(false);
+						loadingInternetDialog.show();
+					}
 
-                    @Override
-                    public void onSuccess(int arg0, Header[] arg1, byte[] arg2) {
-                        super.onSuccess(arg0, arg1, arg2);
-                        Log.d("FreeCredits", new String(arg2));
-                        DeductCreditsResult dcr = new ParserDeductCredits(new String(arg2))
-                                .getData();
-                        if ("success".equals(dcr.status)) {
-                            freeCredits.setText(item.currency + " " + dcr.result.balance_credit);
+					@Override
+					public void onSuccess(int arg0, Header[] arg1, byte[] arg2) {
+						super.onSuccess(arg0, arg1, arg2);
+						Log.d("FreeCredits", new String(arg2));
+						DeductCreditsResult dcr = new ParserDeductCredits(new String(arg2))
+								.getData();
+						if ("success".equals(dcr.status)) {
+							freeCredits.setText(item.currency + " " + dcr.result.balance_credit);
 
-                            discountedAmount = Float.parseFloat(dcr.result.final_amount);
+							discountedAmount = Float.parseFloat(dcr.result.final_amount);
 
-                            TextView txtPrice = (TextView) parentView.findViewById(R.id.txtPrice);
-                            txtPrice.setText(item.currency + " " + dcr.result.final_amount);
-                            txtPrice.setTextColor(getResources().getColor(R.color.red));
+							TextView txtPrice = (TextView) parentView.findViewById(R.id.txtPrice);
+							txtPrice.setText(item.currency + " " + dcr.result.final_amount);
+							txtPrice.setTextColor(getResources().getColor(R.color.red));
 
-                            parentView.findViewById(R.id.txtCredits).setVisibility(View.VISIBLE);
-                            parentView.findViewById(R.id.txtBalanceCredits).setVisibility(View.VISIBLE);
-                            parentView.findViewById(R.id.txtAvailableCredits).setVisibility(View.GONE);
-                            parentView.findViewById(R.id.btnCredits).setVisibility(View.GONE);
+							parentView.findViewById(R.id.txtCredits).setVisibility(View.VISIBLE);
+							parentView.findViewById(R.id.txtBalanceCredits).setVisibility(View.VISIBLE);
+							parentView.findViewById(R.id.txtAvailableCredits).setVisibility(View.GONE);
+							parentView.findViewById(R.id.btnCredits).setVisibility(View.GONE);
 
-                            creditSerial = dcr.result.credit_serial;
+							creditSerial = dcr.result.credit_serial;
 
-                            accordionGroup.disable();
+							accordionGroup.disable();
 
-                            isNoPayment = Codes.NO_PAYMENT.equals(dcr.result.condition);
-                        } else if ("failed".equals(dcr.status)) {
-                            showMessageDialog(dcr.reason);
-                        }
-                        btnCredits.setEnabled(true);
-                        loadingInternetDialog.hide();
-                    }
+							isNoPayment = Codes.NO_PAYMENT.equals(dcr.result.condition);
+						} else if ("failed".equals(dcr.status)) {
+							showMessageDialog(dcr.reason);
+						}
+						btnCredits.setEnabled(true);
+						loadingInternetDialog.hide();
+					}
 
-                    @Override
-                    public void onFailure(int arg0, Header[] arg1, byte[] arg2,
-                                          Throwable arg3) {
-                        super.onFailure(arg0, arg1, arg2, arg3);
-                        Log.d("FreeCredits", "Error " + new String(arg2));
-                        btnCredits.setEnabled(true);
-                        loadingInternetDialog.dismiss();
-                    }
-                });
-    }
+					@Override
+					public void onFailure(int arg0, Header[] arg1, byte[] arg2,
+										  Throwable arg3) {
+						super.onFailure(arg0, arg1, arg2, arg3);
+						Log.d("FreeCredits", "Error " + new String(arg2));
+						btnCredits.setEnabled(true);
+						loadingInternetDialog.dismiss();
+					}
+				});
+	}
 
-    private void doNoPayment() {
-        String country = "sg";
+	private void doNoPayment() {
+		String country = "sg";
 
-        if ("sgd".equals(item.currency.toLowerCase())) {
-            country = "sg";
-        } else if ("myr".equals(item.currency.toLowerCase())) {
-            country = "my";
-        }
+		if ("sgd".equals(item.currency.toLowerCase())) {
+			country = "sg";
+		} else if ("myr".equals(item.currency.toLowerCase())) {
+			country = "my";
+		}
 
-        String amount, serial;
+		String amount, serial;
 
-        if (item.serial.contains("VP-")) {
-            amount = item.price;
-            serial = item.serial;
-        } else {
-            amount = getAmount();
-            serial = (arrProposal.get(selectedProposal).serial);
-        }
+		if (item.serial.contains("VP-")) {
+			amount = item.price;
+			serial = item.serial;
+		} else {
+			amount = getAmount();
+			serial = (arrProposal.get(selectedProposal).serial);
+		}
 
-        RequestParams params = new RequestParams();
-        params.add("session_username", pref.getPref(Config.PREF_USERNAME));
-        params.add("active_session_token",
-                pref.getPref(Config.PREF_ACTIVE_SESSION_TOKEN));
-        params.add("amount", amount);
-        params.add("service_proposal_serial", serial);
-        params.add("country", country);
-        params.add("promocode", validatedPromoCode);
-        params.add("credit_serial", creditSerial);
+		RequestParams params = new RequestParams();
+		params.add("session_username", pref.getPref(Config.PREF_USERNAME));
+		params.add("active_session_token",
+				pref.getPref(Config.PREF_ACTIVE_SESSION_TOKEN));
+		params.add("amount", amount);
+		params.add("service_proposal_serial", serial);
+		params.add("country", country);
+		params.add("promocode", validatedPromoCode);
+		params.add("credit_serial", creditSerial);
 
-        PARestClient.post(pref.getPref(Config.SERVER), Config.API_CREATE_TRANSACTION,
-                params, new AsyncHttpResponseHandler() {
+		PARestClient.post(pref.getPref(Config.SERVER), Config.API_CREATE_TRANSACTION,
+				params, new AsyncHttpResponseHandler() {
 
-                    @Override
-                    public void onStart() {
-                        super.onStart();
-                        loadingInternetDialog.show();
-                    }
+					@Override
+					public void onStart() {
+						super.onStart();
+						loadingInternetDialog.show();
+					}
 
-                    public void onSuccess(int arg0, Header[] arg1, byte[] arg2) {
-                        ParserBasicResult parser = new ParserBasicResult(
-                                new String(arg2));
-                        Log.d("Payment", "Result " + new String(arg2));
-                        if ("success".equals(parser.getStatus())) {
+					public void onSuccess(int arg0, Header[] arg1, byte[] arg2) {
+						ParserBasicResult parser = new ParserBasicResult(
+								new String(arg2));
+						Log.d("Payment", "Result " + new String(arg2));
+						if ("success".equals(parser.getStatus())) {
 
-                            showDialogOrderSuccess();
+							showDialogOrderSuccess();
 
-                        } else {
-                            Log.d("Payment", "Cancel because it is not success");
+						} else {
+							Log.d("Payment", "Cancel because it is not success");
 
-                            showDialogOrderCancel();
+							showDialogOrderCancel();
 
-                        }
-                        loadingInternetDialog.dismiss();
-                    }
+						}
+						loadingInternetDialog.dismiss();
+					}
 
-                    ;
+					;
 
-                    @Override
-                    public void onFailure(int arg0, Header[] arg1, byte[] arg2,
-                                          Throwable arg3) {
-                        // TODO Auto-generated method stub
-                        super.onFailure(arg0, arg1, arg2, arg3);
-                        showDialogOrderSuccess();
-                        loadingInternetDialog.dismiss();
+					@Override
+					public void onFailure(int arg0, Header[] arg1, byte[] arg2,
+										  Throwable arg3) {
+						// TODO Auto-generated method stub
+						super.onFailure(arg0, arg1, arg2, arg3);
+						showDialogOrderSuccess();
+						loadingInternetDialog.dismiss();
 
-                    }
+					}
 
-                });
-    }
+				});
+	}
 
 	private void doPayment(){
 
@@ -1993,7 +2026,7 @@ public class FragmentBidDetail extends MyFragment implements OnClickListener,
 
 	void doPayWithBraintree() {
 		analytic.trackScreen("Job Offer - Payment");
-		
+
 		UserORM user 	= new ProfilUtils(getActivity()).getUser();
 		String country 	= "sg";
 		if ("sgd".equals(item.currency.toLowerCase())) {
@@ -2013,22 +2046,22 @@ public class FragmentBidDetail extends MyFragment implements OnClickListener,
 			public void onStart() {
 				// TODO Auto-generated method stub
 				super.onStart();
-                forceLoadingInternetDialog.show();
+				forceLoadingInternetDialog.show();
 			}
 
 			@Override
 			public void onFailure(int statusCode, Header[] headers,
-					Throwable error, String content) {
+								  Throwable error, String content) {
 				// TODO Auto-generated method stub
 				super.onFailure(statusCode, headers, error, content);
-                forceLoadingInternetDialog.hide();
+				forceLoadingInternetDialog.hide();
 			}
 
 			@Override
 			public void onSuccess(int arg0, Header[] arg1, byte[] arg2) {
 				// TODO Auto-generated method stub
 				super.onSuccess(arg0, arg1, arg2);
-                forceLoadingInternetDialog.hide();
+				forceLoadingInternetDialog.hide();
 
 				ParserBraintreeClientToken parser = new ParserBraintreeClientToken(
 						new String(arg2));
@@ -2046,8 +2079,8 @@ public class FragmentBidDetail extends MyFragment implements OnClickListener,
 
 			@Override
 			public void onFailure(int arg0, Header[] arg1, byte[] arg2,
-					Throwable arg3) {
-                // TODO Auto-generated method stub
+								  Throwable arg3) {
+				// TODO Auto-generated method stub
 				super.onFailure(arg0, arg1, arg2, arg3);
 				simpleToast("Failed " + new String(arg2));
 
@@ -2060,14 +2093,14 @@ public class FragmentBidDetail extends MyFragment implements OnClickListener,
 
 	}
 
-    private String getAmount() {
-        if (item.serial.contains("VP-"))
-            return item.price;
-        else
-            return "" + (discountedAmount > 0 ?
-                    discountedAmount :
-                    Float.parseFloat(arrProposal.get(selectedProposal).total));
-    }
+	private String getAmount() {
+		if (item.serial.contains("VP-"))
+			return item.price;
+		else
+			return "" + (discountedAmount > 0 ?
+					discountedAmount :
+					Float.parseFloat(arrProposal.get(selectedProposal).total));
+	}
 
 	public void onBraintreeSubmit() {
 		String amount = getAmount();
@@ -2075,7 +2108,7 @@ public class FragmentBidDetail extends MyFragment implements OnClickListener,
 		Intent intent = new Intent(getActivity(),
 				BraintreePaymentActivity.class);
 		Customization customization = new CustomizationBuilder()
-				.primaryDescription("Cool Find | Order Id:" + item.serial)
+				.primaryDescription("Page Advisor | Order Id:" + item.serial)
 				.secondaryDescription(item.title)
 				.amount(item.currency + " " + amount)
 				.submitButtonText("Pay Now").build();
@@ -2188,107 +2221,107 @@ public class FragmentBidDetail extends MyFragment implements OnClickListener,
 		}
 	}
 
-    private void validatePromoCode(final String promoCode, final View parentView) {
-        RequestParams params = new RequestParams();
-        params.add("service_proposal_serial", arrProposal.get(selectedProposal).serial);
-        params.add("session_username", pref.getPref(Config.PREF_USERNAME));
-        params.add("active_session_token",
-                pref.getPref(Config.PREF_ACTIVE_SESSION_TOKEN));
-        params.add("promocode", promoCode);
-        params.add("app", "PA");
+	private void validatePromoCode(final String promoCode, final View parentView) {
+		RequestParams params = new RequestParams();
+		params.add("service_proposal_serial", arrProposal.get(selectedProposal).serial);
+		params.add("session_username", pref.getPref(Config.PREF_USERNAME));
+		params.add("active_session_token",
+				pref.getPref(Config.PREF_ACTIVE_SESSION_TOKEN));
+		params.add("promocode", promoCode);
+		params.add("app", "PA");
 
-        Log.d("PromoCode", "validatePromoCode");
+		Log.d("PromoCode", "validatePromoCode");
 
-        PARestClient.post(pref.getPref(Config.SERVER),
-                Config.API_CHECK_PROMO_CODE,
-                params,
-                new AsyncHttpResponseHandler() {
-                    @Override
-                    public void onStart() {
-                        super.onStart();
-                        loadingInternetDialog.show();
-                    }
+		PARestClient.post(pref.getPref(Config.SERVER),
+				Config.API_CHECK_PROMO_CODE,
+				params,
+				new AsyncHttpResponseHandler() {
+					@Override
+					public void onStart() {
+						super.onStart();
+						loadingInternetDialog.show();
+					}
 
-                    @Override
-                    public void onSuccess(int arg0, Header[] arg1, byte[] arg2) {
-                        super.onSuccess(arg0, arg1, arg2);
-                        Log.d("PromoCode", new String(arg2));
-                        PromoCodeResult pcr = new ParserValidatePromoCode(new String(arg2))
-                                .getData();
-                        if ("success".equals(pcr.status)) {
-                            Log.d("PromoCode", pcr.result.new_amt);
+					@Override
+					public void onSuccess(int arg0, Header[] arg1, byte[] arg2) {
+						super.onSuccess(arg0, arg1, arg2);
+						Log.d("PromoCode", new String(arg2));
+						PromoCodeResult pcr = new ParserValidatePromoCode(new String(arg2))
+								.getData();
+						if ("success".equals(pcr.status)) {
+							Log.d("PromoCode", pcr.result.new_amt);
 
-                            discountedAmount = Float.parseFloat(pcr.result.new_amt);
-                            UserORM user = new ProfilUtils(getActivity()).getUser();
-                            String currency = "";
-                            if (user != null) {
-                                currency = user.result.currency;
-                            }
+							discountedAmount = Float.parseFloat(pcr.result.new_amt);
+							UserORM user = new ProfilUtils(getActivity()).getUser();
+							String currency = "";
+							if (user != null) {
+								currency = user.result.currency;
+							}
 
-                            if (TextUtils.isEmpty(currency)) {
-                                currency = item.currency;
-                            }
+							if (TextUtils.isEmpty(currency)) {
+								currency = item.currency;
+							}
 
-                            TextView txtPrice = (TextView) parentView.findViewById(R.id.txtPrice);
-                            txtPrice.setText(currency + " " + pcr.result.new_amt);
-                            txtPrice.setTextColor(getResources().getColor(R.color.red));
+							TextView txtPrice = (TextView) parentView.findViewById(R.id.txtPrice);
+							txtPrice.setText(currency + " " + pcr.result.new_amt);
+							txtPrice.setTextColor(getResources().getColor(R.color.red));
 
-                            ((View)parentView.findViewById(R.id.inputPromoCode).getParent()).setVisibility(View.INVISIBLE);
-                            parentView.findViewById(R.id.txtPromoCode).setVisibility(View.VISIBLE);
+							((View)parentView.findViewById(R.id.inputPromoCode).getParent()).setVisibility(View.INVISIBLE);
+							parentView.findViewById(R.id.txtPromoCode).setVisibility(View.VISIBLE);
 
-                            validatedPromoCode = promoCode;
+							validatedPromoCode = promoCode;
 
-                            accordionGroup.disable();
-                        } else if ("failed".equals(pcr.status)) {
-                            showMessageDialog(pcr.message);
-                        }
-                        loadingInternetDialog.hide();
-                    }
+							accordionGroup.disable();
+						} else if ("failed".equals(pcr.status)) {
+							showMessageDialog(pcr.message);
+						}
+						loadingInternetDialog.hide();
+					}
 
-                    @Override
-                    public void onFailure(int arg0, Header[] arg1, byte[] arg2,
-                                          Throwable arg3) {
-                            super.onFailure(arg0, arg1, arg2, arg3);
-                        loadingInternetDialog.dismiss();
-                        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
-                                getActivity());
+					@Override
+					public void onFailure(int arg0, Header[] arg1, byte[] arg2,
+										  Throwable arg3) {
+						super.onFailure(arg0, arg1, arg2, arg3);
+						loadingInternetDialog.dismiss();
+						AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+								getActivity());
 
-                        // set title
-                        alertDialogBuilder.setTitle("Network Error");
+						// set title
+						alertDialogBuilder.setTitle("Network Error");
 
-                        // set dialog message
-                        alertDialogBuilder
-                                .setMessage("Click yes to retry!")
-                                .setCancelable(true)
-                                .setPositiveButton("Yes",
-                                        new DialogInterface.OnClickListener() {
-                                            public void onClick(
-                                                    DialogInterface dialog,
-                                                    int id) {
-                                                // if this button is clicked,
-                                                // close
-                                                // current activity
-                                                validatePromoCode(promoCode, parentView);
-                                            }
-                                        })
-                                .setNegativeButton("No",
-                                        new DialogInterface.OnClickListener() {
-                                            public void onClick(
-                                                    DialogInterface dialog,
-                                                    int id) {
-                                                // if this button is clicked,
-                                                // just close
-                                                // the dialog box and do nothing
-                                                dialog.cancel();
-                                            }
-                                        });
+						// set dialog message
+						alertDialogBuilder
+								.setMessage("Click yes to retry!")
+								.setCancelable(true)
+								.setPositiveButton("Yes",
+										new DialogInterface.OnClickListener() {
+											public void onClick(
+													DialogInterface dialog,
+													int id) {
+												// if this button is clicked,
+												// close
+												// current activity
+												validatePromoCode(promoCode, parentView);
+											}
+										})
+								.setNegativeButton("No",
+										new DialogInterface.OnClickListener() {
+											public void onClick(
+													DialogInterface dialog,
+													int id) {
+												// if this button is clicked,
+												// just close
+												// the dialog box and do nothing
+												dialog.cancel();
+											}
+										});
 
-                        // create alert dialog
-                        AlertDialog alertDialog = alertDialogBuilder.create();
-                        alertDialog.show();
-                    }
-                });
-    }
+						// create alert dialog
+						AlertDialog alertDialog = alertDialogBuilder.create();
+						alertDialog.show();
+					}
+				});
+	}
 
 	void checkPromoCode() {
 		// AsyncHttpClient client = new AsyncHttpClient();
@@ -2315,7 +2348,7 @@ public class FragmentBidDetail extends MyFragment implements OnClickListener,
 
 					@Override
 					public void onSuccess(int statusCode, Header[] headers,
-							String content) {
+										  String content) {
 						// TODO Auto-generated method stub
 						super.onSuccess(statusCode, headers, content);
 						promoCode = new ParserPromoCode(new String(content))
@@ -2333,7 +2366,7 @@ public class FragmentBidDetail extends MyFragment implements OnClickListener,
 
 					@Override
 					public void onFailure(int arg0, Header[] arg1, byte[] arg2,
-							Throwable arg3) {
+										  Throwable arg3) {
 						// TODO Auto-generated method stub
 						super.onFailure(arg0, arg1, arg2, arg3);
 
@@ -2459,42 +2492,42 @@ public class FragmentBidDetail extends MyFragment implements OnClickListener,
 
 		v.findViewById(R.id.menu).setOnClickListener(new OnClickListener() {
 
-            @Override
-            public void onClick(View v) {
-                // TODO Auto-generated method stub
-                dialogPromoCodeStatus.dismiss();
-            }
-        });
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				dialogPromoCodeStatus.dismiss();
+			}
+		});
 
 		v.findViewById(R.id.btn_ok).setOnClickListener(new OnClickListener() {
 
-            @Override
-            public void onClick(View v) {
-                // TODO Auto-generated method stub
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
 
-                doOrder();
-            }
-        });
+				doOrder();
+			}
+		});
 
 		v.findViewById(R.id.btn_skip).setOnClickListener(new OnClickListener() {
 
-            @Override
-            public void onClick(View v) {
-                // TODO Auto-generated method stub
-                dialogPromoCodeStatus.dismiss();
-            }
-        });
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				dialogPromoCodeStatus.dismiss();
+			}
+		});
 
 		dialogPromoCodeStatus = new Dialog(getActivity(), R.style.PauseDialog);
 
 		dialogPromoCodeStatus.getWindow().requestFeature(
-                Window.FEATURE_NO_TITLE);
+				Window.FEATURE_NO_TITLE);
 		dialogPromoCodeStatus.getWindow().setLayout(
-                WindowManager.LayoutParams.MATCH_PARENT,
-                WindowManager.LayoutParams.MATCH_PARENT);
+				WindowManager.LayoutParams.MATCH_PARENT,
+				WindowManager.LayoutParams.MATCH_PARENT);
 		dialogPromoCodeStatus.setContentView(v);
 		dialogPromoCodeStatus.getWindow().setSoftInputMode(
-                WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+				WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 
 		dialogPromoCodeStatus.show();
 	}
@@ -2555,7 +2588,7 @@ public class FragmentBidDetail extends MyFragment implements OnClickListener,
 
 						@Override
 						public void onSuccess(int arg0, Header[] arg1,
-								byte[] arg2) {
+											  byte[] arg2) {
 							// TODO Auto-generated method stub
 							super.onSuccess(arg0, arg1, arg2);
 							// Tracer.d(content);
@@ -2661,48 +2694,48 @@ public class FragmentBidDetail extends MyFragment implements OnClickListener,
 		params.add("customerId", braintree.customerId);
 		params.add("country", country);
 //        if (!item.serial.contains("VP-"))
-		    params.add("promocode", validatedPromoCode);
-		    params.add("credit_serial", creditSerial);
+		params.add("promocode", validatedPromoCode);
+		params.add("credit_serial", creditSerial);
 
 		PARestClient.get(pref.getPref(Config.SERVER), "braintree/create-sales",
-                params, new AsyncHttpResponseHandler() {
+				params, new AsyncHttpResponseHandler() {
 
-                    @Override
-                    public void onStart() {
-                        super.onStart();
-                        forceLoadingInternetDialog.show();
-                    }
+					@Override
+					public void onStart() {
+						super.onStart();
+						forceLoadingInternetDialog.show();
+					}
 
-                    public void onSuccess(int arg0, Header[] arg1, byte[] arg2) {
-                        ParserBasicResult parser = new ParserBasicResult(
-                                new String(arg2));
-                        Log.d("Payment", "Result " + new String(arg2));
-                        if ("success".equals(parser.getStatus())) {
+					public void onSuccess(int arg0, Header[] arg1, byte[] arg2) {
+						ParserBasicResult parser = new ParserBasicResult(
+								new String(arg2));
+						Log.d("Payment", "Result " + new String(arg2));
+						if ("success".equals(parser.getStatus())) {
 
-                            showDialogOrderSuccess();
+							showDialogOrderSuccess();
 
-                        } else {
-                            Log.d("Payment", "Cancel because it is not success");
+						} else {
+							Log.d("Payment", "Cancel because it is not success");
 
-                            showDialogOrderCancel();
+							showDialogOrderCancel();
 
-                        }
-                        forceLoadingInternetDialog.dismiss();
-                    }
+						}
+						forceLoadingInternetDialog.dismiss();
+					}
 
-                    ;
+					;
 
-                    @Override
-                    public void onFailure(int arg0, Header[] arg1, byte[] arg2,
-                                          Throwable arg3) {
-                        // TODO Auto-generated method stub
-                        super.onFailure(arg0, arg1, arg2, arg3);
+					@Override
+					public void onFailure(int arg0, Header[] arg1, byte[] arg2,
+										  Throwable arg3) {
+						// TODO Auto-generated method stub
+						super.onFailure(arg0, arg1, arg2, arg3);
 						showDialogOrderCancel();
-                        forceLoadingInternetDialog.setCancelable(true);
+						forceLoadingInternetDialog.setCancelable(true);
 
-                    }
+					}
 
-                });
+				});
 	}
 
 	@Override
@@ -2765,7 +2798,7 @@ public class FragmentBidDetail extends MyFragment implements OnClickListener,
 //		}
 		else if (resultCode == Activity.RESULT_CANCELED
 				&& requestCode == MOLPAY_REQUEST_CODE) {
-            Log.d("Payment", "Cancel because result is canceled");
+			Log.d("Payment", "Cancel because result is canceled");
 			showDialogOrderCancel();
 
 		} else if (requestCode == REQUEST_CODE_PAYMENT) {
@@ -2784,7 +2817,7 @@ public class FragmentBidDetail extends MyFragment implements OnClickListener,
 						 * https://developer.paypal.com
 						 * /webapps/developer/docs/integration
 						 * /mobile/verify-mobile-payment/ for more details.
-						 * 
+						 *
 						 * For sample mobile backend interactions, see
 						 * https://github
 						 * .com/paypal/rest-api-sdk-python/tree/master
@@ -2908,9 +2941,9 @@ public class FragmentBidDetail extends MyFragment implements OnClickListener,
 								}else{
 									serial=arrProposal
 											.get(selectedProposal).serial;
-									
+
 								}
-								
+
 								for (JobItem tmpJob : arrJob) {
 									if (tmpJob.service_proposal_serial.equals(serial)) {
 										dialogOrderSuccess.dismiss();		Log.i("!!!!!!: ", "ORDER DETAILS CALLED HERE!!!");
@@ -2927,7 +2960,7 @@ public class FragmentBidDetail extends MyFragment implements OnClickListener,
 
 					@Override
 					public void onFailure(int statusCode, Throwable error,
-							String content) {
+										  String content) {
 						// TODO Auto-generated method stub
 						super.onFailure(statusCode, error, content);
 						loadingInternetDialog.dismiss();
@@ -3004,103 +3037,103 @@ public class FragmentBidDetail extends MyFragment implements OnClickListener,
 		} catch (Exception e) {
 
 		}
-        Map eventData = new HashMap<>();
-        eventData.put("job_request_id", item.serial);
-        Intercom.client().logEvent("job-request-payment", eventData);
+		Map eventData = new HashMap<>();
+		eventData.put("job_request_id", item.serial);
+		Intercom.client().logEvent("job-request-payment", eventData);
 
-        String subServices = "";
-        ArrayList<String> skuArrayList = new ArrayList<>();
-        if (arrDetail != null) {
-            for (int i  = 0; i < arrDetail.size(); i++) {
-                if (i > 0)
-                    subServices += ",";
-                subServices += arrDetail.get(i).service_detail_name;
-                skuArrayList.add(arrDetail.get(i).service_detail_name);
-            }
-        } else {
-            subServices = item.service_category_name;
-        }
+		String subServices = "";
+		ArrayList<String> skuArrayList = new ArrayList<>();
+		if (arrDetail != null) {
+			for (int i  = 0; i < arrDetail.size(); i++) {
+				if (i > 0)
+					subServices += ",";
+				subServices += arrDetail.get(i).service_detail_name;
+				skuArrayList.add(arrDetail.get(i).service_detail_name);
+			}
+		} else {
+			subServices = item.service_category_name;
+		}
 
-        Log.d(TAG, "Sub Services: " + subServices);
-        Log.d(TAG, "Price: " + getAmount());
-        Log.d(TAG, "Currency: " + item.currency);
+		Log.d(TAG, "Sub Services: " + subServices);
+		Log.d(TAG, "Price: " + getAmount());
+		Log.d(TAG, "Currency: " + item.currency);
 
-        AppsFlyerLib.setCurrencyCode(item.currency);
-        Map<String,Object> event = new HashMap<>();
-        event.put("Price",getAmount());
-        event.put("Subservices", subServices);
-        AppsFlyerLib.trackEvent(getActivity().getApplicationContext(), "Appointment", event);
+		AppsFlyerLib.setCurrencyCode(item.currency);
+		Map<String,Object> event = new HashMap<>();
+		event.put("Price",getAmount());
+		event.put("Subservices", subServices);
+		AppsFlyerLib.trackEvent(getActivity().getApplicationContext(), "Appointment", event);
 
-        DecimalFormat df = new DecimalFormat("0.00");
-        Log.d(TAG, "Formatted Price: " + df.format(Double.parseDouble(getAmount())).replace(".", ""));
+		DecimalFormat df = new DecimalFormat("0.00");
+		Log.d(TAG, "Formatted Price: " + df.format(Double.parseDouble(getAmount())).replace(".", ""));
 
-        String[] skuArray = skuArrayList.toArray(new String[skuArrayList.size()]);
-        String[] valueArray = new String[skuArrayList.size()];
-        Log.d(TAG, "valueArray length: " + valueArray.length);
-        for (int k=0; k<valueArray.length; k++) {
-            valueArray[k] = (k == 0 ? df.format(Double.parseDouble(getAmount())).replace(".", "") : "000");
-        }
+		String[] skuArray = skuArrayList.toArray(new String[skuArrayList.size()]);
+		String[] valueArray = new String[skuArrayList.size()];
+		Log.d(TAG, "valueArray length: " + valueArray.length);
+		for (int k=0; k<valueArray.length; k++) {
+			valueArray[k] = (k == 0 ? df.format(Double.parseDouble(getAmount())).replace(".", "") : "000");
+		}
 
-        NanigansEventManager.getInstance().trackNanigansEvent(NanigansEventManager.TYPE.PURCHASE, "appointment",
-                new NanigansEventParameter("sku", skuArray),
-                new NanigansEventParameter("value", valueArray),
-                new NanigansEventParameter("unique", item.serial),
-                new NanigansEventParameter("currency", item.currency)
-        );
-		
+		NanigansEventManager.getInstance().trackNanigansEvent(NanigansEventManager.TYPE.PURCHASE, "appointment",
+				new NanigansEventParameter("sku", skuArray),
+				new NanigansEventParameter("value", valueArray),
+				new NanigansEventParameter("unique", item.serial),
+				new NanigansEventParameter("currency", item.currency)
+		);
+
 		View v;
 		if(!(item!=null && item.serial.contains("VP-"))){
-		
-            v = inflater.inflate(R.layout.dialog_order_success, null);
-            TextView txtServiceRequestID = (TextView) v
-                    .findViewById(R.id.txtServiceRequestID);
 
-            if (item.serial.contains("VP-")) {
-                txtServiceRequestID.setText(item.serial);
+			v = inflater.inflate(R.layout.dialog_order_success, null);
+			TextView txtServiceRequestID = (TextView) v
+					.findViewById(R.id.txtServiceRequestID);
 
-            } else {
-                txtServiceRequestID
-                        .setText(arrProposal.get(selectedProposal).serial);
-            }
-            v.findViewById(R.id.btnBack).setOnClickListener(new OnClickListener() {
+			if (item.serial.contains("VP-")) {
+				txtServiceRequestID.setText(item.serial);
 
-                @Override
-                public void onClick(View v) {
+			} else {
+				txtServiceRequestID
+						.setText(arrProposal.get(selectedProposal).serial);
+			}
+			v.findViewById(R.id.btnBack).setOnClickListener(new OnClickListener() {
+
+				@Override
+				public void onClick(View v) {
 //                    listener.doFragmentChange(new FragmentBid(), true, "");
 					getActivity().getSupportFragmentManager().popBackStackImmediate();
-                    dialogOrderSuccess.hide();
-                }
-            });
+					dialogOrderSuccess.hide();
+				}
+			});
 
-            v.findViewById(R.id.btnNext2).setOnClickListener(new OnClickListener() {
+			v.findViewById(R.id.btnNext2).setOnClickListener(new OnClickListener() {
 
-                @Override
-                public void onClick(View v) {
-                    // TODO Auto-generated method stub
-                    getOrderData();
-                    // dialogOrderSuccess.hide();
-                    // JobItem job=new JobItem();
-                    // job.serial=service_order_serial;
-                    // listener.doFragmentChange(new FragmentOrderDetail(job),
-                    // false, "");
-                }
-            });
+				@Override
+				public void onClick(View v) {
+					// TODO Auto-generated method stub
+					getOrderData();
+					// dialogOrderSuccess.hide();
+					// JobItem job=new JobItem();
+					// job.serial=service_order_serial;
+					// listener.doFragmentChange(new FragmentOrderDetail(job),
+					// false, "");
+				}
+			});
 
-            Map eventData2 = new HashMap<>();
-            eventData2.put("job_request_id", item.serial);
-            eventData2.put("job_proposal_id", arrProposal.get(selectedProposal).serial);
-            Intercom.client().logEvent("job-appointment", eventData2);
+			Map eventData2 = new HashMap<>();
+			eventData2.put("job_request_id", item.serial);
+			eventData2.put("job_proposal_id", arrProposal.get(selectedProposal).serial);
+			Intercom.client().logEvent("job-appointment", eventData2);
 
-            analytic.trackECommerce(arrProposal.get(selectedProposal).serial,
-                    arrProposal.get(selectedProposal).merchant_company_name,
-                    getAmount(),
-                    item.currency,
-                    getJobTitle(item.title),
-                    item.service_category_name
-            );
+			analytic.trackECommerce(arrProposal.get(selectedProposal).serial,
+					arrProposal.get(selectedProposal).merchant_company_name,
+					getAmount(),
+					item.currency,
+					getJobTitle(item.title),
+					item.service_category_name
+			);
 		}else{
 			v=inflater.inflate(R.layout.fragment_service_request_detail_vo_success, null);
-			
+
 			TextView localtxtSerial = (TextView) v.findViewById(R.id.txtSerial);
 			TextView localtxtBidStatus = (TextView) v.findViewById(R.id.txtBidStatus);
 			TextView localtxtDescription = (TextView) v.findViewById(R.id.txtDescription);
@@ -3113,7 +3146,7 @@ public class FragmentBidDetail extends MyFragment implements OnClickListener,
 			TextView localtxtCompanyContact = (TextView) v
 					.findViewById(R.id.txtMerchantContact);
 
-			
+
 			localtxtSerial.setText(item.serial);
 			localtxtJobDesc.setText(item.description);
 			localtxtPrice.setText(item.currency + " " + item.price);
@@ -3121,15 +3154,15 @@ public class FragmentBidDetail extends MyFragment implements OnClickListener,
 			localtxtCompanyName.setText(item.merchant_company_name);
 			localtxtCompanyEmail.setText(item.merchant_email);
 			localtxtCompanyContact.setText(item.merchant_contact);
-			
-			
+
+
 			v.findViewById(R.id.btnBack).setOnClickListener(new OnClickListener() {
 
 				@Override
 				public void onClick(View v) {
 //                    listener.doFragmentChange(new FragmentBid(), true, "");
 					getActivity().getSupportFragmentManager().popBackStackImmediate();
-                    dialogOrderSuccess.hide();
+					dialogOrderSuccess.hide();
 				}
 			});
 
@@ -3147,13 +3180,13 @@ public class FragmentBidDetail extends MyFragment implements OnClickListener,
 				}
 			});
 
-            analytic.trackECommerce(item.serial,
-                    item.merchant_company_name,
-                    getAmount(),
-                    item.currency,
-                    getJobTitle(item.title),
-                    item.service_category_name
-            );
+			analytic.trackECommerce(item.serial,
+					item.merchant_company_name,
+					getAmount(),
+					item.currency,
+					getJobTitle(item.title),
+					item.service_category_name
+			);
 		}
 
 		dialogOrderSuccess = new Dialog(getActivity(), R.style.PauseDialog);
@@ -3303,9 +3336,9 @@ public class FragmentBidDetail extends MyFragment implements OnClickListener,
 								init();
 								loadingInternetDialog.dismiss();
 
-                                Map eventData = new HashMap<>();
-                                eventData.put("job_request_id", item.serial);
-                                Intercom.client().logEvent("job-request-close", eventData);
+								Map eventData = new HashMap<>();
+								eventData.put("job_request_id", item.serial);
+								Intercom.client().logEvent("job-request-close", eventData);
 
 							}
 						} catch (JSONException e) {
@@ -3470,18 +3503,18 @@ public class FragmentBidDetail extends MyFragment implements OnClickListener,
 					Uri.parse("https://www.example.com/privacy"))
 			.merchantUserAgreementUri(
 					Uri.parse("https://www.example.com/legal"))
-	// .acceptCreditCards(false)
-	;
+			// .acceptCreditCards(false)
+			;
 
 	private void sendAuthorizationToServer(PayPalAuthorization authorization) {
 
 		/**
 		 * TODO: Send the authorization response to your server, where it can
 		 * exchange the authorization code for OAuth access and refresh tokens.
-		 * 
+		 *
 		 * Your server must then store these tokens, so that your server code
 		 * can execute payments for this user in the future.
-		 * 
+		 *
 		 * A more complete example that includes the required app-server to
 		 * PayPal-server integration is available from
 		 * https://github.com/paypal/
@@ -3514,7 +3547,7 @@ public class FragmentBidDetail extends MyFragment implements OnClickListener,
 
 					@Override
 					public void onFailure(int arg0, Header[] arg1, byte[] arg2,
-							Throwable arg3) {
+										  Throwable arg3) {
 						// TODO Auto-generated method stub
 						super.onFailure(arg0, arg1, arg2, arg3);
 					}
@@ -3527,7 +3560,7 @@ public class FragmentBidDetail extends MyFragment implements OnClickListener,
 
 	void showMerchantProfilDialog() {
 		analytic.trackScreen("Merchant Profile");
-		
+
 		View v = inflater.inflate(R.layout.dialog_merchant_profil, null);
 		v.findViewById(R.id.btnBack).setOnClickListener(new OnClickListener() {
 
@@ -3567,20 +3600,20 @@ public class FragmentBidDetail extends MyFragment implements OnClickListener,
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				switch (v.getId()) {
-				case R.id.menu1:
-					setActive(flipper, 0);
-					analytic.trackScreen("Merchant Profile - About");
-					break;
-				case R.id.menu2:
-					setActive(flipper, 1);
-					analytic.trackScreen("Merchant Profile - Reviews");
+					case R.id.menu1:
+						setActive(flipper, 0);
+						analytic.trackScreen("Merchant Profile - About");
+						break;
+					case R.id.menu2:
+						setActive(flipper, 1);
+						analytic.trackScreen("Merchant Profile - Reviews");
 
-					break;
-				case R.id.menu3:
-					setActive(flipper, 2);
-					analytic.trackScreen("Merchant Profile - Gallery");
+						break;
+					case R.id.menu3:
+						setActive(flipper, 2);
+						analytic.trackScreen("Merchant Profile - Gallery");
 
-					break;
+						break;
 				}
 			}
 		};
@@ -3600,10 +3633,19 @@ public class FragmentBidDetail extends MyFragment implements OnClickListener,
 		TextView about = (TextView) v.findViewById(R.id.about);
 		TextView service = (TextView) v.findViewById(R.id.service);
 
-		cover_timeline.setTag(MY_URI + "user/merchant-image?image_name="
-				+ mp.cover_photo);
-		imageLoader.DisplayImage(MY_URI + "user/merchant-image?image_name="
-				+ mp.cover_photo, getActivity(), cover_timeline);
+//		cover_timeline.setTag(MY_URI + "user/merchant-image?image_name="
+//				+ mp.cover_photo);
+//		imageLoader.DisplayImage(MY_URI + "user/merchant-image?image_name="
+//				+ mp.cover_photo, getActivity(), cover_timeline);
+		//	change to Glide for image loading
+		glideImageLoader.displayImageGlide(getActivity(), MY_URI + "user/merchant-image?image_name=" + mp.cover_photo, R.drawable.promo_placeholder, cover_timeline);
+//		if(TextUtils.isEmpty(mp.cover_photo))
+//			Glide.with(getActivity()).load(R.drawable.default_cover_timeline).into(cover_timeline);
+//		else
+//			Glide
+//					.with(getActivity())
+//					.load(MY_URI + "user/merchant-image?image_name=" + mp.cover_photo)
+//					.into(cover_timeline);
 
 		txtName.setText(mp.merchant_name);
 		ratingCount.setText(" " + mp.overall_rating + " out of 5");
@@ -3638,15 +3680,15 @@ public class FragmentBidDetail extends MyFragment implements OnClickListener,
 		menu3b.setVisibility(View.INVISIBLE);
 
 		switch (i) {
-		case 0:
-			menu1b.setVisibility(View.VISIBLE);
-			break;
-		case 1:
-			menu2b.setVisibility(View.VISIBLE);
-			break;
-		case 2:
-			menu3b.setVisibility(View.VISIBLE);
-			break;
+			case 0:
+				menu1b.setVisibility(View.VISIBLE);
+				break;
+			case 1:
+				menu2b.setVisibility(View.VISIBLE);
+				break;
+			case 2:
+				menu3b.setVisibility(View.VISIBLE);
+				break;
 
 		}
 
@@ -3705,7 +3747,7 @@ public class FragmentBidDetail extends MyFragment implements OnClickListener,
 						+ tmp.customer_username
 						+ " on"
 						+ TimeUtils.timeStampToDDMMYY("" + tmp.createdtime
-								* 1000));
+						* 1000));
 				holder.comment.setText(tmp.service_description);
 
 			} catch (Exception e) {
@@ -3761,9 +3803,17 @@ public class FragmentBidDetail extends MyFragment implements OnClickListener,
 				holder = (MyHolder) convertView.getTag();
 			}
 			String uri = arr_image.get(position);
-			holder.img.setTag(MY_URI + "user/merchant-image?image_name=" + uri);
-			imageLoader.DisplayImage(MY_URI + "user/merchant-image?image_name="
-					+ uri, getActivity(), holder.img);
+//			holder.img.setTag(MY_URI + "user/merchant-image?image_name=" + uri);
+//			imageLoader.DisplayImage(MY_URI + "user/merchant-image?image_name="
+//					+ uri, getActivity(), holder.img);
+			//	change to Glide for image loading
+			glideImageLoader.displayImageGlide(getActivity(), MY_URI + "user/merchant-image?image_name=" + uri, R.drawable.default_img, holder.img);
+//			if(TextUtils.isEmpty(uri))
+//				Glide.with(getActivity()).load(R.drawable.default_img).into(holder.img);
+//			else
+//				Glide.with(getActivity())
+//						.load(MY_URI + "user/merchant-image?image_name=" + uri)
+//						.into(holder.img);
 
 			holder.img.setOnClickListener(new OnClickListener() {
 
@@ -3800,7 +3850,7 @@ public class FragmentBidDetail extends MyFragment implements OnClickListener,
 
 			@Override
 			public void onFailure(int arg0, Header[] arg1, byte[] arg2,
-					Throwable arg3) {
+								  Throwable arg3) {
 				// TODO Auto-generated method stub
 				super.onFailure(arg0, arg1, arg2, arg3);
 			}
@@ -3822,13 +3872,13 @@ public class FragmentBidDetail extends MyFragment implements OnClickListener,
 
 		RequestParams params = new RequestParams();
 		params.add("merchant_username", merchant_username);
-        params.add("session_username", pref.getPref(Config.PREF_USERNAME));
-        params.add("active_session_token",
-                pref.getPref(Config.PREF_ACTIVE_SESSION_TOKEN));
+		params.add("session_username", pref.getPref(Config.PREF_USERNAME));
+		params.add("active_session_token",
+				pref.getPref(Config.PREF_ACTIVE_SESSION_TOKEN));
 
 		PARestClient.get(pref.getPref(Config.SERVER), "user/merchant-profile",
-                params, responseHandler);
+				params, responseHandler);
 
-    }
+	}
 
 }

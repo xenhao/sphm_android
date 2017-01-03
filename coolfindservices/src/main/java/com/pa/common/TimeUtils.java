@@ -103,7 +103,7 @@ public class TimeUtils {
 		try {
 			//Tracer.d(timeStamp);
 			SimpleDateFormat dateFormat = new SimpleDateFormat(
-					"dd MMM yy hh:mm:ss");
+					"dd MMM yyyy hh:mm:ss");
 			Date convertedDate = new Date(Long.parseLong(timeStamp));
 			dateString = dateFormat.format(convertedDate);
 		} catch (Exception e) {

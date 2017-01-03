@@ -27,11 +27,13 @@ import android.widget.ViewFlipper;
 
 import com.braintreepayments.api.dropin.BraintreePaymentActivity;
 import com.braintreepayments.api.dropin.Customization;
+import com.bumptech.glide.Glide;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.nanigans.android.sdk.NanigansEventManager;
 import com.nanigans.android.sdk.NanigansEventParameter;
 import com.pa.common.Config;
+import com.pa.common.GlideImageLoader;
 import com.pa.common.GlobalVar;
 import com.pa.common.ImageLoader;
 import com.pa.common.MyFragment;
@@ -39,6 +41,7 @@ import com.pa.common.OnFragmentChangeListener;
 import com.pa.common.PARestClient;
 import com.pa.common.ProfilUtils;
 import com.pa.common.TimeUtils;
+import com.pa.merchant_profile.MerchantProfileDialog;
 import com.pa.order.FragmentOrder;
 import com.pa.parser.ParserBasicResult;
 import com.pa.parser.ParserDealBraintreeClientToken;
@@ -70,6 +73,7 @@ public class PromotionDetailFragment extends MyFragment implements View.OnClickL
     private TextView mTitle, mPrice, mTnC, mDetail;
     private ImageView mCoverImage;
     private ImageLoader loader, mMerchantLoader;
+    private GlideImageLoader glideImageLoader;
     private LinearLayout mContentGallery;
     private EditText inputPromoCode;
     private Button mBtnMerchantProfile;
@@ -124,11 +128,19 @@ public class PromotionDetailFragment extends MyFragment implements View.OnClickL
                 Config.DEAL_IMAGE_PATH);
         loader          = new ImageLoader(getActivity());
         mMerchantLoader = new ImageLoader(getActivity());
+        glideImageLoader = new GlideImageLoader();
 
         String coverUrl = imageUrl + "/cover/" + mItem.cover_photo;
-        mCoverImage.setTag(coverUrl);
+//        mCoverImage.setTag(coverUrl);
         loader.setDefaultImage(R.drawable.promo_placeholder);
-        loader.DisplayImage(coverUrl, getActivity(), mCoverImage, false);
+//        loader.DisplayImage(coverUrl, getActivity(), mCoverImage, false);
+
+        //  Glide image loader
+        glideImageLoader.displayImageGlide(getActivity(), coverUrl, R.drawable.promo_placeholder, mCoverImage);
+//        if(TextUtils.isEmpty(mItem.cover_photo))
+//            Glide.with(getActivity()).load(R.drawable.promo_placeholder).into(mCoverImage);
+//        else
+//            Glide.with(getActivity()).load(coverUrl).into(mCoverImage);
 
         String photoUrl = imageUrl + "/attachment/";
         for (String photoName : mItem.attachment_photo) {
@@ -137,8 +149,15 @@ public class PromotionDetailFragment extends MyFragment implements View.OnClickL
             ImageView img = (ImageView) photo.findViewById(R.id.img);
 
             String url = photoUrl + photoName;
-            loader.DisplayImage(url, getActivity(), img, false);
-            img.setTag(url);
+//            loader.DisplayImage(url, getActivity(), img, false);
+//            img.setTag(url);
+
+            //  Glide image loader
+            glideImageLoader.displayImageGlide(getActivity(), url, R.drawable.default_img, img);
+//            if(TextUtils.isEmpty(photoName))
+//                Glide.with(getActivity()).load(R.drawable.default_img).into(img);
+//            else
+//                Glide.with(getActivity()).load(url).into(img);
 
             mContentGallery.addView(photo);
             photo.setOnClickListener(new View.OnClickListener() {
@@ -215,7 +234,9 @@ public class PromotionDetailFragment extends MyFragment implements View.OnClickL
                     mMerchantProfile = parser.getData();
                     arr_image = mMerchantProfile.gallery_image;
                     arr_review = mMerchantProfile.reviews;
-                    onShowMerchantProfileDialog();
+//                    onShowMerchantProfileDialog();
+                    //  new merchant profile
+                    new MerchantProfileDialog(getContext(), mMerchantProfile, arr_image, arr_review);
                 }catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -325,10 +346,19 @@ public class PromotionDetailFragment extends MyFragment implements View.OnClickL
         TextView about = (TextView) v.findViewById(R.id.about);
         TextView service = (TextView) v.findViewById(R.id.service);
 
-        cover_timeline.setTag(MY_URI + "user/merchant-image?image_name="
-                + mMerchantProfile.cover_photo);
-        mMerchantLoader.DisplayImage(MY_URI + "user/merchant-image?image_name="
-                + mMerchantProfile.cover_photo, getActivity(), cover_timeline);
+//        cover_timeline.setTag(MY_URI + "user/merchant-image?image_name="
+//                + mMerchantProfile.cover_photo);
+//        mMerchantLoader.DisplayImage(MY_URI + "user/merchant-image?image_name="
+//                + mMerchantProfile.cover_photo, getActivity(), cover_timeline);
+        //	change to Glide for image loading
+        glideImageLoader.displayImageGlide(getActivity(), MY_URI + "user/merchant-image?image_name=" + mMerchantProfile.cover_photo, R.drawable.promo_placeholder, cover_timeline);
+//        if(TextUtils.isEmpty(mMerchantProfile.cover_photo))
+//            Glide.with(getActivity()).load(R.drawable.default_cover_timeline).into(cover_timeline);
+//        else
+//            Glide
+//                    .with(getActivity())
+//                    .load(MY_URI + "user/merchant-image?image_name=" + mMerchantProfile.cover_photo)
+//                    .into(cover_timeline);
 
         txtName.setText(mMerchantProfile.merchant_name);
         ratingCount.setText(" " + mMerchantProfile.overall_rating + " out of 5");
@@ -492,7 +522,7 @@ public class PromotionDetailFragment extends MyFragment implements View.OnClickL
         Intent intent = new Intent(getActivity(),
                 BraintreePaymentActivity.class);
         Customization customization = new Customization.CustomizationBuilder()
-                .primaryDescription("Cool Find | Order Id:" + mItem.serial)
+                .primaryDescription("Page Advisor | Order Id:" + mItem.serial)
                 .secondaryDescription(mItem.title)
                 .amount(mItem.currency + " " + paymentPrice)
                 .submitButtonText("Pay Now").build();
@@ -915,9 +945,18 @@ public class PromotionDetailFragment extends MyFragment implements View.OnClickL
                 holder = (MyHolder) convertView.getTag();
             }
             String uri = arr_image.get(position);
-            holder.img.setTag(MY_URI + "user/merchant-image?image_name=" + uri);
-            mMerchantLoader.DisplayImage(MY_URI + "user/merchant-image?image_name="
-                    + uri, getActivity(), holder.img);
+//            holder.img.setTag(MY_URI + "user/merchant-image?image_name=" + uri);
+//            mMerchantLoader.DisplayImage(MY_URI + "user/merchant-image?image_name="
+//                    + uri, getActivity(), holder.img);
+            //	change to Glide for image loading
+            glideImageLoader.displayImageGlide(getActivity(), MY_URI + "user/merchant-image?image_name=" + uri, R.drawable.default_img,holder.img);
+//            if(TextUtils.isEmpty(uri))
+//                Glide.with(getActivity()).load(R.drawable.default_img).into(holder.img);
+//            else
+//                Glide
+//                        .with(getActivity())
+//                        .load(MY_URI + "user/merchant-image?image_name=" + uri)
+//                        .into(holder.img);
 
             holder.img.setOnClickListener(new View.OnClickListener() {
                 @Override

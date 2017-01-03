@@ -19,6 +19,7 @@ import android.widget.TextView;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.pa.common.Config;
+import com.pa.common.GlideImageLoader;
 import com.pa.common.ImageLoader;
 import com.pa.common.MyFragment;
 import com.pa.common.OnFragmentChangeListener;
@@ -237,6 +238,7 @@ public class PromotionFragment extends MyFragment implements View.OnClickListene
         private ArrayList<PromotionItem> mItems;
         private String mImageUrl;
         private ImageLoader mImageLoader;
+        private GlideImageLoader mGlideImageLoader;
         private OnItemClickListener mListener = null;
 
         public PromotionAdapter(Activity mActivity, ArrayList<PromotionItem> mItems, String mImageUrl, ImageLoader mImageLoader) {
@@ -245,6 +247,8 @@ public class PromotionFragment extends MyFragment implements View.OnClickListene
             this.mImageUrl = mImageUrl;
             this.mImageLoader = mImageLoader;
             this.mImageLoader.setDefaultImage(R.drawable.promo_placeholder);
+
+            mGlideImageLoader = new GlideImageLoader();
         }
 
         public interface OnItemClickListener {
@@ -269,8 +273,15 @@ public class PromotionFragment extends MyFragment implements View.OnClickListene
             PromotionItem item = mItems.get(position);
 
             String coverUrl = mImageUrl + "/cover/" + item.cover_photo;
-            holder.mCoverImage.setTag(coverUrl);
-            mImageLoader.DisplayImage(coverUrl, mActivity, holder.mCoverImage, false);
+//            holder.mCoverImage.setTag(coverUrl);
+//            mImageLoader.DisplayImage(coverUrl, mActivity, holder.mCoverImage, false);
+
+            //  Glide image loader
+            mGlideImageLoader.displayImageGlide(mActivity, coverUrl, R.drawable.promo_placeholder, holder.mCoverImage);
+//            if(TextUtils.isEmpty(item.cover_photo))
+//                Glide.with(mActivity).load(R.drawable.default_img).into(holder.mCoverImage);
+//            else
+//                Glide.with(mActivity).load(coverUrl).into(holder.mCoverImage);
 
             holder.mTitle.setText(item.title);
             holder.mOriginalPrice.setText(item.currency + " " + item.price);

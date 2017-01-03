@@ -113,6 +113,15 @@
             android:layout_weight="1"/>
     </LinearLayout>
 
+    <!--<android.support.v4.widget.NestedScrollView-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:fillViewport="true">-->
+    <!--<LinearLayout-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:orientation="vertical"-->
+    <!--android:weightSum="10">-->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -138,19 +147,6 @@
         app:layout_scrollFlags="scroll|snap"
         />
 
-    <com.pa.common.SnappyRecyclerView
-        android:id="@+id/recyclerView"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_weight="4"
-        android:scrollbars="horizontal"
-        android:fadeScrollbars="false"
-        android:visibility="gone"
-        android:scrollbarStyle="insideInset"
-        android:scrollbarAlwaysDrawHorizontalTrack="true"
-        android:scrollbarThumbHorizontal="@drawable/scroll_thumb">
-    </com.pa.common.SnappyRecyclerView>
-
     <GridView
         android:horizontalSpacing="@dimen/margin1"
         android:verticalSpacing="@dimen/margin1"
@@ -165,6 +161,23 @@
         android:numColumns="4"
         android:visibility="visible">
     </GridView>
+    <!--</LinearLayout>-->
+    <!--</android.support.v4.widget.NestedScrollView>-->
+
+    <com.pa.common.SnappyRecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="4"
+        android:scrollbars="horizontal"
+        android:fadeScrollbars="false"
+        android:visibility="gone"
+        android:scrollbarStyle="insideInset"
+        android:scrollbarAlwaysDrawHorizontalTrack="true"
+        android:scrollbarThumbHorizontal="@drawable/scroll_thumb">
+    </com.pa.common.SnappyRecyclerView>
+
+
 
     <LinearLayout
         android:id="@+id/landingFallback"

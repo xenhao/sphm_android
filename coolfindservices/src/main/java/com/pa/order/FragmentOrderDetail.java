@@ -37,11 +37,13 @@ import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.pa.common.Config;
 import com.pa.common.FormUtils;
+import com.pa.common.GlideImageLoader;
 import com.pa.common.ImageLoader;
 import com.pa.common.ImageLoaderSecure;
 import com.pa.common.MyFragment;
@@ -89,24 +91,26 @@ public class FragmentOrderDetail extends MyFragment implements OnClickListener {
 
 	ImageView img;
 	ImageLoader imageLoaderNormal;
+	private GlideImageLoader glideImageLoader;
 
 	TextView tnc;
 	String MY_URI;
 	View layoutVO;
 	TextView txtVO;
-	
+
 	LinearLayout layout_vo_id,layout_normal_id;
-	
+
 	public FragmentOrderDetail(){
-		
+
 	}
-	
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		imageLoader = new ImageLoaderSecure(getActivity());
 		imageLoaderNormal = new ImageLoader(getActivity());
+		glideImageLoader = new GlideImageLoader();
 //		if ("0".equals(pref.getPref(Config.SERVER))) {
 //			MY_URI = "http://" + Config.DOMAIN_DEV + "/";
 //
@@ -120,9 +124,9 @@ public class FragmentOrderDetail extends MyFragment implements OnClickListener {
 //			MY_URI = "http://" + Config.DOMAIN_LIVE + "/";
 //
 //		}
-		
+
 		MY_URI=PARestClient.getAbsoluteUrl(pref.getPref(Config.SERVER), "");
-		
+
 	}
 
 	@Override
@@ -156,13 +160,13 @@ public class FragmentOrderDetail extends MyFragment implements OnClickListener {
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
+							 Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		View v = inflater.inflate(R.layout.fragment_job_detail, null);
-		
+
 		layout_vo_id=(LinearLayout) v.findViewById(R.id.vo_id);
 		layout_normal_id=(LinearLayout) v.findViewById(R.id.normal_id);
-		
+
 		txtCall=(TextView) v.findViewById(R.id.txtContactCall);
 		txtDescription = (TextView) v.findViewById(R.id.txtDescription);
 		txtServiceTime = (TextView) v.findViewById(R.id.txtServiceTime);
@@ -175,7 +179,7 @@ public class FragmentOrderDetail extends MyFragment implements OnClickListener {
 		txtSerialVO=(TextView)v.findViewById(R.id.txtSerialVO);
 		txtRelatedSerial = (TextView) v.findViewById(R.id.txtRelatedSerial);
 
-		
+
 		wrapperService = (TextView) v.findViewById(R.id.catParent);
 		txtServiceAddress = (TextView) v.findViewById(R.id.txtServiceAddress);
 		txtServiceDescription = (TextView) v
@@ -207,16 +211,16 @@ public class FragmentOrderDetail extends MyFragment implements OnClickListener {
 		tnc=(TextView) v.findViewById(R.id.tnc);
 		layoutVO=v.findViewById(R.id.layout_vo);
 		txtVO=(TextView) layoutVO.findViewById(R.id.txtVO);
-		
+
 		if(job!=null && job.serial.contains("VO-")){
 			layout_vo_id.setVisibility(View.VISIBLE);
 			layout_normal_id.setVisibility(View.GONE);
 		}else{
 			layout_vo_id.setVisibility(View.GONE);
 			layout_normal_id.setVisibility(View.VISIBLE);
-			
+
 		}
-		
+
 		return v;
 
 	}
@@ -342,7 +346,7 @@ public class FragmentOrderDetail extends MyFragment implements OnClickListener {
 			}
 		});
 		reDraw();
-		
+
 		//showRateMerchant();
 
 	}
@@ -364,15 +368,15 @@ public class FragmentOrderDetail extends MyFragment implements OnClickListener {
 		// job.service_order_status="completed";
 		if ( //"Pending Service Delivery"
 				!"closed".equals(job.service_order_status)
-				&&
-				!"completed".equals(job.service_order_status)
+						&&
+						!"completed".equals(job.service_order_status)
 				) {
 			txtStatus.setBackgroundColor(getResources().getColor(
 					R.color.pa_blue));
 
 			if ("false".equals(job.is_verified)) {
 				analytic.trackScreen("Job Details - Pending Service Delivery");
-				
+
 				//txtStatus.setText("Pending Service Delivery");
 				btnDoJob.setText("VERIFY MERCHANT");
 				btnDoJob.setBackgroundResource(R.drawable.btn_effect_blue_light);
@@ -438,7 +442,7 @@ public class FragmentOrderDetail extends MyFragment implements OnClickListener {
 	private void drawDetail() {
 		// TODO Auto-generated method stub
 		getData();
-		
+
 //		if(!job.serial.contains("VO-")){
 //		getData();
 //		}else{
@@ -455,30 +459,36 @@ public class FragmentOrderDetail extends MyFragment implements OnClickListener {
 				+ pref.getPref(Config.PREF_USERNAME) + "&active_session_token="
 				+ pref.getPref(Config.PREF_ACTIVE_SESSION_TOKEN);
 
-		img.setTag(url);
-		imageLoaderNormal.DisplayImage(url, getActivity(), img);
+//		img.setTag(url);
+//		imageLoaderNormal.DisplayImage(url, getActivity(), img);
+		//	change to Glide for image loading
+		glideImageLoader.displayImageGlide(getActivity(), url, R.drawable.default_img, img);
+//		if(TextUtils.isEmpty(job.service_icon))
+//			Glide.with(getActivity()).load(R.drawable.default_img).into(img);
+//		else
+//			Glide.with(getActivity()).load(url).into(img);
 
 		txtServiceAddress.setText(job.service_order_address
 				+ " , "
 				+ getCityAddress(job.service_order_city,
-						job.service_order_state, job.service_order_country,
-						job.service_order_postal_code));
+				job.service_order_state, job.service_order_country,
+				job.service_order_postal_code));
 		txtServiceDescription.setText(job.service_description);
 
 		txtSerial.setText(job.serial);
 
 		if(job!=null && job.serial.contains("VO-")){
-		txtSerialVO.setText(job.serial);
-		txtRelatedSerial.setText(job.related_job_id);
+			txtSerialVO.setText(job.serial);
+			txtRelatedSerial.setText(job.related_job_id);
 		}
-		
+
 		txtDescription.setText(getJobTitle(job.request_title));
 		txtStatus.setText(job.service_order_status);
-		
+
 		if("completed".equals(job.service_order_status)){
 			txtStatus.setText("Job Completed");
 		}
-		
+
 		txtServiceProvider.setText(job.company_name);
 
 		Spannable span = Spannable.Factory
@@ -537,9 +547,15 @@ public class FragmentOrderDetail extends MyFragment implements OnClickListener {
 					+ "?active_session_token="
 					+ pref.getPref(Config.PREF_ACTIVE_SESSION_TOKEN)
 					+ "&session_username=" + pref.getPref(Config.PREF_USERNAME);
-			img.setTag(url);
-			imageLoader.DisplayImage(url, getActivity(), img);
-			img.setTag(url);
+//			img.setTag(url);
+//			imageLoader.DisplayImage(url, getActivity(), img);
+//			img.setTag(url);
+			//	change to Glide for image loading
+			glideImageLoader.displayImageGlide(getActivity(), url, R.drawable.default_img, img);
+//			if(TextUtils.isEmpty(uri))
+//				Glide.with(getActivity()).load(R.drawable.default_img).into(img);
+//			else
+//				Glide.with(getActivity()).load(url).into(img);
 
 			Tracer.d("debug", url);
 			contentGallery.addView(v);
@@ -588,7 +604,7 @@ public class FragmentOrderDetail extends MyFragment implements OnClickListener {
 									.printEmptyFormValue(parser.cancellation_policy));
 							txtOtherComment.setText(jobAtHeader.other_remarks);
 							arrDetail = parser.getArr();
-							
+
 							drawService();
 							drawJobItem();
 						}
@@ -614,7 +630,7 @@ public class FragmentOrderDetail extends MyFragment implements OnClickListener {
 				if(i<arrDetail.size()-1){
 					strVO+="\n\n";
 				}
-				
+
 				TextView serviceDetail = (TextView) v
 						.findViewById(R.id.service_detail);
 				serviceDetail.setText(getServiceDetailFromParamCache(arrDetail
@@ -638,35 +654,35 @@ public class FragmentOrderDetail extends MyFragment implements OnClickListener {
 
 				((LinearLayout) ((View) wrapperService.getParent())
 						.findViewById(R.id.service_detail_content)).removeAllViews();
-                ((LinearLayout) ((View) wrapperService.getParent())
-                        .findViewById(R.id.service_detail_content)).addView(v);
+				((LinearLayout) ((View) wrapperService.getParent())
+						.findViewById(R.id.service_detail_content)).addView(v);
 			}
-			
-			
+
+
 			//for VO
 			if(job.serial.contains("VO-")){
 				layoutVO.setVisibility(View.VISIBLE);
 				txtVO.setText(strVO);
 			}
-			
-			final String strTnc="Cancellation policy";
-			Spannable span = Spannable.Factory.getInstance().newSpannable(strTnc);   
-			span.setSpan(new ClickableSpan() {  
-			    @Override
-			    public void onClick(View v) {  
-			        //Log.d("main", "link clicked");
-			        //simpleToast("Tnc");
-			        //showTNC(link1,getResources().getString(R.string.link1));
-			    	String cancel_id="";
-			    	for(JobDetail bd:arrDetail){
-			    		cancel_id+=bd.service_id+",";
-			    		}
-			    	
-			    			        showWebDialog("http://pageadvisor.bounche.com/transaction/cancellation-policy?service_id="+cancel_id, strTnc);
 
-			        
-			    } }, 0, strTnc.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-			
+			final String strTnc="Cancellation policy";
+			Spannable span = Spannable.Factory.getInstance().newSpannable(strTnc);
+			span.setSpan(new ClickableSpan() {
+				@Override
+				public void onClick(View v) {
+					//Log.d("main", "link clicked");
+					//simpleToast("Tnc");
+					//showTNC(link1,getResources().getString(R.string.link1));
+					String cancel_id="";
+					for(JobDetail bd:arrDetail){
+						cancel_id+=bd.service_id+",";
+					}
+
+					showWebDialog("http://pageadvisor.bounche.com/transaction/cancellation-policy?service_id="+cancel_id, strTnc);
+
+
+				} }, 0, strTnc.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+
 			tnc.setText(span);
 			tnc.setMovementMethod(LinkMovementMethod.getInstance());
 
@@ -686,9 +702,9 @@ public class FragmentOrderDetail extends MyFragment implements OnClickListener {
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				switch (v.getId()) {
-				case R.id.btnBack:
-					dialogServiceDetailDescription.dismiss();
-					break;
+					case R.id.btnBack:
+						dialogServiceDetailDescription.dismiss();
+						break;
 				}
 			}
 		};
@@ -773,16 +789,16 @@ public class FragmentOrderDetail extends MyFragment implements OnClickListener {
 	Dialog dialogServiceDetailDescription;
 
 	private void showServiceDetail(String service_name,
-			String service_detail_description) {
+								   String service_detail_description) {
 		OnClickListener clickListener = new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				switch (v.getId()) {
-				case R.id.btnBack:
-					dialogServiceDetailDescription.dismiss();
-					break;
+					case R.id.btnBack:
+						dialogServiceDetailDescription.dismiss();
+						break;
 				}
 			}
 		};
@@ -821,7 +837,7 @@ public class FragmentOrderDetail extends MyFragment implements OnClickListener {
 
 	private void showVerifyMerchant() {
 		analytic.trackScreen("Verify Merchant");
-		
+
 		View v = inflater.inflate(R.layout.dialog_verify_merchant, null);
 		txtPasscode = (EditText) v.findViewById(R.id.txtPasscode);
 		msgVerifyMerchant = (TextView) v.findViewById(R.id.msg);
@@ -947,29 +963,29 @@ public class FragmentOrderDetail extends MyFragment implements OnClickListener {
 	String f_rating, f_rating_message;
 
 	void showRateMerchant() {
-		
+
 		analytic.trackScreen("Reviews & Ratings");
 		View v = inflater.inflate(R.layout.dialog_rate, null);
 
 		TextView title=(TextView)v.findViewById(R.id.title);
 		TextView order_id=(TextView)v.findViewById(R.id.txtOrderId);
 		TextView date=(TextView)v.findViewById(R.id.txtDate);
-		
+
 		title.setText(job.request_title);
 		order_id.setText(job.serial);
 		date.setText(getPreferredTime(job.preferred_time1_start,
 				job.preferred_time2_start));
-		
-		
+
+
 		ratingPoint = (RatingBar) v.findViewById(R.id.ratingBar1);
 		txtRatingMsg = (EditText) v.findViewById(R.id.txtRatingMessage);
 		txtRatingServiceName = (TextView) v.findViewById(R.id.txtServiceName);
 		txtRatingServiceName.setText(job.company_name);
 
-		
+
 		LayerDrawable stars = (LayerDrawable) ratingPoint.getProgressDrawable();
 		stars.getDrawable(2).setColorFilter(getResources().getColor(R.color.pa_orange), PorterDuff.Mode.SRC_ATOP);
-		
+
 		ratingPoint.setOnTouchListener(new OnTouchListener() {
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
@@ -1020,32 +1036,32 @@ public class FragmentOrderDetail extends MyFragment implements OnClickListener {
 			}
 		});
 
-		
+
 		dialogRateMerchant = new Dialog(getActivity(), R.style.PauseDialog);
 		//dialogRateMerchant.setCancelable(false);
-		dialogRateMerchant.setOnCancelListener(new DialogInterface.OnCancelListener() {         
-		    @Override
-		    public void onCancel(DialogInterface dialog) {
-		        //do whatever you want the back key to do
-		    	simpleToast("You must give the rating to continue using app");
-		    }
+		dialogRateMerchant.setOnCancelListener(new DialogInterface.OnCancelListener() {
+			@Override
+			public void onCancel(DialogInterface dialog) {
+				//do whatever you want the back key to do
+				simpleToast("You must give the rating to continue using app");
+			}
 		});
-		
+
 		dialogRateMerchant.setOnKeyListener(new OnKeyListener() {
-			
+
 			@Override
 			public boolean onKey(DialogInterface paramDialogInterface, int paramInt,
-					KeyEvent paramKeyEvent) {
+								 KeyEvent paramKeyEvent) {
 				// TODO Auto-generated method stub
 				if (paramKeyEvent.getKeyCode()== KeyEvent.KEYCODE_BACK){
-			    	simpleToast("You must give the rating to continue using app");
-			    	return true;
+					simpleToast("You must give the rating to continue using app");
+					return true;
 				}
-				
+
 				return false;
 			}
 		});
-		
+
 		dialogRateMerchant.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
 		dialogRateMerchant.getWindow().setLayout(
 				WindowManager.LayoutParams.MATCH_PARENT,
@@ -1103,7 +1119,7 @@ public class FragmentOrderDetail extends MyFragment implements OnClickListener {
 
 					@Override
 					public void onFailure(int statusCode, Throwable error,
-							String content) {
+										  String content) {
 						// TODO Auto-generated method stub
 						super.onFailure(statusCode, error, content);
 						simpleToast("Error");
@@ -1224,7 +1240,7 @@ public class FragmentOrderDetail extends MyFragment implements OnClickListener {
 
 					@Override
 					public void onFailure(int statusCode, Throwable error,
-							String content) {
+										  String content) {
 						// TODO Auto-generated method stub
 						super.onFailure(statusCode, error, content);
 						loadingInternetDialog.dismiss();
@@ -1346,7 +1362,7 @@ public class FragmentOrderDetail extends MyFragment implements OnClickListener {
 
 					@Override
 					public void onFailure(int statusCode, Throwable error,
-							String content) {
+										  String content) {
 						// TODO Auto-generated method stub
 						super.onFailure(statusCode, error, content);
 						loadingInternetDialog.dismiss();
@@ -1361,15 +1377,15 @@ public class FragmentOrderDetail extends MyFragment implements OnClickListener {
 	public void onClick(View v) {
 		// TODO Auto-generated method stub
 		switch (v.getId()) {
-		case R.id.btnBack:
-			getActivity().getSupportFragmentManager().popBackStackImmediate();
+			case R.id.btnBack:
+				getActivity().getSupportFragmentManager().popBackStackImmediate();
 //			listener.doFragmentChange(new FragmentOrder(isCompleted), false, "");
-			break;
-		case R.id.cancel_job:
-			showDialogCancel();
-			break;
-		case R.id.do_job:
-			break;
+				break;
+			case R.id.cancel_job:
+				showDialogCancel();
+				break;
+			case R.id.do_job:
+				break;
 		}
 	}
 
@@ -1457,7 +1473,7 @@ public class FragmentOrderDetail extends MyFragment implements OnClickListener {
 
 					@Override
 					public void onFailure(int statusCode, Throwable error,
-							String content) {
+										  String content) {
 						// TODO Auto-generated method stub
 						super.onFailure(statusCode, error, content);
 						loadingInternetDialog.dismiss();

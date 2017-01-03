@@ -6,12 +6,15 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
@@ -19,14 +22,21 @@ import android.widget.TextView;
 
 import com.braintreepayments.api.dropin.BraintreePaymentActivity;
 import com.braintreepayments.api.dropin.Customization;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.drawable.GlideDrawable;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
 import com.coolfindservices.android.SplashActivity;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.nanigans.android.sdk.NanigansEventManager;
 import com.nanigans.android.sdk.NanigansEventParameter;
+import com.pa.common.AccordionGroup;
 import com.pa.common.Config;
+import com.pa.common.GlideImageLoader;
 import com.pa.common.GlobalVar;
 import com.pa.common.ImageLoader;
+import com.pa.common.ImageViewFitWidth;
 import com.pa.common.MyFragment;
 import com.pa.common.OnFragmentChangeListener;
 import com.pa.common.PARestClient;
@@ -57,15 +67,32 @@ public class PackageDetailFragment extends MyFragment implements View.OnClickLis
     private float paymentPrice = 0.0f;
     private String MY_URI, AttachmentImageUrl;
     private TextView mPageTitle, mTitle, mPrice, mTnC, mDetail, mCompanyName, mTotalReview, mReviewPoint,
-                    mCancellationPolicy;
+            mCancellationPolicy;
     private LinearLayout mContentGallery, mLayoutCancellation;
 
     private PackageListDetailItem mItem = null;
     private OnFragmentChangeListener listener;
     private RatingBar ratingBar;
     private ImageLoader loader;
+    private GlideImageLoader glideImageLoader;
+
+    private AccordionGroup accordionGroup;
+    private View containerFreeCredits, containerPromoCode;
+    private TextView freeCredits;
+    private Button btnCredits;
+    private float discountedAmount = 0;
+    private String finalPrice;
+    private EditText inputPromoCode;
+    private String validatedPromoCode = "", creditSerial = "";
+    private String promoCodeForPayment;
+    private String creditSerialForPayment;
+    private boolean isNoPayment = false;
+    private Boolean isSpecial = false;
+    private int type;           //  type: 0 = balance after free credits, 1 = after promocode discount
+    private Boolean isDiscounted = false;
 
     private Boolean isDataMapped;
+    private ImageView tempView;
 
     public static PackageDetailFragment newInstance(PackageListDetailItem param1) {
         PackageDetailFragment fragment = new PackageDetailFragment();
@@ -89,6 +116,7 @@ public class PackageDetailFragment extends MyFragment implements View.OnClickLis
         AttachmentImageUrl = PARestClient.getDealAbsoluteUrl(pref.getPref(Config.SERVER),
                 Config.PACKAGE_IMAGE_PATH);
         loader          = new ImageLoader(getActivity());
+        glideImageLoader = new GlideImageLoader();
 
         onGetOrderDetail();
         isDataMapped = true;
@@ -116,6 +144,7 @@ public class PackageDetailFragment extends MyFragment implements View.OnClickLis
         mCancellationPolicy = (TextView) v.findViewById(R.id.txt_cancellation_policy);
         mContentGallery     = (LinearLayout) v.findViewById(R.id.gallery_content);
         mLayoutCancellation = (LinearLayout) v.findViewById(R.id.layout_cancellation);
+        tempView = (ImageView) v.findViewById(R.id.imageView);
 
 //        AttachmentImageUrl = PARestClient.getDealAbsoluteUrl(pref.getPref(Config.SERVER),
 //                Config.PACKAGE_IMAGE_PATH);
@@ -218,11 +247,11 @@ public class PackageDetailFragment extends MyFragment implements View.OnClickLis
             listener.doFragmentChange(fragment, true, "");
         }
         else {
-            //  work around
+            //  direct to package review before payment
             PackagePreviewFragment fragment = PackagePreviewFragment.newInstance(mPackageJobItem);
             listener.doFragmentChange(fragment, true, "");
-            //  original steps
-            //doPayWithBraintree();
+            //  original method to do payment direct after this (package details) page
+//            doPayWithBraintree();
         }
 
     }
@@ -333,13 +362,24 @@ public class PackageDetailFragment extends MyFragment implements View.OnClickLis
 
             String photoUrl = AttachmentImageUrl + "/attachment/";
             for (String photoName : mPackageJobItem.attachment_photo) {
-                Log.i(LOG_TAG, photoName);
+                Log.i(LOG_TAG, photoUrl+photoName);
                 View photo = inflater.inflate(R.layout.item_upload_photo, null);
                 ImageView img = (ImageView) photo.findViewById(R.id.img);
 
                 String url = photoUrl + photoName;
-                loader.DisplayImage(url, getActivity(), img, false);
-                img.setTag(url);
+//                loader.DisplayImage(url, getActivity(), img, false);
+//                img.setTag(url);
+
+                //  Glide image loader
+                glideImageLoader.displayImageGlide(getActivity(), url, R.drawable.default_img, img);
+//                if(TextUtils.isEmpty(photoName)) {
+//                    Glide.with(getActivity()).load(R.drawable.default_img).into(img);   //simpleToast("default image");
+//                }
+//                else {
+//                    Glide.with(getActivity()).load(url).into(img);                      //simpleToast("merchant image");
+//
+////                    Glide.with(getActivity()).load(R.drawable.default_img).into(img);
+//                }
 
                 mContentGallery.addView(photo);
                 photo.setOnClickListener(new View.OnClickListener() {
@@ -455,7 +495,7 @@ public class PackageDetailFragment extends MyFragment implements View.OnClickLis
         Intent intent = new Intent(getActivity(),
                 BraintreePaymentActivity.class);
         Customization customization = new Customization.CustomizationBuilder()
-                .primaryDescription("Cool Find | Order Id:" + mPackageJobItem.serial)
+                .primaryDescription("Page Advisor | Order Id:" + mPackageJobItem.serial)
                 .secondaryDescription(mPackageJobItem.title)
                 .amount(mPackageJobItem.currency + " " + paymentPrice)
                 .submitButtonText("Pay Now").build();

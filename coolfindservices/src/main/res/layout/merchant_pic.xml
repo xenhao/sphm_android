@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center">
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardElevation="2dp">
+            <ImageView
+                android:layout_gravity="center"
+                android:id="@+id/img_cover_timeline"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/default_cover_timeline" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:orientation="vertical"
+                android:layout_marginTop="@dimen/margin130">
+
+                <com.pa.common.ImageViewFitHeight
+                    android:visibility="gone"
+                    android:id="@+id/img_profile_pic"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/profilecircle2"
+                    android:layout_gravity="center"
+                    android:src="@drawable/icon_car" />
+
+                <RatingBar
+                    android:id="@+id/ratingBar1"
+                    style="?android:attr/ratingBarStyleSmall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:max="5"
+                    android:numStars="5"
+                    android:rating="3" />
+
+                <com.pa.common.TypefaceTextView
+                    android:id="@+id/ratingCount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/edittext_height"
+                    android:gravity="center"
+                    android:layout_gravity="center_horizontal"
+                    android:text=""
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/txt_big"
+                    app:typeface="OpenSans-Regular" />
+
+                <com.pa.common.TypefaceTextView
+                    android:id="@+id/ratingCount1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:gravity="center"
+                    android:text=""
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/txt_big"
+                    app:typeface="OpenSans-Regular" />
+
+                <com.pa.common.TypefaceTextView
+                    android:layout_gravity="bottom"
+                    android:id="@+id/txtName"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/edittext_height"
+                    android:gravity="center"
+                    android:text="Merchant name"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/txt_extra_big"
+                    app:typeface="century-gothic-bold"
+                    android:layout_marginTop="15dp"/>
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+
+
+    </RelativeLayout>

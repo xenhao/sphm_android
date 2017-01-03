@@ -8,8 +8,8 @@ import android.os.Handler;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +25,7 @@ import com.bumptech.glide.Glide;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.pa.common.Config;
+import com.pa.common.GlideImageLoader;
 import com.pa.common.ImageLoader;
 import com.pa.common.MyFragment;
 import com.pa.common.OnFragmentChangeListener;
@@ -58,6 +59,7 @@ public class PackageFragment extends MyFragment implements View.OnClickListener 
     private RecyclerView.LayoutManager mLayoutManager;
     private TextView mTxtCategory;
     private ImageLoader loader;
+    private GlideImageLoader glideImageLoader;
     private PackageAdapter mAdapter;
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private Boolean isRefresh = false;
@@ -112,6 +114,7 @@ public class PackageFragment extends MyFragment implements View.OnClickListener 
                 Config.PACKAGE_IMAGE_PATH);
 
         loader      = new ImageLoader(getActivity());
+        glideImageLoader = new GlideImageLoader();
         mItems      = new ArrayList<>();
         mAdapter    = new PackageAdapter(getActivity(), mItems, imageUrl, loader);
 //        mRecyclerView.setAdapter(mAdapter);
@@ -140,6 +143,7 @@ public class PackageFragment extends MyFragment implements View.OnClickListener 
 //        getCategoryList();
         getList(ServiceID);
 //        getList(arrCategoryId.get(arrCategory.indexOf(ServiceID)));
+
     }
 
     @Override
@@ -164,7 +168,7 @@ public class PackageFragment extends MyFragment implements View.OnClickListener 
 
 //        String imageUrl = PARestClient.getDealAbsoluteUrl(pref.getPref(Config.SERVER),
 //                Config.PACKAGE_IMAGE_PATH);
-
+//
 //        loader      = new ImageLoader(getActivity());
 //        mItems      = new ArrayList<>();
 //        mAdapter    = new PackageAdapter(getActivity(), mItems, imageUrl, loader);
@@ -199,7 +203,7 @@ public class PackageFragment extends MyFragment implements View.OnClickListener 
             }
         });
 
-        //        if(mAdapter.getItemCount() < 0){
+//        if(mAdapter.getItemCount() < 0){
 //        if(mRecyclerView.getChildCount() < 0){
         if(mRecyclerView.getAdapter().getItemCount() == 0){
             mEmptyState.setVisibility(View.VISIBLE);
@@ -263,7 +267,6 @@ public class PackageFragment extends MyFragment implements View.OnClickListener 
                         + " must implemenet OnFragmentChangeListener");
             }
         } catch (Exception e) {
-            e.printStackTrace();
         }
     }
 
@@ -467,7 +470,8 @@ public class PackageFragment extends MyFragment implements View.OnClickListener 
     private void cacheGlide(ArrayList<PackageListItem> items){
         for(int i = 0; i < items.size(); i++){
             if(items.get(i).cover_photo != null){
-                Glide.with(getActivity()).load(imageUrl+items.get(i).cover_photo).preload();
+//                Glide.with(getActivity()).load(imageUrl+items.get(i).cover_photo).preload();
+                glideImageLoader.preload(getActivity(), imageUrl+items.get(i).cover_photo);
             }
         }
     }
@@ -494,6 +498,7 @@ public class PackageFragment extends MyFragment implements View.OnClickListener 
         private ArrayList<PackageListItem> mItems;
         private String mImageUrl;
         private ImageLoader mImageLoader;
+        private GlideImageLoader mGlideImageLoader;
         private OnItemClickListener mListener = null;
 
 
@@ -503,6 +508,8 @@ public class PackageFragment extends MyFragment implements View.OnClickListener 
             this.mImageUrl = mImageUrl;
             this.mImageLoader = mImageLoader;
             this.mImageLoader.setDefaultImage(R.drawable.promo_placeholder);
+
+            mGlideImageLoader = new GlideImageLoader();
         }
 
         public interface OnItemClickListener {
@@ -531,9 +538,15 @@ public class PackageFragment extends MyFragment implements View.OnClickListener 
             }
             else{
                 String coverUrl = mImageUrl + "/cover/" + item.cover_photo;
-                holder.mCoverImage.setTag(coverUrl);
+//                holder.mCoverImage.setTag(coverUrl);
 
-                mImageLoader.DisplayImage(coverUrl, mActivity, holder.mCoverImage, false);
+//                mImageLoader.DisplayImage(coverUrl, mActivity, holder.mCoverImage, false);
+
+                mGlideImageLoader.displayImageGlide(mActivity, coverUrl, R.drawable.promo_placeholder, holder.mCoverImage);
+//                if(TextUtils.isEmpty(item.cover_photo))
+//                    Glide.with(mActivity).load(R.drawable.default_img).into(holder.mCoverImage);
+//                else
+//                    Glide.with(mActivity).load(coverUrl).into(holder.mCoverImage);
             }
 
             holder.mTitle.setText(item.title);
@@ -564,12 +577,12 @@ public class PackageFragment extends MyFragment implements View.OnClickListener 
     }
 
     protected void showCategorySpinnerSelection(final String[] strSelection,
-                                        final TextView tv, String title) {
+                                                final TextView tv, String title) {
         showCategorySpinnerSelection(strSelection, tv, title, null);
     };
 
     protected void showCategorySpinnerSelection(final String[] strSelection,
-                                        final TextView tv, String title, final Handler h) {
+                                                final TextView tv, String title, final Handler h) {
         // TODO Auto-generated method stub
         try {
             class MyAdapter extends BaseAdapter {
