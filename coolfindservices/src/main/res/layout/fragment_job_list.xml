@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/pa_grey"
-    android:orientation="vertical" >
+    android:orientation="vertical"
+    android:animateLayoutChanges="true">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -22,13 +23,13 @@
             android:src="@drawable/btn_effect_menu"
             android:visibility="gone"/>
 
-            <com.pa.common.ImageViewFitHeight
+        <com.pa.common.ImageViewFitHeight
             android:id="@+id/btnHome"
             android:layout_gravity="center"
             android:layout_width="36dp"
             android:layout_height="36dp"
             android:src="@drawable/ic_home_white"
-                android:visibility="invisible"/>
+            android:visibility="invisible"/>
 
         <com.pa.common.TypefaceTextView
             android:id="@+id/title"
@@ -69,17 +70,17 @@
             app:typeface="OpenSans-Bold" />
 
         <!--<com.pa.common.TypefaceTextView-->
-            <!--android:id="@+id/txt_promotion"-->
-            <!--android:layout_width="0dp"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:layout_weight="1"-->
-            <!--android:gravity="center"-->
-            <!--android:text="PROMOTIONS"-->
-            <!--android:textColor="@color/white"-->
-            <!--android:textSize="@dimen/txt_big"-->
-            <!--android:background="@drawable/btn_light_orange_off"-->
-            <!--android:padding="@dimen/padding2"-->
-            <!--app:typeface="OpenSans-Bold" />-->
+        <!--android:id="@+id/txt_promotion"-->
+        <!--android:layout_width="0dp"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:layout_weight="1"-->
+        <!--android:gravity="center"-->
+        <!--android:text="PROMOTIONS"-->
+        <!--android:textColor="@color/white"-->
+        <!--android:textSize="@dimen/txt_big"-->
+        <!--android:background="@drawable/btn_light_orange_off"-->
+        <!--android:padding="@dimen/padding2"-->
+        <!--app:typeface="OpenSans-Bold" />-->
 
         <com.pa.common.TypefaceTextView
             android:id="@+id/txt_package"
@@ -96,79 +97,81 @@
     </LinearLayout>
 
     <!--<LinearLayout-->
-        <!--android:visibility="gone"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_margin="@dimen/margin4"-->
-        <!--android:orientation="horizontal" >-->
+    <!--android:visibility="gone"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_margin="@dimen/margin4"-->
+    <!--android:orientation="horizontal" >-->
 
-        <!--<LinearLayout-->
-            <!--android:id="@+id/job_ongoing"-->
-            <!--android:layout_width="0dp"-->
-            <!--android:layout_height="@dimen/button_height3"-->
-            <!--android:layout_weight="1"-->
-            <!--android:background="@drawable/btn_dark_orange_off"-->
-            <!--android:gravity="center"-->
-            <!--android:orientation="horizontal"-->
-            <!--android:paddingLeft="@dimen/padding2"-->
-            <!--android:paddingRight="@dimen/padding2" >-->
+    <!--<LinearLayout-->
+    <!--android:id="@+id/job_ongoing"-->
+    <!--android:layout_width="0dp"-->
+    <!--android:layout_height="@dimen/button_height3"-->
+    <!--android:layout_weight="1"-->
+    <!--android:background="@drawable/btn_dark_orange_off"-->
+    <!--android:gravity="center"-->
+    <!--android:orientation="horizontal"-->
+    <!--android:paddingLeft="@dimen/padding2"-->
+    <!--android:paddingRight="@dimen/padding2" >-->
 
-            <!--<com.pa.common.TypefaceTextView-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="match_parent"-->
-                <!--android:gravity="center"-->
-                <!--android:text="ONGOING"-->
-                <!--android:textColor="@color/white"-->
-                <!--android:textSize="@dimen/txt_big"-->
-                <!--app:typeface="OpenSans-Bold" />-->
-        <!--</LinearLayout>-->
+    <!--<com.pa.common.TypefaceTextView-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:gravity="center"-->
+    <!--android:text="ONGOING"-->
+    <!--android:textColor="@color/white"-->
+    <!--android:textSize="@dimen/txt_big"-->
+    <!--app:typeface="OpenSans-Bold" />-->
+    <!--</LinearLayout>-->
 
-        <!--<RelativeLayout-->
-            <!--android:id="@+id/job_completed"-->
-            <!--android:layout_width="0dp"-->
-            <!--android:layout_height="@dimen/button_height3"-->
-            <!--android:layout_weight="1"-->
-            <!--android:background="@drawable/btn_light_orange_off"-->
-            <!--android:gravity="center"-->
-            <!--android:orientation="horizontal"-->
-            <!--android:paddingLeft="@dimen/padding2"-->
-            <!--android:paddingRight="@dimen/padding2" >-->
+    <!--<RelativeLayout-->
+    <!--android:id="@+id/job_completed"-->
+    <!--android:layout_width="0dp"-->
+    <!--android:layout_height="@dimen/button_height3"-->
+    <!--android:layout_weight="1"-->
+    <!--android:background="@drawable/btn_light_orange_off"-->
+    <!--android:gravity="center"-->
+    <!--android:orientation="horizontal"-->
+    <!--android:paddingLeft="@dimen/padding2"-->
+    <!--android:paddingRight="@dimen/padding2" >-->
 
-            <!--<TextView -->
-                <!--android:background="@android:color/transparent"-->
-                <!--android:id="@+id/bid_widget"-->
-                <!--android:layout_width="match_parent" android:layout_height="match_parent"/>-->
-            <!-- -->
-            <!--<com.pa.common.TypefaceTextView-->
-                <!--android:layout_centerInParent="true"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="match_parent"-->
-                <!--android:gravity="center"-->
-                <!--android:text="COMPLETED"-->
-                <!--android:textColor="@color/white"-->
-                <!--android:textSize="@dimen/txt_big"-->
-                <!--app:typeface="OpenSans-Bold" />-->
+    <!--<TextView -->
+    <!--android:background="@android:color/transparent"-->
+    <!--android:id="@+id/bid_widget"-->
+    <!--android:layout_width="match_parent" android:layout_height="match_parent"/>-->
+    <!-- -->
+    <!--<com.pa.common.TypefaceTextView-->
+    <!--android:layout_centerInParent="true"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:gravity="center"-->
+    <!--android:text="COMPLETED"-->
+    <!--android:textColor="@color/white"-->
+    <!--android:textSize="@dimen/txt_big"-->
+    <!--app:typeface="OpenSans-Bold" />-->
 
-            <!--<com.pa.common.TypefaceTextView-->
-                <!--android:visibility="gone"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_marginLeft="@dimen/margin2"-->
-                <!--android:background="@drawable/bg_red_circle"-->
-                <!--android:gravity="center"-->
-                <!--android:padding="@dimen/padding"-->
-                <!--android:text="1"-->
-                <!--android:textColor="@color/white"-->
-                <!--android:textSize="@dimen/txt_big"-->
-                <!--app:typeface="OpenSans-Bold" />-->
-        <!--</RelativeLayout>-->
+    <!--<com.pa.common.TypefaceTextView-->
+    <!--android:visibility="gone"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_marginLeft="@dimen/margin2"-->
+    <!--android:background="@drawable/bg_red_circle"-->
+    <!--android:gravity="center"-->
+    <!--android:padding="@dimen/padding"-->
+    <!--android:text="1"-->
+    <!--android:textColor="@color/white"-->
+    <!--android:textSize="@dimen/txt_big"-->
+    <!--app:typeface="OpenSans-Bold" />-->
+    <!--</RelativeLayout>-->
     <!--</LinearLayout>-->
 
     <android.support.v4.widget.SwipeRefreshLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/swiperefresh"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:animateLayoutChanges="true"
+        android:layout_weight="4">
         <ListView
             android:id="@+id/list"
             android:layout_width="match_parent"
@@ -180,8 +183,37 @@
             android:dividerHeight="0dp" >
         </ListView>
     </android.support.v4.widget.SwipeRefreshLayout>
- 	<com.pa.common.TypefaceTextView
- 	    android:visibility="gone"
+
+    <RelativeLayout
+        android:id="@+id/loadingPanel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:animateLayoutChanges="true"
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:layout_weight=".5"
+        android:background="@color/intercom_full_transparent_full_white"
+        android:visibility="gone">
+
+        <ProgressBar
+            android:id="@+id/pb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:foregroundGravity="left"
+            android:indeterminate="true"
+            android:indeterminateDrawable="@drawable/orange_progress_wheel" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:padding="@dimen/padding2"
+            android:text="Loading more content..."
+            android:layout_toEndOf="@+id/pb"
+            android:layout_toRightOf="@+id/pb"/>
+    </RelativeLayout>
+
+    <com.pa.common.TypefaceTextView
+        android:visibility="gone"
         android:background="@drawable/white_rectangle_solid"
         android:id="@+id/empty"
         android:layout_width="match_parent"
@@ -190,9 +222,9 @@
         android:text="No data found"
         android:textColor="@color/pa_dark_grey"
         android:textSize="@dimen/txt_big"
-        app:typeface="OpenSans-Regular" 
+        app:typeface="OpenSans-Regular"
         />
-    
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/edittext_height3"
@@ -246,6 +278,8 @@
             android:clickable="false"
             android:focusable="false" />
     </LinearLayout>
+
+
 
 
 </LinearLayout>

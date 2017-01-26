@@ -59,4 +59,5 @@
 
     <color name="black_transparent">#f9eade</color>
     <color name="trans_black">#99000000</color>
+    <color name="transparent_white">#00FFFFFF</color>
 </resources>

@@ -739,20 +739,26 @@ public class MyFragment extends Fragment implements ImageChooserListener {
 		inflater = getActivity().getLayoutInflater();
 		pref = new AppPreferences(getActivity());
 		loadingDialog = new ProgressDialog(getActivity());
+		loadingDialog.setIndeterminate(true);
+		loadingDialog.setIndeterminateDrawable(getResources().getDrawable(R.drawable.intercom_progress_wheel));
 		loadingDialog.setMessage("Please wait...");
 		loadingDialog.setTitle("Loading");
 
 		loadingInternetDialog = new ProgressDialog(getActivity());
+		loadingInternetDialog.setIndeterminate(true);
+		loadingInternetDialog.setIndeterminateDrawable(getResources().getDrawable(R.drawable.intercom_progress_wheel));
 		loadingInternetDialog.setCancelable(true);
 		loadingInternetDialog
 				.setMessage("This feature using internet connection");
 		loadingInternetDialog.setTitle("Loading");
 
-        forceLoadingInternetDialog = new ProgressDialog(getActivity());
-        forceLoadingInternetDialog.setCancelable(false);
-        forceLoadingInternetDialog
-                .setMessage("This feature using internet connection");
-        forceLoadingInternetDialog.setTitle("Loading");
+		forceLoadingInternetDialog = new ProgressDialog(getActivity());
+		forceLoadingInternetDialog.setIndeterminate(true);
+		forceLoadingInternetDialog.setIndeterminateDrawable(getResources().getDrawable(R.drawable.intercom_progress_wheel));
+		forceLoadingInternetDialog.setCancelable(false);
+		forceLoadingInternetDialog
+				.setMessage("This feature using internet connection");
+		forceLoadingInternetDialog.setTitle("Loading");
 
 		fm = getChildFragmentManager();
 		getActivity().getWindow().setSoftInputMode(

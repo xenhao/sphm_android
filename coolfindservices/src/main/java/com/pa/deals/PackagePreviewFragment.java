@@ -815,7 +815,7 @@ public class PackagePreviewFragment extends MyFragment implements View.OnClickLi
 
             @Override
             public void onClick(View v) {
-                activityLanding.setBottomBar(2);
+                activityLanding.setBottomBar(3);
 //                mListener.doFragmentChange(new FragmentOrder(false, "PA"), true, "");
                 ((ActivityLanding) getActivity()).replaceFragment(new FragmentOrder(false, "PA"), true);
                 dialogOrderSuccess.hide();
@@ -825,7 +825,7 @@ public class PackagePreviewFragment extends MyFragment implements View.OnClickLi
         v.findViewById(R.id.btnNext2).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                activityLanding.setBottomBar(2);
+                activityLanding.setBottomBar(3);
 //                mListener.doFragmentChange(new FragmentOrder(false, "PA"), true, "");
                 ((ActivityLanding) getActivity()).replaceFragment(new FragmentOrder(false, "PA"), true);
                 dialogOrderSuccess.hide();

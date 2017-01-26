@@ -311,7 +311,8 @@ public class PackageListDetailFragment extends MyFragment implements View.OnClic
 //        params.add("page", page + "");
 //        params.add("country", country);
 //        params.add("state", state);
-        params.add("package_serial",mItem.serial);
+        //  test resolve mItem.serial NullPointerException
+        params.add("package_serial", (mItem.serial == null) ? "" : mItem.serial);
 
         Log.i("Package Fragment", params.toString());
         Log.i("Package Fragment", pref.getPref(Config.SERVER) + Config.DEAL_API_GET_PACKAGE_DETAIL_LIST);

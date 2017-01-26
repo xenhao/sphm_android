@@ -28,6 +28,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.facebook.appevents.AppEventsLogger;
 import com.hipmob.android.HipmobCore;
@@ -44,6 +45,8 @@ import com.pa.common.PARestClient;
 import com.pa.common.ProfilUtils;
 import com.pa.common.Tracer;
 import com.pa.contactus.FragmentContactUs;
+import com.pa.deals.PackageFragment;
+import com.pa.deals.PackagePromoFragment;
 import com.pa.free_credit.FragmentEarnFreeCredits;
 import com.pa.job.FragmentPostOpenBid;
 import com.pa.order.FragmentOrder;
@@ -202,7 +205,7 @@ public class ActivityLanding extends MyActivity implements OnClickListener,
 
 			if (fm.findFragmentById(R.id.content_frame) instanceof FragmentRevisedLanding/*FragmentNewLanding*/
 					|| fm.findFragmentById(R.id.content_frame) instanceof FragmentBid
-//					|| fm.findFragmentById(R.id.content_frame) instanceof FragmentOrder
+					|| fm.findFragmentById(R.id.content_frame) instanceof PackageFragment
 					|| fm.findFragmentById(R.id.content_frame) instanceof FragmentOthers
 					/*|| fm.findFragmentById(R.id.content_frame) instanceof  FragmentOthers*/) {
 				Tracer.d("Exit1");
@@ -401,6 +404,9 @@ public class ActivityLanding extends MyActivity implements OnClickListener,
 							selectItem(R.id.tab_others);
 //							simpleToast("display all others options");
 							break;
+						case (R.id.tab_package):
+							selectItem(99);
+							break;
 					}
 				}
 			});
@@ -432,6 +438,9 @@ public class ActivityLanding extends MyActivity implements OnClickListener,
 							if (!(fm.findFragmentById(R.id.content_frame) instanceof FragmentOthers))
 								selectItem(R.id.tab_others);
 //							simpleToast("display all others options");
+							break;
+						case (R.id.tab_package):
+							selectItem(99);
 							break;
 					}
 				}
@@ -695,8 +704,24 @@ public class ActivityLanding extends MyActivity implements OnClickListener,
 			case R.id.menu_completed_jobs:
 //			fm.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
 				replaceFragment(R.id.content_frame, new FragmentOrder(true) ,true);
-
 				break;
+			case (99):
+//			Toast.makeText(this, "GlobalVar country: " + GlobalVar.country + "\nGlobalVar state: " + GlobalVar.state, Toast.LENGTH_SHORT).show();
+//			Toast.makeText(this, "Last country in saved pref: " + pref.getPref(Config.PREF_LAST_COUNTRY), Toast.LENGTH_SHORT).show();
+				//	new landing package button, use global variable stored country if available
+				if(GlobalVar.country == null) {
+					String temp = pref.getPref(Config.PREF_LAST_COUNTRY);
+					//	filter off additional state info if present before passing to PackageFragment
+					if(temp.isEmpty())
+						doFragmentChange(PackageFragment.newInstance("no country", false), true, "");
+					else if(temp.toLowerCase().contains("singapore"))
+						doFragmentChange(PackageFragment.newInstance(temp + ", " + GlobalVar.state, false), true, "");
+					else
+						doFragmentChange(PackageFragment.newInstance(temp.substring(0, temp.indexOf(",")) + ", " + GlobalVar.state, false), true, "");
+				} else
+					doFragmentChange(PackageFragment.newInstance(GlobalVar.country + ", " + GlobalVar.state, false), true, "");
+				break;
+
 			case R.id.menu_faq:
 				doFAQ();
 				analytic.trackScreen("Consumer FAQ");
@@ -888,7 +913,7 @@ public class ActivityLanding extends MyActivity implements OnClickListener,
 //				Fragment f = fm.findFragmentById(R.id.content_frame);
 //				f.onActivityResult(requestCode, resultCode, intent);
 //
-//			}			
+//			}
 
 	}
 

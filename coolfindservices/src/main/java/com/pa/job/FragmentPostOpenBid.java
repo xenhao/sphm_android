@@ -3505,7 +3505,7 @@ public class FragmentPostOpenBid extends MyFragment implements OnClickListener,
 					@Override
 					public void onClick(View v) {
 						// TODO Auto-generated method stub
-						activityLanding.setBottomBar(1);
+						activityLanding.setBottomBar(2);
 						flagForDialogBid = 1;
 //						listener.doFragmentChange(new FragmentBid(), false,
 //								"Bid");
@@ -3521,7 +3521,7 @@ public class FragmentPostOpenBid extends MyFragment implements OnClickListener,
 					@Override
 					public void onClick(View v) {
 						// TODO Auto-generated method stub
-						activityLanding.setBottomBar(1);
+						activityLanding.setBottomBar(2);
 						flagForDialogBid = 2;
 //						listener.doFragmentChange(new FragmentBidDetail(
 //								service_request_serial), false, "Bid");

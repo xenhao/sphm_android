@@ -1207,7 +1207,7 @@ public class FragmentRevisedLanding extends MyFragment implements View.OnClickLi
         }
 
         @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
+        public View getView(final int position, View convertView, ViewGroup parent) {
             // TODO Auto-generated method stub
             try{
                 if (convertView == null) {
@@ -1296,18 +1296,23 @@ public class FragmentRevisedLanding extends MyFragment implements View.OnClickLi
                         // TODO Auto-generated method stub
                         try {
                             int pos = (Integer) v.getTag(R.id.action_settings);
-                            ServiceCategory sc = arrServiceCategory.get(pos);
-                            ArrayList<ServiceCategory> arr = new ArrayList<ServiceCategory>();
-                            arr.add(sc);
+
+                            if(arrServiceCategory.get(pos).id.equals("765")) {
+                                showWebDialog("http://www.pageadvisor.com/myrepublic");
+                            }else{
+                                ServiceCategory sc = arrServiceCategory.get(pos);
+                                ArrayList<ServiceCategory> arr = new ArrayList<ServiceCategory>();
+                                arr.add(sc);
 //                            listener.doFragmentChange(new FragmentPostOpenBid(arr, serviceCountry),
 //                                    true, "");
 //                            Toast.makeText(getActivity(), "arr: " + sc.id + "\nserviceCountry: " + txtCountry2.getText().toString() + "\narrServiceCategory.get(pos).service_name: " + arrServiceCategory.get(pos).service_name + "\narrServiceCategory.get(pos).id: " + arrServiceCategory.get(pos).id, Toast.LENGTH_LONG).show();
-                            //  set GlobalVar.country before proceeding
-                            GlobalVar.country = txtCountry2.getText().toString();
-                            listener.doFragmentChange(new FragmentCategoryTab(arrServiceCategory.get(pos).service_name, arrServiceCategory.get(pos).id, txtCountry2.getText().toString(), arr),
-                                    true, "");
+                                //  set GlobalVar.country before proceeding
+                                GlobalVar.country = txtCountry2.getText().toString();
+                                listener.doFragmentChange(new FragmentCategoryTab(arrServiceCategory.get(pos).service_name, arrServiceCategory.get(pos).id, txtCountry2.getText().toString(), arr),
+                                        true, "");
 
-                            analytic.trackCustomDimension("Category", 1, arrServiceCategory.get(pos).service_name);
+                                analytic.trackCustomDimension("Category", 1, arrServiceCategory.get(pos).service_name);
+                            }
                         }catch(Exception e){
                             e.printStackTrace();
                         }

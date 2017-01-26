@@ -10,6 +10,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,7 +20,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RatingBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.loopj.android.http.AsyncHttpResponseHandler;
@@ -67,7 +70,7 @@ public class PackageFragment extends MyFragment implements View.OnClickListener 
     final ArrayList<String> arrCategoryId = new ArrayList<String>();
 
     private ArrayList<PackageListItem> mItems;
-    private int LIMIT = 100;
+    private int LIMIT = 10;
     private int page = 1;
     private boolean hasNext = false;
     private OnFragmentChangeListener listener;
@@ -75,6 +78,11 @@ public class PackageFragment extends MyFragment implements View.OnClickListener 
     private String serviceIDNum;
 
     private String imageUrl;
+
+    private static boolean isBackable = true;
+    private ImageView backBtn;
+
+    private RelativeLayout progressBar;
 
     public static PackageFragment newInstance() {
         return new PackageFragment();
@@ -90,13 +98,27 @@ public class PackageFragment extends MyFragment implements View.OnClickListener 
         return fragment;
     }
 
-    public static PackageFragment newInstance(String category, String country) {
+    public static PackageFragment newInstance(String country, boolean canGoBack) {
+        PackageFragment fragment = new PackageFragment();
+
+        Bundle args = new Bundle();
+        args.putString(PARAMS_TAG_COUNTRY, country);
+        fragment.setArguments(args);
+
+        isBackable = canGoBack;
+
+        return fragment;
+    }
+
+    public static PackageFragment newInstance(String category, String country, boolean canGoBack) {
         PackageFragment fragment = new PackageFragment();
 
         Bundle args = new Bundle();
         args.putString(PARAMS_TAG_COUNTRY, country);
         args.putString("service category", category);
         fragment.setArguments(args);
+
+        isBackable = canGoBack;
 
         return fragment;
     }
@@ -127,17 +149,25 @@ public class PackageFragment extends MyFragment implements View.OnClickListener 
 //                listener.doFragmentChange(fragment, true, "");
 //            }
 //        });
-
         String paramsCountry = getArguments().getString(PARAMS_TAG_COUNTRY);
-        if("singapore".equalsIgnoreCase(paramsCountry)){
+//        Toast.makeText(getContext(), "paramsCountry: " + paramsCountry, Toast.LENGTH_SHORT).show();
+        if(paramsCountry.toLowerCase().contains("singapore") || "singapore".equalsIgnoreCase(paramsCountry)){
             country = "sg";
             state   = "";
-        }else{
+        }else if(paramsCountry.equalsIgnoreCase("no country")){
+            country = "no country";
+            state   = "no country";
+        }else {
             country ="my";
-            state   = paramsCountry.replace(malaysia_prefix, "");
+            state   = paramsCountry != null ? paramsCountry.replace(malaysia_prefix, "") : null;
         }
 
-        ServiceID = getArguments().getString("service category");
+//        Toast.makeText(getContext(), "country: " + country + "\nstate: " + state, Toast.LENGTH_SHORT).show();
+
+        if (getArguments().containsKey("service category"))
+            ServiceID = getArguments().getString("service category");
+        else
+            ServiceID = "";
 
 //        getList("");
 //        getCategoryList();
@@ -160,11 +190,29 @@ public class PackageFragment extends MyFragment implements View.OnClickListener 
         mTxtCategory = (TextView) v.findViewById(R.id.txt_category);
         mSwipeRefreshLayout = (SwipeRefreshLayout) v.findViewById(R.id.swiperefresh);
         mEmptyState = (LinearLayout) v.findViewById(R.id.empty_state);
+        progressBar = (RelativeLayout) v.findViewById(R.id.loadingPanel);
         mLayoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(mLayoutManager);
         mLayoutRefresh.setOnClickListener(this);
         mTxtCategory.setOnClickListener(this);
+        backBtn = (ImageView) v.findViewById(R.id.btnBack);
+
+        if(isBackable){
+            v.setOnKeyListener(new View.OnKeyListener() {
+                @Override
+                public boolean onKey(View v, int keyCode, KeyEvent event) {
+
+//                    Toast.makeText(getContext(), "!!!HIDE BACK BUTTON!!!", Toast.LENGTH_SHORT).show();
+//                    backBtn.setVisibility(View.INVISIBLE);
+//                    v.findViewById(R.id.btnBack1).setVisibility(View.GONE);
+                    return false;
+                }
+            });
+        }else{
+//            Toast.makeText(getContext(), "!!!HIDE BACK BUTTON!!!", Toast.LENGTH_SHORT).show();
+            backBtn.setVisibility(View.INVISIBLE);
+        }
 
 //        String imageUrl = PARestClient.getDealAbsoluteUrl(pref.getPref(Config.SERVER),
 //                Config.PACKAGE_IMAGE_PATH);
@@ -377,8 +425,8 @@ public class PackageFragment extends MyFragment implements View.OnClickListener 
         RequestParams params = new RequestParams();
         params.add("session_username", pref.getPref(Config.PREF_USERNAME));
         params.add("active_session_token", pref.getPref(Config.PREF_ACTIVE_SESSION_TOKEN));
-        params.add("limit", LIMIT + "");
-        params.add("page", page + "");
+//        params.add("limit", LIMIT + "");
+//        params.add("page", page + "");
         params.add("country", country);
         params.add("state", state);
         params.add("service_id", serviceId);
@@ -403,20 +451,32 @@ public class PackageFragment extends MyFragment implements View.OnClickListener 
                     public void onFailure(int statusCode, Throwable error, String content) {
                         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
                                 getActivity());
-                        alertDialogBuilder.setTitle("Network Error");
-                        alertDialogBuilder
-                                .setMessage("Click yes to reload!")
-                                .setCancelable(false)
-                                .setPositiveButton("Yes",new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int id) {
-                                        getList(ServiceID);
-                                    }
-                                })
-                                .setNegativeButton("No", new DialogInterface.OnClickListener() {
-                                    public void onClick( DialogInterface dialog, int id) {
-                                        dialog.cancel();
-                                    }
-                                });
+                        if(state.equals(", ") || (country.equalsIgnoreCase("no country") && state.equalsIgnoreCase("no country"))) {
+                            alertDialogBuilder.setTitle("Please select country at Homepage");
+                            alertDialogBuilder
+                                    .setCancelable(false)
+                                    .setNegativeButton("OK", new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int id) {
+                                            dialog.cancel();
+                                            ((ActivityLanding) getActivity()).setBottomBar(0);
+                                        }
+                                    });
+                        } else {
+                            alertDialogBuilder.setTitle("Network Error");
+                            alertDialogBuilder
+                                    .setMessage("Click yes to reload!")
+                                    .setCancelable(false)
+                                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int id) {
+                                            getList(ServiceID);
+                                        }
+                                    })
+                                    .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int id) {
+                                            dialog.cancel();
+                                        }
+                                    });
+                        }
                         AlertDialog alertDialog = alertDialogBuilder.create();
                         alertDialog.show();
                     }

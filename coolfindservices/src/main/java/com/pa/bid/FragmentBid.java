@@ -15,10 +15,12 @@ import android.text.SpannableString;
 import android.text.style.RelativeSizeSpan;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -26,6 +28,7 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.pa.common.Config;
@@ -63,9 +66,11 @@ public class FragmentBid extends MyFragment implements OnClickListener, Config {
 
 	private SwipeRefreshLayout mSwipeRefreshLayout;
 	private Boolean isRefresh = false;
-	
+	private int preLast;
+	private RelativeLayout progressBar;
+
 	public FragmentBid(){
-		
+
 	}
 
 	@Override
@@ -122,7 +127,7 @@ public class FragmentBid extends MyFragment implements OnClickListener, Config {
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
+							 Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		View v = inflater.inflate(R.layout.fragment_bid_list, null);
 		v.findViewById(R.id.btnMenu).setOnClickListener(this);
@@ -131,6 +136,7 @@ public class FragmentBid extends MyFragment implements OnClickListener, Config {
 		list = (ListView) v.findViewById(R.id.list);
 		job = (LinearLayout) v.findViewById(R.id.job);
 		bid = (RelativeLayout) v.findViewById(R.id.bid);
+		progressBar = (RelativeLayout) v.findViewById(R.id.loadingPanel);
 
 		job.setOnClickListener(this);
 		bid.setOnClickListener(this);
@@ -139,6 +145,23 @@ public class FragmentBid extends MyFragment implements OnClickListener, Config {
 
 		v.findViewById(R.id.refresh).setOnClickListener(this);
 		v.findViewById(R.id.btnHome).setOnClickListener(this);
+
+		v.setOnKeyListener(new View.OnKeyListener() {
+			@Override
+			public boolean onKey(View v, int keyCode, KeyEvent event) {
+
+				if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK){
+
+					// handle back button
+					for(int i = getActivity().getSupportFragmentManager().getBackStackEntryCount(); i > 1; i--)
+						getActivity().getSupportFragmentManager().popBackStackImmediate();
+					return true;
+
+				}
+
+				return false;
+			}
+		});
 
 		mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
 			@Override
@@ -153,13 +176,46 @@ public class FragmentBid extends MyFragment implements OnClickListener, Config {
 		return v;
 	}
 
-
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onActivityCreated(savedInstanceState);
 		adapter = new MyBidListAdapter();
 		list.setAdapter(adapter);
+		list.setOnScrollListener(new AbsListView.OnScrollListener() {
+			@Override
+			public void onScrollStateChanged(AbsListView view, int scrollState) {
+
+			}
+
+			@Override
+			public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+				switch (view.getId()){
+					case R.id.list:
+						// calculation stuff here.
+
+						// calculation to determine if the last item is fully visible.
+						final int lastItem = firstVisibleItem + visibleItemCount;
+
+						if(lastItem == totalItemCount)
+						{
+							if(preLast!=lastItem)
+							{
+								//to avoid multiple calls for last item
+								Log.d("Last", "Last");
+//							Toast.makeText(getContext(), "end of list reached", Toast.LENGTH_SHORT).show();
+								preLast = lastItem;
+
+//								page++;
+//								if(has_Next)
+								getData();
+								adapter.notifyDataSetChanged();
+							}
+						}
+						break;
+				}
+			}
+		});
 //		if (hasNext)
 //			getData();
 
@@ -168,7 +224,7 @@ public class FragmentBid extends MyFragment implements OnClickListener, Config {
 		badge.setBadgePosition(BadgeView.POSITION_TOP_RIGHT);
 
 		badge.hide();
-		
+
 		analytic.trackScreen("Job Request List");
 
 	}
@@ -212,8 +268,10 @@ public class FragmentBid extends MyFragment implements OnClickListener, Config {
 				pref.getPref(Config.PREF_ACTIVE_SESSION_TOKEN));
 		params.add("session_username", pref.getPref(Config.PREF_USERNAME));
 		params.add("customer_username", pref.getPref(Config.PREF_USERNAME));
-		params.add("page", "" + offset);
-//		params.add("limit", "" + limit);
+		params.add("page", Integer.toString(offset));
+		params.add("limit", "" + limit);
+//		params.add("page", "0");
+//		params.add("limit", "10");
 		params.add("is_taken", "N");
 		params.add("is_expired", "Y");
 
@@ -224,7 +282,7 @@ public class FragmentBid extends MyFragment implements OnClickListener, Config {
 				new AsyncHttpResponseHandler() {
 					@Override
 					public void onFailure(int statusCode, Throwable error,
-							String content) {
+										  String content) {
 						// TODO Auto-generated method stub
 						super.onFailure(statusCode, error, content);
 
@@ -290,8 +348,11 @@ public class FragmentBid extends MyFragment implements OnClickListener, Config {
 									bidList.addAll(parser.getArr());
 									hasNext = parser.isNext_page();
 
-									//	data caching edit
-									displayData();
+									if(parser.getArr().size() > 0) {
+										//	data caching edit
+										displayData();
+										offset++;
+									}
 
 //									badge.setText("" + totalData);
 //									badge.show();
@@ -321,20 +382,23 @@ public class FragmentBid extends MyFragment implements OnClickListener, Config {
 					@Override
 					public void onStart() {
 						super.onStart();
-						if(!isRefresh) {
+						if(!isRefresh && offset == 1) {
 							loadingInternetDialog.show();
+						}else{
+							progressBar.setVisibility(View.VISIBLE);
 						}
 					}
 
 					@Override
 					public void onFinish() {
 						super.onFinish();
-						if(!isRefresh) {
+						if(!isRefresh && offset == 1) {
 							loadingInternetDialog.dismiss();
 						}else{
 							// Stop refresh animation
 							mSwipeRefreshLayout.setRefreshing(false);
 							isRefresh = false;
+							progressBar.setVisibility(View.GONE);
 						}
 
 					}
@@ -346,7 +410,7 @@ public class FragmentBid extends MyFragment implements OnClickListener, Config {
 		badge.setText("" + totalData);
 		badge.show();
 
-		Tracer.d("BID LIST SIZE:" + bidList.size());
+		Tracer.d("BID LIST SIZE:" + bidList.size() + "\nhasNext: " + hasNext);
 		adapter.notifyDataSetChanged();
 
 		if (hasNext) {
@@ -359,33 +423,33 @@ public class FragmentBid extends MyFragment implements OnClickListener, Config {
 	public void onClick(View v) {
 		// TODO Auto-generated method stub
 		switch (v.getId()) {
-		case R.id.btnRegister:
-			startActivity(new Intent(getActivity(), ActivityRegister.class));
-			break;
+			case R.id.btnRegister:
+				startActivity(new Intent(getActivity(), ActivityRegister.class));
+				break;
 
-		case R.id.btnMenu:
-			ActivityLanding parent = (ActivityLanding) getActivity();
-			parent.menuClick();
-            break;
+			case R.id.btnMenu:
+				ActivityLanding parent = (ActivityLanding) getActivity();
+				parent.menuClick();
+				break;
 
-		case R.id.btnHome:
+			case R.id.btnHome:
 //			((ActivityLanding) getActivity()).selectItem(0);
-			for(int i = getActivity().getSupportFragmentManager().getBackStackEntryCount(); i > 1; i--)
-				getActivity().getSupportFragmentManager().popBackStackImmediate();
+				for(int i = getActivity().getSupportFragmentManager().getBackStackEntryCount(); i > 1; i--)
+					getActivity().getSupportFragmentManager().popBackStackImmediate();
 //			fm.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-			Log.i("backstack entry count: ", String.valueOf(getActivity().getSupportFragmentManager().getBackStackEntryCount()));
-            break;
+				Log.i("backstack entry count: ", String.valueOf(getActivity().getSupportFragmentManager().getBackStackEntryCount()));
+				break;
 
-		case R.id.btnIntercom:
-            Intercom.client().displayConversationsList();
+			case R.id.btnIntercom:
+				Intercom.client().displayConversationsList();
 
-			break;
-		case R.id.job:
-			chooseBid(0);
-			break;
-		case R.id.bid:
-			chooseBid(1);
-			break;
+				break;
+			case R.id.job:
+				chooseBid(0);
+				break;
+			case R.id.bid:
+				chooseBid(1);
+				break;
 
 			case R.id.refresh:
 				refreshItems();
@@ -397,6 +461,7 @@ public class FragmentBid extends MyFragment implements OnClickListener, Config {
 	void refreshItems() {
 		// Load items
 		// ...
+		preLast = 0;
 		offset = 1;
 		bidList.clear();
 		isRefresh = true;
@@ -405,28 +470,28 @@ public class FragmentBid extends MyFragment implements OnClickListener, Config {
 
 	void chooseBid(int type) {
 		switch (type) {
-		case 0:// job
-			job.setBackgroundResource(R.drawable.bg_bid_tab_on);
-			bid.setBackgroundResource(R.drawable.bg_bid_tab_off);
-			bidList.clear();
-			adapter.notifyDataSetChanged();
+			case 0:// job
+				job.setBackgroundResource(R.drawable.bg_bid_tab_on);
+				bid.setBackgroundResource(R.drawable.bg_bid_tab_off);
+				bidList.clear();
+				adapter.notifyDataSetChanged();
 
-			hasNext = true;
-			isBid = false;
-			getData();
+				hasNext = true;
+				isBid = false;
+				getData();
 
-			break;
-		case 1:// job
-			job.setBackgroundResource(R.drawable.bg_bid_tab_off);
-			bid.setBackgroundResource(R.drawable.bg_bid_tab_on);
-			bidList.clear();
-			adapter.notifyDataSetChanged();
+				break;
+			case 1:// job
+				job.setBackgroundResource(R.drawable.bg_bid_tab_off);
+				bid.setBackgroundResource(R.drawable.bg_bid_tab_on);
+				bidList.clear();
+				adapter.notifyDataSetChanged();
 
-			hasNext = true;
-			isBid = true;
-			getData();
+				hasNext = true;
+				isBid = true;
+				getData();
 
-			break;
+				break;
 
 		}
 	}
@@ -514,6 +579,7 @@ public class FragmentBid extends MyFragment implements OnClickListener, Config {
 														.parseLong(item.service_request_stop))));
 
 					} catch (Exception e) {
+						Log.i("FragmentBid", "No preferred start time1");
 						e.printStackTrace();
 					}
 
@@ -563,7 +629,7 @@ public class FragmentBid extends MyFragment implements OnClickListener, Config {
 
 						if ("submitted".equals(item.service_request_status)
 								|| "under_consideration"
-										.equals(item.service_request_status)) {
+								.equals(item.service_request_status)) {
 							holder.txtBidStatus.setText("OPEN");
 							// holder.txtBidCount.setBackgroundColor(0xfff6b26b);
 							holder.txtBidCount
@@ -572,24 +638,24 @@ public class FragmentBid extends MyFragment implements OnClickListener, Config {
 									.setBackgroundResource(R.drawable.open_down);
 
 						} else {
-                            String serviceRequestStatus = item.service_request_status.toUpperCase();
+							String serviceRequestStatus = item.service_request_status.toUpperCase();
 
 							holder.txtBidStatus
 									.setText(serviceRequestStatus);
 
-                            if (serviceRequestStatus.equals("EXPIRED") ||
-                                    serviceRequestStatus.equals("CANCELED") ||
-                                    serviceRequestStatus.equals("CANCELLED")) { // Prevent cancelled word to be fix
-                                holder.txtBidCount
-                                        .setBackgroundResource(R.drawable.expired_up);
-                                holder.txtBidStatus
-                                        .setBackgroundResource(R.drawable.expired_down);
-                            } else {
-                                holder.txtBidCount
-                                        .setBackgroundResource(R.drawable.close_up);
-                                holder.txtBidStatus
-                                        .setBackgroundResource(R.drawable.close_down);
-                            }
+							if (serviceRequestStatus.equals("EXPIRED") ||
+									serviceRequestStatus.equals("CANCELED") ||
+									serviceRequestStatus.equals("CANCELLED")) { // Prevent cancelled word to be fix
+								holder.txtBidCount
+										.setBackgroundResource(R.drawable.expired_up);
+								holder.txtBidStatus
+										.setBackgroundResource(R.drawable.expired_down);
+							} else {
+								holder.txtBidCount
+										.setBackgroundResource(R.drawable.close_up);
+								holder.txtBidStatus
+										.setBackgroundResource(R.drawable.close_down);
+							}
 						}
 
 					} else {
@@ -614,9 +680,9 @@ public class FragmentBid extends MyFragment implements OnClickListener, Config {
 								+ pref.getPref(Config.PREF_USERNAME)
 								+ "&active_session_token="
 								+ pref.getPref(Config.PREF_ACTIVE_SESSION_TOKEN);
-						holder.img.setTag(url);
-						imageLoader
-								.DisplayImage(url, getActivity(), holder.img);
+//						holder.img.setTag(url);
+//						imageLoader.DisplayImage(url, getActivity(), holder.img);
+						Glide.with(getActivity()).load(url).into(holder.img);
 					}
 				}
 			} catch (Exception e) {

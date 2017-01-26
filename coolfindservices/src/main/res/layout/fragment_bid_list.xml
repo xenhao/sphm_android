@@ -54,7 +54,7 @@
         android:layout_marginLeft="@dimen/margin4"
         android:layout_marginRight="@dimen/margin4"
         android:layout_marginBottom="@dimen/margin4"
-        
+
         android:orientation="horizontal" >
 
         <LinearLayout
@@ -93,11 +93,11 @@
             android:paddingLeft="@dimen/padding2"
             android:paddingRight="@dimen/padding2" >
 
-            <TextView 
+            <TextView
                 android:background="@android:color/transparent"
                 android:id="@+id/bid_widget"
                 android:layout_width="match_parent" android:layout_height="match_parent"/>
-            
+
             <com.pa.common.TypefaceTextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
@@ -128,7 +128,8 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/swiperefresh"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_weight="4">
         <ListView
             android:id="@+id/list"
 
@@ -141,6 +142,34 @@
             android:dividerHeight="0dp" >
         </ListView>
     </android.support.v4.widget.SwipeRefreshLayout>
+
+    <RelativeLayout
+        android:id="@+id/loadingPanel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:animateLayoutChanges="true"
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:layout_weight=".5"
+        android:background="@color/intercom_full_transparent_full_white"
+        android:visibility="gone">
+
+        <ProgressBar
+            android:id="@+id/pb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:foregroundGravity="left"
+            android:indeterminate="true"
+            android:indeterminateDrawable="@drawable/orange_progress_wheel" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:padding="@dimen/padding2"
+            android:text="Loading more content..."
+            android:layout_toEndOf="@+id/pb"
+            android:layout_toRightOf="@+id/pb"/>
+    </RelativeLayout>
 
     <LinearLayout
         android:layout_width="match_parent"

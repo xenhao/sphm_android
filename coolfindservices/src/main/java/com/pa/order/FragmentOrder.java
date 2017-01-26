@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.os.Bundle;
+import android.support.transition.Fade;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.CardView;
@@ -15,12 +16,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.pa.common.Config;
@@ -45,10 +47,11 @@ public class FragmentOrder extends MyFragment implements OnClickListener, Config
 	private static final String LOG_TAG = "FragmentOrder";
 	protected ArrayList<JobItem> arr = new ArrayList<>();
 	private boolean hasNext = true;
+	private boolean has_Next;
 	private boolean isLoadingMoreContent;
 	private int totalData;
 	private String service_order_status = "ongoing";
-	private String page;
+	private int page = 1;
 	private String isMethod = "SR";
 	private boolean isComplete;
 	protected String MY_URI, DEAL_URL;
@@ -70,6 +73,9 @@ public class FragmentOrder extends MyFragment implements OnClickListener, Config
 
 	private SwipeRefreshLayout mSwipeRefreshLayout;
 	private Boolean isRefresh = false;
+
+	private MyListAdapter listAdapter;
+	private RelativeLayout progressBar;
 
 	public FragmentOrder(){
 		service_order_status = "ongoing";
@@ -142,10 +148,13 @@ public class FragmentOrder extends MyFragment implements OnClickListener, Config
 		v.findViewById(R.id.btnHome).setOnClickListener(this);
 
 		list            = (ListView) v.findViewById(R.id.list);
+		listAdapter = new MyListAdapter();
+		list.setAdapter(listAdapter);
 		title           = (TextView) v.findViewById(R.id.title);
 		txtBidRequest   = (TextView) v.findViewById(R.id.txt_bid_request);
 		txtPackage		= (TextView) v.findViewById(R.id.txt_package);
 		mSwipeRefreshLayout = (SwipeRefreshLayout) v.findViewById(R.id.swiperefresh);
+		progressBar		= (RelativeLayout) v.findViewById(R.id.loadingPanel);
 //        txtPromotion    = (TextView) v.findViewById(R.id.txt_promotion);
 
 //        txtPromotion.setOnClickListener(this);
@@ -201,7 +210,7 @@ public class FragmentOrder extends MyFragment implements OnClickListener, Config
 //		// badge.setText("100");
 //		badge.setBadgePosition(BadgeView.POSITION_TOP_RIGHT);
 //		badge.hide();
-//		page = "1";
+		page = 1;
 		Tracer.d(this.getClass().toString());
 		if(!gotData)	getData();
 		setAdapter();
@@ -237,8 +246,46 @@ public class FragmentOrder extends MyFragment implements OnClickListener, Config
 		}
 	}
 
+	private int preLast;
 	private void setAdapter(){
-		list.setAdapter(new MyListAdapter());
+		list.setAdapter(listAdapter);
+
+		list.setOnScrollListener(new AbsListView.OnScrollListener() {
+			@Override
+			public void onScrollStateChanged(AbsListView view, int scrollState) {
+
+			}
+
+			@Override
+			public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+				switch (view.getId()){
+					case R.id.list:
+						// Make your calculation stuff here. You have all your
+						// needed info from the parameters of this function.
+
+						// Sample calculation to determine if the last
+						// item is fully visible.
+						final int lastItem = firstVisibleItem + visibleItemCount;
+
+						if(lastItem == totalItemCount)
+						{
+							if(preLast!=lastItem)
+							{
+								//to avoid multiple calls for last item
+								Log.d("Last", "Last");
+//							Toast.makeText(getContext(), "end of list reached", Toast.LENGTH_SHORT).show();
+								preLast = lastItem;
+
+//								page++;
+								if(has_Next)
+									getBidData();
+								listAdapter.notifyDataSetChanged();
+							}
+						}
+						break;
+				}
+			}
+		});
 	}
 
 	public void getPromoData() {
@@ -265,7 +312,7 @@ public class FragmentOrder extends MyFragment implements OnClickListener, Config
 //                    list.setAdapter(new MyListAdapter());
 					setAdapter();
 					if (parser.has_next) {
-						page += 1;
+						page ++;
 					}
 
 				} catch (Exception e) {
@@ -306,14 +353,14 @@ public class FragmentOrder extends MyFragment implements OnClickListener, Config
 		params.add("session_username", pref.getPref(Config.PREF_USERNAME));
 		params.add("active_session_token", pref.getPref(Config.PREF_ACTIVE_SESSION_TOKEN));
 		params.add("status", service_order_status);
-		params.add("page", page);
+		params.add("page", Integer.toString(page));
 		params.add("limit", "100");
 
 		PARestClient.dealGet(pref.getPref(Config.SERVER), Config.DEAL_API_GET_PROMO_ORDER, params, promoHandler);
 	}
 
 	public void getBidData() {
-		if(!isRefresh)	loadingInternetDialog.show();
+		if(!isRefresh && page == 1)	loadingInternetDialog.show();
 		//AsyncHttpClient client = new AsyncHttpClient();
 		RequestParams params = new RequestParams();
 		params.add("customer_username", pref.getPref(Config.PREF_USERNAME));
@@ -321,7 +368,7 @@ public class FragmentOrder extends MyFragment implements OnClickListener, Config
 		params.add("active_session_token",
 				pref.getPref(Config.PREF_ACTIVE_SESSION_TOKEN));
 		params.add("service_order_status_string", service_order_status);
-		params.add("page", page);
+		params.add("page", Integer.toString(page));
 		params.add("limit", "10");
 
 		PARestClient.get(pref.getPref(Config.SERVER), Config.API_GET_SERVICE_ORDER
@@ -338,13 +385,18 @@ public class FragmentOrder extends MyFragment implements OnClickListener, Config
 						} else {
 							ParserJob parser = new ParserJob(content);
 							if ("success".equals(parser.status)) {
-								arr = parser.getData();
+								if(page > 1)
+									arr.addAll(parser.getData());
+								else
+									arr = parser.getData();
 								Tracer.d("Size:" + arr.size());
 //						list.setAdapter(new MyListAdapter());
-								setAdapter();
+//						setAdapter();
+								has_Next = parser.has_next;
+								listAdapter.notifyDataSetChanged();
 								totalData = parser.total_unread;
 								if (parser.has_next) {
-									page += 1;
+									page ++;
 								}
 							}
 
@@ -362,24 +414,27 @@ public class FragmentOrder extends MyFragment implements OnClickListener, Config
 					@Override
 					public void onStart() {
 						super.onStart();
-						if(!isRefresh) {
+						if(!isRefresh && page == 1) {
 							loadingInternetDialog.show();
+						}else {
+							progressBar.setVisibility(View.VISIBLE);
 						}
 					}
 
 					@Override
 					public void onFinish() {
 						super.onFinish();
-						if(!isRefresh) {
+						if (!isRefresh && page == 1) {
 							loadingInternetDialog.dismiss();
-						}else{
+						} else {
 							// Stop refresh animation
 							mSwipeRefreshLayout.setRefreshing(false);
 							isRefresh = false;
+							progressBar.setVisibility(View.GONE);
 						}
-
 					}
 				});
+		Log.d("Appointment List", Config.API_GET_SERVICE_ORDER + "\nParams: " + params.toString());
 	}
 
 	public void getPackageData() {
@@ -404,9 +459,11 @@ public class FragmentOrder extends MyFragment implements OnClickListener, Config
 
 					arr = parser.getPackageData();
 //					list.setAdapter(new MyListAdapter());
-					setAdapter();
+//					setAdapter();
+					has_Next = parser.has_next;
+					listAdapter.notifyDataSetChanged();
 					if (parser.has_next) {
-						page += 1;
+						page ++;
 					}
 
 				} catch (Exception e) {
@@ -447,8 +504,8 @@ public class FragmentOrder extends MyFragment implements OnClickListener, Config
 		params.add("session_username", pref.getPref(Config.PREF_USERNAME));
 		params.add("active_session_token", pref.getPref(Config.PREF_ACTIVE_SESSION_TOKEN));
 		params.add("status", service_order_status);
-		params.add("page", page);
-		params.add("limit", "100");
+		params.add("page", Integer.toString(page));
+		params.add("limit", "10");
 
 		if(!GlobalVar.isGuest)
 			PARestClient.dealGet(pref.getPref(Config.SERVER), Config.DEAL_API_GET_PACKAGE_ORDER, params, promoHandler);
@@ -498,7 +555,8 @@ public class FragmentOrder extends MyFragment implements OnClickListener, Config
 		// Load items
 		// ...
 		arr.clear();
-		page = "1";
+		preLast = 0;
+		page = 1;
 		isRefresh = true;
 		getData();
 	}
@@ -552,7 +610,8 @@ public class FragmentOrder extends MyFragment implements OnClickListener, Config
 		}
 
 		arr.clear();
-		page = "1";
+		preLast = 0;
+		page = 1;
 		getData();
 	}
 
@@ -721,13 +780,13 @@ public class FragmentOrder extends MyFragment implements OnClickListener, Config
 					if (position % 2 == 0) {
 //						convertView.setBackgroundColor(getResources().getColor(
 //								R.color.merchant_list_row_odd));
-						cardView.setCardBackgroundColor(getResources().getColor(
-								R.color.merchant_list_row_odd));
+//						cardView.setCardBackgroundColor(getResources().getColor(
+//								R.color.merchant_list_row_odd));
 					} else {
 //						convertView.setBackgroundColor(getResources().getColor(
 //								R.color.merchant_list_row_oven));
-						cardView.setCardBackgroundColor(getResources().getColor(
-								R.color.merchant_list_row_oven));
+//						cardView.setCardBackgroundColor(getResources().getColor(
+//								R.color.merchant_list_row_oven));
 					}
 					holder.img.setVisibility(View.INVISIBLE);
 

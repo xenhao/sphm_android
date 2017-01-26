@@ -21,7 +21,8 @@
                 android:layout_width="@dimen/edittext_height"
                 android:layout_height="@dimen/edittext_height"
                 android:padding="@dimen/padding"
-                android:src="@drawable/img_back" />
+                android:src="@drawable/img_back"
+                android:visibility="visible"/>
 
             <com.pa.common.TypefaceTextView
                 android:id="@+id/page_title"
@@ -50,7 +51,8 @@
             android:src="@drawable/ic_home_white"
             android:gravity="center"
             android:layout_marginLeft="@dimen/edittext_height2"
-            android:layout_marginTop="5dp"/>
+            android:layout_marginTop="5dp"
+            android:visibility="invisible"/>
     </FrameLayout>
 
     <com.pa.common.TypefaceTextView
@@ -73,6 +75,7 @@
         android:id="@+id/swiperefresh"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_weight="4"
         android:visibility="visible">
         <!--<LinearLayout-->
         <!--android:layout_width="match_parent"-->
@@ -132,6 +135,34 @@
         </android.support.v7.widget.RecyclerView>
         <!--</LinearLayout>-->
     </android.support.v4.widget.SwipeRefreshLayout>
+
+    <RelativeLayout
+        android:id="@+id/loadingPanel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:animateLayoutChanges="true"
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:layout_weight=".5"
+        android:background="@color/intercom_full_transparent_full_white"
+        android:visibility="gone">
+
+        <ProgressBar
+            android:id="@+id/pb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:foregroundGravity="left"
+            android:indeterminate="true"
+            android:indeterminateDrawable="@drawable/orange_progress_wheel" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:padding="@dimen/padding2"
+            android:text="Loading more content..."
+            android:layout_toEndOf="@+id/pb"
+            android:layout_toRightOf="@+id/pb"/>
+    </RelativeLayout>
 
     <LinearLayout
         android:id="@+id/empty_state"

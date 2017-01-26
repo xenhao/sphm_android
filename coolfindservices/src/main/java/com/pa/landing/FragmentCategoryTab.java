@@ -66,7 +66,7 @@ public class FragmentCategoryTab extends MyFragment implements View.OnClickListe
 
         try {
             //  default view (packages)
-            replaceFragment(R.id.tabContainer, PackageFragment.newInstance(serviceID, serviceCountry), true);
+            replaceFragment(R.id.tabContainer, PackageFragment.newInstance(serviceID, serviceCountry, true), true);
             //  set tab state
 //            tabState(isPackage);
             isPackage = true;
