@@ -41,30 +41,7 @@
                     android:src="@drawable/pa_logo_long_white"
                     android:layout_weight="10"/>
 
-                <!--<ImageView-->
-                <!--android:layout_width="@dimen/edittext_height4"-->
-                <!--android:layout_height="@dimen/edittext_height4"-->
-                <!--android:src="@drawable/concierge_small"-->
-                <!--android:layout_marginTop="@dimen/margin1"-->
-                <!--android:layout_marginEnd="@dimen/padding"-->
-                <!--android:layout_marginRight="@dimen/padding"-->
-                <!--android:layout_gravity="center_vertical"-->
-                <!--android:gravity="center_vertical"-->
-                <!--android:id="@+id/btnIntercom"-->
-                <!--android:layout_weight="1"/>-->
             </LinearLayout>
-
-            <!--<RelativeLayout-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_gravity="center">-->
-
-            <!--<LinearLayout-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:orientation="horizontal"-->
-            <!--android:layout_marginTop="@dimen/padding2"-->
-            <!--android:weightSum="20">-->
 
             <com.pa.common.TypefaceTextView
                 android:id="@+id/country2"
@@ -73,7 +50,7 @@
                 android:layout_marginTop="@dimen/margin2"
                 android:layout_marginLeft="30dp"
                 android:layout_marginRight="10dp"
-                android:background="#55FFFFFF"
+                android:background="@drawable/btn_countryselect"
                 android:drawableRight="@drawable/icon_white_dropdown"
                 android:gravity="center_vertical"
                 android:padding="@dimen/margin2"
@@ -82,12 +59,6 @@
                 android:textSize="@dimen/txt_big"
                 app:typeface="OpenSans-Bold"
                 />
-
-
-
-
-
-            <!--</LinearLayout>-->
 
             <com.pa.common.TypefaceTextView
                 android:layout_width="wrap_content"
@@ -113,80 +84,37 @@
             android:layout_weight="1"/>
     </LinearLayout>
 
-    <!--<android.support.v4.widget.NestedScrollView-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:fillViewport="true">-->
-    <!--<LinearLayout-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:orientation="vertical"-->
-    <!--android:weightSum="10">-->
-    <LinearLayout
+    <android.support.v4.widget.SwipeRefreshLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/swiperefresh"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/slider_container"
-        android:layout_weight="4">
-        <com.daimajia.slider.library.SliderLayout
-            android:id="@+id/slider"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:clickable="true"
-            android:visibility="gone"
-            app:layout_scrollFlags="scroll|snap"
+        android:layout_height="match_parent"
+        android:visibility="gone">
 
-            />
-    </LinearLayout>
-    <com.daimajia.slider.library.Indicators.PagerIndicator
-        android:id="@+id/custom_indicator"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        style="@style/AndroidImageSlider_Corner_Oval_Orange"
-        android:visibility="gone"
-        app:layout_scrollFlags="scroll|snap"
-        />
+        <!--linear layout added for swipe refresh to work when any element of the list is empty-->
+        <!--<LinearLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:nestedScrollingEnabled="true">-->
 
-    <GridView
-        android:horizontalSpacing="@dimen/margin1"
-        android:verticalSpacing="@dimen/margin1"
-        android:id="@+id/gridCategory"
-        android:layout_width="match_parent"
-        android:layout_height="1000dp"
-        android:layout_weight="6"
-        android:background="@android:color/transparent"
-        android:cacheColorHint="#00000000"
-        android:divider="@color/black"
-        android:dividerHeight="0dp"
-        android:numColumns="4"
-        android:visibility="visible">
-    </GridView>
-    <!--</LinearLayout>-->
-    <!--</android.support.v4.widget.NestedScrollView>-->
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/home_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="none"
+            android:layout_gravity="center"
+            android:visibility="gone"/>
+        <!--</LinearLayout>-->
+    </android.support.v4.widget.SwipeRefreshLayout>
 
-    <com.pa.common.SnappyRecyclerView
-        android:id="@+id/recyclerView"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_weight="4"
-        android:scrollbars="horizontal"
-        android:fadeScrollbars="false"
-        android:visibility="gone"
-        android:scrollbarStyle="insideInset"
-        android:scrollbarAlwaysDrawHorizontalTrack="true"
-        android:scrollbarThumbHorizontal="@drawable/scroll_thumb">
-    </com.pa.common.SnappyRecyclerView>
-
-
-
+    <!--empty state image-->
     <LinearLayout
         android:id="@+id/landingFallback"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="6"
+        android:layout_height="match_parent"
         android:orientation="vertical"
         android:gravity="center_vertical"
-        android:visibility="gone">
+        android:visibility="visible">
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="@dimen/edittext_width"

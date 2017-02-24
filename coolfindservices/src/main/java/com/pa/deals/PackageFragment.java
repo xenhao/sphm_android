@@ -8,7 +8,6 @@ import android.os.Handler;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -22,13 +21,12 @@ import android.widget.ListView;
 import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.pa.common.Config;
 import com.pa.common.GlideImageLoader;
+import com.pa.common.GlobalVar;
 import com.pa.common.ImageLoader;
 import com.pa.common.MyFragment;
 import com.pa.common.OnFragmentChangeListener;
@@ -199,19 +197,20 @@ public class PackageFragment extends MyFragment implements View.OnClickListener 
         backBtn = (ImageView) v.findViewById(R.id.btnBack);
 
         if(isBackable){
+            //  package tab, do appropriate adjustments
             v.setOnKeyListener(new View.OnKeyListener() {
                 @Override
                 public boolean onKey(View v, int keyCode, KeyEvent event) {
-
-//                    Toast.makeText(getContext(), "!!!HIDE BACK BUTTON!!!", Toast.LENGTH_SHORT).show();
-//                    backBtn.setVisibility(View.INVISIBLE);
-//                    v.findViewById(R.id.btnBack1).setVisibility(View.GONE);
+                    //  do not capture back button event
                     return false;
                 }
             });
+            mTxtCategory.setVisibility(View.GONE);
+            v.findViewById(R.id.btn_request_quotes).setOnClickListener(this);
         }else{
 //            Toast.makeText(getContext(), "!!!HIDE BACK BUTTON!!!", Toast.LENGTH_SHORT).show();
             backBtn.setVisibility(View.INVISIBLE);
+            v.findViewById(R.id.btn_request_quotes).setVisibility(View.GONE);
         }
 
 //        String imageUrl = PARestClient.getDealAbsoluteUrl(pref.getPref(Config.SERVER),
@@ -241,7 +240,21 @@ public class PackageFragment extends MyFragment implements View.OnClickListener 
 //        }
 //
 //        getList(ServiceID);
-//        getCategoryList();
+        if(GlobalVar.package_category.length < 2) {
+            getCategoryList();
+        } else {
+            if(!isBackable)
+                mTxtCategory.setVisibility(View.VISIBLE);
+            package_category = GlobalVar.package_category;
+            arrCategoryId.clear();
+            for(int i = 0; i < GlobalVar.package_category_id.size(); i++){
+                arrCategoryId.add(GlobalVar.package_category_id.get(i));
+            }
+            arrCategory.clear();
+            for(int i = 0; i < GlobalVar.package_category_name.size(); i++){
+                arrCategory.add(GlobalVar.package_category_name.get(i));
+            }
+        }
 
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -299,6 +312,9 @@ public class PackageFragment extends MyFragment implements View.OnClickListener 
             case R.id.btnHome:
                 for(int i = getActivity().getSupportFragmentManager().getBackStackEntryCount(); i > 1; i--)
                     getActivity().getSupportFragmentManager().popBackStackImmediate();
+                break;
+            case R.id.btn_request_quotes:
+                ((ActivityLanding) getActivity()).switchJRTab();
                 break;
         }
     }
@@ -360,12 +376,25 @@ public class PackageFragment extends MyFragment implements View.OnClickListener 
                                     Log.i("get service name ", category);
                                     arrCategory.add(category);
                                     arrCategoryId.add(categoryId);
+
+                                    //  store in global variable due to extremely slow loading speeds
+                                    GlobalVar.package_category_name.add(category);
+                                    GlobalVar.package_category_id.add(categoryId);
                                 }
+
+                                Log.i("arrCategory.size()", String.valueOf(arrCategory.size()));
 
                                 package_category = new String[arrCategory.size()];
                                 for (int i = 0; i < package_category.length; i++) {
                                     package_category[i] = arrCategory.get(i);
                                 }
+                                //  store into global variable so don't have to load again
+                                GlobalVar.package_category = package_category;
+                                Log.i("package_category.size()", String.valueOf(package_category.length));
+                                Log.i("package_category_id", String.valueOf(GlobalVar.package_category_id));
+                                Log.i("package_category_name", String.valueOf(GlobalVar.package_category_name));
+                                if(!isBackable)
+                                    mTxtCategory.setVisibility(View.VISIBLE);
 //                                if (h != null)
 //                                    h.sendEmptyMessage(2);
                             } else {
@@ -395,10 +424,10 @@ public class PackageFragment extends MyFragment implements View.OnClickListener 
                         try {
                             if(arrCategory.indexOf(ServiceID) == -1) {
                                 //  show empty state
-                                mSwipeRefreshLayout.setVisibility(View.GONE);
-                                mEmptyState.setVisibility(View.VISIBLE);
+//                                mSwipeRefreshLayout.setVisibility(View.GONE);
+//                                mEmptyState.setVisibility(View.VISIBLE);
                             }else{
-                                serviceIDNum = arrCategoryId.get(arrCategory.indexOf(ServiceID));
+//                                serviceIDNum = arrCategoryId.get(arrCategory.indexOf(ServiceID));
 //                                getList(serviceIDNum);
                             }
                         }catch (Exception e){
@@ -417,7 +446,7 @@ public class PackageFragment extends MyFragment implements View.OnClickListener 
             mItems.clear();
         }
         isRefresh = true;
-        getList(ServiceID);
+        getList(serviceIDNum);
     }
 
     private void getList(String serviceId) {
@@ -639,7 +668,7 @@ public class PackageFragment extends MyFragment implements View.OnClickListener 
     protected void showCategorySpinnerSelection(final String[] strSelection,
                                                 final TextView tv, String title) {
         showCategorySpinnerSelection(strSelection, tv, title, null);
-    };
+    }
 
     protected void showCategorySpinnerSelection(final String[] strSelection,
                                                 final TextView tv, String title, final Handler h) {
@@ -704,11 +733,13 @@ public class PackageFragment extends MyFragment implements View.OnClickListener 
                         generalDialog.hide();
                         tv.setText(strSelection[arg2]);
                         tv.setTag(arg2);
-
+                        Log.i("package_category.size()", String.valueOf(package_category.length));
+                        Log.i("arrCategoryId", String.valueOf(arrCategoryId));
+                        Log.i("arrCategory", String.valueOf(arrCategory));
                         serviceIDNum   = arrCategoryId.get(arg2);
                         ServiceName = arrCategory.get(arg2);
 
-                        getList(ServiceID);
+                        getList(serviceIDNum);
 
                     } catch (Exception e) {
                         e.printStackTrace();

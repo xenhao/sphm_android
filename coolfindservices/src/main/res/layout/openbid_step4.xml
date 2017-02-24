@@ -5,12 +5,12 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-<com.pa.common.ImageViewFitWidth
+    <com.pa.common.ImageViewFitWidth
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/margin2"
         android:src="@drawable/post_job_3"
-         />
+        />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -23,17 +23,18 @@
             android:layout_height="match_parent"
             android:orientation="vertical" >
 
-                <com.pa.common.TypefaceTextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin4"
-        android:gravity="left"
-        android:text="SERVICE/DELIVERY/PICKUP DATE AND TIME"
-       android:textAppearance="@style/Label"
-        android:textSize="@dimen/txt_extra_big"
-        app:typeface="OpenSans-Bold" />
-            
-            
+            <com.pa.common.TypefaceTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin4"
+                android:gravity="left"
+                android:text="Service/Delivery/Pickup Date and Time"
+                android:textAppearance="@style/Label"
+                android:textAllCaps="false"
+                android:textSize="@dimen/txt_extra_big"
+                app:typeface="OpenSans-Bold" />
+
+
             <com.pa.common.TypefaceTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -41,6 +42,7 @@
                 android:gravity="center"
                 android:text="@string/_1st_preferred_service_date"
                 android:textAppearance="@style/Label"
+                android:textAllCaps="false"
                 android:textSize="@dimen/txt_big"
                 app:typeface="OpenSans-Bold" />
 
@@ -82,6 +84,7 @@
                 android:gravity="center"
                 android:text="@string/_2nd_preferred_date_and_time"
                 android:textAppearance="@style/Label"
+                android:textAllCaps="false"
                 android:textSize="@dimen/txt_big"
                 app:typeface="OpenSans-Bold" />
 
@@ -102,7 +105,7 @@
                     android:textSize="@dimen/txt_big"
                     app:typeface="OpenSans-Regular" />
 
-               
+
 
                 <com.pa.common.TypefaceTextView android:visibility="gone"
                     android:id="@+id/second_prefer_time"
@@ -116,7 +119,7 @@
                     android:textSize="@dimen/txt_big"
                     app:typeface="OpenSans-Regular" />
             </LinearLayout>
-            
+
             <com.pa.common.TypefaceTextView
                 android:visibility="gone"
                 android:layout_width="wrap_content"
@@ -124,7 +127,7 @@
                 android:layout_marginTop="@dimen/margin4"
                 android:gravity="center"
                 android:text="Select Preferred Merchant Rating"
-               android:textAppearance="@style/Label"
+                android:textAppearance="@style/Label"
                 android:textSize="@dimen/txt_extra_big"
                 app:typeface="OpenSans-Bold" />
 
@@ -148,20 +151,21 @@
                 android:layout_marginTop="@dimen/margin4"
                 android:gravity="center"
                 android:text="Service Location/Pickup Address"
-               android:textAppearance="@style/Label"
-               
+                android:textAppearance="@style/Label"
+                android:textAllCaps="false"
                 android:textSize="@dimen/txt_extra_big"
-                app:typeface="OpenSans-Bold" />
+                app:typeface="OpenSans-Bold"
+                android:paddingTop="@dimen/padding4"/>
 
             <com.pa.common.TypefaceTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin2"
                 android:text="Unit no. is optional - please contact merchant to provide your full address if you do not include your unit no. here."
-               android:textAppearance="@style/Placeholder"
-               android:textColor="@color/black"
+                android:textAppearance="@style/Placeholder"
+                android:textColor="@color/black"
                 android:textSize="@dimen/txt_big"
-                app:typeface="OpenSans-Bold" />
+                app:typeface="OpenSans-Regular" />
 
             <com.pa.common.TypefaceEditText
                 android:id="@+id/txtAddress"
@@ -173,7 +177,7 @@
                 android:hint="Address"
                 android:inputType="text"
                 style="@style/PlaceholderEdit" android:textColor="#ff989898"
-               
+
                 android:textSize="@dimen/txt_big"
                 app:typeface="OpenSans-Regular" />
 
@@ -227,7 +231,7 @@
                 android:inputType="number"
                 android:textAppearance="@style/PlaceholderEdit"
                 android:textSize="@dimen/txt_big" android:textColor="#ff989898"
-               
+
                 app:typeface="OpenSans-Regular" />
         </LinearLayout>
     </ScrollView>

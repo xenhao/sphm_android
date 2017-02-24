@@ -74,10 +74,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin4"
                 android:gravity="left"
-                android:text="Sub service(s) detail"
+                android:text="Sub Service(s) Detail"
                 android:textAppearance="@style/Label"
                 android:textSize="@dimen/txt_big"
-                app:typeface="OpenSans-Bold" />
+                app:typeface="OpenSans-Bold"
+                android:textAllCaps="false"/>
 
             <LinearLayout
                 android:id="@+id/wrapper"
@@ -91,11 +92,12 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin4"
                 android:gravity="left"
-                android:text="TAKE A PHOTO (Optional)"
+                android:text="Take a Photo (Optional)"
                 android:textAppearance="@style/Label"
                 android:textSize="@dimen/txt_big"
                 android:textAllCaps="false"
-                app:typeface="OpenSans-Bold" />
+                app:typeface="OpenSans-Bold"
+                android:paddingTop="@dimen/padding3"/>
 
             <com.pa.common.TypefaceTextView
                 android:layout_width="match_parent"
@@ -105,20 +107,23 @@
                 android:text="This will help our merchants better understand your request and provide you with a more accurate quotation"
                 android:textAppearance="@style/Normal"
                 android:textSize="@dimen/txt_big"
-                app:typeface="OpenSans-Bold" />
+                app:typeface="OpenSans-Regular" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal" >
+                android:orientation="horizontal"
+                android:paddingTop="@dimen/padding3"
+                android:paddingBottom="@dimen/padding3">
 
                 <com.pa.common.ImageViewFitHeight
                     android:id="@+id/add"
                     android:layout_width="0dp"
-                    android:layout_height="@dimen/edittext_height3"
+                    android:layout_height="80dp"
                     android:layout_gravity="center"
                     android:layout_marginRight="@dimen/margin1"
-                    android:src="@drawable/icon_add_photo" />
+                    android:src="@drawable/icon_add_photo"
+                    android:background="@drawable/dotted_border"/>
 
                 <LinearLayout
                     android:id="@+id/wrapperPhoto"
@@ -126,6 +131,7 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal" >
                 </LinearLayout>
+
             </LinearLayout>
 
             <com.pa.common.TypefaceTextView
@@ -135,6 +141,7 @@
                 android:gravity="left"
                 android:text="Other Comments"
                 android:textAppearance="@style/Label"
+                android:textAllCaps="false"
                 android:textSize="@dimen/txt_big"
                 app:typeface="OpenSans-Bold" />
 
@@ -142,9 +149,10 @@
                 android:id="@+id/txt_other_remark"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:minLines="5"
                 android:layout_marginTop="@dimen/margin4"
                 android:background="@drawable/white_rectangle_solid"
-                android:gravity="left|center_vertical"
+                android:gravity="start"
                 android:hint="Other comments"
                 android:imeOptions="actionDone"
                 android:inputType="textMultiLine"

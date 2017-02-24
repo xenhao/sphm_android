@@ -5,11 +5,9 @@ import java.util.ArrayList;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.os.Bundle;
-import android.support.transition.Fade;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.CardView;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -360,7 +358,6 @@ public class FragmentOrder extends MyFragment implements OnClickListener, Config
 	}
 
 	public void getBidData() {
-		if(!isRefresh && page == 1)	loadingInternetDialog.show();
 		//AsyncHttpClient client = new AsyncHttpClient();
 		RequestParams params = new RequestParams();
 		params.add("customer_username", pref.getPref(Config.PREF_USERNAME));
@@ -371,69 +368,73 @@ public class FragmentOrder extends MyFragment implements OnClickListener, Config
 		params.add("page", Integer.toString(page));
 		params.add("limit", "10");
 
-		PARestClient.get(pref.getPref(Config.SERVER), Config.API_GET_SERVICE_ORDER
+		if(GlobalVar.isGuest)
+			simpleToast("No appointments at the moment.");
+		else
+			PARestClient.get(pref.getPref(Config.SERVER), Config.API_GET_SERVICE_ORDER
 
-				, params, new AsyncHttpResponseHandler() {
-					@Override
-					public void onSuccess(String content) {
-						// TODO Auto-generated method stub
-						super.onSuccess(content);
-						Tracer.d(content);
-						if(!isRefresh)	loadingInternetDialog.dismiss();
-						if ("authentication fail".equals(content)) {
-							listener.doLogout();
-						} else {
-							ParserJob parser = new ParserJob(content);
-							if ("success".equals(parser.status)) {
-								if(page > 1)
-									arr.addAll(parser.getData());
-								else
-									arr = parser.getData();
-								Tracer.d("Size:" + arr.size());
+					, params, new AsyncHttpResponseHandler() {
+						@Override
+						public void onSuccess(String content) {
+							// TODO Auto-generated method stub
+							super.onSuccess(content);
+							Tracer.d(content);
+							if (!isRefresh) loadingInternetDialog.dismiss();
+							if ("authentication fail".equals(content)) {
+								listener.doLogout();
+							} else {
+								ParserJob parser = new ParserJob(content);
+								if ("success".equals(parser.status)) {
+									if (page > 1)
+										arr.addAll(parser.getData());
+									else
+										arr = parser.getData();
+									Tracer.d("Size:" + arr.size());
 //						list.setAdapter(new MyListAdapter());
 //						setAdapter();
-								has_Next = parser.has_next;
-								listAdapter.notifyDataSetChanged();
-								totalData = parser.total_unread;
-								if (parser.has_next) {
-									page ++;
+									has_Next = parser.has_next;
+									listAdapter.notifyDataSetChanged();
+									totalData = parser.total_unread;
+									if (parser.has_next) {
+										page++;
+									}
 								}
+
 							}
-
 						}
-					}
 
-					@Override
-					public void onFailure(int statusCode, Throwable error,
-										  String content) {
-						// TODO Auto-generated method stub
-						super.onFailure(statusCode, error, content);
-						loadingInternetDialog.dismiss();
-					}
-
-					@Override
-					public void onStart() {
-						super.onStart();
-						if(!isRefresh && page == 1) {
-							loadingInternetDialog.show();
-						}else {
-							progressBar.setVisibility(View.VISIBLE);
-						}
-					}
-
-					@Override
-					public void onFinish() {
-						super.onFinish();
-						if (!isRefresh && page == 1) {
+						@Override
+						public void onFailure(int statusCode, Throwable error,
+											  String content) {
+							// TODO Auto-generated method stub
+							super.onFailure(statusCode, error, content);
 							loadingInternetDialog.dismiss();
-						} else {
-							// Stop refresh animation
-							mSwipeRefreshLayout.setRefreshing(false);
-							isRefresh = false;
-							progressBar.setVisibility(View.GONE);
 						}
-					}
-				});
+
+						@Override
+						public void onStart() {
+							super.onStart();
+							if (!isRefresh && page == 1) {
+								loadingInternetDialog.show();
+							} else {
+								progressBar.setVisibility(View.VISIBLE);
+							}
+						}
+
+						@Override
+						public void onFinish() {
+							super.onFinish();
+							if (!isRefresh && page == 1) {
+								loadingInternetDialog.dismiss();
+							} else {
+								// Stop refresh animation
+								mSwipeRefreshLayout.setRefreshing(false);
+								isRefresh = false;
+								progressBar.setVisibility(View.GONE);
+							}
+						}
+					});
+
 		Log.d("Appointment List", Config.API_GET_SERVICE_ORDER + "\nParams: " + params.toString());
 	}
 
@@ -510,7 +511,7 @@ public class FragmentOrder extends MyFragment implements OnClickListener, Config
 		if(!GlobalVar.isGuest)
 			PARestClient.dealGet(pref.getPref(Config.SERVER), Config.DEAL_API_GET_PACKAGE_ORDER, params, promoHandler);
 		else
-			simpleToast("No appointments at ahe moment.");
+			simpleToast("No appointments at the moment.");
 
 
 	}

@@ -104,8 +104,8 @@ public class FragmentCategoryTab extends MyFragment implements View.OnClickListe
 
     }
 
-    private void tabState(boolean state){
-        if(state){
+    private void tabState(boolean isPackageState){
+        if(isPackageState){
             packageTab.setBackgroundColor(getResources().getColor(R.color.pa_orange));
             packageTab.setTextColor(getResources().getColor(R.color.white));
 
@@ -148,7 +148,7 @@ public class FragmentCategoryTab extends MyFragment implements View.OnClickListe
         }
     }
 
-    private void simulatequoteTap(){
+    public void simulatequoteTap(){
         if(isPackage) {
             isPackage = false;
             tabState(isPackage);

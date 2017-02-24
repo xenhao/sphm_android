@@ -10,8 +10,8 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/margin2"
         android:src="@drawable/post_job_4"
-         />
-    
+        />
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -30,6 +30,7 @@
                 android:text="Select Bid Window Period"
                 android:textAppearance="@style/Label"
                 android:textSize="@dimen/txt_big"
+                android:textAllCaps="false"
                 app:typeface="OpenSans-Bold" />
 
             <com.pa.common.TypefaceTextView

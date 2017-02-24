@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/padding">
+
+    <android.support.v7.widget.RecyclerView
+        android:horizontalSpacing="@dimen/margin1"
+        android:verticalSpacing="@dimen/margin1"
+        android:id="@+id/gridCategory"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:cacheColorHint="#00000000"
+        android:divider="@color/black"
+        android:dividerHeight="0dp"
+        android:orientation="horizontal"
+        android:paddingLeft="2dp"
+        android:paddingRight="2dp"
+        android:visibility="visible">
+    </android.support.v7.widget.RecyclerView>
+
+</LinearLayout>

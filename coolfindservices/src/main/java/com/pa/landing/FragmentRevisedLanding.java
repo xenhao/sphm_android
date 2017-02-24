@@ -6,10 +6,6 @@ import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.animation.DrawableCrossFadeFactory;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.Target;
-import com.daimajia.slider.library.Indicators.PagerIndicator;
-import com.daimajia.slider.library.SliderLayout;
-import com.daimajia.slider.library.SliderTypes.BaseSliderView;
-import com.daimajia.slider.library.SliderTypes.DefaultSliderView;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
@@ -19,9 +15,7 @@ import com.pa.common.ImageLoader;
 import com.pa.common.MyFragment;
 import com.pa.common.OnFragmentChangeListener;
 import com.pa.common.PARestClient;
-import com.pa.common.SnappyRecyclerView;
 import com.pa.common.Tracer;
-import com.pa.deals.PackageListDetailFragment;
 import com.pa.parser.ParserDealGetPackage;
 import com.pa.parser.ParserParentServiceCategoryNew;
 import com.pa.parser.ParserPendingRating;
@@ -48,10 +42,10 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -71,9 +65,7 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import org.apache.http.Header;
 import org.json.JSONObject;
@@ -111,8 +103,6 @@ public class FragmentRevisedLanding extends MyFragment implements View.OnClickLi
     //	boolean switch for random unresponsive getStateData
     private Boolean retryGetState = false;
 
-    String prevKeyword = "";
-
     JobItem job=null;
     Dialog dialogRateMerchant;
     EditText txtRatingMsg;
@@ -126,13 +116,12 @@ public class FragmentRevisedLanding extends MyFragment implements View.OnClickLi
     private ArrayList<PackageListItem> mItems;
     private PackageAdapter mAdapter;
     private String imageUrl;
-    private SnappyRecyclerView mSnappyRecyclerView;
-    private LinearLayoutManager mLayoutManager;
     private boolean hasPromo = false;
-    private float dpi;
-    private SliderLayout sliderLayout;
-    private PagerIndicator pagerIndicator;
-    private LinearLayout sliderContainer;
+    private SwipeRefreshLayout mSwipeRefreshLayout;
+    private boolean isRefresh = false;
+    private ArrayList<LandingDataType> allData = new ArrayList<LandingDataType>();
+    private RecyclerView homeContent;
+    private LandingAdapter landingAdapter;
 
     @Override
     public void onAttach(Activity activity) {
@@ -170,14 +159,21 @@ public class FragmentRevisedLanding extends MyFragment implements View.OnClickLi
         mItems      = new ArrayList<>();
         mAdapter    = new PackageAdapter(getActivity(), mItems, imageUrl, loader);
 
-//        getList("485", false, "onCreate");
-
-        //  get screen density
-        DisplayMetrics displaymetrics = new DisplayMetrics();
-
-        getActivity().getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
-
-        dpi = getResources().getDisplayMetrics().density;
+        //  content recycler view
+        allData = new ArrayList<LandingDataType>();
+        for (int i = 1; i < 3; i++) {
+            LandingDataType tempData = new LandingDataType();
+            tempData.setViewType(String.valueOf(i));
+            switch (i) {
+                case 1:
+                    tempData.homeBanner = new ArrayList<PackageListItem>();
+                    break;
+                case 2:
+                    tempData.homeGrid = new ArrayList<ServiceCategory>();
+                    break;
+            }
+            allData.add(tempData);
+        }
     }
 
     @Override
@@ -191,69 +187,22 @@ public class FragmentRevisedLanding extends MyFragment implements View.OnClickLi
 
         fallBack = (LinearLayout) v.findViewById(R.id.landingFallback);
         gridCat = (GridView) v.findViewById(R.id.gridCategory);
+        mSwipeRefreshLayout = (SwipeRefreshLayout) v.findViewById(R.id.swiperefresh);
 
-        /**
-         *      SnappyRecyclerView which is initially used for banner
-         */
-//        mSnappyRecyclerView = (SnappyRecyclerView) v.findViewById(R.id.recyclerView);
-//        mLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
-//        //  set banner layout_weight depend on device DPI(screen density)
-//        LinearLayout.LayoutParams params;
-//        if(dpi < 2.0)
-//            params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, 0, 4.0f);
-//        else
-//            params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, 0, 3.5f);
-//        mSnappyRecyclerView.setLayoutParams(params);
-//        mSnappyRecyclerView.setHasFixedSize(true);
-//        mSnappyRecyclerView.setLayoutManager(mLayoutManager);
-//
-//        mSnappyRecyclerView.setAdapter(mAdapter);
-//
-//        mSnappyRecyclerView.setOnTouchListener(new View.OnTouchListener() {
-//            @Override
-//            public boolean onTouch(View v, MotionEvent event) {
-//                return false;
-//            }
-//        });
-//
-//        mAdapter.setListener(new PackageAdapter.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(int position) {
-//                PackageListDetailFragment fragment = PackageListDetailFragment.newInstance(mItems.get(position));
-//                listener.doFragmentChange(fragment, true, "");
-//            }
-//        });
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                // Refresh items & redraw page
+                isRefresh = true;
+                getServiceData(0);
+            }
+        });
 
-        //  SliderLayout
-        sliderLayout = (SliderLayout) v.findViewById(R.id.slider);
-        sliderLayout.setClickable(true);
-
-        sliderContainer = (LinearLayout) v.findViewById(R.id.slider_container);
-
-        pagerIndicator = (PagerIndicator) v.findViewById(R.id.custom_indicator);
-
-        //  set banner layout_weight & page indicator size depend on device DPI(screen density)
-        LinearLayout.LayoutParams params;
-        if(dpi < 2.0) {
-//            pagerIndicator.setDefaultSelectedIndicatorSize();
-//            pagerIndicator.setDefaultUnselectedIndicatorSize();
-            params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, 2.5f);
-        } else if(2.0 < dpi && dpi <= 3.0){
-            pagerIndicator.setDefaultSelectedIndicatorSize(8, 8, PagerIndicator.Unit.DP);
-            pagerIndicator.setDefaultUnselectedIndicatorSize(4, 4, PagerIndicator.Unit.DP);
-            params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, 3.0f);
-        } else if(3.0 < dpi && dpi < 4.0){
-            pagerIndicator.setDefaultSelectedIndicatorSize(8, 8, PagerIndicator.Unit.DP);
-            pagerIndicator.setDefaultUnselectedIndicatorSize(4, 4, PagerIndicator.Unit.DP);
-            params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, 4.0f);
-        } else {
-            pagerIndicator.setDefaultSelectedIndicatorSize(8, 8, PagerIndicator.Unit.DP);
-            pagerIndicator.setDefaultUnselectedIndicatorSize(4, 4, PagerIndicator.Unit.DP);
-            params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, 3.5f);
-        }
-        sliderLayout.setLayoutParams(params);
-        sliderContainer.setLayoutParams(params);
-        //***************************************************************
+        homeContent = (RecyclerView) v.findViewById(R.id.home_content);
+        homeContent.setHasFixedSize(true);
+        landingAdapter = new LandingAdapter(getActivity(), allData);
+        homeContent.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+        homeContent.setAdapter(landingAdapter);
 
         txtCountry2 = (TextView) v.findViewById(R.id.country2);
         txtCountry2.setOnClickListener(this);
@@ -278,7 +227,7 @@ public class FragmentRevisedLanding extends MyFragment implements View.OnClickLi
         try {
             loader=new ImageLoader(getActivity());
 
-            gridCat.setAdapter(gridAdapter);
+//            gridCat.setAdapter(gridAdapter);
 
 
             adapter = new ServiceAutoCompleteAdapter(getActivity(),
@@ -289,8 +238,11 @@ public class FragmentRevisedLanding extends MyFragment implements View.OnClickLi
             }
 
             if("select country".equalsIgnoreCase(txtCountry2.getText().toString())){
-                gridCat.setVisibility(View.GONE);
+//                gridCat.setVisibility(View.GONE);
+                mSwipeRefreshLayout.setVisibility(View.GONE);
+                homeContent.setVisibility(View.GONE);
                 fallBack.setVisibility(View.VISIBLE);
+                Log.i("homepage set to gone", "homepage set to gone");
             }else if("singapore".equalsIgnoreCase(txtCountry2.getText().toString())){
                 serviceCountry  = "sg";
                 serviceState    = "";
@@ -298,15 +250,15 @@ public class FragmentRevisedLanding extends MyFragment implements View.OnClickLi
                     getServiceData(0);
                 }else{
 //                    gridAdapter.notifyDataSetChanged();
-                    fallBack.setVisibility(View.GONE);
+//                    fallBack.setVisibility(View.GONE);
                     gridAdapter.notifyDataSetChanged();
-                    gridCat.setVisibility(View.VISIBLE);
+//                    gridCat.setVisibility(View.VISIBLE);
                     //  show promotions layout
                     if(hasPromo){    //getList("485", true);
 //                    mSnappyRecyclerView.setVisibility(View.VISIBLE);
-                        sliderLayout.setVisibility(View.VISIBLE);
-                        sliderContainer.setVisibility(View.VISIBLE);
-                        pagerIndicator.setVisibility(View.VISIBLE);
+//                        sliderLayout.setVisibility(View.VISIBLE);
+//                        sliderContainer.setVisibility(View.VISIBLE);
+//                        pagerIndicator.setVisibility(View.VISIBLE);
                     }
                 }
             }else{
@@ -316,15 +268,15 @@ public class FragmentRevisedLanding extends MyFragment implements View.OnClickLi
                 if(gridAdapter.isEmpty()){
                     getServiceData(0);
                 }else{
-                    fallBack.setVisibility(View.GONE);
+//                    fallBack.setVisibility(View.GONE);
                     gridAdapter.notifyDataSetChanged();
-                    gridCat.setVisibility(View.VISIBLE);
+//                    gridCat.setVisibility(View.VISIBLE);
                     //  show promotions layout
                     if(hasPromo){    //getList("485", true);
 //                    mSnappyRecyclerView.setVisibility(View.VISIBLE);
-                        sliderLayout.setVisibility(View.VISIBLE);
-                        sliderContainer.setVisibility(View.VISIBLE);
-                        pagerIndicator.setVisibility(View.VISIBLE);
+//                        sliderLayout.setVisibility(View.VISIBLE);
+//                        sliderContainer.setVisibility(View.VISIBLE);
+//                        pagerIndicator.setVisibility(View.VISIBLE);
                     }
                 }
 //                fallBack.setVisibility(View.GONE);
@@ -650,6 +602,14 @@ public class FragmentRevisedLanding extends MyFragment implements View.OnClickLi
                             //  get service data list
                             getServiceData(0);
 
+                            //  clear package category related variables to reload them with new country params
+                            GlobalVar.package_category_id.clear();
+                            GlobalVar.package_category_name.clear();
+                            GlobalVar.package_category = new String[]{""};
+                            Log.i("package_category.size()", String.valueOf(GlobalVar.package_category.length));
+                            Log.i("package_category_id", String.valueOf(GlobalVar.package_category_id));
+                            Log.i("package_category_name", String.valueOf(GlobalVar.package_category_name));
+
                             try {
                                 f_country2 = txtCountry2.getText().toString();
 
@@ -681,10 +641,19 @@ public class FragmentRevisedLanding extends MyFragment implements View.OnClickLi
             getStateData();		Log.i("CALLED FROM ONRESUME", "CALLED FROM ONRESUME" + " " + countrySelection);
         }
 
-        //  check for promo availability
-        if(hasPromo)    //getList("485", true);
-//        mSnappyRecyclerView.setVisibility(View.VISIBLE);
-            setupSlider(mItems, hasPromo);
+        //  refresh homepage contents
+        landingAdapter.notifyDataSetChanged();
+        //  show fallback image if no country is selected
+        if(!txtCountry2.getText().toString().equalsIgnoreCase("select country")) {
+            homeContent.setVisibility(View.VISIBLE);
+            mSwipeRefreshLayout.setVisibility(View.VISIBLE);
+            homeContent.setAdapter(landingAdapter);
+        }
+
+        //  reload homepage content if parameters are empty
+        if(allData.isEmpty() || (allData.get(0).homeBanner.isEmpty() && allData.get(1).homeGrid.isEmpty()))
+            getServiceData(0);
+
     }
 
     void getStateData() {
@@ -699,7 +668,6 @@ public class FragmentRevisedLanding extends MyFragment implements View.OnClickLi
             @Override
             public void onStart() {
                 super.onStart();
-//                loadingInternetDialog.setMessage("getStateData");
                 loadingInternetDialog.show();
             }
 
@@ -732,8 +700,6 @@ public class FragmentRevisedLanding extends MyFragment implements View.OnClickLi
                 // TODO Auto-generated method stub
                 super.onFailure(statusCode, error, content);
                 Log.d("Country", content);
-//                simpleToast(error + "\n" + content);
-
                 loadingInternetDialog.dismiss();
 
             }
@@ -754,8 +720,6 @@ public class FragmentRevisedLanding extends MyFragment implements View.OnClickLi
     }
 
     void getServiceData(int parentId) {
-//        loadingInternetDialog.setMessage("getServiceData");
-        loadingInternetDialog.show();
 
         if ("singapore".equalsIgnoreCase(txtCountry2.getText().toString())) {
             serviceCountry = "sg";
@@ -840,26 +804,56 @@ public class FragmentRevisedLanding extends MyFragment implements View.OnClickLi
 
                         Tracer.d("Service size:" + arrServiceCategory.size());
 
-                        //  hide fall back page before generate grids
-                        fallBack.setVisibility(View.GONE);
-                        //  restore visibility to grid
-                        gridCat.setVisibility(View.VISIBLE);
+                        if(allData.isEmpty() && allData.size()<2) {
+                            LandingDataType landingDataType = new LandingDataType();
+                            landingDataType.setViewType("2");
+                            landingDataType.homeGrid = arrServiceCategory;
+                            allData.add(landingDataType);
+                        }else{
+                            allData.get(allData.size()-1).homeGrid = arrServiceCategory;
+                            if(allData.get(0) != null) {
+//                                allData.remove(0);
+//                                allData.get(0).homeBanner = new ArrayList<PackageListItem>();
+                            }
+                        }
+                        Log.i("LALALALALA", "code execution till grid creation");
 
-                        // drawCategory();
+                        homeContent.setHasFixedSize(true);
+                        homeContent.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+
+                        //  show fallback image if no country is selected
+                        if(!txtCountry2.getText().toString().equalsIgnoreCase("select country")) {
+                            homeContent.setAdapter(landingAdapter);
+                            homeContent.setVisibility(View.VISIBLE);
+                            mSwipeRefreshLayout.setVisibility(View.VISIBLE);
+                        }
+
                         gridAdapter.notifyDataSetChanged();
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
 
-//				loadingInternetDialog.dismiss();
+            }
+
+            @Override
+            public void onStart(){
+                super.onStart();
+                if(!isRefresh) {
+                    loadingInternetDialog.show();
+                }
             }
 
             @Override
             public void onFinish() {
                 // TODO Auto-generated method stub
                 super.onFinish();
-                loadingInternetDialog.dismiss();
+                if(isRefresh) {
+                    mSwipeRefreshLayout.setRefreshing(false);
+                    isRefresh = false;
+                }else{
+                    loadingInternetDialog.dismiss();
+                }
             }
         });
     }
@@ -868,21 +862,30 @@ public class FragmentRevisedLanding extends MyFragment implements View.OnClickLi
         for (ServiceCategory object : list) {
             if (object.id.equals(id)) {
                 list.remove(object);
+                //  get promotional items, or hide promo banner if unavailable
                 getList(id, true, "containsId");
                 hasPromo = true;
-                //  show promotional items
-//        mSnappyRecyclerView.setVisibility(View.VISIBLE);       //simpleToast("show promo layout");
-//                sliderLayout.setVisibility(View.VISIBLE);
-//                pagerIndicator.setVisibility(View.VISIBLE);
                 return list;
             }
         }
 
-        //  no promotional items, hide layout
-//        mSnappyRecyclerView.setVisibility(View.GONE);       //simpleToast("hide promo layout");
-        sliderLayout.setVisibility(View.GONE);
-        sliderContainer.setVisibility(View.GONE);
-        pagerIndicator.setVisibility(View.GONE);
+        //  setup homepage content
+        LandingDataType landingDataType = new LandingDataType();
+        landingDataType.setViewType("1");
+        landingDataType.homeBanner = new ArrayList<>();
+        allData.remove(0);
+        allData.add(0, landingDataType);
+        Log.i("LALALALALA", "code execution till here");
+
+        homeContent.setHasFixedSize(true);
+        homeContent.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+        landingAdapter.notifyDataSetChanged();
+        //  show fallback image if no country is selected
+        if(!txtCountry2.getText().toString().equalsIgnoreCase("select country")) {
+            homeContent.setAdapter(landingAdapter);
+            homeContent.setVisibility(View.VISIBLE);
+            mSwipeRefreshLayout.setVisibility(View.VISIBLE);
+        }
         hasPromo = false;
         return list;
     }
@@ -910,7 +913,7 @@ public class FragmentRevisedLanding extends MyFragment implements View.OnClickLi
         }
     }
 
-    private void getList(final String serviceId, final boolean showLayout, String clue) {    //simpleToast("getList called: " + ++getListTracker); Log.i("getList log: ", "getList called: " + getListTracker + " " + showLayout);
+    private void getList(final String serviceId, final boolean showLayout, String clue) {
         Log.i("getList called", "getList called\n" + clue);
         RequestParams params = new RequestParams();
         params.add("session_username", pref.getPref(Config.PREF_USERNAME));
@@ -982,48 +985,35 @@ public class FragmentRevisedLanding extends MyFragment implements View.OnClickLi
                             ParserDealGetPackage parser = new ParserDealGetPackage(new String(responseBody));
                             Log.i("Promotion", parser.getStatus());
 
-                            if ("success".equalsIgnoreCase(parser.getStatus())) {       //simpleToast("success loading promotions");
+                            if ("success".equalsIgnoreCase(parser.getStatus())) {
                                 mItems.clear();
                                 mItems.addAll(parser.getResult());
                                 Log.i("Promotion", mItems.size() + " ");
                                 mAdapter.notifyDataSetChanged();
-//                                mSnappyRecyclerView.setVisibility(showLayout ? View.VISIBLE : View.GONE);
 
-                                //  setup auto slider
-                                setupSlider(mItems, showLayout);
+                                //  setup homepage content
+                                LandingDataType landingDataType = new LandingDataType();
+                                landingDataType.setViewType("1");
+                                landingDataType.homeBanner = mItems;
+                                allData.remove(0);
+                                allData.add(0, landingDataType);
+                                Log.i("LALALALALA", "code execution till here");
+
+                                homeContent.setHasFixedSize(true);
+                                homeContent.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+                                landingAdapter.notifyDataSetChanged();
+                                //  show fallback image if no country is selected
+                                if(!txtCountry2.getText().toString().equalsIgnoreCase("select country")) {
+                                    homeContent.setAdapter(landingAdapter);
+                                    homeContent.setVisibility(View.VISIBLE);
+                                    mSwipeRefreshLayout.setVisibility(View.VISIBLE);
+                                }
                             }
                         } catch (Exception ex) {
                             ex.printStackTrace();
                         }
                     }
                 });
-    }
-
-    private void setupSlider(final ArrayList<PackageListItem> items, boolean hasPromo){
-        //  clear sliders of previous data before repopulating them
-        sliderLayout.removeAllSliders();
-        for(int i = 0; i < items.size(); i++){
-            DefaultSliderView defaultSliderView = new DefaultSliderView(getContext());
-            defaultSliderView.image(imageUrl+"/cover/"+items.get(i).cover_photo);
-            defaultSliderView.setOnSliderClickListener(new BaseSliderView.OnSliderClickListener() {
-                @Override
-                public void onSliderClick(BaseSliderView slider) {
-                    PackageListDetailFragment fragment = PackageListDetailFragment.newInstance(items.get(sliderLayout.getCurrentPosition()));
-                    listener.doFragmentChange(fragment, true, "");
-//                    simpleToast(/*defaultSliderView.getUrl() + */"\ncurrent position: " + sliderLayout.getCurrentPosition());
-//                    Log.i("SLIDERLAYOUT", "click registered");
-                }
-            });
-            sliderLayout.addSlider(defaultSliderView);
-        }
-        //  custom indicator
-        sliderLayout.setCustomIndicator(pagerIndicator);
-        pagerIndicator.redraw();
-        //  set duration before banner change
-        sliderLayout.setDuration(5000);
-        sliderLayout.setVisibility(hasPromo ? View.VISIBLE : View.GONE);
-        sliderContainer.setVisibility(hasPromo ? View.VISIBLE : View.GONE);
-        pagerIndicator.setVisibility(hasPromo ? View.VISIBLE : View.GONE);
     }
 
     /**     SnappyRecyclerView Adapter
@@ -1307,7 +1297,7 @@ public class FragmentRevisedLanding extends MyFragment implements View.OnClickLi
 //                                    true, "");
 //                            Toast.makeText(getActivity(), "arr: " + sc.id + "\nserviceCountry: " + txtCountry2.getText().toString() + "\narrServiceCategory.get(pos).service_name: " + arrServiceCategory.get(pos).service_name + "\narrServiceCategory.get(pos).id: " + arrServiceCategory.get(pos).id, Toast.LENGTH_LONG).show();
                                 //  set GlobalVar.country before proceeding
-                                GlobalVar.country = txtCountry2.getText().toString();
+//                                GlobalVar.country = txtCountry2.getText().toString();
                                 listener.doFragmentChange(new FragmentCategoryTab(arrServiceCategory.get(pos).service_name, arrServiceCategory.get(pos).id, txtCountry2.getText().toString(), arr),
                                         true, "");
 
@@ -1343,64 +1333,4 @@ public class FragmentRevisedLanding extends MyFragment implements View.OnClickLi
         }
 
     }
-
-    /**
-     * A simple pager adapter that represents 5 ScreenSlidePageFragment objects, in
-     * sequence.
-     */
-//    private class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
-//        public ScreenSlidePagerAdapter(FragmentManager fm) {
-//            super(fm);
-//        }
-//
-//        @Override
-//        public Fragment getItem(int position) {
-//            return new ScreenSlidePageFragment();
-//        }
-//
-//        @Override
-//        public int getCount() {
-//            return NUM_PAGES;
-//        }
-//    }
-//
-//    public class CustomPagerAdapter extends PagerAdapter {
-//
-//        private Context mContext;
-//
-//        public CustomPagerAdapter(Context context) {
-//            mContext = context;
-//        }
-//
-//        @Override
-//        public Object instantiateItem(ViewGroup collection, int position) {
-//            CustomPagerEnum customPagerEnum = CustomPagerEnum.values()[position];
-//            LayoutInflater inflater = LayoutInflater.from(mContext);
-//            ViewGroup layout = (ViewGroup) inflater.inflate(customPagerEnum.getLayoutResId(), collection, false);
-//            collection.addView(layout);
-//            return layout;
-//        }
-//
-//        @Override
-//        public void destroyItem(ViewGroup collection, int position, Object view) {
-//            collection.removeView((View) view);
-//        }
-//
-//        @Override
-//        public int getCount() {
-//            return CustomPagerEnum.values().length;
-//        }
-//
-//        @Override
-//        public boolean isViewFromObject(View view, Object object) {
-//            return view == object;
-//        }
-//
-//        @Override
-//        public CharSequence getPageTitle(int position) {
-//            CustomPagerEnum customPagerEnum = CustomPagerEnum.values()[position];
-//            return mContext.getString(customPagerEnum.getTitleResId());
-//        }
-//
-//    }
 }

@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal" 
+    android:orientation="horizontal"
     android:background="@color/white"
     android:paddingTop="@dimen/padding2"
     android:paddingBottom="@dimen/padding2"
@@ -20,6 +20,8 @@
         android:textColor="@color/pa_category"
         android:textSize="@dimen/txt_big"
         app:typeface="OpenSans-Regular"
+        android:paddingTop="@dimen/padding"
+        android:paddingBottom="@dimen/padding"
         />
 
     <CheckBox
@@ -28,7 +30,7 @@
         android:layout_marginRight="@dimen/margin2"
         android:layout_width="@dimen/button_height"
         android:layout_height="@dimen/button_height"
-        />
+        android:visibility="gone"/>
 
 
 </LinearLayout>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <!--layout for promotional banner-->
+    <!--<LinearLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:id="@+id/slider_container"-->
+        <!--android:layout_weight="4">-->
+        <com.daimajia.slider.library.SliderLayout
+            android:id="@+id/slider"
+            android:layout_width="match_parent"
+            android:layout_height="108pt"
+            android:clickable="true"
+            android:visibility="visible"
+            app:layout_scrollFlags="scroll|snap"
+            />
+    <!--</LinearLayout>-->
+
+    <!--page indicator for promotional banner-->
+    <com.daimajia.slider.library.Indicators.PagerIndicator
+        android:id="@+id/custom_indicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        style="@style/AndroidImageSlider_Corner_Oval_Orange"
+        android:visibility="visible"
+        app:layout_scrollFlags="scroll|snap" />
+
+</LinearLayout>

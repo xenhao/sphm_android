@@ -77,55 +77,6 @@
         android:layout_height="match_parent"
         android:layout_weight="4"
         android:visibility="visible">
-        <!--<LinearLayout-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:orientation="vertical">-->
-        <!--<HorizontalScrollView-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content">-->
-        <!--<LinearLayout-->
-        <!--android:layout_width="30dp"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:background="@color/aqua"-->
-        <!--android:orientation="horizontal">-->
-        <!--<ImageView-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:src="@drawable/appointment_button"-->
-        <!--android:padding="@dimen/padding2"/>-->
-        <!--<ImageView-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:src="@drawable/appointment_button"-->
-        <!--android:padding="@dimen/padding2"/>-->
-        <!--<ImageView-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:src="@drawable/appointment_button"-->
-        <!--android:padding="@dimen/padding2"/>-->
-        <!--<ImageView-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:src="@drawable/appointment_button"-->
-        <!--android:padding="@dimen/padding2"/>-->
-        <!--<ImageView-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:src="@drawable/appointment_button"-->
-        <!--android:padding="@dimen/padding2"/>-->
-        <!--<ImageView-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:src="@drawable/appointment_button"-->
-        <!--android:padding="@dimen/padding2"/>-->
-        <!--<ImageView-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:src="@drawable/appointment_button"-->
-        <!--android:padding="@dimen/padding2"/>-->
-        <!--</LinearLayout>-->
-        <!--</HorizontalScrollView>-->
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
@@ -133,7 +84,6 @@
             android:layout_weight="1"
             android:layout_marginTop="@dimen/margin3">
         </android.support.v7.widget.RecyclerView>
-        <!--</LinearLayout>-->
     </android.support.v4.widget.SwipeRefreshLayout>
 
     <RelativeLayout
@@ -183,6 +133,22 @@
             android:textColor="@color/gray"
             android:layout_gravity="center_horizontal"
             android:textSize="@dimen/txt_xxx_big"
+            app:typeface="century-gothic-bold"/>
+
+        <com.pa.common.TypefaceButton
+            android:id="@+id/btn_request_quotes"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/edittext_height3"
+            android:layout_marginTop="@dimen/margin2"
+            android:paddingLeft="@dimen/padding5"
+            android:paddingRight="@dimen/padding5"
+            android:layout_gravity="center"
+            android:background="@drawable/btn_request_quotes"
+            android:gravity="center"
+            android:text="Proceed to Request Quotes"
+            android:textColor="@color/white"
+            android:textSize="@dimen/txt_extra_big"
+            android:textStyle="bold"
             app:typeface="century-gothic-bold"/>
     </LinearLayout>
 

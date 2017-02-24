@@ -38,8 +38,8 @@
     <string name="my_services">My Services</string>
     <string name="add_new_service">ADD NEW SERVICE</string>
     <string name="_preferred_service_date">PREFERRED DATE AND TIME</string>
-    <string name="_1st_preferred_service_date">1<sup><small>st</small></sup> PREFERRED DATE AND TIME</string>
-    <string name="_2nd_preferred_date_and_time">2<sup><small>nd</small></sup> preferred date and time (OPTIONAL)</string>
+    <string name="_1st_preferred_service_date">1<sup><small>st</small></sup> Preferred Date and Time</string>
+    <string name="_2nd_preferred_date_and_time">2<sup><small>nd</small></sup> Preferred Date and Time (OPTIONAL)</string>
     <string name="msg_default_status">Place a barcode inside the viewfinder rectangle to scan it. </string>
     <string name="refer_page_advisor_to_friends_and_get_10_credits_1">
         Share Your Referral Code <b>[PROMOCODE]</b> And Earn <b>[AMOUNT]</b> In FREE Credit.

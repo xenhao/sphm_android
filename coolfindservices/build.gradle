@@ -32,7 +32,7 @@ android {
         }
     }
     compileSdkVersion 22
-    buildToolsVersion "23.0.3"
+    buildToolsVersion "25.0.2"
     packagingOptions {
         exclude 'META-INF/LICENSE'
         exclude 'META-INF/NOTICE'

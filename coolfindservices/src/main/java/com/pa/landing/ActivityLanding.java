@@ -4,6 +4,7 @@ import org.apache.http.Header;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.Configuration;
@@ -23,12 +24,12 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.View.OnClickListener;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.facebook.appevents.AppEventsLogger;
 import com.hipmob.android.HipmobCore;
@@ -46,7 +47,6 @@ import com.pa.common.ProfilUtils;
 import com.pa.common.Tracer;
 import com.pa.contactus.FragmentContactUs;
 import com.pa.deals.PackageFragment;
-import com.pa.deals.PackagePromoFragment;
 import com.pa.free_credit.FragmentEarnFreeCredits;
 import com.pa.job.FragmentPostOpenBid;
 import com.pa.order.FragmentOrder;
@@ -263,6 +263,13 @@ public class ActivityLanding extends MyActivity implements OnClickListener,
 		}
 
 		return super.onKeyDown(keyCode, event);
+	}
+
+	//	to call switch tab in FragmentCategoryTab from PackageFragment
+	public void switchJRTab(){
+		if (fm.findFragmentById(R.id.content_frame) instanceof FragmentCategoryTab){
+			((FragmentCategoryTab) fm.findFragmentById(R.id.content_frame)).simulatequoteTap();
+		}
 	}
 
 	public void setBottomBar(int iconIndex){
@@ -651,6 +658,14 @@ public class ActivityLanding extends MyActivity implements OnClickListener,
 		}
 	}
 
+	protected void hideKeyboard() {
+		View view = this.getCurrentFocus();
+		if (view != null) {
+			InputMethodManager imm = (InputMethodManager)this.getSystemService(Context.INPUT_METHOD_SERVICE);
+			imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+		}
+	}
+
 	public void selectItem(int position) {
 		// update the main content by replacing fragments
 		/**
@@ -673,6 +688,7 @@ public class ActivityLanding extends MyActivity implements OnClickListener,
 					Log.i("Backstack entry count1: ", String.valueOf(this.getSupportFragmentManager().getBackStackEntryCount()));
 				}
 //			Toast.makeText(ActivityLanding.this, "Backstack entry count: " + String.valueOf(this.getSupportFragmentManager().getBackStackEntryCount()), Toast.LENGTH_LONG).show();
+				hideKeyboard();
 				break;
 
 			case 1:
@@ -718,8 +734,14 @@ public class ActivityLanding extends MyActivity implements OnClickListener,
 						doFragmentChange(PackageFragment.newInstance(temp + ", " + GlobalVar.state, false), true, "");
 					else
 						doFragmentChange(PackageFragment.newInstance(temp.substring(0, temp.indexOf(",")) + ", " + GlobalVar.state, false), true, "");
-				} else
-					doFragmentChange(PackageFragment.newInstance(GlobalVar.country + ", " + GlobalVar.state, false), true, "");
+				} else {
+					Log.i("ACTIVITY LANDING", "GlobalVar.country: " + GlobalVar.country);
+					if(GlobalVar.country.contains(",")){
+						doFragmentChange(PackageFragment.newInstance(GlobalVar.country, false), true, "");
+					}else{
+						doFragmentChange(PackageFragment.newInstance(GlobalVar.country + ", " + GlobalVar.state, false), true, "");
+					}
+				}
 				break;
 
 			case R.id.menu_faq:

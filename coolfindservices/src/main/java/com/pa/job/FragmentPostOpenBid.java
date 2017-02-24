@@ -144,7 +144,7 @@ public class FragmentPostOpenBid extends MyFragment implements OnClickListener,
 	String country2 = "sg";
     String userAddressCountry = "", userAddressState = "", userAddressStateShort = "", userAddressCity = "";
 	String backupCountry;
-	
+
 
 	public FragmentPostOpenBid(ArrayList<ServiceCategory> arr, String country) {
 		backupCountry = country;
@@ -745,7 +745,39 @@ public class FragmentPostOpenBid extends MyFragment implements OnClickListener,
 			v.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
+					//	disable checkbox
 					v.findViewById(R.id.chk).performClick();
+
+					//	next step right away, bypassing next button
+					if(GlobalVar.isGuest){
+						AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+								getActivity());
+						alertDialogBuilder.setTitle("Sign In");
+						alertDialogBuilder
+								.setMessage("Sign In or Register to Proceed?")
+								.setCancelable(false)
+								.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+									public void onClick(DialogInterface dialog, int id) {
+										Intent intent = new Intent(getActivity(), SplashActivity.class);
+										intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+										GlobalVar.isResumeGuest = true;
+										startActivity(intent);
+									}
+								})
+								.setNegativeButton("No", new DialogInterface.OnClickListener() {
+									public void onClick(DialogInterface dialog, int id) {
+										dialog.cancel();
+									}
+								});
+						AlertDialog alertDialog = alertDialogBuilder.create();
+						alertDialog.show();
+					}else {
+						if (isValidStep1()) {
+							pageHistory.add(prev_page);
+
+							changeStep(3);
+						}
+					}
 				}
 			});
 
@@ -761,7 +793,7 @@ public class FragmentPostOpenBid extends MyFragment implements OnClickListener,
 
 							int pos = (Integer) paramCompoundButton
 									.getTag(R.id.action_settings);
-							Tracer.d("Check" + pos);
+							Tracer.d("Check here" + pos);
 
 							if (!selection_mode.equals("multi_select_option")) {
 								for (int x = 0; x < selectedSubService.length; x++) {
@@ -1170,7 +1202,7 @@ public class FragmentPostOpenBid extends MyFragment implements OnClickListener,
 
 	private void showStep2(boolean search) {
 		analytic.trackScreen("Service Sub Cat");
-		
+
 		pageTitle.setText("POST A JOB");
 
 		// TODO Auto-generated method stub
@@ -1209,7 +1241,7 @@ public class FragmentPostOpenBid extends MyFragment implements OnClickListener,
 			{
 				// step2.findViewById(R.id.btnNext2).setVisibility(View.GONE);
 //				step2.findViewById(R.id.btnCancel2).setVisibility(View.VISIBLE);
-				step2.findViewById(R.id.btnNext2).setVisibility(View.VISIBLE);
+				step2.findViewById(R.id.btnNext2).setVisibility(View.GONE);
 			}
 
 		} catch (Exception e) {
@@ -3146,13 +3178,13 @@ public class FragmentPostOpenBid extends MyFragment implements OnClickListener,
 												try {
 //													valueKid = new JSONArray(
 //															tmpArr);
-													
+
 													valueKid=new JSONArray();
 													for(String s:tmpArr){
 														((JSONArray) valueKid).put(s);
 													}
 
-													
+
 												} catch (Exception e) {
 													// TODO Auto-generated catch
 													// block

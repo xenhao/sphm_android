@@ -2,6 +2,8 @@ package com.pa.common;
 
 import com.pa.pojo.User;
 
+import java.util.ArrayList;
+
 public class GlobalVar {
 	public static User USER;
 	
@@ -19,4 +21,9 @@ public class GlobalVar {
 	public static String country;
 	public static String state;
 	public static String state_short;
+
+	//	these are created to cater for the extremely slow loading time of category filters in main packages page
+	public static String[] package_category = { "" };
+	public static ArrayList<String> package_category_id = new ArrayList<>();
+	public static ArrayList<String> package_category_name = new ArrayList<>();
 }
